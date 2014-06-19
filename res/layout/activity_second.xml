@@ -1,0 +1,171 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="right"
+    tools:context="${packageName}.${activityClass}" >
+
+    <Button
+        android:id="@+id/secondToFirstButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:text="@string/back_text_view" />
+
+    <TextView
+        android:id="@+id/benchTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/generalTrainingMaxTextView"
+        android:layout_below="@+id/generalTrainingMaxTextView"
+        android:layout_marginTop="16dp"
+        android:text="@string/bench_training_max_title" />
+
+    <TextView
+        android:id="@+id/squatTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/benchTextView"
+        android:layout_below="@+id/benchTextView"
+        android:layout_marginTop="26dp"
+        android:text="@string/squat_training_max_title" />
+
+    <EditText
+        android:id="@+id/benchEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/squatTextView"
+        android:layout_alignLeft="@+id/secondToFirstButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/generalTrainingMaxTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/benchEditText"
+        android:text="@string/training_maxes_title" />
+
+    <Button
+        android:id="@+id/secondScreenNextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/secondToFirstButton"
+        android:layout_toRightOf="@+id/squatTextView"
+        android:text="@string/schedule_creation_text_view" />
+
+    <TextView
+        android:id="@+id/ohpTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/squatTextView"
+        android:layout_below="@+id/squatTextView"
+        android:layout_marginTop="28dp"
+        android:text="@string/OHP_training_max" />
+
+    <EditText
+        android:id="@+id/squatEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/squatTextView"
+        android:layout_alignBottom="@+id/squatTextView"
+        android:layout_alignLeft="@+id/benchEditText"
+        android:layout_alignRight="@+id/benchEditText"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/ohpEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ohpTextView"
+        android:layout_alignBottom="@+id/ohpTextView"
+        android:layout_alignLeft="@+id/squatEditText"
+        android:layout_alignRight="@+id/squatEditText"
+        android:ems="10"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/deadEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/deadTextView"
+        android:layout_alignLeft="@+id/ohpEditText"
+        android:layout_alignRight="@+id/ohpEditText"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/deadTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ohpTextView"
+        android:layout_below="@+id/ohpEditText"
+        android:layout_marginTop="32dp"
+        android:text="@string/dead_training_max" />
+
+    <TextView
+        android:id="@+id/dynamicTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/NumberCyclesTextView"
+        android:layout_below="@+id/NumberCyclesTextView"
+        android:layout_marginTop="27dp"
+        android:text="@string/blank_text_view" />
+
+    <TextView
+        android:id="@+id/NumberCyclesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/deadTextView"
+        android:layout_centerVertical="true"
+        android:text="@string/Number_of_cycles_text_view" />
+
+    <Spinner
+        android:id="@+id/numberCyclesSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/secondToFirstButton"
+        android:entries="@array/cycles_array" />
+
+
+
+    <TextView
+        android:id="@+id/modeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/numberCyclesSpinner"
+        android:layout_alignRight="@+id/benchTextView"
+        android:text="@string/lb_kg_text_view" />
+
+    <RadioGroup
+        android:id="@+id/unitModeGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NumberCyclesTextView"
+        android:layout_toRightOf="@+id/squatTextView"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/kgRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kg_radio_button" />
+
+        <RadioButton
+            android:id="@+id/lbRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/lb_radio_button" />
+    </RadioGroup>
+
+</RelativeLayout>
