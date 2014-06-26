@@ -2,11 +2,13 @@ package com.example.whowascns;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.CheckBox;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,11 +27,17 @@ public class SecondScreen extends Activity {
 	Spinner numberCyclesSpinner;
 	RadioButton lbRadioButton;
 	RadioButton kgRadioButton;
+	CheckBox roundingCheckBox;
 	
 	//to display errors 
 	TextView errorTextView;
 	Boolean lbs = true;
 	String unit_mode;
+	
+	String restoredBench;
+	String restoredSquat;
+	String restoredOHP;
+	String restoredDead;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -60,23 +68,9 @@ public class SecondScreen extends Activity {
 
 		RadioGroup unitModeGroup = (RadioGroup) findViewById(R.id.unitModeGroup);
 		unitModeGroup.setOnCheckedChangeListener(new OnCheckedChangeListener(){
-
-			Intent intent = getIntent();
 			
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				
-				
-				/*switch (checkedId)
-				{
-				case R.id.lbRadioButton:
-				intent.putExtra("lbmode", true);	
-				break;
-				
-				case R.id.kgRadioButton:
-				intent.putExtra("lbmode", false);	
-				break;
-				}*/
 				
 				if (lbRadioButton.isChecked())
 					lbs = true;
@@ -89,8 +83,46 @@ public class SecondScreen extends Activity {
 			}}
 		);
 		
+		
+		roundingCheckBox = (CheckBox) findViewById(R.id.roundingCheckBox);	
+		
+		
+		 if (savedInstanceState != null) 
+		 {
+				String restoredBench  = savedInstanceState.getString("bench");
+				benchEditText.setText(restoredBench);
+				//String restoredSquat  = savedInstanceState.getString("squat");  
+				//String restoredOHP    = savedInstanceState.getString("ohp"); 
+				//String restoredDead   = savedInstanceState.getString("dead");
+			 
+		 }
+		
+		
+		
 	}
 	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState){
+		savedInstanceState.putString("bench", benchEditText.getText().toString());
+		
+		// Always call the superclass so it can save the view hierarchy state
+	    super.onSaveInstanceState(savedInstanceState);
+		
+	}
+	
+	
+	@Override
+	public void onRestoreInstanceState (Bundle savedInstanceState){
+				String restoredBench  = savedInstanceState.getString("bench");
+				benchEditText.setText(restoredBench);
+				//String restoredSquat  = savedInstanceState.getString("squat");  
+				//String restoredOHP    = savedInstanceState.getString("ohp"); 
+				//String restoredDead   = savedInstanceState.getString("dead");
+			 
+
+	}
+	
+
 	
 	private OnClickListener goToFirstListener = new OnClickListener(){
 
@@ -129,33 +161,6 @@ public class SecondScreen extends Activity {
 			
 		}};	
 		
-	/*	private OnCheckedChangeListener modeGroupListener = new OnCheckedChangeListener(){
-
-			Intent intent = getIntent();
-			
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				
-				
-				switch (checkedId)
-				{
-				case R.id.lbRadioButton:
-				intent.putExtra("lbmode", true);	
-				break;
-				
-				case R.id.kgRadioButton:
-				intent.putExtra("lbmode", false);	
-				break;
-				}
-				
-				if (lbRadioButton.isChecked())
-					intent.putExtra("mode", "Lbs");
-				
-				if (kgRadioButton.isChecked())
-					intent.putExtra("lbmode", "Kg");
-				
-				
-			}};*/
 		
 
 	
@@ -314,7 +319,7 @@ public class SecondScreen extends Activity {
 		intent.putExtra("dead", dead);
 		
 		//Spinner error handling
-		if (Integer.parseInt(numberCyclesSpinner.getSelectedItem().toString()) == 0) 
+		if (numberCyclesSpinner.getSelectedItem().toString().equals("0")) 
 		{
 			errorStream = errorStream + "\n" + zeroCycleString;
 			errorTextView.setText(errorStream);
@@ -330,18 +335,24 @@ public class SecondScreen extends Activity {
 	{
 	 
 	  
-	  if (lbs.equals(true))
-	   unit_mode = "lbs";	  
+	  if (lbs.equals(true)){
+	   unit_mode = "Lbs";	  
 	  Toast.makeText(SecondScreen.this, "Displaying in lbs", Toast.LENGTH_SHORT).show();
 	  intent.putExtra("mode", unit_mode);
 	  }
 	  if (lbs.equals(false))
 	  {
-      unit_mode = "kgs";
+      unit_mode = "Kgs";
 	  Toast.makeText(SecondScreen.this, "Displaying in kgs", Toast.LENGTH_SHORT).show();
 	  intent.putExtra("mode", unit_mode);
 	  }
-	
+	  
+		if (roundingCheckBox.isChecked())
+			intent.putExtra("round", "true");
+		else
+			intent.putExtra("round", "false");
+	  
+	  
 	  startActivity(intent);
 	  
   }
@@ -349,6 +360,8 @@ public class SecondScreen extends Activity {
 
 
 
+}
+  
 }
   
 

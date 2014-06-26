@@ -22,7 +22,6 @@
 	<string name="email_text_view">Export to email</string>
 	
 	<string name="blank_text_view"> </string>
-	<string name="mode_text_view">Lbs</string>
 	
 	<string name="Number_of_cycles_text_view">Cycles to project:</string>
 	<string name="lb_radio_button">Lbs</string>
@@ -30,7 +29,7 @@
 	<string name="lb_kg_text_view">Lb/Kg:</string>
 	
 	<string name="unit_mode_text_view">Mode:</string>
-	
+	<string name="rounding_checkbox_text">Round to nearest 5lb/1kg?</string>
 	
 	<string-array name="cycles_array">
         <item>0</item>
@@ -39,6 +38,7 @@
         <item>3</item>
     </string-array>
 	
+		<string name="options_checkbox_test">Configure...</string>
 	
 
 </resources>

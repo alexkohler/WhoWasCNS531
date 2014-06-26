@@ -136,16 +136,6 @@
         android:layout_toRightOf="@+id/secondToFirstButton"
         android:entries="@array/cycles_array" />
 
-
-
-    <TextView
-        android:id="@+id/modeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/numberCyclesSpinner"
-        android:layout_alignRight="@+id/benchTextView"
-        android:text="@string/lb_kg_text_view" />
-
     <RadioGroup
         android:id="@+id/unitModeGroup"
         android:layout_width="wrap_content"
@@ -167,5 +157,13 @@
             android:checked="true"
             android:text="@string/lb_radio_button" />
     </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/roundingCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/NumberCyclesTextView"
+        android:layout_alignLeft="@+id/NumberCyclesTextView"
+        android:text="@string/rounding_checkbox_text" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.whowascns;
 
+import android.annotation.SuppressLint;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,7 +42,16 @@ public class DateProcessor {
 	Double OHP_TRAINING_MAX;
 	Double DEAD_TRAINING_MAX;
 	Boolean UNIT_MODE_LBS; //If true, then lbs are unit, otheriwse, kgs are unit. 
+	Boolean ROUND_FLAG; //determine whether or not to round
 	Double UNIT_CONVERSION_FACTOR = 2.20462;
+	
+	
+	//for sake of output on title
+	String STARTINGBENCH;
+	String STARTINGSQUAT;
+	String STARTINGOHP;
+	String STARTINGDEAD;
+
 	
 	//Currency definitions 
 	String CURRENT_LIFT = Lift.Bench.name(); //for now this is start
@@ -52,7 +62,8 @@ public class DateProcessor {
 	Double CURRENT_FIRST;
 	Double CURRENT_SECOND;
 	Double CURRENT_THIRD;
-	
+	Calendar CURRENT_DATE_CAL = Calendar.getInstance();; //to be parsed and worked to maintain current date (instead of modifying starting_date_string like I was before)
+	SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault()); // date format only needs to be declared once. Is not and won't be changing (Unless users really want a changable date format...)
 
 
 	
@@ -73,9 +84,18 @@ public class DateProcessor {
 		SQUAT_TRAINING_MAX = Double.valueOf(startingSquat);
 		OHP_TRAINING_MAX = Double.valueOf(startingOHP);
 		DEAD_TRAINING_MAX = Double.valueOf(startingDead); 
+		
+		//for sake of getStartingXXX method (title output on ThirdScreen)
+
+		 STARTINGBENCH = startingBench;
+		 STARTINGSQUAT = startingSquat;
+		 STARTINGOHP = startingOHP;
+		 STARTINGDEAD = startingDead;
+
+		
+		
+		
 	}
-	
-	
 	
 	
 	
@@ -105,63 +125,129 @@ public class DateProcessor {
 	}
 	
 	//need to implement a calculate5 function, calculate3 function, and calculate1 function 
-	Double getFirstLift()
+	double getFirstLift()
 	{
+		if (ROUND_FLAG)//if there is rounding wanted
+			{
+				if (UNIT_MODE_LBS)//lbs
+				CURRENT_FIRST =  round(CURRENT_FIRST, 5);//return first lift rounded to nearest 5lb
+				if (!UNIT_MODE_LBS)
+				CURRENT_FIRST = round(CURRENT_FIRST, 1);//return first lift rounded to nearest 1kg
+			}	
+			
+		
 		return CURRENT_FIRST;
 	}
 	
-	Double getSecondLift()
+	double getSecondLift()
 	{
+		if (ROUND_FLAG)//if there is rounding wanted
+		{
+			if (UNIT_MODE_LBS)//lbs
+			CURRENT_SECOND =  round(CURRENT_SECOND, 5);//return first lift rounded to nearest 5lb
+			if (!UNIT_MODE_LBS)
+			CURRENT_SECOND = round(CURRENT_SECOND, 1);//return first lift rounded to nearest 1kg
+		}	
+		
+	
 		return CURRENT_SECOND;
 	}
 	
-	Double getThirdLift()
+	double getThirdLift()
 	{
+		if (ROUND_FLAG)//if there is rounding wanted
+		{
+			if (UNIT_MODE_LBS)//lbs
+			CURRENT_THIRD =  round(CURRENT_THIRD, 5);//return first lift rounded to nearest 5lb
+			if (!UNIT_MODE_LBS)
+			CURRENT_THIRD = round(CURRENT_THIRD, 1);//return first lift rounded to nearest 1kg
+		}	
+		
+	
 		return CURRENT_THIRD;
 	}
 	
-	Double getBenchTM()
+	double getBenchTM()
 	{
 		return BENCH_TRAINING_MAX;
 	}
 	
-	Double getSquatTM()
+	double getSquatTM()
 	{
 		return SQUAT_TRAINING_MAX;
 	}
 	
-	Double getOHPTM()
+	double getOHPTM()
 	{
 		return OHP_TRAINING_MAX;
 	}
 	
-	Double getDeadTM()
+	double getDeadTM()
 	{
 		return DEAD_TRAINING_MAX;
 	}
 	
+	public boolean getUnitMode()
+	{
+		return UNIT_MODE_LBS;
+	}
 	
 	
+	String getStartingBench()
+	{
+		return STARTINGBENCH;
+	}
+
+	String getStartingSquat()
+	{
+		return STARTINGSQUAT;
+	}
+
+	String getStartingOHP()
+	{
+		return STARTINGOHP;
+	}
+
+	String getStartingDead()
+	{
+		return STARTINGDEAD;
+	}
 	
-	//calculation/misc definitions 
+	
+	//Setter definitions
+	
+	@SuppressLint("DefaultLocale")
+	public void setUnitMode(String unitMode)
+	{
+		if (unitMode.equals("Lbs"))
+		UNIT_MODE_LBS = true;
+		if (unitMode.equals("Kgs"))
+		UNIT_MODE_LBS = false;
+	}
+	
+	public void setRoundingFlag (boolean roundFlag)
+	{
+		ROUND_FLAG = roundFlag;
+	}
+	
+	//calculation/misc definitions
+	
+	//turns our STARTING_DATE_STRING into a more workable calendar object that we can do date arithmetic om
+	public void parseDateString() 
+	{
+		try {
+		CURRENT_DATE_CAL.setTime(df.parse(STARTING_DATE_STRING));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	//day incrementing function
 	public void incrementDay()
 	{
-		SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault());
-		Calendar cal  = Calendar.getInstance();
-		try {
-			cal.setTime(df.parse(STARTING_DATE_STRING));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-	cal.add(Calendar.DAY_OF_MONTH, 1);  // number of days to add
+	CURRENT_DATE_CAL.add(Calendar.DAY_OF_MONTH, 1);  // number of days to add
 	
-	Date myDate = cal.getTime();
+	Date myDate = CURRENT_DATE_CAL.getTime();
 	String formattedDate = df.format(myDate);
 	
 	 setStartingDate(formattedDate);
@@ -238,13 +324,40 @@ public class DateProcessor {
 	public void incrementCycleAndUpdateTMs()
 	{
 		CURRENT_CYCLE = CURRENT_CYCLE + 1;
+		if (getUnitMode())
+		{
 		BENCH_TRAINING_MAX = BENCH_TRAINING_MAX + 5; //this WILL HAVE TO CHANGE FOR KG MODE 
 		OHP_TRAINING_MAX = OHP_TRAINING_MAX + 5;
 		SQUAT_TRAINING_MAX = SQUAT_TRAINING_MAX + 10;
 		DEAD_TRAINING_MAX = DEAD_TRAINING_MAX + 10;
-		
+		}
+		if (!getUnitMode())
+		BENCH_TRAINING_MAX = BENCH_TRAINING_MAX + (5 / UNIT_CONVERSION_FACTOR); 
+		OHP_TRAINING_MAX = OHP_TRAINING_MAX + (5 / UNIT_CONVERSION_FACTOR);
+		SQUAT_TRAINING_MAX = SQUAT_TRAINING_MAX + (10 / UNIT_CONVERSION_FACTOR);
+		DEAD_TRAINING_MAX = DEAD_TRAINING_MAX + (10 / UNIT_CONVERSION_FACTOR);	
+			
 	}
 	
+	
+	//to be called after a regular increment (just go to next day)
+	void increment()
+	{
+		incrementDay();
+		incrementLift();
+	}
+
+	
+	void incrementRest()
+	{
+		incrementDay();
+		incrementDay();
+		incrementLift();
+		incrementLift();
+	}
+	
+	
+	//Calculation methods
 	
 	public void calculateFivesDay(Double myLift)
 	{
@@ -270,9 +383,11 @@ public class DateProcessor {
 		CURRENT_THIRD  = myLift * SINGLE_3;
 	}
 	
-	public void setUnitMode(boolean lbs)
+	
+	
+	double round(double i, int v) //first argument is rounded, 
 	{
-		UNIT_MODE_LBS = lbs;
+	    return (double) (Math.round(i/v) * v);
 	}
 
 }

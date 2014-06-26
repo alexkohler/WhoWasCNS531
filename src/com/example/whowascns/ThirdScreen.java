@@ -3,18 +3,23 @@ package com.example.whowascns;
 
 
 import java.text.DecimalFormat;
-import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 
 //small victories :) 
@@ -23,10 +28,20 @@ import android.database.sqlite.SQLiteDatabase;
 public class ThirdScreen extends Activity {
 
 	EventsDataSQLHelper eventsData;
-	TextView output;
-	Calendar myCalendarInstance;
-	String myMessage;
+	TextView OUTPUT;
+	String MODE_FORMAT;
+    DecimalFormat twoDForm = new DecimalFormat("#.##");
 	
+    public enum CURRENT_VIEW {
+        DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), FIVE('5'), THREE('3'), ONE('1');
+        private int value;
+
+        private CURRENT_VIEW(char value) {
+                this.value = value;
+        }
+    };   
+
+    CURRENT_VIEW curView = CURRENT_VIEW.DEFAULT;
 
 	//initialize processor to process all lifts, dates, etc...
 	DateProcessor Processor = new DateProcessor();
@@ -37,17 +52,14 @@ public class ThirdScreen extends Activity {
 		setContentView(R.layout.activity_third);
 		//declare our button, tie it to listener, code listener
 
-		Button thirdScreenBackButton = (Button) findViewById(R.id.thirdScreenBackButton);
-		thirdScreenBackButton.setOnClickListener(goToSecondListener);
 		
-		Button clearButton = (Button) findViewById(R.id.clearButton);
-		clearButton.setOnClickListener(clearListener);
+
+		CheckBox optionsCheckBox = (CheckBox) findViewById(R.id.optionsCheckBox);
 		
-		TextView dynamicModeTextView = (TextView) findViewById(R.id.dynamicModeTextView);
-		//dynamicModeTextView.setText("Kg");
+		optionsCheckBox.setOnCheckedChangeListener(optionsCheckBoxListener);
 		
 		//Data output
-		output = (TextView) findViewById(R.id.output);
+		OUTPUT = (TextView) findViewById(R.id.output);
 		
 		
 		Intent intent = getIntent();
@@ -56,21 +68,48 @@ public class ThirdScreen extends Activity {
 		
 
 	    eventsData = new EventsDataSQLHelper(this);
+	    SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
+	    db.delete("Lifts", null, null);
 	    
+	    
+	  //determine whether to round or not
+	  String areWeGoingToRound = intent.getStringExtra("round");
+	  String roundMode = "error"; // if this is not changed from error, there was an error 
+	  if (areWeGoingToRound.equals("true"))	
+	  {
+	  Processor.setRoundingFlag(true);
+	  roundMode = "Rounded";
+	  }
+	  else //revert to the default of no round
+	  {
+      Processor.setRoundingFlag(false);
+	  roundMode = "Unrounded";  
+	  }
 	    
 	    //get unit mode
 	    String lbmode = intent.getStringExtra("mode");
 	    if (lbmode.length() > 1)
-	    dynamicModeTextView.setText(lbmode);
-	    else
-	    	 dynamicModeTextView.setText("lbs");
+	    	{
+	    	setModeFormat(roundMode + " " +  lbmode);
+	    	
+	    	}
 
 	    
+
+	    Processor.setUnitMode(lbmode);
 	    
-	   
+	    
 		
-	    //set starting lifts
-	    Processor.setStartingLifts(intent.getStringExtra("bench"), intent.getStringExtra("squat"), intent.getStringExtra("OHP"), intent.getStringExtra("dead"));
+	    //set starting lifts (separate strings so title can them too) 
+		String startingBench = intent.getStringExtra("bench");
+		String startingSquat = intent.getStringExtra("squat");
+		String startingOHP   = intent.getStringExtra("OHP");
+		String startingDead  = intent.getStringExtra("dead");
+	    
+		//also set starting lifts locally 
+
+		
+	    Processor.setStartingLifts(startingBench, startingSquat, startingOHP, startingDead);
 	    Processor.setStartingDate(startingDate);
 	    
 	    
@@ -80,49 +119,66 @@ public class ThirdScreen extends Activity {
 	    calculateCycle();
 	    Processor.incrementCycleAndUpdateTMs();
 	   }
+	  
 	   
+	   
+	   	if (curView.equals(CURRENT_VIEW.DEFAULT))
+	   	{
 	    Cursor cursor = getEvents();
 	    showEvents(cursor);
+	   	}
 
 	}//end method oncreate 
 
 
 	 @Override
 	  public void onDestroy() {
+		 super.onDestroy();
+		 
 	    eventsData.close();
 	  }
-
 	 
-	 private OnClickListener clearListener = new OnClickListener(){
+	 
+	 private OnCheckedChangeListener optionsCheckBoxListener = new OnCheckedChangeListener() {
 
 		@Override
-		public void onClick(View v) {
-		    SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
-		    db.delete("Lifts", null, null);
-		    
-		    //this may not be pretty and may take too many resources 
-		    Bundle tempBundle = new Bundle();
-		    onCreate(tempBundle);
-		}
-		 
-	 };
+		public void onCheckedChanged(CompoundButton buttonView,
+				boolean isChecked) {
+		    //Options menu -- wrap up in a checkbox Listener 
+		    CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", "Export...", "View By...", "Back"};
 
-
-	private OnClickListener goToSecondListener = new OnClickListener(){
-
-		@Override
-		public void onClick(View v) {
-			SQLiteDatabase db = eventsData.getWritableDatabase();
-			db.close();
-			backToSecond();
-
+		    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+		    builder.setTitle("Pick a color");
+		    builder.setItems(colors, new DialogInterface.OnClickListener() {
+		        @Override
+		        public void onClick(DialogInterface dialog, int which) {
+		        	if (which == 0){
+		        		onBackPressed();
+		        		}
+		            if (which == 1) // arrays are zero indexed
+		            	backToFirst();
+		            
+		           //if (which== 4) 
+		            	//no need to worry about Back case, takes care of itself
+		        }
+		    });
+		    builder.show();
+			
 		}};
 		
 			
-			
+		public void setModeFormat (String myFormat )
+		{
+			MODE_FORMAT = "Mode: " + myFormat;
+		}
+		
+		String getModeFormat ()
+		{
+			return MODE_FORMAT; 
+		}
 
 		//pass back title argument if things go awry 
-		public void addEvent(String startDate, Integer currentCycle, String currentLift, String currentFreq, double first, double second, double third) {
+		public void addEvent() {
 		    SQLiteDatabase db = eventsData.getWritableDatabase();
 		    ContentValues values = new ContentValues();
 
@@ -149,7 +205,7 @@ public class ThirdScreen extends Activity {
 		  }
 
 		  private void showEvents(Cursor cursor) {
-		    StringBuilder ret = new StringBuilder("5/3/1 Schema:\n\n");
+		    StringBuilder ret = new StringBuilder("Starting TMs [Bench: " + Processor.getStartingBench() + "] [Squat: " + Processor.getStartingSquat() + "] [OHP: " + Processor.getStartingOHP() + "] [Dead: " + Processor.getStartingDead() + "] " + getModeFormat() + "\n\n");
 		    while (cursor.moveToNext()) {
 		      //long id = cursor.getLong(0);
 		      String liftDate = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
@@ -161,17 +217,21 @@ public class ThirdScreen extends Activity {
 		      Double third = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD)));
 		      ret.append(liftDate + "| " + cycle + "| " + lift + "| " + freq + "| " + first + "| " + second + "| " + third + "\n");
 		    }
-		    output.setText(ret);
+		    OUTPUT.setText(ret);
 		  }
 		
 
 
+		private void backToFirst()
+		{
+			startActivity(new Intent(this, MainActivity.class));
+			SQLiteDatabase db = eventsData.getWritableDatabase();
+			db.delete("Lifts", null, null);
+		}
+		
 		private void backToSecond()
 		{
-			//need to pass back date before going back. 
-			//startActivity(new Intent(this, SecondScreen.class));
-			//temp(perhaps permanent) fix 
-			startActivity(new Intent(this, MainActivity.class));
+			startActivity(new Intent(this, SecondScreen.class));
 			SQLiteDatabase db = eventsData.getWritableDatabase();
 			db.delete("Lifts", null, null);
 		}
@@ -180,113 +240,83 @@ public class ThirdScreen extends Activity {
 		
 		private void calculateCycle()
 		{
+			
+			
+			//SparseArray benchFives = new SparseArray()
 			//bench fives
 			Processor.calculateFivesDay(Processor.getBenchTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
-		
-			
-			Processor.incrementDay();
-			Processor.incrementLift();
+	
+			addEvent();
+			Processor.increment();
 			
 			//Squat fives
 			Processor.calculateFivesDay(Processor.getSquatTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
-			
-			Processor.incrementDay();
-			Processor.incrementDay();
-			Processor.incrementLift();
-			Processor.incrementLift();
+			addEvent();
+			Processor.incrementRest();
 			
 			//OHP Fives 
 			Processor.calculateFivesDay(Processor.getOHPTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
-			
-			Processor.incrementDay();
-			Processor.incrementLift();
+			addEvent();
+			Processor.increment();
 			
 			//Dead Fives
 			Processor.calculateFivesDay(Processor.getDeadTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
-
-			Processor.incrementDay();
-			Processor.incrementDay();
-			Processor.incrementLift();
-			Processor.incrementLift();
+			addEvent();
+			Processor.incrementRest();
 			
 			//bench triples
 			Processor.calculateTriplesDay(Processor.getBenchTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
-		
+			addEvent();
+			Processor.increment();
 			
-			Processor.incrementDay();
-			Processor.incrementLift();
 			
 			//Squat triples
 			Processor.calculateTriplesDay(Processor.getSquatTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
-			
-			Processor.incrementDay();
-			Processor.incrementDay();
-			Processor.incrementLift();
-			Processor.incrementLift();
+			addEvent();
+			Processor.incrementRest();
 			
 			//OHP triples 
 			Processor.calculateTriplesDay(Processor.getOHPTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
-			
-			Processor.incrementDay();
-			Processor.incrementLift();
+			addEvent();
+			Processor.increment();
 			
 			//Dead triples
 			Processor.calculateFivesDay(Processor.getDeadTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
-
-			Processor.incrementDay();
-			Processor.incrementDay();
-			Processor.incrementLift();
-			Processor.incrementLift();
+			addEvent();
+			Processor.incrementRest();
 			
 			//bench single
 			Processor.calculateSingleDay(Processor.getBenchTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
-		
-			
-			Processor.incrementDay();
-			Processor.incrementLift();
+			addEvent();
+			Processor.increment();
 			
 			//Squat single
 			Processor.calculateSingleDay(Processor.getSquatTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
+			addEvent();
+			Processor.incrementRest();
 			
-			Processor.incrementDay();
-			Processor.incrementDay();
-			Processor.incrementLift();
-			Processor.incrementLift();
-			
-			//OHP triples 
+			//OHP single 
 			Processor.calculateSingleDay(Processor.getOHPTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
+			addEvent();
+			Processor.increment();
 			
-			Processor.incrementDay();
-			Processor.incrementLift();
-			
-			//Dead triples
+			//Dead single
 			Processor.calculateSingleDay(Processor.getDeadTM());
-			addEvent(Processor.getStartingDate(), Processor.getCycle(), Processor.getLiftType(), Processor.getFreq(), Processor.getFirstLift(), Processor.getSecondLift(), Processor.getThirdLift());
-
-			Processor.incrementDay();
-			Processor.incrementDay();
-			Processor.incrementLift();
-			Processor.incrementLift();
-			
+			addEvent();
+			Processor.incrementRest();
 
 			
 		}
 		
-		double roundtoTwoDecimals(double d) {
-            DecimalFormat twoDForm = new DecimalFormat("#.##");
+		double roundtoTwoDecimals(double d) 
+		{
         return Double.valueOf(twoDForm.format(d));
-}
+		}
+		
+
+
+
+
 
 }//end thirdscreen activiy 
 

@@ -1095,15 +1095,13 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050058;
+        public static final int action_settings=0x7f050055;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
         public static final int benchEditText=0x7f050043;
         public static final int benchTextView=0x7f050040;
-        public static final int button1=0x7f050054;
         public static final int checkbox=0x7f05002d;
-        public static final int clearButton=0x7f050055;
         public static final int collapseActionView=0x7f05000d;
         public static final int deadEditText=0x7f050048;
         public static final int deadTextView=0x7f050049;
@@ -1113,7 +1111,6 @@ containing a value of this type.
         public static final int disableHome=0x7f050008;
         public static final int dp=0x7f05003d;
         public static final int dropdown=0x7f05000f;
-        public static final int dynamicModeTextView=0x7f050057;
         public static final int dynamicTextView=0x7f05004a;
         public static final int edit_query=0x7f050030;
         public static final int end=0x7f050013;
@@ -1125,22 +1122,23 @@ containing a value of this type.
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
-        public static final int kgRadioButton=0x7f05004f;
-        public static final int lbRadioButton=0x7f050050;
+        public static final int kgRadioButton=0x7f05004e;
+        public static final int lbRadioButton=0x7f05004f;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
         public static final int middle=0x7f050012;
-        public static final int modeTextView=0x7f05004d;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int numberCyclesSpinner=0x7f05004c;
         public static final int ohpEditText=0x7f050047;
         public static final int ohpTextView=0x7f050045;
+        public static final int optionsCheckBox=0x7f050054;
         public static final int output=0x7f050053;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
+        public static final int roundingCheckBox=0x7f050050;
         public static final int scrollView1=0x7f050052;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
@@ -1164,11 +1162,10 @@ containing a value of this type.
         public static final int squatTextView=0x7f050042;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int thirdScreenBackButton=0x7f050056;
         public static final int thirdScreenLayout=0x7f050051;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
-        public static final int unitModeGroup=0x7f05004e;
+        public static final int unitModeGroup=0x7f05004d;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
         public static final int withText=0x7f05000c;
@@ -1233,7 +1230,7 @@ containing a value of this type.
         public static final int main=0x7f0d0000;
     }
     public static final class string {
-        public static final int Number_of_cycles_text_view=0x7f0a0020;
+        public static final int Number_of_cycles_text_view=0x7f0a001f;
         public static final int OHP_training_max=0x7f0a0018;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
@@ -1284,11 +1281,12 @@ containing a value of this type.
         public static final int dead_training_max=0x7f0a0019;
         public static final int dialog_text_view=0x7f0a000f;
         public static final int email_text_view=0x7f0a001d;
-        public static final int kg_radio_button=0x7f0a0022;
-        public static final int lb_kg_text_view=0x7f0a0023;
-        public static final int lb_radio_button=0x7f0a0021;
-        public static final int mode_text_view=0x7f0a001f;
+        public static final int kg_radio_button=0x7f0a0021;
+        public static final int lb_kg_text_view=0x7f0a0022;
+        public static final int lb_radio_button=0x7f0a0020;
+        public static final int options_checkbox_test=0x7f0a0025;
         public static final int reset_text_view=0x7f0a0014;
+        public static final int rounding_checkbox_text=0x7f0a0024;
         public static final int schedule_creation_text_view=0x7f0a001a;
         public static final int second_screen_text_view=0x7f0a0012;
         public static final int set_button_text_view=0x7f0a000e;
@@ -1296,7 +1294,7 @@ containing a value of this type.
         public static final int sync_with_calendar_text_view=0x7f0a001b;
         public static final int title_activity_second=0x7f0a0011;
         public static final int training_maxes_title=0x7f0a0015;
-        public static final int unit_mode_text_view=0x7f0a0024;
+        public static final int unit_mode_text_view=0x7f0a0023;
     }
     public static final class style {
         /** 
