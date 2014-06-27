@@ -111,6 +111,11 @@ public class DateProcessor {
 	{
 		return CURRENT_CYCLE;
 	}
+	
+	public void setCycle(Integer myCycle)
+	{
+		CURRENT_CYCLE = myCycle;
+	}
 	//String startDate, Integer currentCycle, String currentLift, String currentFreq, double first, double second, double third
 	
 	
