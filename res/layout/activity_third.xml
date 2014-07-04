@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/thirdScreenLayout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent" 
+    >
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -15,8 +16,9 @@
             android:layout_height="wrap_content" />
     </ScrollView>
 
-    <CheckBox
-        android:id="@+id/optionsCheckBox"
+    <Button
+        android:id="@+id/configureButton"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

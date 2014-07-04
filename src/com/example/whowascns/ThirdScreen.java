@@ -12,13 +12,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +29,11 @@ public class ThirdScreen extends Activity {
 	String MODE_FORMAT;
     DecimalFormat twoDForm = new DecimalFormat("#.##");
     Integer NUMBER_CYCLES;
+    String CURRENT_SELECT_QUERY;
+    boolean insertStatus = false;
+    boolean changedView = false;
+    String retStringSaver; //for sake of changing views
+    
 	
     public enum CURRENT_VIEW {
         DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), DEAD('D'), FIVES('5'), THREES('3'), ONES('1');
@@ -57,11 +58,10 @@ public class ThirdScreen extends Activity {
 		setContentView(R.layout.activity_third);
 		//declare our button, tie it to listener, code listener
 
+		Button configureButton = (Button) findViewById(R.id.configureButton);
 		
+		configureButton.setOnClickListener(optionsListener);
 
-		CheckBox optionsCheckBox = (CheckBox) findViewById(R.id.optionsCheckBox);
-		
-		optionsCheckBox.setOnCheckedChangeListener(optionsCheckBoxListener);
 		
 		//Data output
 		OUTPUT = (TextView) findViewById(R.id.output);
@@ -74,7 +74,12 @@ public class ThirdScreen extends Activity {
 
 	    eventsData = new EventsDataSQLHelper(this);
 	    SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
-	    db.delete("Lifts", null, null);
+	   
+	    //if we are coming from second screen
+	    String origin = intent.getStringExtra("origin");
+	    if (origin.equals("second"))
+	    {
+	   db.delete("Lifts", null, null);
 	    
 	    
 	  //determine whether to round or not
@@ -120,7 +125,7 @@ public class ThirdScreen extends Activity {
 	    int numberCycles =  Integer.parseInt(intent.getStringExtra("numberCycles"));
 	    setNumberCycles(numberCycles);
 	    calculateCycle();
-	    
+		}
 	   
 	  
 	   
@@ -149,11 +154,10 @@ public class ThirdScreen extends Activity {
 	  }
 	 
 	 
-	 private OnCheckedChangeListener optionsCheckBoxListener = new OnCheckedChangeListener() {
+	 private OnClickListener optionsListener = new OnClickListener () {
 
 		@Override
-		public void onCheckedChanged(CompoundButton buttonView,
-				boolean isChecked) {
+		public void onClick(View v) {
 		    //Options menu -- wrap up in a checkbox Listener 
 		    CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", "Export...", "View By...", "Back"};
 
@@ -179,6 +183,7 @@ public class ThirdScreen extends Activity {
 		    builder.show();
 			
 		}};
+	 
 		
 		//ugly but will clean up later..
 		public void createViewBuilder()
@@ -191,47 +196,71 @@ public class ThirdScreen extends Activity {
 			    builder2.setItems(colors, new DialogInterface.OnClickListener() {
 			        @Override
 			        public void onClick(DialogInterface dialog, int which) {
-		        		Bundle tempBundle = new Bundle();
+		        	    Cursor cursor = getEvents();
 			        	switch (which){
 			        	case 0:
 			        		curView = CURRENT_VIEW.DEFAULT;
 			        		Toast.makeText(ThirdScreen.this, "View Selected: Show All", Toast.LENGTH_SHORT).show();
-			        		onCreate(tempBundle);
+			        		setQuery(null);
+			        		cursor = getEvents();
+			        	    changedView = true;
+			        	    showDefaultEvents(cursor);
 			        		break;
 			        	case 1:
 			        		curView = CURRENT_VIEW.BENCH;
 			        		Toast.makeText(ThirdScreen.this, "View Selected: Bench Only", Toast.LENGTH_SHORT).show();
-			        		onCreate(tempBundle);
+			        		setQuery("Lift = 'Bench'");
+			        		cursor = getEvents();
+			        	    changedView = true;
+			        		showDefaultEvents(cursor);
 			        		break;	
 			        	case 2:
 			        		curView = CURRENT_VIEW.SQUAT;
 			        		Toast.makeText(ThirdScreen.this, "View Selected: Squat Only", Toast.LENGTH_SHORT).show();
-			        		onCreate(tempBundle);
+			        		setQuery("Lift = 'Squat'");
+			        		cursor = getEvents();
+			        	    changedView = true;
+			        		showDefaultEvents(cursor);
 			        		break;	
 			        	case 3:
 			        		curView = CURRENT_VIEW.OHP;
 			        		Toast.makeText(ThirdScreen.this, "View Selected: OHP Only", Toast.LENGTH_SHORT).show();
-			        		onCreate(tempBundle);
+			        		setQuery("Lift = 'OHP'");
+			        		cursor = getEvents();
+			        	    changedView = true;
+			        		showDefaultEvents(cursor);
 			        		break;		
 			        	case 4:
 			        		curView = CURRENT_VIEW.DEAD;
 			        		Toast.makeText(ThirdScreen.this, "View Selected: Deadlift Only", Toast.LENGTH_SHORT).show();
-			        		onCreate(tempBundle);
+			        		setQuery("Lift = 'Deadlift'");
+			        		cursor = getEvents();
+			        	    changedView = true;
+			        		showDefaultEvents(cursor);
 			        		break;
 			        	case 5:
 			        		curView = CURRENT_VIEW.FIVES;
 			        		Toast.makeText(ThirdScreen.this, "View Selected: Fives Days Only", Toast.LENGTH_SHORT).show();
-			        		onCreate(tempBundle);
+			        		setQuery("Frequency = '5-5-5'");
+			        		cursor = getEvents();
+			        	    changedView = true;
+			        		showDefaultEvents(cursor);
 			        		break;
 			        	case 6:
 			        		curView = CURRENT_VIEW.THREES;
 			        		Toast.makeText(ThirdScreen.this, "View Selected: Triples Days Only", Toast.LENGTH_SHORT).show();
-			        		onCreate(tempBundle);
+			        		setQuery("Frequency = '3-3-3'");
+			        		cursor = getEvents();
+			        	    changedView = true;
+			        		showDefaultEvents(cursor);
 			        		break;
 			        	case 7:
 			        		curView = CURRENT_VIEW.ONES;
 			        		Toast.makeText(ThirdScreen.this, "View Selected: 5-3-1 Days Only", Toast.LENGTH_SHORT).show();
-			        		onCreate(tempBundle);
+			        		setQuery("Frequency = '5-3-1'");
+			        		cursor = getEvents();
+			        	    changedView = true;
+			        	    showDefaultEvents(cursor);
 			        		break;				
 			        	case 8:
 			            	CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", "Export...", "View By...", "Back"};
@@ -293,13 +322,32 @@ public class ThirdScreen extends Activity {
 		   values.put(EventsDataSQLHelper.FIRST, Processor.getFirstLift());
 		   values.put(EventsDataSQLHelper.SECOND, Processor.getSecondLift());
 		   values.put(EventsDataSQLHelper.THIRD, Processor.getThirdLift());
+		   if ((Processor.getLiftType().equals("Bench")) && Processor.getCycle() == 1) //insert our initial training maxes into table instead of trying to pass them back and forth between intents 
+			   values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getBenchTM());
+		   if (Processor.getLiftType().equals("Squat") && Processor.getCycle() == 1 )	   
+			   values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getSquatTM());   
+		   if (Processor.getLiftType().equals("OHP") && Processor.getCycle() == 1 )	   
+			   values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getOHPTM());
+		   if (Processor.getLiftType().equals("Deadlift") && Processor.getCycle() == 1 )	   
+			   values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getDeadTM());
+		   
 		    db.insert(EventsDataSQLHelper.TABLE, null, values);
 		  }
+		
+		public void setQuery(String myQuery)
+		{
+			CURRENT_SELECT_QUERY = myQuery;
+		}
+		
+		public String getQuery ()
+		{
+			return CURRENT_SELECT_QUERY;
+		}
 
 		  @SuppressWarnings("deprecation")
 		private Cursor getEvents() {
 		    SQLiteDatabase db = eventsData.getReadableDatabase();
-		    Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, null, null, null,
+		    Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, getQuery(), null, null,
 		        null, null);
 		    
 		    startManagingCursor(cursor);
@@ -307,9 +355,27 @@ public class ThirdScreen extends Activity {
 		  }
 
 		  private void showDefaultEvents(Cursor cursor) {
-		    StringBuilder ret = new StringBuilder("Starting TMs [Bench: " + Processor.getStartingBench() + "] [Squat: " + Processor.getStartingSquat() + "] [OHP: " + Processor.getStartingOHP() + "] [Dead: " + Processor.getStartingDead() + "] " + "\n" + getModeFormat() + " " + "View Mode: " + curView.toString() + "\n");
+			  StringBuilder ret; 
+			  ret = new StringBuilder("");
 		    while (cursor.moveToNext()) {
-		      //long id = cursor.getLong(0);
+		      if (!this.insertStatus){
+		    	  Cursor subcursor = cursor;
+		    	  ret = new StringBuilder("Start TMs [Bench: " + cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]");
+		    	  subcursor.moveToNext();
+		    	  ret.append(" [Squat: " +cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]");
+		    	  subcursor.moveToNext();
+		    	  ret.append(" [OHP: " + cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
+		      	  subcursor.moveToNext();
+		      	  ret.append(" [Dead: " + cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
+			      ret.append("\n");
+			      insertStatus = true;
+		    	  retStringSaver = ret.toString();
+		      }
+		      else
+		    	  if (changedView){
+		    	  ret.append(retStringSaver);
+		    	  changedView = false;
+		    	  }
 		      String liftDate = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
 		      String cycle = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.CYCLE));
 		      String lift = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
@@ -317,40 +383,8 @@ public class ThirdScreen extends Activity {
 		      Double first = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST)));
 		      Double second = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND)));
 		      Double third = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD)));
-		      switch (curView){
-		      case DEFAULT:
-		    	  ret.append(liftDate + "| " + cycle + "| " + lift + "| " + freq + "| " + first + "| " + second + "| " + third + "\n");
-		    	  break;
-		      case BENCH: 
-		    	if (lift.equals("Bench"))
-			      ret.append(liftDate + "| " + cycle + "| " + lift + "| " + freq + "| " + first + "| " + second + "| " + third + "\n");	  
-		    	  break;
-		      case SQUAT:
-			    if (lift.equals("Squat"))
-				  ret.append(liftDate + "| " + cycle + "| " + lift + "| " + freq + "| " + first + "| " + second + "| " + third + "\n");	  
-				  break;
-		      case OHP:
-				if (lift.equals("OHP"))
-				  ret.append(liftDate + "| " + cycle + "| " + lift + "| " + freq + "| " + first + "| " + second + "| " + third + "\n");	  
-				  break;
-		      case DEAD:
-				if (lift.equals("Dead"))
-				  ret.append(liftDate + "| " + cycle + "| " + lift + "| " + freq + "| " + first + "| " + second + "| " + third + "\n");	  
-				  break;
-		      case FIVES:
-				if (freq.equals("5-5-5"))
-				  ret.append(liftDate + "| " + cycle + "| " + lift + "| " + freq + "| " + first + "| " + second + "| " + third + "\n");	  
-				  break;
-		      case THREES:
-				if (freq.equals("3-3-3"))
-				  ret.append(liftDate + "| " + cycle + "| " + lift + "| " + freq + "| " + first + "| " + second + "| " + third + "\n");	  
-				  break;
-		      case ONES:
-				if (freq.equals("5-3-1"))
-				  ret.append(liftDate + "| " + cycle + "| " + lift + "| " + freq + "| " + first + "| " + second + "| " + third + "\n");	  
-				  break;  
-		      
-		      }//end curview switch
+		    ret.append(liftDate + "| " + cycle + "| " + lift + "| " + freq + "| " + first + "| " + second + "| " + third + "\n");
+		    	  
 		    }
 		    OUTPUT.setText(ret);
 		  }
@@ -446,7 +480,7 @@ public class ThirdScreen extends Activity {
 		
 
 
-
+	
 
 
 }//end thirdscreen activiy 

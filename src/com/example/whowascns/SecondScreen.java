@@ -352,6 +352,8 @@ public class SecondScreen extends Activity {
 		else
 			intent.putExtra("round", "false");
 	  
+	//tell third activity we are coming from second screen (creating a new query)
+	intent.putExtra("origin", "second");
 	  
 	  startActivity(intent);
 	  

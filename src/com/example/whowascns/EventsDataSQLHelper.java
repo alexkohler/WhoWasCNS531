@@ -22,7 +22,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	public static final String FIRST = "First_Lift";
 	public static final String SECOND = "Second_Lift";
 	public static final String THIRD = "Third_Lift";
-
+	public static final String TRAINING_MAX = "Third_Lift";
 	public EventsDataSQLHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -30,7 +30,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		//this was originally alter table
-		String sql = "create table " + TABLE + "(liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real);";
+		String sql = "create table " + TABLE + "(liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer);";
 		Log.d("EventsData", "onCreate: " + sql);
 		db.execSQL(sql);
 	}

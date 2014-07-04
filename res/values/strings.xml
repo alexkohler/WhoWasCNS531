@@ -38,7 +38,7 @@
         <item>3</item>
     </string-array>
 	
-		<string name="options_checkbox_test">Configure...</string>
-	
+	<string name="options_checkbox_test">Configure</string>
+	<string name="view_existing_text_view">View existing projection</string>
 
 </resources>
