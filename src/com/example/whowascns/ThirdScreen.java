@@ -6,11 +6,13 @@ import java.text.DecimalFormat;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +35,7 @@ public class ThirdScreen extends Activity {
     boolean insertStatus = false;
     boolean changedView = false;
     String retStringSaver; //for sake of changing views
-    
+	Cursor cursor;
 	
     public enum CURRENT_VIEW {
         DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), DEAD('D'), FIVES('5'), THREES('3'), ONES('1');
@@ -124,16 +126,17 @@ public class ThirdScreen extends Activity {
 	    
 	    int numberCycles =  Integer.parseInt(intent.getStringExtra("numberCycles"));
 	    setNumberCycles(numberCycles);
-	    calculateCycle();
-		}
+		new AsyncCaller().execute();
+	    }
 	   
 	  
 	   
 	   
-
+	    else
+	    {
 	    Cursor cursor = getEvents();
 	    showDefaultEvents(cursor);
-
+	    }
 	}//end method oncreate 
 
 	public void setNumberCycles(int numberCycles)
@@ -479,7 +482,42 @@ public class ThirdScreen extends Activity {
 		}
 		
 
+		//Async caller for threading
+	   	 private class AsyncCaller extends AsyncTask<Void, Void, Void>
+	   	 {
+	   	 	ProgressDialog pdLoading = new ProgressDialog(ThirdScreen.this);
+	   	 	@Override
+	   	 	protected void onPreExecute() {
+	   	     	super.onPreExecute();
 
+	   	     	//this method will be running on UI thread
+	   	     	pdLoading.setMessage("\tLoading your gains...");
+	   	    	 
+	   	     	pdLoading.show();
+	   	 	}
+	   	 	@Override
+	   	 	protected Void doInBackground(Void... params) {
+	   				calculateCycle();
+	   				 cursor = getEvents();
+
+	   			 //this method will be running on background thread so don't update UI frome here
+	   	     	//do your long running http tasks here,you dont want to pass argument and u can access the parent class' variable url over here
+
+
+	   	     	return null;
+	   	 	}
+
+	   	 	@Override
+	   	 	protected void onPostExecute(Void result) {
+	   	     	super.onPostExecute(result);
+				showDefaultEvents(cursor);
+
+	   	     	pdLoading.dismiss();
+	   	 }
+
+	   	 }
+		
+		
 	
 
 
