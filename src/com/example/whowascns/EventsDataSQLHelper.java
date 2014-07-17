@@ -3,7 +3,6 @@ package com.example.whowascns;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 import android.util.Log;
 
 /** Helper to the database, manages versions and creation */
@@ -22,7 +21,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	public static final String FIRST = "First_Lift";
 	public static final String SECOND = "Second_Lift";
 	public static final String THIRD = "Third_Lift";
-	public static final String TRAINING_MAX = "Third_Lift";
+	public static final String TRAINING_MAX = "Training_Max";
 	public EventsDataSQLHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}

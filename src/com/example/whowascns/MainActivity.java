@@ -22,109 +22,111 @@ import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
-	
+
 	//to be used in activity 3 - may not be most efficient but for testing purposes 
 	static int startingDateDay;
 	static int startingDateMonth;
 	static int startingDateYear;
 	RelativeLayout relativeLayout;  //declare this globally
-	
-	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        
-        final DatePicker dp = (DatePicker) findViewById(R.id.dp);
-        final Button setBtn = (Button) findViewById(R.id.set);
-        
-        setBtn.setOnClickListener(new OnClickListener() {
-			
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+
+		final DatePicker dp = (DatePicker) findViewById(R.id.dp);
+		final Button setBtn = (Button) findViewById(R.id.set);
+
+		setBtn.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(MainActivity.this, "Date Selected: " + dp.getMonth() + " " + dp.getDayOfMonth() + " " + dp.getYear(),  Toast.LENGTH_SHORT).show();
 				startingDateDay = dp.getDayOfMonth();
 				startingDateMonth = dp.getMonth();
 				startingDateYear = dp.getYear();
-				
-				
-				
+
+
+
 				goToSecond();
 			}
 		});
-        
-        
-        Button existingProjectionButton = (Button) findViewById(R.id.existingProjectionButton);
-        existingProjectionButton.setOnClickListener(goToThirdListener);
-        
-        
-    }//end method onCreate 
-	
-	
+
+
+		Button existingProjectionButton = (Button) findViewById(R.id.existingProjectionButton);
+		existingProjectionButton.setOnClickListener(goToThirdListener);
+
+
+	}//end method onCreate 
+
+
 	private OnClickListener goToThirdListener = new OnClickListener(){
 
 		@Override
 		public void onClick(View v) {
 			goToThird();
-			
+
 		}};
-		
-	
-	private void goToSecond()
-	{
-		
-	    Calendar cal = Calendar.getInstance();
-	    cal.setTimeInMillis(0);
-	    cal.set(startingDateYear, startingDateMonth, startingDateDay);
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault());
-		Date myDate = cal.getTime();
-		String formattedDate = dateFormat.format(myDate);
-		
-		
-		Intent intent = new Intent(MainActivity.this, SecondScreen.class);
-		intent.putExtra("key", formattedDate );
-		startActivity(intent);
-		
-	}
-	
-	private void goToThird()
-	{
-		if (!dbEmpty())
+
+
+		private void goToSecond()
 		{
-		Intent intent = new Intent(MainActivity.this, ThirdScreen.class);
-		intent.putExtra("origin", "first");
-		startActivity(intent);
+
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(0);
+			cal.set(startingDateYear, startingDateMonth, startingDateDay);
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault());
+			Date myDate = cal.getTime();
+			String formattedDate = dateFormat.format(myDate);
+			//if this db does not have a database....
+			//EventsDataSQLHelper eventsData = new EventsDataSQLHelper(this);
+			//SQLiteDatabase db = eventsData.getWritableDatabase();
+			//db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer)");
+			Intent intent = new Intent(MainActivity.this, SecondScreen.class);
+			intent.putExtra("key", formattedDate );
+			startActivity(intent);
+
 		}
-		else
-		Toast.makeText(MainActivity.this, "Database currently empty!", Toast.LENGTH_SHORT).show();
-	}
-	
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+		private void goToThird()
+		{
+			if (!dbEmpty())
+			{
+				Intent intent = new Intent(MainActivity.this, ThirdScreen.class);
+				intent.putExtra("origin", "first");
+				startActivity(intent);
+			}
+			else
+				Toast.makeText(MainActivity.this, "Database currently empty!", Toast.LENGTH_SHORT).show();
+		}
 
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+
+			// Inflate the menu; this adds items to the action bar if it is present.
+			getMenuInflater().inflate(R.menu.main, menu);
 			return true;
 		}
-		return super.onOptionsItemSelected(item);
-	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-/*	public static class PlaceholderFragment extends Fragment {
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			// Handle action bar item clicks here. The action bar will
+			// automatically handle clicks on the Home/Up button, so long
+			// as you specify a parent activity in AndroidManifest.xml.
+			int id = item.getItemId();
+			if (id == R.id.action_settings) {
+				return true;
+			}
+			return super.onOptionsItemSelected(item);
+		}
+
+		/**
+		 * A placeholder fragment containing a simple view.
+		 */
+		/*	public static class PlaceholderFragment extends Fragment {
 
 		public PlaceholderFragment() {
 		}
@@ -138,27 +140,27 @@ public class MainActivity extends ActionBarActivity {
 		}
 	}*/
 
-	public boolean dbEmpty()
-	{
-		EventsDataSQLHelper eventsData = new EventsDataSQLHelper(this);
-	    SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
-	    Cursor mCursor = db.rawQuery("SELECT * FROM " + EventsDataSQLHelper.TABLE, null);
-		Boolean rowExists;
-
-		if (mCursor.moveToFirst())
+		public boolean dbEmpty()
 		{
-		   // DO SOMETHING WITH CURSOR
-		  rowExists = false;
+			EventsDataSQLHelper eventsData = new EventsDataSQLHelper(this);
+			SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
+			Cursor mCursor = db.rawQuery("SELECT * FROM " + EventsDataSQLHelper.TABLE, null);
+			Boolean rowExists;
 
-		} else
-		{
-		   // I AM EMPTY
-		   rowExists = true;
+			if (mCursor.moveToFirst())
+			{
+				// DO SOMETHING WITH CURSOR
+				rowExists = false;
+
+			} else
+			{
+				// I AM EMPTY
+				rowExists = true;
+			}
+
+			db.close();
+			return rowExists;
+
 		}
-		
-		db.close();
-		return rowExists;
-		
-	}
-	
+
 }

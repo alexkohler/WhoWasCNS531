@@ -40,5 +40,25 @@
 	
 	<string name="options_checkbox_test">Configure</string>
 	<string name="view_existing_text_view">View existing projection</string>
-
+	
+	
+	
+	<string name="date_text_test">XX-XX-XXXX</string>
+	<string name="cycle_text_test">Cycle: #</string>
+	<string name="weight_text_test">###</string>
+	<string name="mode_text_test">Mode: lbs</string>
+	<string name="fourtyfive_text_test">45s needed: X</string>
+	<string name="thirtyfive_text_test">35s needed: X</string>
+	<string name="twentyfive_text_test">25s needed: X</string>
+	<string name="ten_text_test">10s needed: X</string>
+	<string name="five_text_test">5s needed: X</string>
+	<string name="twopointfive_text_test">2.5s needed: X</string>
+	
+	<string name="lift_one_tv">Lift 1</string>
+	<string name="lift_two_tv">Lift 2</string>
+	<string name="lift_three_tv">Lift 3</string>	
+	
+	
+	
+	
 </resources>

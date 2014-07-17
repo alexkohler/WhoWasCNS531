@@ -44,8 +44,26 @@
              <intent-filter>
                 <action android:name="com.example.whowascns.Second" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="com.example.whowascns.IndividualView" />
             </intent-filter>
         </activity>
+        
+         <activity android:name="com.example.whowascns.IndividualView">  
+           <intent-filter>
+                <action android:name="com.example.whowascns.IndividualViewTwo" />
+            </intent-filter>  
+
+         </activity>   
+         
+         <activity android:name="com.example.whowascns.IndividualViewTwo"></activity>   
+         <activity android:name="com.example.whowascns.IndividualViewThree"></activity> 
     </application>
+    
+    
+    
+    
+    
+    
+    
 
 </manifest>

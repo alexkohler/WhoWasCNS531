@@ -15,7 +15,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 	public static final String TABLE01 = "Lifts";
 
 	// Columns
-	public static final String LIFTDATE = "Date"; //PREVIOUSLY TIME
+	public static final String LIFTDATE = "liftDate"; //PREVIOUSLY TIME
 	public static final String CYCLE = "Cycle"; //PREVIOUSLY TITLE 
 	public static final String LIFT = "Lift";
 	public static final String FREQUENCY = "Frequency";
@@ -26,7 +26,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 	String sql01 = "create table " + TABLE01 + "( " + BaseColumns._ID
 			+ " integer primary key autoincrement, " + LIFTDATE + " text not null, "
 			+ CYCLE + " integer, " + LIFT + " text not null)";	
-	
+
 	public SQLHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
