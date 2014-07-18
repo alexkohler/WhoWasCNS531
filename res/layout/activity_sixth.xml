@@ -1,0 +1,129 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/individualViewThree"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.uitest.IndividualView"
+    tools:ignore="MergeRootFrame" >
+    
+        <ImageView
+        android:id="@+id/barbell_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/barbell_fortyfives" />
+
+    <TextView
+        android:id="@+id/modeTextView_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/cycleTextView_activity_three"
+        android:layout_centerVertical="true"
+        android:text="@string/mode_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/platesNeeded5_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/platesNeeded6_activity_three"
+        android:layout_below="@+id/platesNeeded6_activity_three"
+        android:layout_centerHorizontal="true"
+        android:text="@string/thirtyfive_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/platesNeeded4_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/platesNeeded5_activity_three"
+        android:layout_below="@+id/platesNeeded5_activity_three"
+        android:layout_centerHorizontal="true"
+        android:text="@string/twentyfive_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/platesNeeded3_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/platesNeeded4_activity_three"
+        android:layout_below="@+id/platesNeeded4_activity_three"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ten_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/platesNeeded2_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/platesNeeded3_activity_three"
+        android:layout_centerHorizontal="true"
+        android:text="@string/five_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/platesNeeded1_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/platesNeeded3"
+        android:layout_below="@+id/platesNeeded2_activity_three"
+        android:layout_centerHorizontal="true"
+        android:text="@string/twopointfive_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/platesNeeded6_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/modeTextView_activity_three"
+        android:layout_centerHorizontal="true"
+        android:text="@string/fourtyfive_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/liftTypeTextView_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/weightTextView_activity_three"
+        android:layout_centerHorizontal="true"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/weightTextView_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cycleTextView_activity_three"
+        android:layout_centerHorizontal="true"
+        android:text="@string/weight_text_test"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/cycleTextView_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateTextView_activity_three"
+        android:layout_centerHorizontal="true"
+        android:text="@string/cycle_text_test"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/dateTextView_activity_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/barbell_activity_three"
+        android:layout_centerHorizontal="true"
+        android:text="@string/date_text_test"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/liftNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/lift_three_tv"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>
