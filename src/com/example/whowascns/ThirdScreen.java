@@ -37,7 +37,7 @@ public class ThirdScreen extends Activity {
 	DecimalFormat twoDForm = new DecimalFormat("#.##");
 	Integer NUMBER_CYCLES;
 	static String CURRENT_SELECT_QUERY;
-	static boolean insertStatus = false;
+	boolean insertStatus = false;
 	boolean changedView = false;
 	String retStringSaver; //for sake of changing views
 	Cursor cursor;
@@ -112,57 +112,50 @@ public class ThirdScreen extends Activity {
 					setQuery("Lift = 'Bench'");
 					llPrincipal.removeAllViews();
 					cursor = getEvents();
-					insertStatus = true;
-					showDefaultEvents(cursor);
 					insertStatus = false;
+					showDefaultEvents(cursor);
 					break;
 				case "SQUAT":
 					setQuery("Lift = 'Squat'");
 					llPrincipal.removeAllViews();
 					cursor = getEvents();
-					insertStatus = true;
-					showDefaultEvents(cursor);
 					insertStatus = false;
+					showDefaultEvents(cursor);
 					break;
 				case "OHP":
 					setQuery("Lift = 'OHP'");
 					llPrincipal.removeAllViews();
 					cursor = getEvents();
-					insertStatus = true;
-					showDefaultEvents(cursor);
 					insertStatus = false;
+					showDefaultEvents(cursor);
 					break;
 				case "DEAD":
 					setQuery("Lift = 'Deadlift'");
 					llPrincipal.removeAllViews();
 					cursor = getEvents();
-					insertStatus = true;
-					showDefaultEvents(cursor);
 					insertStatus = false;
+					showDefaultEvents(cursor);
 					break;	
 				case "FIVES":
 					setQuery("Frequency = '5-5-5'");
 					llPrincipal.removeAllViews();
 					cursor = getEvents();
-					insertStatus = true;
-					showDefaultEvents(cursor);
 					insertStatus = false;
+					showDefaultEvents(cursor);
 					break;	
 				case "THREES":
 					setQuery("Frequency = '3-3-3'");
 					llPrincipal.removeAllViews();
 					cursor = getEvents();
-					insertStatus = true;
-					showDefaultEvents(cursor);
 					insertStatus = false;
+					showDefaultEvents(cursor);
 					break;
 				case "ONES":
 					setQuery("Frequency = '5-3-1'");
 					llPrincipal.removeAllViews();
 					cursor = getEvents();
-					insertStatus = true;
-					showDefaultEvents(cursor);
 					insertStatus = false;
+					showDefaultEvents(cursor);
 					break;	
 
 			}
@@ -267,6 +260,7 @@ public class ThirdScreen extends Activity {
 					if (which == 1) 
 					{// arrays are zero indexed
 						SQLiteDatabase db = eventsData.getWritableDatabase();
+						curView = CURRENT_VIEW.DEFAULT;
 						db.delete("Lifts", null, null);
 						backToFirst();
 
@@ -322,8 +316,7 @@ public class ThirdScreen extends Activity {
 						setQuery("Lift = 'Squat'");
 						llPrincipal.removeAllViews();
 						cursor = getEvents();
-						changedView = false; // for now
-						insertStatus = true;
+						changedView = true; 
 						showDefaultEvents(cursor);
 						break;	
 					case 3:
@@ -482,8 +475,9 @@ public class ThirdScreen extends Activity {
 			LinearLayout llPrincipal = (LinearLayout)findViewById(R.id.linearLayout1);
 			while (cursor.moveToNext()) {
 				if (!this.insertStatus){//has title been inserted?
-					//need to get training maxes the right way
-					Cursor subcursor = cursor;
+					String temp = getQuery(); //temporarily hold query
+					setQuery(null);
+					Cursor subcursor = getEvents();//create a subcursor to get our training maxes 
 					ret = new StringBuilder("Start TMs [Bench: " + cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]");
 					subcursor.moveToNext();
 					ret.append(" [Squat: " +cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]");
@@ -495,7 +489,7 @@ public class ThirdScreen extends Activity {
 					cursor.moveToFirst();
 					insertStatus = true;
 					retStringSaver = ret.toString();
-					
+					setQuery(temp); //change query back to what it was
 					TextView title = new TextView(this);
 					title.setText(retStringSaver.toString());
 					title.setTextSize(12);
