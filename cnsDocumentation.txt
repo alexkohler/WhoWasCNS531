@@ -1,0 +1,88 @@
+Who Was CNS 531 project progress
+6-4: Got clear button working, ugly solution with onCreate but it will work for now 
+6-5: Started to set up database, still need to figure out how to pass values from activity 1 to activity 3, unknown error, trace doesn't help. It's probably your terrible sql. Understand what each component does, I think you bit off more than you could chew in this (30 minute) print
+6-7: Got dates to display in table. Next up is to get a fuckin formated date to insert.
+6-8: Got formatted date to insert. Next is to pass the actual starting date. Which also got done today after a brief i broke something very important scare. Next up is to start adding other columns to table
+6-10:Literally nothing depite working. To add columns you will have to make ugly alter table statemeents or find a way to delete the database
+6-11:Morning:woke up with a drive to get something done before work. Mission accomplished! In order to get table to work properly, had to execute a drop table and then create table command.. To insert data and find proper column indices I used cursor.getString and cursor.getColumnIndex(string columnName). Data inserts fine now. 
+6-11:Evening:INTENTS ARE NEEDED TO PASS DATA- a brutal brutal lesson learned. Dates are now being inserted in the correct format. Hopefully the algorithm work can start tomorrow. 
+6-12: Created setStartingLifts function, and added rest of lift edittext fields. Function is tested and works. Error handling for bad (empty) data needs to be done (no bench over 1000, no squat over 1200, no ohp over 1000, no dead over 1200). Created incrementFreq/incrementLift methods. Did not test.
+6-12: setter for starting dates does not work, just use intents. 
+6-14: tried to fix layout problem (bench number not showing up in edittext), wrestled with it forever and settled with a right alignment with screen. not sure how this will pan out for smaller screens but we'll tackle the probem when it comes. Also did error handling today for the big 4, error stream outputs to dynamic textview. Again, hopefully this will work on smaller screens.
+6-15: entries are now inserting with all proper information gathered from dateprocessor.java..minus the date itself. Algorithm could probably use some simplification too. All in good time 
+6-15: Dates are finally incrementing correctly. Not even debugging can save you from silly function calls sometimes. Plenty of things to choose from for tomorrow...
+6-16: Implemented scrolling when displaying data. Installed on a brand new vm, 3.4in, fits fine minus nonterminating decimals. Shouldn't be too bad to fix:) 
+6-17: Fixed nonterminating decimals, now round to two decimal points. Fixed buttons in scrollview. Now move with scrolling :) Key was to put them outside the scrollview, but inside the relativelayout.  Added basics with a spinner and number of cycles to project, error handling and other cutesy stuff. Created temp (perhaps permanent) fix for thirdtoSecond... Made it simply go to first. WIll work for now. 
+6-18: Started kg support. Cannot get intents to work properly to pass status of kg/lb, so just using toast. Didn't do error handling 
+6-19: morning: Finally got mode flag to work.. Next up is to actually take care of the math. A "hide buttons" toggle would be nice for smaller screens
+6-21: Have not got much done, have been busy setting my ubuntu environment. Figure it can't be bad to learn both. Should have Android system images installed tomorrow and should be able to finish up kg support without too much trouble.  
+6-22: don't have all compatibility libraries working in ubuntu... regardless working on windows partition I added kg support (which seems to be working) and modified how the mode displays for a better viewing experience regardless of screen size. Added title that displayed what users starting lifts were. Next to do is cleanup... your old records are still there when you reinsert.
+6-23: Still didn't do cleanup because that seemed boring and I did boring things at work all day:) Created rounding function, implemented for getFirstLift(), seems to work fine... Will add to other lifts. Tested on a 3.4 screen and it looks pretty slick. Next up is cleanup, a show buttons popup
+6-24: Fixed back button logic.. Read console stack trace and fixed things.. Who woulda thunk. Fixed uncleared database bug.. Database should be clear every time now. As a result, removed clear button. Added options menu via a easy plug n play builder :) Surprised how well everything went today.. Next up is  probably option menu button logic  and cleanup of buttons on main layout that no longer need to be there. 
+6-25: Added basic support (back buttons) to popup options menu on third screen, deleted old buttons. House cleaning on methods/formatting in attempt for cleaner presentation and hopefully a little faster database insertion algorithm:( Attempting to implement a onRestoreInstanceState method to remember lifts... Got that working pretty easily for the built in android back button. Struggled a bit with my 'adjust lifts' option (essentially a back button) before having the idea to simply call the same method my kindle uses. works great. wooooooo 
+6-26: Working on view by views, which will be under an embedded builder after "View By..." button is pushed. Implemented everything  
+6-27: Fixed views so they're actually displayed proper way. Recalling oncreate is never a good idea. Used query and only the methods called I needed from onCreate instead of the whole damn thing.. Tried to work on making layout prettier but had some issues with scalability. Function over form right now. Next up is viewing an existing creation.  
+6-28: Started to work on view existing projection. training maxes are not currently saved but i am parsing for null and ignoring the ret string if it contains that word and replaces it with a newline. You'll probably want to figure that out.. 
+7-01: Figured out how to save TMs for an existing projection... convoluted but works. 
+7-02: Added zyzz bird background, training maxes now show when changing "view by...", added zyzz bird icon 
+7-04: Created threaded loading screen :) 
+7-06: Started to implement individual view UI. Got basic code down. Used lots of copy and paste...
+7-07: Still work on individual view UI, made code a little prettier, however, you may want to read up on reflection for grabbing your fields. I'll add a todo.
+7-08: started  to link UI with main application.. dynamically created individual text view for each entry, next is to add listeners and make sure I didn't break anything.  
+7-09: Continuing to link.. Should be done tomorrow. Fixed odd bug with third lift displaying instead as training max. Mislabeled field in eventssqldatahelper.java 
+7-10: Struggled hard with link.. No idea what was wrong with formatting. Workaround is to have bar + plate for each and every lift...
+7-11: finished lb UI garbage, created a regex to split entries  
+7-12: fixed platecomputer bug.. was comparing to integer string instead of double string -_- Eventually all these dumb errors will be sorted through quicker I hope 
+7-14: UI is finally working properly on the individualview... It is a good day 
+7-15: Finished up the set of three that will represent a single lift. Next up is to implement down and up swipe (where corner cases are the top and bottom entries in the database)
+7-16: finsihed up dynamically created view on up and down swipe, took care of corner cases. Broke some stuff with views, will take care of that tomorrow :) 
+7-17: Fixed bug with swiping up and then swiping right, navigation seems to be working proper now. Working on view by bug, will now scroll through no matter what view you're on. Bug now with training max, need to get it from database.
+
+ bug/suggestion list
+
+TO DO:.
+ 
+"Export..."  in however many formats you can take  
+gradient buttons? - http://www.dibbus.com/2011/02/gradient-buttons-for-android/ 
+Rounding to nearest 1kg is not what you want to do (you want 2.5 i think) 
+reflection: http://stackoverflow.com/questions/16353140/android-textview-arrays
+Memory managment- http://developer.android.com/training/articles/memory.html
+create text size based on how big screen is?
+could have a toggle on increment method (so you don't have increment and incrementrest)
+have a version check to see whether or not you can use your barbell in the individual ui 
+need to get training max title to show up again on view by... removeAllViews works but you need to figure out where you can snag that string
+clean up your code it's fucking juvenile and ugly 
+rig some sort of db creation thing for first boot
+check your program against the excel sheet you wrote
+moving imageview via animation http://stackoverflow.com/questions/11144421/move-an-imageview-to-different-position-in-animated-way-in-androidmay need to resize 45 barbell
+"go to today's lift" button 
+fix view existing projection to go into your individual view, currently failing because cursor is null, so populate your cursor and you should be good to go
+"i don't have thirty five plates within the layout and refresh and recalculate based on this 
+need to figure something out to keep lbmode when viewing an existing projection
+will have to put lb flag into database...
+display for weights less than 35fix layout two fuck
+need to change backButton now.. goes back to previous view which you will already be supporting with upswipe  
+
+will have to support swipes for view by
+Maybe add swipe support to thirdScreen to go back? (but nothing on first and second screens) 
+BUG upon opening projection from yesterday... wouldn't let me up or down from corner cases... look into this 
+
+random times where this shit breaks..  fix it 
+
+On plate for tomorrow:
+1) whatever the fuck you wanna do
+2) just for ideas: view by bug is high priority
+3) I just projected a couple cycles, lift was not rounding (it should always round)
+4) 35 flag 
+5) go to today's lift button with error support (you probably want to implement this on thirdScreen
+6) Have fun with programming man, do whatever the fuck your heart desires. I'm gonna run some mac shit now  
+
+
+To fix swipe support for view by, you will have to go to your switch enum that does the logic for each of the lifts, and take the existing query (where lift = blah or freq = blah, whatever changes the view...)
+put it into an intent package, retrieve it (for show all it can simply be blank I think), and then modify your query and switch statement based on that. You will probably have to have a switch for incrementing the day
+depending on what view you're on. (where an enum may come in useful), then, with a switch on the enum, increment the day based on whatever algorithm you need. For example, viewing by lift will have some pattern, 
+and I imagine frequency is the same way. I'll even look at that now. While frequency works now, it won't over multiple cycles. 
+
+
+
+
