@@ -473,6 +473,29 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 				incrementedString = incrementDay(c1, 6);
 				nextLift = "Deadlift";
 				break;
+			case "FIVES":
+			case "THREES":
+			case "ONES":
+				switch (liftType)
+				{
+				case "Bench":
+					incrementedString = incrementDay(c1, 1);
+					nextLift = "Squat";
+					break;
+				case "Squat":
+					incrementedString = incrementDay(c1, 2);
+					nextLift = "OHP";	
+					break;
+				case "OHP":
+					incrementedString = incrementDay(c1, 1);
+					nextLift = "Deadlift";
+					break;
+				case "Deadlift":
+					incrementedString = incrementDay(c1, 14); //fives won't happen again for 14 days 
+					nextLift = "Bench";	
+					break;
+				}
+				break;	
 			    
 	    }//end viewmode switch
 	    configureNextSet(incrementedString, nextLift, viewMode);//poodles
@@ -535,7 +558,30 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 				incrementedString = decrementDay(c1, 6);
 				nextLift = "Deadlift";
 				break;
-			 
+			case "FIVES":
+			case "THREES":
+			case "ONES":
+					switch (liftType)
+					{
+					case "Bench":
+						incrementedString = decrementDay(c1, 14);
+						nextLift = "Deadlift";
+						break;
+					case "Squat":
+						incrementedString = decrementDay(c1, 1);
+						nextLift = "Bench";	
+						break;
+					case "OHP":
+						incrementedString = decrementDay(c1, 2);
+						nextLift = "Squat";
+						break;
+					case "Deadlift":
+						incrementedString = decrementDay(c1, 1);  
+						nextLift = "OHP";	
+						break;
+				
+					}
+			break; //Break from fives, threes, ones	
 			 
 			 
 	    }//end big switch
