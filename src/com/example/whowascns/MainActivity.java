@@ -86,6 +86,7 @@ public class MainActivity extends ActionBarActivity {
 			//db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer)");
 			Intent intent = new Intent(MainActivity.this, SecondScreen.class);
 			intent.putExtra("key", formattedDate );
+			intent.putExtra("origin", "first");
 			startActivity(intent);
 
 		}
@@ -122,23 +123,6 @@ public class MainActivity extends ActionBarActivity {
 			}
 			return super.onOptionsItemSelected(item);
 		}
-
-		/**
-		 * A placeholder fragment containing a simple view.
-		 */
-		/*	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
-	}*/
 
 		public boolean dbEmpty()
 		{

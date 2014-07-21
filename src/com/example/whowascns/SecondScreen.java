@@ -86,40 +86,23 @@ public class SecondScreen extends Activity {
 		roundingCheckBox = (CheckBox) findViewById(R.id.roundingCheckBox);	
 
 
-		if (savedInstanceState != null) 
+		
+		
+		Intent thirdToSecondIntent = getIntent();
+		String origin = thirdToSecondIntent.getStringExtra("origin");
+		if (origin.equals("third"))
 		{
-			String restoredBench  = savedInstanceState.getString("bench");
-			benchEditText.setText(restoredBench);
-			//String restoredSquat  = savedInstanceState.getString("squat");  
-			//String restoredOHP    = savedInstanceState.getString("ohp"); 
-			//String restoredDead   = savedInstanceState.getString("dead");
-
+			benchEditText.setText(thirdToSecondIntent.getStringExtra("bench"));
+			squatEditText.setText(thirdToSecondIntent.getStringExtra("squat"));
+			ohpEditText.setText(thirdToSecondIntent.getStringExtra("ohp"));
+			deadEditText.setText(thirdToSecondIntent.getStringExtra("dead"));
+			
 		}
 
 
 
 	}
 
-	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState){
-		savedInstanceState.putString("bench", benchEditText.getText().toString());
-
-		// Always call the superclass so it can save the view hierarchy state
-		super.onSaveInstanceState(savedInstanceState);
-
-	}
-
-
-	@Override
-	public void onRestoreInstanceState (Bundle savedInstanceState){
-		String restoredBench  = savedInstanceState.getString("bench");
-		benchEditText.setText(restoredBench);
-		//String restoredSquat  = savedInstanceState.getString("squat");  
-		//String restoredOHP    = savedInstanceState.getString("ohp"); 
-		//String restoredDead   = savedInstanceState.getString("dead");
-
-
-	}
 
 
 
@@ -166,23 +149,31 @@ public class SecondScreen extends Activity {
 				//error handling: eventually want to put this output on screen.. not in toast.		
 				private void forwardToThird()
 				{
-
+					//if we throw errors, we will need the erraneous column value
+					String errorBench = benchEditText.getText().toString();
+					String errorSquat = squatEditText.getText().toString();
+					String errorOHP = ohpEditText.getText().toString();
+					String errorDead = deadEditText.getText().toString();
 					String errorStream = "";
 					//error name definitions (to make appends cleaner looking)
 					String emptyBenchString = "Please enter a starting bench number!";
-					String thousandBenchString = "Please enter your REAL bench phaggot";
+					String thousandBenchString = errorBench + " lbs? Lettuce be reality here. Enter your actual bench.";
+					String thousandBenchStringKgs = errorBench + "kgs? Lettuce be reality here. Enter your actual bench.";
 					String zeroBenchString = "Please enter a bench greater than 0lbs!";
 
 					String emptySquatString = "Please enter a starting squat number!";
-					String thousandSquatString = "Please enter your REAL squat phaggot";
+					String thousandSquatString = errorSquat + " lbs? Lettuce be actual reality here. Enter your actual squat.";
+					String thousandSquatStringKgs = errorSquat + " kgs? Lettuce be actual reality here. Enter your actual squat.";
 					String zeroSquatString = "Please enter a squat greater than 0lbs!";
 
 					String emptyOHPString = "Please enter a starting OHP number!";
-					String thousandOHPString = "1000lb OHP? Lettuce be reality here";
+					String thousandOHPString = errorOHP  + " lbs? Lettuce be actual reality here. Enter your actual OHP.";
+					String thousandOHPStringKgs = errorOHP + " kgs? Lettuce be actual reality here. Enter your actual OHP.";
 					String zeroOHPString = "Please enter a OHP greater than 0lbs!";
 
 					String emptyDeadliftString = "Please enter a starting deadlift number!";
-					String thousandDeadliftString = "1500lb deadlift? Lettuce be reality here";
+					String thousandDeadliftString = errorDead +  " lbs? Lettuce be actual reality here. Enter your actual deadlift.";
+					String thousandDeadliftStringKgs = errorDead + " kgs? Lettuce be actual reality here. Enter your actual deadlift.";
 					String zeroDeadliftString = "Please enter a deadlift greater than 0lbs!";
 
 					String zeroCycleString = "Please choose how many cycles you wish to project!";
@@ -217,7 +208,10 @@ public class SecondScreen extends Activity {
 					else{
 						if ((Double.parseDouble(bench) >= 1000 && lbs) || (Double.parseDouble(bench) >= 500 && !lbs))
 						{
+							if (lbs)
 							errorStream = errorStream + "\n" + thousandBenchString;
+							if (!lbs)
+							errorStream = errorStream + "\n" + thousandBenchStringKgs;
 							errorTextView.setText(errorStream);
 							benchErrorFlag = true;
 						}
@@ -247,7 +241,10 @@ public class SecondScreen extends Activity {
 					else{
 						if ((Double.parseDouble(squat) >= 1500 && lbs) || (Double.parseDouble(squat) > 600 && !lbs))
 						{
+							if (lbs)
 							errorStream = errorStream + "\n" + thousandSquatString;
+							if (!lbs)
+							errorStream = errorStream + "\n" + thousandSquatStringKgs;
 							errorTextView.setText(errorStream);
 							squatErrorFlag = true;
 						}
@@ -277,7 +274,10 @@ public class SecondScreen extends Activity {
 					else{
 						if ((Double.parseDouble(OHP) >= 1000 && lbs) || (Double.parseDouble(OHP) >= 400 && !lbs) )
 						{
+							if (lbs)
 							errorStream = errorStream + "\n" + thousandOHPString;
+							if (!lbs)
+							errorStream = errorStream + "\n" + thousandOHPStringKgs;
 							errorTextView.setText(errorStream);
 							ohpErrorFlag = true;
 						}
@@ -304,7 +304,10 @@ public class SecondScreen extends Activity {
 					else{
 						if ((Double.parseDouble(dead) >= 1500 && lbs ) || (Double.parseDouble(dead) >= 700 && !lbs) )
 						{
+							if (lbs)
 							errorStream = errorStream + "\n" + thousandDeadliftString;
+							if (!lbs)
+							errorStream = errorStream + "\n" + thousandDeadliftStringKgs;
 							errorTextView.setText(errorStream);
 							deadErrorFlag = true;
 						}

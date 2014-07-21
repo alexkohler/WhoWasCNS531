@@ -38,6 +38,8 @@ Who Was CNS 531 project progress
 7-16: finsihed up dynamically created view on up and down swipe, took care of corner cases. Broke some stuff with views, will take care of that tomorrow :) 
 7-17: Fixed bug with swiping up and then swiping right, navigation seems to be working proper now. Working on view by bug, will now scroll through no matter what view you're on. Bug now with training max, need to get it from database.
 7-18: IndividualView now works for ANY view. Finally finished off training max bug and it was actually mildly elegant. I impress myself sometimes 
+7-19: Fixed an overall view bug that saved previous mode when resetting and projecting a different set of lifts. Fixed frequency appender... forgot breaks in my switch statements :) Added proper lb/kg mode flag.. methoding is not working properly quite yet but i'll figure it out. I think it has to do with data being unpassed that's needed when you up and down swipe (ie the fucking mode itself) 
+7-20: Fixed back button bug. Added kilogram error handling and slightly more dynamic error handling (actually retrieves erroraneous lift number). Got initial KG placeholders made... Started to tackle kilogram support  
  bug/suggestion list
 
 TO DO:.
@@ -49,27 +51,25 @@ reflection: http://stackoverflow.com/questions/16353140/android-textview-arrays
 Memory managment- http://developer.android.com/training/articles/memory.html
 create text size based on how big screen is?
 could have a toggle on increment method (so you don't have increment and incrementrest)
-have a version check to see whether or not you can use your barbell in the individual ui 
-need to get training max title to show up again on view by... removeAllViews works but you need to figure out where you can snag that string
 clean up your code it's fucking juvenile and ugly 
 rig some sort of db creation thing for first boot
 check your program against the excel sheet you wrote
 moving imageview via animation http://stackoverflow.com/questions/11144421/move-an-imageview-to-different-position-in-animated-way-in-androidmay need to resize 45 barbell
-"go to today's lift" button 
-fix view existing projection to go into your individual view, currently failing because cursor is null, so populate your cursor and you should be good to go
-"i don't have thirty five plates within the layout and refresh and recalculate based on this 
+"go to today's lift" button (on thirdScreen)
+"i don't have the following plates: then recalculate based on that
+create an algorithm that allows you to choose pattern... It's totally possible but there's gonna be hella code revamping
 need to figure something out to keep lbmode when viewing an existing projection
-will have to put lb flag into database...
-display for weights less than 35fix layout two fuck
-need to change backButton now.. goes back to previous view which you will already be supporting with upswipe  
-
-will have to support swipes for view by
+display for weights less than 45
+prettier  row layout?
 Maybe add swipe support to thirdScreen to go back? (but nothing on first and second screens) 
-BUG upon opening projection from yesterday... wouldn't let me up or down from corner cases... look into this 
+BUG upon opening projection from yesterday... wouldn't let me up or down from corner cases... look into this +
+might want to programmatically change color of 45 to save space
+empty barbell addition
+abstraction for indivudal view... that's really the only place that needs it I think
 
-Found reset bug that came as a result of changing curView to static, when you reset and projected another set of lifts it would use whatever mode you were on previously, will sort through that later.
-
-
-
+Feature: allow users to specify what plates they have, just like you did with 35lb plate flag, you could do that for each and every plate and have an input screen that will set those booleans based on a bunch of check boxes
+error handling as a result: 
+** if you decide to have an okay and back button make sure your back button recognizes when something changes and they just hit back instead of okay and be like yo do you want to save these changes
+** you can save these preferences in app data so user doesn't have to change them every time, however, you will want an option to change the shit in config somewhere  
 
 

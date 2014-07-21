@@ -101,18 +101,30 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 	//After you have everything figured, make sure all of these plates fit.
 	//at the least you should be able to do this with reused code
 	//dynamic shit can be done later... for now just do manual labor so you don't get lost in the code. 
-	Boolean lbmode = true;//for now 
+	Boolean lbMode = true;//for now 
 	Boolean thirtyFiveFlag = true;
 	Double firstLift;
 	int barbellWeight;
 	
-	
+	//LBS
 	int fortyfivesNeeded;
 	int thirtyfivesNeeded;
 	int twentyfivesNeeded;
 	int tensNeeded;
 	int fivesNeeded;
 	int twopointfivesNeeded;
+	
+	//KGS
+	int twentyfivesNeeded_kg;
+	int twentysNeeded_kg;
+	int fifteensNeeded_kg;
+	int tensNeeded_kg;
+	int fivesNeeded_kg;
+	int twopointfivesNeeded_kg;
+	int twosNeeded_kg;
+	int onepointfivesNeeded_kg;
+	int onesNeeded_kg;
+	int pointfivesNeeded_kg;
 	
 
     private static final int SWIPE_MIN_DISTANCE = 170;
@@ -144,6 +156,7 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 		cycleTV = (TextView) findViewById(R.id.cycleTextView_activity_two);
 		liftTV = (TextView) findViewById(R.id.liftTypeTextView_activity_two);
 		weightTV = (TextView) findViewById(R.id.weightTextView_activity_two);
+		modeTV = (TextView) findViewById(R.id.modeTextView_activity_two);
 		platesNeeded6 = (TextView) findViewById(R.id.platesNeeded6_activity_two);
 		platesNeeded5 = (TextView) findViewById(R.id.platesNeeded5_activity_two);
 		platesNeeded4 = (TextView) findViewById(R.id.platesNeeded4_activity_two);
@@ -170,7 +183,8 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 		String firstLiftString = intent.getStringExtra("firstLift");
 		String secondLiftString = intent.getStringExtra("secondLift");
 		String thirdLiftString = intent.getStringExtra("thirdLift");
-	//	String lbmodeString = intent.getStringExtra("mode");
+		String lbmodeString = intent.getStringExtra("mode");
+		setLbMode(lbmodeString);
 		String frequencyBuffer = null;
 		switch (frequency)
 		{
@@ -191,7 +205,7 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 		cycleTV.setText("Cycle: " + cycle);
 		liftTV.setText(liftType);
 		weightTV.setText(secondLiftString + frequencyBuffer);
-	//	modeTV.setText(lbmodeString);
+		modeTV.setText(lbmodeString);
 		
 
 		//if the weight is greater than 45 (or equal to).... second and third lift will be handled in right swipe intent
@@ -212,18 +226,43 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 	}//end oncreate
 	
 	
+	private void setLbMode(String lbModeString) {
+		
+		int buffer = Integer.valueOf(lbModeString);
+		if (buffer == 1)
+		{
+		lbMode = true;
+		modeTV.setText("Mode: lbs");
+		}
+		else if (buffer == 0)
+		{
+		lbMode = false;
+		modeTV.setText("Mode: kgs");
+		}
+		else
+		{
+		lbMode = null;//create an error
+		modeTV.setText("Mode error!");
+		}
+	}
+	
+	private boolean getLbMode()
+	{
+		return lbMode;
+	}
+	
+	
 	public void configureBarbell(String mySecondLiftString)
 	{
-		String firstLiftString = mySecondLiftString;
+		String secondLiftString = mySecondLiftString;
 		/*if (lbmodeString.contains("Lbs"))
 		lbmode = true;
 		if (lbmodeString.contains("Kgs"))
 		lbmode = false;*/ //need to figure something out to keep lbmode when viewing an existing projection
-		lbmode = true;
-		firstLift = Double.valueOf(firstLiftString);
+		firstLift = Double.valueOf(secondLiftString);//TODO change this field to second lift...
 		//Toast.makeText(IndividualViewTwo.this, date + cycle + liftType + frequency + firstLiftString + lbmodeString, Toast.LENGTH_SHORT).show();
 		//mode
-		if (lbmode == true)
+		if (getLbMode())
 		{
 			if (firstLift < 45)//then completely skip UI generation 	
 			{
@@ -234,7 +273,7 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 				//do something like setting plates here.. 
 				if (firstLift >= 135 ) //can we use our base barebell?	
 				{
-				barbellImageView.setImageResource(R.drawable.barbell_fortyfives); 
+				barbellImageView.setImageResource(R.drawable.barbell_fortyfives_lb); 
 				barbellWeight = 135;
 				}
 
@@ -264,8 +303,8 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 				setContentView(relativeLayout);
 				relativeLayout.setOnClickListener(IndividualViewTwo.this); 
 
-				PlateComputer platecomputer = new PlateComputer();
-				platecomputer.computePlates(firstLift, barbellWeight);
+				PoundPlateComputer platecomputer = new PoundPlateComputer();
+				platecomputer.computeLbPlates(firstLift, barbellWeight);
 				
 				
 				fortyfivesNeeded = platecomputer.getFortyFivesNeeded();
@@ -378,6 +417,247 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 
 
 		}//end taking care of lbmode condition 
+		else //otheriwse we are working in kilograms..
+		{
+			if (firstLift < 20)//then completely skip UI generation.. could have an empty barbell sprite but meh 	
+			{
+				barbellImageView.setVisibility(View.INVISIBLE);
+			}
+			else
+			{
+				if (firstLift == 20)
+				{
+					barbellImageView.setImageResource(R.drawable.empty_barbell);  
+					barbellWeight = 45;
+				}
+				
+				//do something like setting plates here.. 
+				if (firstLift >= 70 ) //can we use our base barebell?	
+				{
+				barbellImageView.setImageResource(R.drawable.barbell_twentyfive_kg); 
+				barbellWeight = 70;
+				}
+
+				else if ( (firstLift <= 70) && (firstLift >= 60))//assert: lift must be less than 135 to make it to this else 
+				{	
+					barbellImageView.setImageResource(R.drawable.barbell_twenty_kg);
+					barbellWeight = 60;
+				}
+
+				else if ((firstLift <= 60) && (firstLift >= 50)) // assert: lift must be less than 115 to make it to this else
+				{
+					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_fifteen_kg)));
+					barbellWeight = 50;
+				}
+
+				else if ((firstLift <= 50) && (firstLift >= 40))
+				{
+					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_ten_kg)));
+					barbellWeight = 40;
+				}
+				else if ((firstLift <= 40) && (firstLift >= 30) )
+				{	
+					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_five_kg)));
+					barbellWeight = 30;
+				}
+				else if ((firstLift <= 30) && (firstLift >= 25) )
+				{	
+					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_twopointfive_kg)));
+					barbellWeight = 25;
+				}
+				else if ((firstLift <= 25) && (firstLift >= 24) )
+				{	
+					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_two_kg)));
+					barbellWeight = 24;
+				}
+				else if ((firstLift <= 24) && (firstLift >= 23) )
+				{	
+					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_onepointfive_kg)));
+					barbellWeight = 23;
+				}
+				else if ((firstLift <= 23) && (firstLift >= 22) )
+				{	
+					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_one_kg)));
+					barbellWeight = 22;
+				}
+				else if ((firstLift <= 22) && (firstLift >= 21) )
+				{	
+					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_pointfive_kg)));
+					barbellWeight = 21;
+				}
+				
+				relativeLayout=  (RelativeLayout) findViewById(R.id.individualViewTwo);
+				setContentView(relativeLayout);
+				relativeLayout.setOnClickListener(IndividualViewTwo.this); 
+
+				KilogramPlateComputer platecomputer = new KilogramPlateComputer();
+				platecomputer.computeKgPlates(firstLift, barbellWeight);
+				
+				
+				 twentyfivesNeeded_kg = platecomputer.getTwentyFivesNeeded();
+				 twentysNeeded_kg = platecomputer.getTwentysNeeded();
+				 fifteensNeeded_kg = platecomputer.getFifteensNeeded();
+				 tensNeeded_kg = platecomputer.getTensNeeded();
+				 fivesNeeded_kg = platecomputer.getFivesNeeded();
+				 twopointfivesNeeded_kg = platecomputer.getTwopointfivesNeeded();
+				 twosNeeded_kg = platecomputer.getTwosNeeded();
+				 onepointfivesNeeded_kg = platecomputer.getOnepointfivesNeeded();
+				 onesNeeded_kg = platecomputer.getOnesNeeded();
+				 pointfivesNeeded_kg = platecomputer.getPointfivesNeeded();
+				
+				
+				
+				if (twentyfivesNeeded_kg > 0)
+				{
+				int iterations = twentyfivesNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				for (int i=0; i < iterations; i++)
+				{
+				moveOut();
+				dynamicAddPlate(R.drawable.plate_twentyfive_kg);
+				}
+				}
+				
+				if (twentysNeeded_kg > 0)
+				{
+				int iterations = twentysNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				for (int i=0; i < iterations; i++)
+				{
+				moveOut();
+				dynamicAddPlate(R.drawable.plate_twenty_kg);
+				}
+				}
+
+				if (fifteensNeeded_kg > 0)
+				{
+				int iterations = fifteensNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				for (int i=0; i < iterations; i++)
+				{
+				moveOut();
+				dynamicAddPlate(R.drawable.plate_fifteen_kg);
+				}
+				}
+				
+				if (tensNeeded_kg > 0)
+				{
+				int iterations = tensNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				for (int i=0; i < iterations; i++)
+				{
+				moveOut();
+				dynamicAddPlate(R.drawable.plate_ten_kg);
+				}
+				}
+				
+				if (fivesNeeded_kg > 0)
+				{
+				int iterations = fivesNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				for (int i=0; i < iterations; i++)
+				{
+				moveOut();
+				dynamicAddPlate(R.drawable.plate_five_kg);
+				}
+				}
+				
+				if (twopointfivesNeeded_kg > 0)
+				{
+				int iterations = twopointfivesNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				for (int i=0; i < iterations; i++)
+				{
+				moveOut();
+				dynamicAddPlate(R.drawable.plate_twopointfive_kg);
+				}
+				}
+				
+				if (twosNeeded_kg > 0)
+				{
+				int iterations = twosNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				for (int i=0; i < iterations; i++)
+				{
+				moveOut();
+				dynamicAddPlate(R.drawable.plate_two_kg);
+				}
+				}
+				
+				if (onepointfivesNeeded_kg > 0)
+				{
+				int iterations = onepointfivesNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				for (int i=0; i < iterations; i++)
+				{
+				moveOut();
+				dynamicAddPlate(R.drawable.plate_onepointfive_kg);
+				}
+				}
+				
+				if (onesNeeded_kg > 0)
+				{
+				int iterations = onesNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				for (int i=0; i < iterations; i++)
+				{
+				moveOut();
+				dynamicAddPlate(R.drawable.plate_one_kg);
+				}
+				}
+				
+				if (pointfivesNeeded_kg > 0)
+				{
+				int iterations = pointfivesNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				for (int i=0; i < iterations; i++)
+				{
+				moveOut();
+				dynamicAddPlate(R.drawable.plate_pointfive_kg);
+				}
+				}
+				
+				
+				//now add plates that were on barbell
+				switch (barbellWeight)
+				{
+				case 70:
+					twentyfivesNeeded_kg = twentyfivesNeeded_kg + 2;
+					break;
+				case 60:
+					twentysNeeded_kg = twentysNeeded_kg + 2;
+					break;
+				case 50:
+					fifteensNeeded_kg = fifteensNeeded_kg + 2;
+					break;
+				case 40: 
+					tensNeeded_kg = tensNeeded_kg + 2;
+					break; 
+				case 30:
+					fivesNeeded_kg = fivesNeeded_kg + 2;
+					break;
+				case 25:
+					twopointfivesNeeded_kg = twopointfivesNeeded_kg + 2;
+					break;
+				case 23:
+					onepointfivesNeeded_kg = onepointfivesNeeded_kg + 2;
+					break;	
+				case 22:
+					onesNeeded_kg = onesNeeded_kg + 2;
+					break;
+				case 21:
+					pointfivesNeeded_kg = pointfivesNeeded_kg + 2;
+					break;
+				}
+				relativeLayout.invalidate();
+				platesNeeded6 = (TextView) findViewById(R.id.platesNeeded6_activity_two);
+				platesNeeded5 = (TextView) findViewById(R.id.platesNeeded5_activity_two);
+				platesNeeded4 = (TextView) findViewById(R.id.platesNeeded4_activity_two);
+				platesNeeded3 = (TextView) findViewById(R.id.platesNeeded3_activity_two);
+				platesNeeded2 = (TextView) findViewById(R.id.platesNeeded2_activity_two);
+				platesNeeded1 = (TextView) findViewById(R.id.platesNeeded1_activity_two);
+				
+				//add data to text views
+				platesNeeded6.setText("25s needed: " + twentyfivesNeeded_kg);
+				platesNeeded5.setText("20s needed: " + twentysNeeded_kg);
+				platesNeeded4.setText("15s needed: " + fifteensNeeded_kg);
+				platesNeeded3.setText("10s needed: " + tensNeeded_kg);
+				platesNeeded2.setText("5s needed: " + fivesNeeded_kg);
+				platesNeeded1.setText("2.5s needed: " + twopointfivesNeeded_kg);
+				//TODO add more textviews for the extra plates
+				
+			}//end else to checking if UI generation is even possible  
+		}
 	}
 	
 	

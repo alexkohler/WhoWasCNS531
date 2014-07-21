@@ -37,6 +37,7 @@ public class ThirdScreen extends Activity {
 	DecimalFormat twoDForm = new DecimalFormat("#.##");
 	Integer NUMBER_CYCLES;
 	static String CURRENT_SELECT_QUERY;
+	static int lbMode;
 	boolean insertStatus = false;
 	boolean changedView = false;
 	String retStringSaver; //for sake of changing views
@@ -166,26 +167,22 @@ public class ThirdScreen extends Activity {
 		{
 
 			db.delete("Lifts", null, null);
-
+			setQuery(null);
 			//determine whether to round or not
 			String areWeGoingToRound = intent.getStringExtra("round");
 			String roundMode = "error"; // if this is not changed from error, there was an error 
 			if (areWeGoingToRound.equals("true"))	
-			{
 				Processor.setRoundingFlag(true);
-				roundMode = "Rounded";
-			}
+			
 			else //revert to the default of no round
-			{
 				Processor.setRoundingFlag(false);
-				roundMode = "Unrounded";  
-			}
+			
 
 			//get unit mode
 			lbmode = intent.getStringExtra("mode");
 			if (lbmode.length() > 1)
 			{
-				setModeFormat(roundMode + " " +  lbmode);
+				setMode(lbmode);
 
 			}
 
@@ -254,8 +251,16 @@ public class ThirdScreen extends Activity {
 				public void onClick(DialogInterface dialog, int which) {
 					if (which == 0){
 						SQLiteDatabase db = eventsData.getWritableDatabase();
+						Intent myIntent = new Intent(ThirdScreen.this, SecondScreen.class);
+						myIntent.putExtra("origin", "third");
+						String[] intentDataArray = new String[6];
+						intentDataArray = getSecondScreenData(intentDataArray);
+						myIntent.putExtra("bench", intentDataArray[0]);
+						myIntent.putExtra("squat", intentDataArray[1]);
+						myIntent.putExtra("ohp", intentDataArray[2]);
+						myIntent.putExtra("dead", intentDataArray[3]);
 						db.delete("Lifts", null, null);
-						onBackPressed();
+						startActivity(myIntent);
 					}
 					if (which == 1) 
 					{// arrays are zero indexed
@@ -271,6 +276,33 @@ public class ThirdScreen extends Activity {
 					}
 					//if (which== 4) 
 					//no need to worry about Back case, takes care of itself
+				}
+
+				private String[] getSecondScreenData(String[] intentDataArray) {
+					SQLiteDatabase db = eventsData.getWritableDatabase();
+					setQuery("Lift = 'Bench' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+					Cursor myCursor = getEvents(); //vladdy
+					myCursor.moveToNext();
+					String benchTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
+					setQuery("Lift = 'Squat' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+					myCursor = getEvents(); //vladdy
+					myCursor.moveToNext();
+					String squatTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
+					setQuery("Lift = 'OHP' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+					myCursor = getEvents(); //vladdy
+					myCursor.moveToNext();
+					String ohpTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
+					setQuery("Lift = 'Deadlift' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+					myCursor = getEvents(); //vladdy
+					myCursor.moveToNext();
+					String deadTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
+					
+					intentDataArray[0] = benchTM;
+					intentDataArray[1] = squatTM;
+					intentDataArray[2] = ohpTM;
+					intentDataArray[3] = deadTM;
+					
+					return intentDataArray;
 				}
 			});
 			builder.show();
@@ -400,9 +432,9 @@ public class ThirdScreen extends Activity {
 
 
 
-		public void setModeFormat (String myFormat )
+		public void setMode (String myMode )
 		{
-			MODE_FORMAT = "Mode: " + myFormat;
+			MODE_FORMAT = myMode;
 		}
 
 		String getModeFormat ()
@@ -414,8 +446,17 @@ public class ThirdScreen extends Activity {
 		public void addEvent() {
 			SQLiteDatabase db = eventsData.getWritableDatabase();
 			ContentValues values = new ContentValues();
-
-
+			//db.execSQL("ALTER TABLE Lifts ADD COLUMN column_lbFlag integer");
+			int sqlLitelbMode = 3; //booleans in sqllite are represented by 1 and 0
+			if (getModeFormat().contains("Lbs"))
+			sqlLitelbMode = 1;
+			if (getModeFormat().contains("Kgs")) //TODO change mode format just to hold raw data we need i think..
+			sqlLitelbMode = 0;
+			
+			
+			
+				
+			
 
 			values.put(EventsDataSQLHelper.LIFTDATE, Processor.getStartingDate() );
 			values.put(EventsDataSQLHelper.CYCLE, Processor.getCycle());
@@ -425,14 +466,26 @@ public class ThirdScreen extends Activity {
 			values.put(EventsDataSQLHelper.SECOND, Processor.getSecondLift());
 			values.put(EventsDataSQLHelper.THIRD, Processor.getThirdLift());
 			if ((Processor.getLiftType().equals("Bench")) && Processor.getCycle() == 1) //insert our initial training maxes into table instead of trying to pass them back and forth between intents 
-				values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getBenchTM());   //(the first entry of each lift has a value in the "training_max" column for sake of easily generating title between changing views)
-			if (Processor.getLiftType().equals("Squat") && Processor.getCycle() == 1 )	   
+				{
+				values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getBenchTM());
+				values.put(EventsDataSQLHelper.LBFLAG, sqlLitelbMode);
+				}//(the first entry of each lift has a value in the "training_max" column for sake of easily generating title between changing views)
+				
+			if (Processor.getLiftType().equals("Squat") && Processor.getCycle() == 1 )	  		
+			{
 				values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getSquatTM());   
+				values.put(EventsDataSQLHelper.LBFLAG, sqlLitelbMode);
+			}
 			if (Processor.getLiftType().equals("OHP") && Processor.getCycle() == 1 )	   
+			{
 				values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getOHPTM());
+				values.put(EventsDataSQLHelper.LBFLAG, sqlLitelbMode);
+			}
 			if (Processor.getLiftType().equals("Deadlift") && Processor.getCycle() == 1 )	   
+			{
 				values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getDeadTM());
-
+				values.put(EventsDataSQLHelper.LBFLAG, sqlLitelbMode);
+			}
 			db.insert(EventsDataSQLHelper.TABLE, null, values);
 		}
 
@@ -485,7 +538,14 @@ public class ThirdScreen extends Activity {
 					ret.append(" [OHP: " + cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
 					subcursor.moveToNext();
 					ret.append(" [Dead: " + cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
+					lbMode = cursor.getInt((cursor.getColumnIndex(EventsDataSQLHelper.LBFLAG)));
 					ret.append("\n");
+					if (lbMode == 1)
+					ret.append("Mode: lbs");
+					else if (lbMode == 0 )
+					ret.append("Mode: kgs");
+					else
+					ret.append("Mode error");	
 					cursor.moveToFirst();
 					insertStatus = true;
 					retStringSaver = ret.toString();
@@ -542,11 +602,11 @@ public class ThirdScreen extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				String entryText =  ((TextView)v).getText().toString();
+				String entryText =  ((TextView) v).getText().toString(); 
 				String myDate = entryText.substring(0, 10);//parse our date
 				//parsing cycle: account for cycles greater than 9
 
-				String dividerRegex = "(?<=\\|)[^|]++(?=\\|)";
+				String dividerRegex = "(?<=\\|)[^|]++(?=\\|)";//regex to grab data between pipes (|)
 				Pattern pattern = Pattern.compile(dividerRegex);
 				Matcher matcher = pattern.matcher(entryText);
 
@@ -569,7 +629,10 @@ public class ThirdScreen extends Activity {
 				String mySecondLift =  myEntries[4];
 				String myThirdLift = myEntries[5];
 				String viewMode = curView.name().toString(); 
-				//^^ hardcoded these for sake of sanity
+				String mode = String.valueOf(lbMode);
+				
+				
+				
 
 				intent.putExtra("cycle", myCycle);
 				intent.putExtra("frequency", myFrequency);
@@ -579,7 +642,7 @@ public class ThirdScreen extends Activity {
 				intent.putExtra("thirdLift", myThirdLift);
 				intent.putExtra("thirdLift", myThirdLift);
 				intent.putExtra("date", myDate);
-				intent.putExtra("mode", getModeFormat());
+				intent.putExtra("mode", mode);
 				intent.putExtra("viewMode", viewMode);
 
 
