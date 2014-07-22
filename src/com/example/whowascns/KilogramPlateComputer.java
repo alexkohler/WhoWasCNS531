@@ -40,7 +40,7 @@ public class KilogramPlateComputer {
 		for (int i=0; i<9; i++)
 		{
 			currentPlate_needed = 0;
-			switch (i){
+			switch (i){ 
 			case 0:
 				currentPlate = 25;
 				break;

@@ -53,7 +53,10 @@
 	<string name="ten_text_test">10s needed: X</string>
 	<string name="five_text_test">5s needed: X</string>
 	<string name="twopointfive_text_test">2.5s needed: X</string>
-	
+	<string name="twos_text_test">2s needed: X</string>
+	<string name="onepointfive_text_test">1.5s needed: X</string>
+	<string name="ones_text_test">1s needed: X</string>
+	<string name="pointfives_text_test">.5s needed: X</string>
 	<string name="lift_one_tv">Lift 1</string>
 	<string name="lift_two_tv">Lift 2</string>
 	<string name="lift_three_tv">Lift 3</string>	

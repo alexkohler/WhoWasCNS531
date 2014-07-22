@@ -22,10 +22,10 @@ public class SQLHelper extends SQLiteOpenHelper {
 	public static final String FIRST = "First_Lift";
 	public static final String SECOND = "Second_Lift";
 	public static final String THIRD = "Third_Lift";
-
-	String sql01 = "create table " + TABLE01 + "( " + BaseColumns._ID
-			+ " integer primary key autoincrement, " + LIFTDATE + " text not null, "
-			+ CYCLE + " integer, " + LIFT + " text not null)";	
+	public static final String TRAINING_MAX = "Training_Max";
+	public static final String LBFLAG = "column_lbFlag";
+	
+	String sql01 = "create table " + TABLE01 + "(liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_lbFlag integer);";
 
 	public SQLHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

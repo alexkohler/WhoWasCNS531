@@ -30,7 +30,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		//this was originally alter table
-		String sql = "create table " + TABLE + "(liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, lbFlag integer);";
+		String sql = "create table " + TABLE + "(liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_lbFlag integer);";
 		Log.d("EventsData", "onCreate: " + sql);
 		db.execSQL(sql);
 	}

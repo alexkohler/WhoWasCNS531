@@ -126,4 +126,40 @@
         android:text="@string/lift_one_tv"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <TextView
+        android:id="@+id/platesNeeded_kgExtra1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/platesNeeded2"
+        android:layout_below="@+id/platesNeeded1"
+        android:text="@string/twos_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/platesNeeded_kgExtra2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/platesNeeded_kgExtra1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/onepointfive_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/platesNeeded_kgExtra4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/platesNeeded_kgExtra2"
+        android:layout_below="@+id/platesNeeded_kgExtra3"
+        android:text="@string/pointfives_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/platesNeeded_kgExtra3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/platesNeeded_kgExtra4"
+        android:layout_below="@+id/platesNeeded_kgExtra2"
+        android:text="@string/ones_text_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </RelativeLayout>

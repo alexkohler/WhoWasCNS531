@@ -140,6 +140,10 @@ public class IndividualViewThree extends ActionBarActivity implements OnClickLis
     TextView platesNeeded3;
     TextView platesNeeded2;
     TextView platesNeeded1;
+    TextView platesNeeded_kgExtra1;
+    TextView platesNeeded_kgExtra2;
+    TextView platesNeeded_kgExtra3;
+    TextView platesNeeded_kgExtra4;
     int idCounter;
 
 	@Override
@@ -159,6 +163,10 @@ public class IndividualViewThree extends ActionBarActivity implements OnClickLis
 		platesNeeded3 = (TextView) findViewById(R.id.platesNeeded3_activity_three);
 		platesNeeded2 = (TextView) findViewById(R.id.platesNeeded2_activity_three);
 		platesNeeded1 = (TextView) findViewById(R.id.platesNeeded1_activity_three);
+		platesNeeded_kgExtra1 = (TextView) findViewById(R.id.platesNeeded_kgExtra1_activity_three);
+		platesNeeded_kgExtra2 = (TextView) findViewById(R.id.platesNeeded_kgExtra2_activity_three);
+		platesNeeded_kgExtra3 = (TextView) findViewById(R.id.platesNeeded_kgExtra3_activity_three);
+		platesNeeded_kgExtra4 = (TextView) findViewById(R.id.platesNeeded_kgExtra4_activity_three);//chacaron
 		barbellImageView = (ImageView) findViewById(R.id.barbell_activity_three);
 		
         // Gesture detection
@@ -239,6 +247,7 @@ public class IndividualViewThree extends ActionBarActivity implements OnClickLis
 			{
 				
 			}
+			
 			else
 			{
 				//do something like setting plates here.. 
@@ -380,7 +389,10 @@ public class IndividualViewThree extends ActionBarActivity implements OnClickLis
 				platesNeeded3.setText("10s needed: " + tensNeeded);
 				platesNeeded2.setText("5s needed: " + fivesNeeded);
 				platesNeeded1.setText("2.5s needed: " + twopointfivesNeeded);
-				
+				platesNeeded_kgExtra1.setVisibility(View.INVISIBLE);
+				platesNeeded_kgExtra2.setVisibility(View.INVISIBLE);
+				platesNeeded_kgExtra3.setVisibility(View.INVISIBLE);
+				platesNeeded_kgExtra4.setVisibility(View.INVISIBLE);
 	
 			}//end else to checking if UI generation is even possible  
 
@@ -626,7 +638,10 @@ public class IndividualViewThree extends ActionBarActivity implements OnClickLis
 				platesNeeded3.setText("10s needed: " + tensNeeded_kg);
 				platesNeeded2.setText("5s needed: " + fivesNeeded_kg);
 				platesNeeded1.setText("2.5s needed: " + twopointfivesNeeded_kg);
-				//TODO add more textviews for the extra plates
+				platesNeeded_kgExtra1.setText("2s needed: " + twosNeeded_kg );
+				platesNeeded_kgExtra2.setText("1.5s needed: " + onepointfivesNeeded_kg );
+				platesNeeded_kgExtra3.setText("1s needed: " + onesNeeded_kg );
+				platesNeeded_kgExtra4.setText(".5s needed: " + pointfivesNeeded_kg );
 				
 			}//end else to checking if UI generation is even possible  
 		}
@@ -666,7 +681,7 @@ public class IndividualViewThree extends ActionBarActivity implements OnClickLis
                 //    return false;
                 // right to left swipe
                 if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    Toast.makeText(IndividualViewThree.this, "Left Swipe", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(IndividualViewThree.this, "Left Swipe", Toast.LENGTH_SHORT).show();
                    
                 }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     onBackPressed();
