@@ -40,35 +40,41 @@ Who Was CNS 531 project progress
 7-18: IndividualView now works for ANY view. Finally finished off training max bug and it was actually mildly elegant. I impress myself sometimes 
 7-19: Fixed an overall view bug that saved previous mode when resetting and projecting a different set of lifts. Fixed frequency appender... forgot breaks in my switch statements :) Added proper lb/kg mode flag.. methoding is not working properly quite yet but i'll figure it out. I think it has to do with data being unpassed that's needed when you up and down swipe (ie the fucking mode itself) 
 7-20: Fixed back button bug. Added kilogram error handling and slightly more dynamic error handling (actually retrieves erroraneous lift number). Got initial KG placeholders made... Started to tackle kilogram support  
-7-21: added extra textviews for kilograms, hid them for lbs. Fixed SQL issue when starting fresh on new device 
+7-21: added extra textviews for kilograms, hid them for lbs. Fixed SQL issue when starting fresh on new device, should work now when starting fresh 
  bug/suggestion list
 
 TO DO:.
  
 "Export..."  in however many formats you can take  
 gradient buttons? - http://www.dibbus.com/2011/02/gradient-buttons-for-android/ 
-Rounding to nearest 1kg is not what you want to do (you want 2.5 i think) 
 reflection: http://stackoverflow.com/questions/16353140/android-textview-arrays
-Memory managment- http://developer.android.com/training/articles/memory.html
 create text size based on how big screen is?
-could have a toggle on increment method (so you don't have increment and incrementrest)
 clean up your code it's fucking juvenile and ugly 
-rig some sort of db creation thing for first boot
 check your program against the excel sheet you wrote
 moving imageview via animation http://stackoverflow.com/questions/11144421/move-an-imageview-to-different-position-in-animated-way-in-androidmay need to resize 45 barbell
 "go to today's lift" button (on thirdScreen)
-"i don't have the following plates: then recalculate based on that
+***"i don't have the following plates: then recalculate based on that
+***prettier row layout
 create an algorithm that allows you to choose pattern... It's totally possible but there's gonna be hella code revamping
 display for weights less than 45
-prettier  row layout?
 Maybe add swipe support to thirdScreen to go back? (but nothing on first and second screens) 
-BUG upon opening projection from yesterday... wouldn't let me up or down from corner cases... look into this +
 might want to programmatically change color of 45 to save space
 empty barbell addition
 
-Feature: allow users to specify what plates they have, just like you did with 35lb plate flag, you could do that for each and every plate and have an input screen that will set those booleans based on a bunch of check boxes
+
+TODO:
+Prettier row layout - 
+http://stackoverflow.com/questions/8447234/android-creating-two-columns-in-a-linearlayout
+Can highlight each entry, toggle between two colors
+Programmatically change gravity and layout weight, have a toggle function for what color you want to insert
+Move config to options listener thing 
+Can also make text a little bigger 
+
+
+I don't have the following plates:
+Add to config in individualView/thirdScreen
+You will then have to have dynamic rounding depending on what plates they give oyou
+allow users to specify what plates they have, just like you did with 35lb plate flag, you could do that for each and every plate and have an input screen that will set those booleans based on a bunch of check boxes
 error handling as a result: 
 ** if you decide to have an okay and back button make sure your back button recognizes when something changes and they just hit back instead of okay and be like yo do you want to save these changes
 ** you can save these preferences in app data so user doesn't have to change them every time, however, you will want an option to change the shit in config somewhere  
-
-
