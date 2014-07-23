@@ -88,6 +88,7 @@ public class MainActivity extends ActionBarActivity {
 			Intent intent = new Intent(MainActivity.this, SecondScreen.class);
 			intent.putExtra("key", formattedDate );
 			intent.putExtra("origin", "first");
+			db.close();
 			startActivity(intent);
 
 		}

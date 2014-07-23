@@ -14,14 +14,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +44,7 @@ public class ThirdScreen extends Activity {
 	static int lbMode;
 	boolean insertStatus = false;
 	boolean changedView = false;
+	static boolean tableColorToggle = true;
 	String retStringSaver; //for sake of changing views
 	Cursor cursor;
 	String lbmode;
@@ -84,6 +89,9 @@ public class ThirdScreen extends Activity {
 		setContentView(R.layout.activity_third);
 
 		Button configureButton = (Button) findViewById(R.id.configureButton);
+		
+		configureButton.setBackgroundColor(Color.GRAY);
+		configureButton.setTextColor(Color.WHITE);
 
 		configureButton.setOnClickListener(optionsListener);
 
@@ -100,60 +108,60 @@ public class ThirdScreen extends Activity {
 		if (origin.equals("individualView"))
 		{
 			String view = intent.getStringExtra("viewMode");
-			LinearLayout llPrincipal = (LinearLayout)findViewById(R.id.linearLayout1);
+			TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
 			switch(view)
 			{//		DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), DEAD('D'), FIVES('5'), THREES('3'), ONES('1');
 				case "DEFAULT":
 					setQuery(null);
-					llPrincipal.removeAllViews();
+					tableRowPrincipal.removeAllViews();
 					cursor = getEvents();
 					showDefaultEvents(cursor);
 					break;
 				case "BENCH":
 					setQuery("Lift = 'Bench'");
-					llPrincipal.removeAllViews();
+					tableRowPrincipal.removeAllViews();
 					cursor = getEvents();
 					insertStatus = false;
 					showDefaultEvents(cursor);
 					break;
 				case "SQUAT":
 					setQuery("Lift = 'Squat'");
-					llPrincipal.removeAllViews();
+					tableRowPrincipal.removeAllViews();
 					cursor = getEvents();
 					insertStatus = false;
 					showDefaultEvents(cursor);
 					break;
 				case "OHP":
 					setQuery("Lift = 'OHP'");
-					llPrincipal.removeAllViews();
+					tableRowPrincipal.removeAllViews();
 					cursor = getEvents();
 					insertStatus = false;
 					showDefaultEvents(cursor);
 					break;
 				case "DEAD":
 					setQuery("Lift = 'Deadlift'");
-					llPrincipal.removeAllViews();
+					tableRowPrincipal.removeAllViews();
 					cursor = getEvents();
 					insertStatus = false;
 					showDefaultEvents(cursor);
 					break;	
 				case "FIVES":
 					setQuery("Frequency = '5-5-5'");
-					llPrincipal.removeAllViews();
+					tableRowPrincipal.removeAllViews();
 					cursor = getEvents();
 					insertStatus = false;
 					showDefaultEvents(cursor);
 					break;	
 				case "THREES":
 					setQuery("Frequency = '3-3-3'");
-					llPrincipal.removeAllViews();
+					tableRowPrincipal.removeAllViews();
 					cursor = getEvents();
 					insertStatus = false;
 					showDefaultEvents(cursor);
 					break;
 				case "ONES":
 					setQuery("Frequency = '5-3-1'");
-					llPrincipal.removeAllViews();
+					tableRowPrincipal.removeAllViews();
 					cursor = getEvents();
 					insertStatus = false;
 					showDefaultEvents(cursor);
@@ -233,6 +241,14 @@ public class ThirdScreen extends Activity {
 		super.onDestroy();
 
 		eventsData.close();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
 	}
 
 
@@ -322,13 +338,13 @@ public class ThirdScreen extends Activity {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Cursor cursor = getEvents();
-					LinearLayout llPrincipal = (LinearLayout)findViewById(R.id.linearLayout1);
+					TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
 					switch (which){
 					case 0:
 						curView = CURRENT_VIEW.DEFAULT;
 						Toast.makeText(ThirdScreen.this, "View Selected: Show All", Toast.LENGTH_SHORT).show();
 						setQuery(null);
-						llPrincipal.removeAllViews();
+						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
@@ -337,7 +353,7 @@ public class ThirdScreen extends Activity {
 						curView = CURRENT_VIEW.BENCH;
 						Toast.makeText(ThirdScreen.this, "View Selected: Bench Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Bench'");
-						llPrincipal.removeAllViews(); //try something like this 
+						tableRowPrincipal.removeAllViews(); //try something like this 
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
@@ -346,7 +362,7 @@ public class ThirdScreen extends Activity {
 						curView = CURRENT_VIEW.SQUAT;
 						Toast.makeText(ThirdScreen.this, "View Selected: Squat Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Squat'");
-						llPrincipal.removeAllViews();
+						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true; 
 						showDefaultEvents(cursor);
@@ -355,7 +371,7 @@ public class ThirdScreen extends Activity {
 						curView = CURRENT_VIEW.OHP;
 						Toast.makeText(ThirdScreen.this, "View Selected: OHP Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'OHP'");
-						llPrincipal.removeAllViews();
+						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
@@ -364,7 +380,7 @@ public class ThirdScreen extends Activity {
 						curView = CURRENT_VIEW.DEAD;
 						Toast.makeText(ThirdScreen.this, "View Selected: Deadlift Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Deadlift'");
-						llPrincipal.removeAllViews();
+						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
@@ -373,7 +389,7 @@ public class ThirdScreen extends Activity {
 						curView = CURRENT_VIEW.FIVES;
 						Toast.makeText(ThirdScreen.this, "View Selected: Fives Days Only", Toast.LENGTH_SHORT).show();
 						setQuery("Frequency = '5-5-5'");
-						llPrincipal.removeAllViews();
+						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
@@ -382,7 +398,7 @@ public class ThirdScreen extends Activity {
 						curView = CURRENT_VIEW.THREES;
 						Toast.makeText(ThirdScreen.this, "View Selected: Triples Days Only", Toast.LENGTH_SHORT).show();
 						setQuery("Frequency = '3-3-3'");
-						llPrincipal.removeAllViews();
+						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
@@ -391,7 +407,7 @@ public class ThirdScreen extends Activity {
 						curView = CURRENT_VIEW.ONES;
 						Toast.makeText(ThirdScreen.this, "View Selected: 5-3-1 Days Only", Toast.LENGTH_SHORT).show();
 						setQuery("Frequency = '5-3-1'");
-						llPrincipal.removeAllViews();
+						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
@@ -525,7 +541,7 @@ public class ThirdScreen extends Activity {
 		private void showDefaultEvents(Cursor cursor) {
 			StringBuilder ret; 
 			ret = new StringBuilder("");
-			LinearLayout llPrincipal = (LinearLayout)findViewById(R.id.linearLayout1);
+			TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
 			while (cursor.moveToNext()) {
 				if (!this.insertStatus){//has title been inserted?
 					String temp = getQuery(); //temporarily hold query
@@ -539,25 +555,24 @@ public class ThirdScreen extends Activity {
 					subcursor.moveToNext();
 					ret.append(" [Dead: " + cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
 					lbMode = cursor.getInt((cursor.getColumnIndex(EventsDataSQLHelper.LBFLAG)));
-					ret.append("\n");
 					if (lbMode == 1)
-					ret.append("Mode: lbs");
+					ret.append("	Mode: lbs");
 					else if (lbMode == 0 )
-					ret.append("Mode: kgs");
+					ret.append("	Mode: kgs");
 					else
 					ret.append("Mode error");	
 					cursor.moveToFirst();
 					insertStatus = true;
 					retStringSaver = ret.toString();
 					setQuery(temp); //change query back to what it was
-					TextView title = new TextView(this);
+					
+					TextView title = (TextView) findViewById(R.id.trainingMaxesTV);
 					title.setText(retStringSaver.toString());
-					title.setTextSize(12);
-					title.setGravity(Gravity.LEFT);
-					title.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,          
-
-							LayoutParams.WRAP_CONTENT));
-					llPrincipal.addView(title);
+					//title.setTextSize(12);
+					//title.setGravity(Gravity.CENTER);
+					title.setTextColor(Color.WHITE);
+					//title.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
+					//tableRowPrincipal.addView(title);
 				}
 				else
 					if (changedView){//if the title hasn't been inserted, has there been a change in the view?
@@ -565,11 +580,15 @@ public class ThirdScreen extends Activity {
 						TextView title = new TextView(this);
 						title.setText(retStringSaver.toString());
 						title.setTextSize(12);
-						title.setGravity(Gravity.LEFT);
+						title.setGravity(Gravity.CENTER);
+						title.setTextColor(Color.WHITE);
 						title.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,          
 
 								LayoutParams.WRAP_CONTENT));
-						llPrincipal.addView(title);
+					//	tableRowPrincipal.addView(title);
+					//	TableRow titleRow = (TableRow) findViewById(R.id.insertValues);
+						
+						//createColumns("Date", "Cycle", "Lift", "Freq", "1st", "2nd", "3rd");
 						changedView = false;
 					}
 				String liftDate = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
@@ -579,18 +598,80 @@ public class ThirdScreen extends Activity {
 				String first = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST))));
 				Double second = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND)));
 				Double third = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD)));
-				String entryString = liftDate + "|" + cycle + "|" + lift + "|" + freq + "|" + first + "|" + second + "|" + third + "|\n";
-
+				final String entryString = liftDate + "|" + cycle + "|" + lift + "|" + freq + "|" + first + "|" + second + "|" + third + "|\n";
+				TableRow tr = new TableRow(this);
+				LayoutParams trParams = tableRowPrincipal.getLayoutParams();
+				tr.setLayoutParams(trParams);
+				tr.setGravity(Gravity.CENTER_HORIZONTAL);
+				createColumns(tr, liftDate, cycle, lift, freq, first, String.valueOf(second), String.valueOf(third));
+				
 				TextView entry = new TextView(this);
 				entry.setText(entryString); 
 				entry.setTextSize(12);
-				entry.setGravity(Gravity.LEFT);
-				entry.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,          
+				entry.setGravity(Gravity.CENTER);
+				LinearLayout.LayoutParams PO = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1f);
+				entry.setLayoutParams(PO);
+				if(tableColorToggle)
+				{
+				entry.setBackgroundColor(Color.WHITE);
+				tableColorToggle = false;
+				}
+				else if (!tableColorToggle)
+				{
+				entry.setBackgroundColor(Color.LTGRAY);
+				tableColorToggle = true;
+				}
+				tr.setOnClickListener(new TableRowClickListener(entryString){
 
-						LayoutParams.WRAP_CONTENT));
-				entry.setOnClickListener(individualViewListener);	   
-				llPrincipal.addView(entry);
+					@Override
+					public void onClick(View v) {
+						String myDate = entryString.substring(0, 10);//parse our date
+						//parsing cycle: account for cycles greater than 9
 
+						String dividerRegex = "(?<=\\|)[^|]++(?=\\|)";//regex to grab data between pipes (|)
+						Pattern pattern = Pattern.compile(dividerRegex);
+						Matcher matcher = pattern.matcher(entryString);
+
+						String myEntries[] = new String[6]; //for reference: 0 = date, 1 = cycle, 2 = liftType, 3 = frequency, 4 = firstLift, 5 = secondLift, 6 = secondLift
+						int iterator = 0 ;
+						while (matcher.find()) {
+							myEntries[iterator] = matcher.group(0);
+							iterator++;
+						}	
+
+						Toast.makeText(ThirdScreen.this, myEntries[2], Toast.LENGTH_SHORT).show();
+
+
+						Intent intent = new Intent(ThirdScreen.this, IndividualView.class);
+
+						String myFrequency = myEntries[2];	
+						String myLiftType = myEntries[1];
+						String myCycle = myEntries[0];
+						String myFirstLift = myEntries[3];
+						String mySecondLift =  myEntries[4];
+						String myThirdLift = myEntries[5];
+						String viewMode = curView.name().toString(); 
+						String mode = String.valueOf(lbMode);
+						
+						
+						
+
+						intent.putExtra("cycle", myCycle);
+						intent.putExtra("frequency", myFrequency);
+						intent.putExtra("liftType", myLiftType);
+						intent.putExtra("firstLift", myFirstLift);
+						intent.putExtra("secondLift", mySecondLift);
+						intent.putExtra("thirdLift", myThirdLift);
+						intent.putExtra("thirdLift", myThirdLift);
+						intent.putExtra("date", myDate);
+						intent.putExtra("mode", mode);
+						intent.putExtra("viewMode", viewMode);
+
+
+						startActivity(intent);
+					}});	   
+				//tableRowPrincipal.addView(entry);
+				tableRowPrincipal.addView(tr);
 				//TODO encase everything in a linear layout, then you should have individualized views by date. be sure there is not too much of a performance hit 
 				//then parse by date (regex) and then either parse first second and third (along with any other additional info you may want to add for featues), and you should be good to go my nigga ;)
 			}
@@ -598,56 +679,86 @@ public class ThirdScreen extends Activity {
 		}
 
 
-		public OnClickListener individualViewListener = new  OnClickListener(){
+/*		public TableRowClickListener individualViewListener = new  TableRowClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				String entryText =  ((TextView) v).getText().toString(); 
-				String myDate = entryText.substring(0, 10);//parse our date
-				//parsing cycle: account for cycles greater than 9
+				
+			}};  */
 
-				String dividerRegex = "(?<=\\|)[^|]++(?=\\|)";//regex to grab data between pipes (|)
-				Pattern pattern = Pattern.compile(dividerRegex);
-				Matcher matcher = pattern.matcher(entryText);
-
-				String myEntries[] = new String[6]; //for reference: 0 = date, 1 = cycle, 2 = liftType, 3 = frequency, 4 = firstLift, 5 = secondLift, 6 = secondLift
-				int iterator = 0 ;
-				while (matcher.find()) {
-					myEntries[iterator] = matcher.group(0);
-					iterator++;
-				}	
-
-				Toast.makeText(ThirdScreen.this, myEntries[2], Toast.LENGTH_SHORT).show();
-
-
-				Intent intent = new Intent(ThirdScreen.this, IndividualView.class);
-
-				String myFrequency = myEntries[2];	
-				String myLiftType = myEntries[1];
-				String myCycle = myEntries[0];
-				String myFirstLift = myEntries[3];
-				String mySecondLift =  myEntries[4];
-				String myThirdLift = myEntries[5];
-				String viewMode = curView.name().toString(); 
-				String mode = String.valueOf(lbMode);
+			private void createColumns(TableRow tr, String liftDate, String cycle, String lift, String freq, String first, String second, String third) {
+				//date column creation 
 				
 				
 				
+				TableRow.LayoutParams tvParams = new TableRow.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+				tvParams.setMargins(1, 1, 1, 1);
+				final int minHeight = 30;
+				TextView dateColumn = new TextView(this);
+				dateColumn.setText(liftDate);
+				dateColumn.setLayoutParams(tvParams);
+				dateColumn.setBackgroundColor(Color.WHITE);
+				dateColumn.setMinHeight(minHeight);
+				dateColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr.addView(dateColumn);
+				
+				
+				//cycle column creation 
+				TextView cycleColumn = new TextView(this);
+				cycleColumn.setText(cycle);
+				cycleColumn.setLayoutParams(tvParams);
+				cycleColumn.setBackgroundColor(Color.WHITE);
+				cycleColumn.setMinHeight(minHeight);
+				cycleColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr.addView(cycleColumn);
+				
+				//lift column creation 
+				TextView liftColumn = new TextView(this);
+				liftColumn.setText(lift);
+				liftColumn.setLayoutParams(tvParams);
+				liftColumn.setBackgroundColor(Color.WHITE);
+				liftColumn.setMinHeight(minHeight);
+				liftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr.addView(liftColumn);
 
-				intent.putExtra("cycle", myCycle);
-				intent.putExtra("frequency", myFrequency);
-				intent.putExtra("liftType", myLiftType);
-				intent.putExtra("firstLift", myFirstLift);
-				intent.putExtra("secondLift", mySecondLift);
-				intent.putExtra("thirdLift", myThirdLift);
-				intent.putExtra("thirdLift", myThirdLift);
-				intent.putExtra("date", myDate);
-				intent.putExtra("mode", mode);
-				intent.putExtra("viewMode", viewMode);
-
-
-				startActivity(intent);
-			}};  
+				//freq column creation 
+				TextView freqColumn = new TextView(this);
+				freqColumn.setText(freq);
+				freqColumn.setLayoutParams(tvParams);
+				freqColumn.setBackgroundColor(Color.WHITE);
+				freqColumn.setMinHeight(minHeight);
+				freqColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr.addView(freqColumn);
+				
+				
+				//first lift column creation
+				TextView firstLiftColumn = new TextView(this);
+				firstLiftColumn.setText(first);
+				firstLiftColumn.setLayoutParams(tvParams);
+				firstLiftColumn.setBackgroundColor(Color.WHITE);
+				firstLiftColumn.setMinHeight(minHeight);
+				firstLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr.addView(firstLiftColumn);
+				
+				//second lift column creation
+				TextView secondLiftColumn = new TextView(this);
+				secondLiftColumn.setText(second);
+				secondLiftColumn.setLayoutParams(tvParams);
+				secondLiftColumn.setBackgroundColor(Color.WHITE);
+				secondLiftColumn.setMinHeight(minHeight);
+				secondLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr.addView(secondLiftColumn);
+				
+				//third lift column creation
+				TextView thirdLiftColumn = new TextView(this);
+				thirdLiftColumn.setText(third);
+				thirdLiftColumn.setLayoutParams(tvParams);
+				thirdLiftColumn.setBackgroundColor(Color.WHITE);
+				thirdLiftColumn.setMinHeight(minHeight);
+				thirdLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+				tr.addView(thirdLiftColumn);
+		}
 
 			private void backToFirst()
 			{

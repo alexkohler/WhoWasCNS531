@@ -41,6 +41,8 @@ Who Was CNS 531 project progress
 7-19: Fixed an overall view bug that saved previous mode when resetting and projecting a different set of lifts. Fixed frequency appender... forgot breaks in my switch statements :) Added proper lb/kg mode flag.. methoding is not working properly quite yet but i'll figure it out. I think it has to do with data being unpassed that's needed when you up and down swipe (ie the fucking mode itself) 
 7-20: Fixed back button bug. Added kilogram error handling and slightly more dynamic error handling (actually retrieves erroraneous lift number). Got initial KG placeholders made... Started to tackle kilogram support  
 7-21: added extra textviews for kilograms, hid them for lbs. Fixed SQL issue when starting fresh on new device 
+7-22: Plugged in entirely new UI for third screen. Now uses dynamically created tablerows and looks oh so much better
+7-23: Found a proper display for training maxes and config button
  bug/suggestion list
 
 TO DO:.
@@ -72,3 +74,9 @@ error handling as a result:
 ** you can save these preferences in app data so user doesn't have to change them every time, however, you will want an option to change the shit in config somewhere  
 
 
+ThirdScreen revamp: high priority
+training maxes in separate columns 
+may want to reformat date 
+change column colors
+think of some way to display training maxes 
+still may be unstable, I wouldn't push yet. 

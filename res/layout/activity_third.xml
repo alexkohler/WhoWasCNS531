@@ -1,36 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/thirdScreenLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:background="#000000"
+     android:orientation="vertical"
+    android:layout_weight="2"
     >
 
     <ScrollView
         android:id="@+id/scrollView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fillViewport="true" >
-		<LinearLayout
-			android:id="@+id/linearLayout1"
-        	android:layout_width="match_parent"
-        	android:layout_height="match_parent"
-        	android:orientation="vertical"
-        	 >
-        	<!-- 	<TextView
-            		android:id="@+id/output"
-            		android:layout_width="fill_parent"
-            		android:layout_height="wrap_content" /> -->
-        </LinearLayout>
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:layout_weight="2"
+         >
         
-    </ScrollView>
+
+
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:background="#000000"
+        android:orientation="vertical"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <TableRow
+            android:id="@+id/insertValues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/dateColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Date" />
+
+            <TextView
+                android:id="@+id/cycleColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Cycle" />
+
+            <TextView
+                android:id="@+id/liftColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Lift" />
+
+            <TextView
+                android:id="@+id/freqColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="Freq" />
+
+            <TextView
+                android:id="@+id/firstLiftColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="1st" />
+
+            <TextView
+                android:id="@+id/secondLiftColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="2nd" />
+
+            <TextView
+                android:id="@+id/thirdLiftColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="3st" />
+        </TableRow>
+    </TableLayout>
+
+        </ScrollView>
+
+    <TextView
+        android:id="@+id/trainingMaxesTV"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
     <Button
         android:id="@+id/configureButton"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:gravity="center"
         android:text="@string/options_checkbox_test" />
 
-</RelativeLayout>
+</LinearLayout>
