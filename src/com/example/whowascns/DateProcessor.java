@@ -1,6 +1,7 @@
 package com.example.whowascns;
 
 import android.annotation.SuppressLint;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,7 +37,7 @@ public class DateProcessor {
 
 	//Starting definitions
 	Date STARTING_DATE;
-	String STARTING_DATE_STRING;
+	static String STARTING_DATE_STRING;
 	Double BENCH_TRAINING_MAX;
 	Double SQUAT_TRAINING_MAX;
 	Double OHP_TRAINING_MAX;
@@ -62,6 +63,7 @@ public class DateProcessor {
 	Double CURRENT_FIRST;
 	Double CURRENT_SECOND;
 	Double CURRENT_THIRD;
+	String CURRENT_DATE_STRING;
 	Calendar CURRENT_DATE_CAL = Calendar.getInstance();; //to be parsed and worked to maintain current date (instead of modifying starting_date_string like I was before)
 	SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault()); // date format only needs to be declared once. Is not and won't be changing (Unless users really want a changable date format...)
 
@@ -74,6 +76,16 @@ public class DateProcessor {
 
 		STARTING_DATE_STRING = myDate;
 
+	}
+	
+	public String getDate ()
+	{
+		return CURRENT_DATE_STRING;
+	}
+	
+	void setDate(String formattedDate) {
+		CURRENT_DATE_STRING = formattedDate;
+		
 	}
 
 
@@ -255,8 +267,10 @@ public class DateProcessor {
 		Date myDate = CURRENT_DATE_CAL.getTime();
 		String formattedDate = df.format(myDate);
 
-		setStartingDate(formattedDate);
+		setDate(formattedDate);
 	}
+
+
 
 	//Lift (and cycle if needed) incrementing function
 	//PERCENTAGE definitions

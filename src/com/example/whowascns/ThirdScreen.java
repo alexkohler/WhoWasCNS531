@@ -213,7 +213,7 @@ public class ThirdScreen extends Activity {
 
 			Processor.setStartingLifts(startingBench, startingSquat, startingOHP, startingDead);
 			Processor.setStartingDate(startingDate);
-
+			Processor.setDate(startingDate);
 			int numberCycles =  Integer.parseInt(intent.getStringExtra("numberCycles"));
 			setNumberCycles(numberCycles);
 			new AsyncCaller().execute();
@@ -424,6 +424,7 @@ public class ThirdScreen extends Activity {
 						myIntent.putExtra("origin", "third");
 						String[] intentDataArray = new String[6];
 						intentDataArray = getSecondScreenData(intentDataArray);
+						myIntent.putExtra("key", Processor.getStartingDate()); //key is for get starting date, //TODO change that shit
 						myIntent.putExtra("bench", intentDataArray[0]);
 						myIntent.putExtra("squat", intentDataArray[1]);
 						myIntent.putExtra("ohp", intentDataArray[2]);
@@ -782,7 +783,7 @@ public class ThirdScreen extends Activity {
 				
 			
 
-			values.put(EventsDataSQLHelper.LIFTDATE, Processor.getStartingDate() );
+			values.put(EventsDataSQLHelper.LIFTDATE, Processor.getDate() );
 			values.put(EventsDataSQLHelper.CYCLE, Processor.getCycle());
 			values.put(EventsDataSQLHelper.LIFT, Processor.getLiftType());
 			values.put(EventsDataSQLHelper.FREQUENCY, Processor.getFreq());
