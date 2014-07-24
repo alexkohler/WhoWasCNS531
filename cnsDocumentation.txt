@@ -84,14 +84,11 @@ allow users to specify what plates they have, just like you did with 35lb plate 
 error handling as a result: 
 ** if you decide to have an okay and back button make sure your back button recognizes when something changes and they just hit back instead of okay and be like yo do you want to save these changes
 ** you can save these preferences in app data so user doesn't have to change them every time, however, you will want an option to change the shit in config somewhere  
-<<<<<<< HEAD
 
 
-ThirdScreen revamp: high priority
-training maxes in separate columns 
-may want to reformat date 
-change column colors
-think of some way to display training maxes 
-still may be unstable, I wouldn't push yet. 
-=======
->>>>>>> 7be894bba17917297ea5e4319046ba431a41e23f
+
+training max bug when adjusting lifts and then going back, training maxes are wrong i think 
+
+hook up back end to your plate addition UI
+adjust lifts button is broken somewhere, starts with squat instead of bench.
+adjust lifts button is just very broken. 

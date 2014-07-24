@@ -3,11 +3,13 @@ package com.example.whowascns;
 
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -257,7 +259,7 @@ public class ThirdScreen extends Activity {
 		@Override
 		public void onClick(View v) {
 			//Options menu -- wrap up in a checkbox Listener 
-			CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", "Export...", "View By...", "Back"};
+			CharSequence colors[] = new CharSequence[] {"Plate Config", "Adjust Lifts", "Reset", "Export...", "View By...", "Back"};
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
 			builder.setTitle("Options menu");
@@ -265,7 +267,158 @@ public class ThirdScreen extends Activity {
 			builder.setItems(colors, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					if (which == 0){
+					if (which==0)
+					{
+						CharSequence modes[] = new CharSequence[] {"Pounds", "Kilograms"};
+						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+						builder.setTitle("Unit menu");
+						builder.setItems(modes, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								if (which == 0){
+								    final CharSequence[] lbPlates = {" 45lb "," 35lb "," 25lb "," 10lb ", " 5lb "," 2.5lb "};
+								    // arraylist to keep the selected items
+								    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
+								    
+								    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+								    builder.setTitle("What plates does your gym have?");
+								    builder.setMultiChoiceItems(lbPlates, null,
+								            new DialogInterface.OnMultiChoiceClickListener() {
+								     @Override
+								     public void onClick(DialogInterface dialog, int indexSelected,
+								             boolean isChecked) {
+								         if (isChecked) {
+								             // If the user checked the item, add it to the selected items
+								             seletedItems.add(indexSelected);
+								         } else if (seletedItems.contains(indexSelected)) {
+								             // Else, if the item is already in the array, remove it
+								             seletedItems.remove(Integer.valueOf(indexSelected));
+								         }
+								     }
+								 })
+								  // Set the action buttons
+								 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+								     @Override
+								     public void onClick(DialogInterface dialog, int id) {
+								         //  Your code when user clicked on OK
+								         //  You can write the code  to save the selected item here
+								    	 for (int indexSelected : seletedItems)
+								    	 {
+								    		 switch (indexSelected)
+								    		 {
+								    		 case 0:
+								    		 	Boolean lbHaveFortyFive = true;//TODO fix logic 
+								    			break;
+								    		 case 1:	
+								    		 	Boolean lbHaveThirtyFive = true;
+								    			break;
+								    		 case 2:	
+								    			Boolean lbHaveTwentyFive = true;
+								    			break;
+								    		 case 3:	
+								    			Boolean lbHaveTen = true;
+								    			break;
+								    		 case 4:	
+								    			Boolean lbHaveFive = true;
+								    			break;
+								    		 case 5:	
+								    			Boolean lbHaveTwoPointFive = true;
+								    			break;
+								    		 }
+								    	 }
+
+								     }
+								 })
+								 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+								     @Override
+								     public void onClick(DialogInterface dialog, int id) {
+								        //  Your code when user clicked on Cancel
+
+								     }
+								 });
+
+								    dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+								    ((Dialog) dialog).show();
+								}
+								if (which == 1)
+								{// arrays are zero indexed
+								    final CharSequence[] kgPlates = {" 25kg "," 20kg "," 15kg "," 10kg "," 5kg ", " 2.5kg "," 1.25kg "};
+								    // arraylist to keep the selected items
+								    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
+
+								    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+								    builder.setTitle("What plates does your gym have?");
+								    builder.setMultiChoiceItems(kgPlates, null,
+								            new DialogInterface.OnMultiChoiceClickListener() {
+								     @Override
+								     public void onClick(DialogInterface dialog, int indexSelected,
+								             boolean isChecked) {
+								         if (isChecked) {
+								             // If the user checked the item, add it to the selected items
+								             seletedItems.add(indexSelected);
+								         } else if (seletedItems.contains(indexSelected)) {
+								             // Else, if the item is already in the array, remove it
+								             seletedItems.remove(Integer.valueOf(indexSelected));
+								         }
+								     }
+								 })
+								  // Set the action buttons
+								 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+								     @Override
+								     public void onClick(DialogInterface dialog, int id) {
+								         //  Your code when user clicked on OK
+								         //  You can write the code  to save the selected item here
+								    	 for (int indexSelected : seletedItems)
+								    	 {
+								    		switch (indexSelected)
+								    		{
+								    		case 0:
+									    		Boolean kgHaveTwentyFive = true;
+									    		break;
+								    		case 1:
+									    		Boolean kgHaveTwenty = true;
+									    		break;
+								    		case 2:
+									    		Boolean kgHaveFifteen = true;
+									    		break;
+								    		case 3:
+								    			Boolean kgHaveTen  = true;
+								    			break;
+								    		case 4:	
+								    			Boolean kgHaveFive  = true;
+								    			break;
+								    		case 5:
+								    			Boolean kgHaveTwoPointFive = true;
+								    			break;
+								    		case 6:
+								    			Boolean kgHaveOnePointTwoFive = true;
+								    			break;
+								    		}
+								    	 }
+
+								     }
+								 })
+								 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+								     @Override
+								     public void onClick(DialogInterface dialog, int id) {
+								        //  Your code when user clicked on Cancel
+
+								     }
+								 });
+
+								    dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+								    ((Dialog) dialog).show();	
+									
+								}
+
+				
+							}//end inner onClick 
+						});//end inner which listener
+						builder.show();	
+					}
+					
+					
+					if (which == 1){
 						SQLiteDatabase db = eventsData.getWritableDatabase();
 						Intent myIntent = new Intent(ThirdScreen.this, SecondScreen.class);
 						myIntent.putExtra("origin", "third");
@@ -278,7 +431,7 @@ public class ThirdScreen extends Activity {
 						db.delete("Lifts", null, null);
 						startActivity(myIntent);
 					}
-					if (which == 1) 
+					if (which == 2) 
 					{// arrays are zero indexed
 						SQLiteDatabase db = eventsData.getWritableDatabase();
 						curView = CURRENT_VIEW.DEFAULT;
@@ -286,7 +439,8 @@ public class ThirdScreen extends Activity {
 						backToFirst();
 
 					}
-					if (which == 3)
+					//nothing for export yet
+					if (which == 4)
 					{
 						createViewBuilder();
 					}
@@ -446,6 +600,160 @@ public class ThirdScreen extends Activity {
 
 		}//end createViewBuilder
 
+		
+		
+		//modeBuilder
+		private OnClickListener kgLbConfig = new OnClickListener () {
+			CharSequence modes[] = new CharSequence[] {"Pounds", "Kilograms"};
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+				builder.setTitle("Unit menu");
+				builder.setItems(modes, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if (which == 0){
+						    final CharSequence[] lbPlates = {" 45lb "," 35lb "," 25lb "," 10lb ", " 5lb "," 2.5lb "};
+						    // arraylist to keep the selected items
+						    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
+						    
+						    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+						    builder.setTitle("What plates does your gym have?");
+						    builder.setMultiChoiceItems(lbPlates, null,
+						            new DialogInterface.OnMultiChoiceClickListener() {
+						     @Override
+						     public void onClick(DialogInterface dialog, int indexSelected,
+						             boolean isChecked) {
+						         if (isChecked) {
+						             // If the user checked the item, add it to the selected items
+						             seletedItems.add(indexSelected);
+						         } else if (seletedItems.contains(indexSelected)) {
+						             // Else, if the item is already in the array, remove it
+						             seletedItems.remove(Integer.valueOf(indexSelected));
+						         }
+						     }
+						 })
+						  // Set the action buttons
+						 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						     @Override
+						     public void onClick(DialogInterface dialog, int id) {
+						         //  Your code when user clicked on OK
+						         //  You can write the code  to save the selected item here
+						    	 for (int indexSelected : seletedItems)
+						    	 {
+						    		 switch (indexSelected)
+						    		 {
+						    		 case 0:
+						    		 	Boolean lbHaveFortyFive = true;
+						    			break;
+						    		 case 1:	
+						    		 	Boolean lbHaveThirtyFive = true;
+						    			break;
+						    		 case 2:	
+						    			Boolean lbHaveTwentyFive = true;
+						    			break;
+						    		 case 3:	
+						    			Boolean lbHaveTen = true;
+						    			break;
+						    		 case 4:	
+						    			Boolean lbHaveFive = true;
+						    			break;
+						    		 case 5:	
+						    			Boolean lbHaveTwoPointFive = true;
+						    			break;
+						    		 }
+						    	 }
+
+						     }
+						 })
+						 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						     @Override
+						     public void onClick(DialogInterface dialog, int id) {
+						        //  Your code when user clicked on Cancel
+
+						     }
+						 });
+
+						    dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+						    ((Dialog) dialog).show();
+						}
+						if (which == 1)
+						{// arrays are zero indexed
+						    final CharSequence[] kgPlates = {" 25kg "," 20kg "," 15kg "," 10kg "," 5kg ", " 2.5kg "," 1.25kg "};
+						    // arraylist to keep the selected items
+						    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
+
+						    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+						    builder.setTitle("What plates does your gym have?");
+						    builder.setMultiChoiceItems(kgPlates, null,
+						            new DialogInterface.OnMultiChoiceClickListener() {
+						     @Override
+						     public void onClick(DialogInterface dialog, int indexSelected,
+						             boolean isChecked) {
+						         if (isChecked) {
+						             // If the user checked the item, add it to the selected items
+						             seletedItems.add(indexSelected);
+						         } else if (seletedItems.contains(indexSelected)) {
+						             // Else, if the item is already in the array, remove it
+						             seletedItems.remove(Integer.valueOf(indexSelected));
+						         }
+						     }
+						 })
+						  // Set the action buttons
+						 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						     @Override
+						     public void onClick(DialogInterface dialog, int id) {
+						         //  Your code when user clicked on OK
+						         //  You can write the code  to save the selected item here
+						    	 for (int indexSelected : seletedItems)
+						    	 {
+						    		switch (indexSelected)
+						    		{
+						    		case 0:
+							    		Boolean kgHaveTwentyFive = true;
+							    		break;
+						    		case 1:
+							    		Boolean kgHaveTwenty = true;
+							    		break;
+						    		case 2:
+							    		Boolean kgHaveFifteen = true;
+							    		break;
+						    		case 3:
+						    			Boolean kgHaveTen  = true;
+						    			break;
+						    		case 4:	
+						    			Boolean kgHaveFive  = true;
+						    			break;
+						    		case 5:
+						    			Boolean kgHaveTwoPointFive = true;
+						    			break;
+						    		case 6:
+						    			Boolean kgHaveOnePointTwoFive = true;
+						    			break;
+						    		}
+						    	 }
+
+						     }
+						 })
+						 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						     @Override
+						     public void onClick(DialogInterface dialog, int id) {
+						        //  Your code when user clicked on Cancel
+
+						     }
+						 });
+
+						    dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+						    ((Dialog) dialog).show();	
+							
+						}
+
+		
+					}//end inner onClick 
+				});//end inner which listener
+				builder.show();	
+				
+			}};
 
 
 		public void setMode (String myMode )
@@ -603,14 +911,16 @@ public class ThirdScreen extends Activity {
 				LayoutParams trParams = tableRowPrincipal.getLayoutParams();
 				tr.setLayoutParams(trParams);
 				tr.setGravity(Gravity.CENTER_HORIZONTAL);
-				createColumns(tr, liftDate, cycle, lift, freq, first, String.valueOf(second), String.valueOf(third));
+				//parse date (remove 20..., I don't think any cycles will be running for a millenium)
+				String insertDate = liftDate.substring(0, 6) + liftDate.substring(8, 10);
+				createColumns(tr, insertDate, cycle, lift, freq, first, String.valueOf(second), String.valueOf(third));
 				
 				TextView entry = new TextView(this);
 				entry.setText(entryString); 
 				entry.setTextSize(12);
 				entry.setGravity(Gravity.CENTER);
 				LinearLayout.LayoutParams PO = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1f);
-				entry.setLayoutParams(PO);
+				entry.setLayoutParams(PO); 
 				if(tableColorToggle)
 				{
 				entry.setBackgroundColor(Color.WHITE);
@@ -694,7 +1004,7 @@ public class ThirdScreen extends Activity {
 				
 				TableRow.LayoutParams tvParams = new TableRow.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 				tvParams.setMargins(1, 1, 1, 1);
-				final int minHeight = 30;
+				final int minHeight = 15;
 				TextView dateColumn = new TextView(this);
 				dateColumn.setText(liftDate);
 				dateColumn.setLayoutParams(tvParams);
