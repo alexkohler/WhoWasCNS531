@@ -1,33 +1,17 @@
 package com.example.whowascns;
 
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import android.app.ActionBar.LayoutParams;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.LayoutInflater.Filter;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
+import android.app.Activity;
+import android.content.Context;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.view.View.OnClickListener;
 
-import com.example.whowascns.ThirdScreen;
-public class IndividualView extends ActionBarActivity implements OnClickListener {
-
+public class BarbellConfig extends Activity{
+	
+	
 	static int CURRENT_LEFT_ANCHOR_ID  = 0;
 	static int CURRENT_RIGHT_ANCHOR_ID = 0;
 	static int CURRENT_LEFT_ID         = 0;
@@ -98,18 +82,10 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 	RelativeLayout.LayoutParams LEFTPLATE_LP7;
 	RelativeLayout.LayoutParams RIGHTPLATE_LP8;
 	RelativeLayout.LayoutParams LEFTPLATE_LP8;
-
-	//is creating separate layout parameters necessary?
-	//may want to dynamically creating ids via appending and some cute algorithm..
-	//Setting up depth  = 2 plates will be top of hill, and should be downhill from there once you figure something out...
-	//Make it elegant! 
-	//After you have everything figured, make sure all of these plates fit.
-	//at the least you should be able to do this with reused code
-	//dynamic shit can be done later... for now just do manual labor so you don't get lost in the code. 
-	Boolean lbmode = true;//for now 
-	Boolean thirtyFiveFlag = true;
-	Double firstLift;
+	
 	int barbellWeight;
+	Double firstLift;
+	Boolean lbMode; //might need to be static 
 	
 	//lbNeeded declarations
 	int fortyfivesNeeded;
@@ -118,7 +94,6 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 	int tensNeeded;
 	int fivesNeeded;
 	int twopointfivesNeeded;
-	
 	
 	int twentyfivesNeeded_kg;
 	int twentysNeeded_kg;
@@ -132,24 +107,6 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 	int pointfivesNeeded_kg;
 	
 	
-	
-	
-	Boolean lbMode; //might need to be static 
-	
-	static String viewMode;
-	
-    private static final int SWIPE_MIN_DISTANCE = 170;
-    private static final int SWIPE_MAX_OFF_PATH = 100;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 100;
-    private GestureDetector gestureDetector;
-    View.OnTouchListener gestureListener;
-    
-    TextView dateTV;
-    TextView freqTV;
-    TextView liftTV;
-    TextView weightTV;
-    TextView cycleTV;
-    TextView modeTV;
     TextView platesNeeded6;//this is first in list 
     TextView platesNeeded5;
     TextView platesNeeded4;
@@ -160,120 +117,14 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
     TextView platesNeeded_kgExtra2;
     TextView platesNeeded_kgExtra3;
     TextView platesNeeded_kgExtra4;
-    int idCounter;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		idCounter = 0;
-		setContentView(R.layout.activity_fourth);
-		int plateDepth = 0; 
-		dateTV = (TextView) findViewById(R.id.dateTextView);
-		liftTV = (TextView) findViewById(R.id.liftTypeTextView);
-		weightTV = (TextView) findViewById(R.id.weightTextView);
-		cycleTV = (TextView) findViewById(R.id.cycleTextView);
-		modeTV = (TextView) findViewById(R.id.modeTextView);
-		barbellImageView = (ImageView) findViewById(R.id.barbell);
-		
-        // Gesture detection
-        gestureDetector = new GestureDetector(this, new MyGestureDetector());
-        gestureListener = new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return gestureDetector.onTouchEvent(event);
-            }
-        };
-		
-
-		Intent intent = getIntent();
-
-		String date = intent.getStringExtra("date");
-		String cycle = intent.getStringExtra("cycle");
-		String liftType = intent.getStringExtra("liftType");
-		String frequency = intent.getStringExtra("frequency");
-		String firstLiftString = intent.getStringExtra("firstLift");
-		String secondLiftString = intent.getStringExtra("secondLift");
-		String thirdLiftString = intent.getStringExtra("thirdLift");
-		String lbModeString = intent.getStringExtra("mode");
-		setLbMode(lbModeString);
-		setViewModeString(intent.getStringExtra("viewMode"));
-		
-		String frequencyBuffer = null;
-		switch (frequency)
-		{
-		case "5-5-5":
-			frequencyBuffer = "x5";
-			break;
-		case "3-3-3":
-			frequencyBuffer = "x3";
-			break;
-		case "5-3-1":
-			frequencyBuffer = "x5";
-			break;
-		
-		}
-		
-		configureBarbell(firstLiftString);
-		dateTV.setText(date);
-		cycleTV.setText("Cycle: " + cycle);
-		liftTV.setText(liftType);
-		weightTV.setText(firstLiftString + frequencyBuffer);
-		
-
-		//if the weight is greater than 45 (or equal to).... second and third lift will be handled in right swipe intent
-
-		//TODO add back button and 35 support 
-		relativeLayout = (RelativeLayout) findViewById(R.id.individualView);
-		relativeLayout.setOnTouchListener(gestureListener);
-
-		//weight divisions 
-
-
-
-		
-
-
-
-
-	}//end oncreate
 	
+	Context mContext;
 	
-	private void setLbMode(String lbModeString) {
-		
-		int buffer = Integer.valueOf(lbModeString);
-		if (buffer == 1)
-		{
-		lbMode = true;
-		modeTV.setText("Mode: lbs");
-		}
-		else if (buffer == 0)
-		{
-		lbMode = false;
-		modeTV.setText("Mode: kgs");
-		}
-		else
-		{
-		lbMode = null;//create an error
-		modeTV.setText("Mode error!");
-		}
-	}
+    public BarbellConfig (Context context){
+        mContext = context;
+    }
 	
-	boolean getLbMode()
-	{
-		return lbMode;
-	}
-
-
-	void setViewModeString(String viewmodestring)
-	{
-		viewMode = viewmodestring;
-	}
-	
-	String getViewModeString()
-	{
-		return viewMode;
-	}
-	
-	public void configureBarbell(String myFirstLiftString)
+	public void configureBarbell(String myFirstLiftString, ImageView barbellImageView, RelativeLayout relativeLayout)
 	{
 		String firstLiftString = myFirstLiftString;
 		/*if (lbmodeString.contains("Lbs"))
@@ -281,9 +132,11 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 		if (lbmodeString.contains("Kgs"))
 		lbmode = false;*/ //need to figure something out to keep lbmode when viewing an existing projection
 		firstLift = Double.valueOf(firstLiftString);
-		//Toast.makeText(IndividualView.this, date + cycle + liftType + frequency + firstLiftString + lbmodeString, Toast.LENGTH_SHORT).show();
+		//Toast.makeText(mContext, date + cycle + liftType + frequency + firstLiftString + lbmodeString, Toast.LENGTH_SHORT).show();
 		//mode
-		if (getLbMode())
+		IndividualView myView = new IndividualView();
+		
+		if (getLbMode())//TODO add getlbmode to this class?
 		{
 			if (firstLift < 50)//then completely skip UI generation.. could have an empty barbell sprite but meh 	
 			{
@@ -304,7 +157,7 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 				barbellWeight = 135;
 				}
 
-				else if ( (firstLift <= 135) && (firstLift >= 115) && thirtyFiveFlag)//assert: lift must be less than 135 to make it to this else 
+				else if ( (firstLift <= 135) && (firstLift >= 115) /*&& thirtyFiveFlag*/)//assert: lift must be less than 135 to make it to this else 
 				{	
 					barbellImageView.setImageResource(R.drawable.barbell_thirtyfives);
 					barbellWeight = 115;
@@ -326,9 +179,9 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_twopointfives)));
 					barbellWeight = 50;
 				}
-				relativeLayout=  (RelativeLayout) findViewById(R.id.individualView);
-				setContentView(relativeLayout);
-				relativeLayout.setOnClickListener(IndividualView.this); 
+				//relativeLayout=  (RelativeLayout) findViewById(R.id.individualView);
+				//myView.setContentView(relativeLayout);
+				///relativeLayout.setOnClickListener(mContext); 
 
 				PoundPlateComputer platecomputer = new PoundPlateComputer();
 				platecomputer.computeLbPlates(firstLift, barbellWeight);
@@ -340,7 +193,7 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 				tensNeeded = platecomputer.getTensNeeded();
 				fivesNeeded = platecomputer.getFivesNeeded();
 				twopointfivesNeeded = platecomputer.getTwoPointFivesNeeded();
-				ConfigTool helper = new ConfigTool(IndividualView.this);
+				ConfigTool helper = new ConfigTool(mContext);
 				
 				if (fortyfivesNeeded > 0)
 				{
@@ -530,7 +383,7 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 				
 				relativeLayout=  (RelativeLayout) findViewById(R.id.individualView);
 				setContentView(relativeLayout);
-				relativeLayout.setOnClickListener(IndividualView.this); 
+				//relativeLayout.setOnClickListener(mContext); 
 
 				KilogramPlateComputer platecomputer = new KilogramPlateComputer();
 				platecomputer.computeKgPlates(firstLift, barbellWeight);
@@ -708,166 +561,15 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 				
 			}//end else to checking if UI generation is even possible  
 		}
-	}
+	}// end method barbellConfig
 	
-
-	//forward direction (lifts go normal way)
-	//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
-	public void onUpSwipe() throws ParseException
-	{
-		Intent myIntent = getIntent();
-		String DATE_FORMAT = "MM-dd-yyyy";
-	    String date_string = myIntent.getStringExtra("date"); 
-	    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(DATE_FORMAT, java.util.Locale.getDefault());
-	    Date date = (Date)sdf.parse(date_string);
-	    Calendar c1 = Calendar.getInstance();
-		c1.setTimeInMillis(0);
-	    c1.setTime(date);
-
-	    
-	    String liftType = myIntent.getStringExtra("liftType"); 
-		String viewMode = myIntent.getStringExtra("viewMode");
-		String mode = myIntent.getStringExtra("mode");
-		//String[] liftPattern = myIntent.getStringArrayExtra("pattern"); monkey
-		String nextLift = null;
-	    String incrementedString = null;
-		String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
-		//String[] myPattern = {"Squat", "Bench", "Rest", "Deadlift", "OHP", "Rest" };
-	    String[] result = new String[2];
-	    ConfigTool helper = new ConfigTool(IndividualView.this);
-		result = helper.getNextLift(c1, myPattern, liftType, viewMode);//getNextLiftDefault returns a result array which has nextLift and incrementedString
-		nextLift = result[0];
-		incrementedString = result[1];
-
-			    
-	    Intent nextLiftIntent = helper.configureNextSet(incrementedString, nextLift, viewMode, mode/*, liftPattern*/);//monkey
-	    if (!helper.bottomCase())
-	    {
-	    	startActivity(nextLiftIntent);
-			overridePendingTransition(0,R.anim.exit_slide_up);
-	    }
-	    
-	   
-	}
-	
-	public void onDownSwipe() throws ParseException
-	{
-		Intent myIntent = getIntent();
-		
-		String DATE_FORMAT = "MM-dd-yyyy";
-	    String date_string = myIntent.getStringExtra("date"); 
-	    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(DATE_FORMAT, java.util.Locale.getDefault());
-	    Date date = (Date)sdf.parse(date_string);
-	    Calendar c1 = Calendar.getInstance();
-		c1.setTimeInMillis(0);
-	    c1.setTime(date);
-
-	    
-	    String liftType = myIntent.getStringExtra("liftType"); 
-	    String nextLift = null;
-	    String incrementedString = null;
-		String viewMode = myIntent.getStringExtra("viewMode");
-		String mode = myIntent.getStringExtra("mode");
-		//String[] myPattern = {"Squat", "Bench", "Rest", "Deadlift", "OHP", "Rest" };
-		String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
-	     String[] result = new String[2];
-		//String[] liftPattern = myIntent.getStringArrayExtra("pattern"); monkey
-	     ConfigTool helper = new ConfigTool(IndividualView.this);
-		 result = helper.getPrevLift(c1, myPattern, liftType, viewMode);//getNextLiftDefault returns a result array which has nextLift and incrementedString
-		 nextLift = result[0];
-		 incrementedString = result[1];
-	    
-	    
-	    
-	    Intent prevLiftIntent =  helper.configurePreviousSet(incrementedString, nextLift, viewMode, mode/*, liftPattern*/);
-	    if (!helper.topCase())
-	    {
-	    	startActivity(prevLiftIntent);
-	    	overridePendingTransition(0,R.anim.exit_slide_down);
-	    }
-	   
-	}
-	
-	
-	
-	
-	@Override
-	public void onBackPressed() {
-		
-		Intent intent = new Intent(IndividualView.this, ThirdScreen.class);
-		intent.putExtra("origin", "individualView");//reusing flag I use to jump to third from first. 
-		intent.putExtra("viewMode", getViewModeString());
-		startActivity(intent);
-		overridePendingTransition(0,R.anim.exit_slide_right);
-	}
-	
-    class MyGestureDetector extends SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            try {
-               // if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                //    return false;
-                // right to left swipe
-                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    forwardSwipe(); 
-                }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    onBackPressed();
-                }
-                
-                //up and down swipes 
-                if(e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                    onUpSwipe();
-                }  else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                    onDownSwipe();
-                }
-                
-                
-                
-                
-            } catch (Exception e) {
-                // nothing
-            }
-            return false;
-        }
-
-            @Override
-        public boolean onDown(MotionEvent e) {
-              return true;
-        }
-    }
-	
-	
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-
-
-
 	public void dynamicAddPlate(int resource)
 	{
 		barbellImageView = (ImageView) findViewById(R.id.barbell);
 		
 		//Right/left 45 Setup
-		CURRENT_RIGHT_IMAGEVIEW = new ImageView(IndividualView.this);
-		CURRENT_LEFT_IMAGEVIEW = new ImageView(IndividualView.this);
+		CURRENT_RIGHT_IMAGEVIEW = new ImageView(mContext);
+		CURRENT_LEFT_IMAGEVIEW = new ImageView(mContext);
 		//setting image resource
 		//setting image position
 		CURRENT_RIGHT_IMAGEVIEW.setImageResource(resource);
@@ -912,43 +614,18 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 		
 
 	}
-
-    public void forwardSwipe()
-    {
-		Intent intent = getIntent();
-		String date = intent.getStringExtra("date");
-		String cycle = intent.getStringExtra("cycle");
-		String liftType = intent.getStringExtra("liftType");
-		String frequency = intent.getStringExtra("frequency");
-		String firstLiftString = intent.getStringExtra("firstLift");
-		String secondLiftString = intent.getStringExtra("secondLift");
-		String thirdLiftString = intent.getStringExtra("thirdLift");
-		String lbmodeString = intent.getStringExtra("mode");
-		
-		
-		Intent forwardIntent  = new Intent(IndividualView.this, IndividualViewTwo.class);
-		forwardIntent.putExtra("cycle", cycle);
-		forwardIntent.putExtra("frequency", frequency);
-		forwardIntent.putExtra("liftType", liftType);
-		forwardIntent.putExtra("firstLift", firstLiftString);
-		forwardIntent.putExtra("secondLift", secondLiftString);
-		forwardIntent.putExtra("thirdLift", thirdLiftString);
-		forwardIntent.putExtra("date", date);
-		forwardIntent.putExtra("mode", lbmodeString);
-		startActivity(forwardIntent);
-    }
-	
-
-	//research reflection... I think that may be what you w
-
+    
+    
 	public void moveOut ()
 	{
-		idCounter++;
-		switch (idCounter)
+		IndividualView viewInstantiation = new IndividualView();
+		
+		viewInstantiation.idCounter++;
+		switch (viewInstantiation.idCounter)
 		{
 		case 1://first time this is called our anchor for the left and right plate will be the same--the barbell.
-			CURRENT_LEFT_ANCHOR_ID  = R.id.barbell;
-			CURRENT_RIGHT_ANCHOR_ID = R.id.barbell;
+			viewInstantiation.CURRENT_LEFT_ANCHOR_ID  = R.id.barbell;
+			viewInstantiation.CURRENT_RIGHT_ANCHOR_ID = R.id.barbell;
 			CURRENT_RIGHT_IMAGEVIEW = RIGHTFORTYFIVEIMAGEVIEW;
 			CURRENT_LEFT_IMAGEVIEW  = LEFTFORTYFIVEIMAGEVIEW;
 			CURRENT_LEFT_ID         = LEFT_PLATE_ID_DEPTH1;
@@ -1031,57 +708,30 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 		}
 
 	}//end method moveOut()
-
-
-	public int getLeftAnchorId()
+	
+	
+	boolean getLbMode()
 	{
-		return CURRENT_LEFT_ANCHOR_ID;
+		return lbMode;
 	}
-
-	public int getRightAnchorId()
-	{
-		return CURRENT_RIGHT_ANCHOR_ID;
+	
+	void setLbMode(String lbModeString, TextView modeTV) {
+		int buffer = Integer.valueOf(lbModeString);
+		if (buffer == 1)
+		{
+		lbMode = true;
+		modeTV.setText("Mode: lbs");
+		}
+		else if (buffer == 0)
+		{
+		lbMode = false;
+		modeTV.setText("Mode: kgs");
+		}
+		else
+		{
+		lbMode = null;//create an error
+		modeTV.setText("Mode error!");
+		}
 	}
-
-	public int getCurrentLeftId()
-	{
-		return CURRENT_LEFT_ID;
-	}
-
-	public int getCurrentRightId()
-	{
-		return CURRENT_RIGHT_ID;
-	}
-
-
-	public ImageView getCurrentLeftImageView()
-	{
-		return CURRENT_RIGHT_IMAGEVIEW;
-	}
-
-	public ImageView getCurrentRightImageView()
-	{
-		return CURRENT_LEFT_IMAGEVIEW;
-	}
-
-	public RelativeLayout.LayoutParams getCurrentLeftLp()
-	{
-		return CURRENT_LEFT_LP;
-	}
-
-	public RelativeLayout.LayoutParams getCurrentRightLp()
-	{
-		return CURRENT_RIGHT_LP;
-	}
-
-	@Override
-	public void onClick(View v) {
-        Filter f = (Filter) v.getTag();
-        //FilterFullscreenActivity.show(this, input, f);
-		
-	}
-
-
-
-
+	
 }

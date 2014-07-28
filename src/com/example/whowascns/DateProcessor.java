@@ -10,8 +10,8 @@ import java.util.Date;
 //DateProcessor.java- processes dates passed to it in ThirdScreen-the main algorithm of this program
 public class DateProcessor {
 	//day classification definition (Proper call syntax- String myString = Lift.Bench.name())
-	enum Lift {Bench, Squat, REST1, OHP, Deadlift, REST2};  
-
+	enum Lift {Bench, Squat, OHP, Deadlift, REST};  
+	
 
 	//Frequency definitions 
 	String freq5 = "5-5-5";
@@ -55,10 +55,10 @@ public class DateProcessor {
 
 
 	//Currency definitions 
-	String CURRENT_LIFT = Lift.Bench.name(); //for now this is start
+	static String CURRENT_LIFT = Lift.Bench.name(); //for now this is start
 	String CURRENT_FREQUENCY = freq5;
 	Integer CURRENT_CYCLE = 1;
-	int liftTrack = 2;//because we want to progress from bench (if we stayed at one bench would happen twice at the incrementing of the lift) 
+	int liftTrack = 0;//because we want to progress from bench (if we stayed at one bench would happen twice at the incrementing of the lift) 
 	int freqTrack = 2;//because we want to progress from fives (if we stayed at one freq would be fives twice when incrementing frequency)
 	Double CURRENT_FIRST;
 	Double CURRENT_SECOND;
@@ -68,7 +68,7 @@ public class DateProcessor {
 	SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault()); // date format only needs to be declared once. Is not and won't be changing (Unless users really want a changable date format...)
 
 
-
+	static int patternSize; //size of user specified pattern
 	//logic is funky but will stay for now
 	public void setStartingDate (String myDate)
 	{
@@ -274,44 +274,27 @@ public class DateProcessor {
 
 	//Lift (and cycle if needed) incrementing function
 	//PERCENTAGE definitions
-	public void incrementLift()
+	public void incrementLift(String[] myPattern, String currentLift)
 	{
-		switch (liftTrack)
+		//NAMES ASSIGNED ARE BASED ON ENUM::
+		
+		//#####****
+		//enum Lift {Bench, Squat, OHP, Deadlift, REST};  
+		//liftTrack will have to be
+		//need separate variable (static? like lifttrack that holds patternSize
+		if (liftTrack + 1 < patternSize)
 		{
-		case 1:
-			CURRENT_LIFT = Lift.Bench.name();
-			liftTrack++;
-			break;
-
-		case 2:
-			CURRENT_LIFT=Lift.Squat.name();
-			liftTrack++;
-			break;
-
-		case 3:
-			CURRENT_LIFT=Lift.REST1.name();
-			liftTrack++;
-			break;
-
-		case 4:
-			CURRENT_LIFT=Lift.OHP.name();
-			liftTrack++;
-			break;
-
-		case 5:
-			CURRENT_LIFT=Lift.Deadlift.name();
-			liftTrack++;
-			break;
-
-		case 6:
-			CURRENT_LIFT=Lift.REST2.name();
-			liftTrack = 1;
-			incrementFreq();
-			break;
-
-		default:
-			CURRENT_LIFT="incrementLift ERROR:<";
+		liftTrack++;
+		CURRENT_LIFT = myPattern[liftTrack];//assign currentLift to be the next one in the patten
+		//if it's a rest day that is taken care of in getCurrentTM by returning 0 which will be rooted out on insertion (onlys tms > 0)
 		}
+		else if ( (liftTrack + 1) == patternSize)
+			{
+					liftTrack = 0;//reset our liftTrack
+					incrementFreq();
+			}
+		
+		
 	}//end method incrementLift
 
 	//Method to increment frequency-(only called within incrementLift)
@@ -360,20 +343,6 @@ public class DateProcessor {
 
 
 	//to be called after a regular increment (just go to next day)
-	void increment()
-	{
-		incrementDay();
-		incrementLift();
-	}
-
-
-	void incrementRest()
-	{
-		incrementDay();
-		incrementDay();
-		incrementLift();
-		incrementLift();
-	}
 
 
 	//Calculation methods
@@ -407,6 +376,42 @@ public class DateProcessor {
 	double round(double i, int v) //first argument is rounded, 
 	{
 		return (double) (Math.round(i/v) * v);
+	}
+
+	public void initializePatternSize(int length) {
+		patternSize = length;
+		
+	}
+
+	
+	
+	//enum Lift {Bench, Squat, OHP, Deadlift, REST};  
+	public void setCurrentLift(String lift) {
+		if (lift.equals("Bench") || lift.equals("Squat") || lift.equals("OHP") || lift.equals("Deadlift") || lift.equals("Rest"))
+		CURRENT_LIFT = lift;
+		else
+			CURRENT_LIFT = "ERROR";
+		
+	}
+
+	public double getCurrentTM() {
+	
+		switch (CURRENT_LIFT)	
+		{
+		case "Bench":
+			return getBenchTM();
+		case "Squat":
+			return getSquatTM();
+		case "OHP":
+			return getOHPTM();
+		case "Deadlift":
+			return getDeadTM();
+		case "Rest":
+			return 0;
+		default://if something falls to here something is screwy, so let's return something screwy because I am a young coder who doesn't know how to be robust
+			return 999;	
+		}
+		
 	}
 
 }

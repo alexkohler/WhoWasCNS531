@@ -78,6 +78,7 @@ public class ThirdScreen extends Activity {
 
 	static CURRENT_VIEW curView = CURRENT_VIEW.DEFAULT;//start with default (show all) view (for overview)
 
+	static String[] liftPattern;
 
 	CURRENT_VIEW individualCV; //for individual view
 	CURRENT_FREQ individualFreq; //^^
@@ -100,6 +101,7 @@ public class ThirdScreen extends Activity {
 		Intent intent = getIntent();
 
 		String startingDate = intent.getStringExtra("key2");
+		
 
 		
 		eventsData = new EventsDataSQLHelper(this);
@@ -965,7 +967,6 @@ public class ThirdScreen extends Activity {
 						String mode = String.valueOf(lbMode);
 						
 						
-						
 
 						intent.putExtra("cycle", myCycle);
 						intent.putExtra("frequency", myFrequency);
@@ -977,6 +978,7 @@ public class ThirdScreen extends Activity {
 						intent.putExtra("date", myDate);
 						intent.putExtra("mode", mode);
 						intent.putExtra("viewMode", viewMode);
+						//intent.putExtra(liftPattern, "pattern"); monkey
 
 
 						startActivity(intent);
@@ -1081,79 +1083,61 @@ public class ThirdScreen extends Activity {
 
 			private void calculateCycle()
 			{
-
-
+				//(max pattern of 7 days), 
+				//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  }; //be sure to use default naming patterns (like you've used in rest of program) 
+				//lets give the patern it's been dealing with since the start, however, now it's hopefully in a generalized algorithm
+				String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
+				//String[] myPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
+				//String[] myPattern = {"Squat", "Bench", "Rest", "Deadlift", "OHP", "Rest" };
+				
+				Processor.initializePatternSize(myPattern.length);//separate variable from liftTrack
 				Processor.setCycle(1);
 				for (int i=0; i < getNumberCycles(); i++) 
 				{
-					//bench fives
-					Processor.calculateFivesDay(Processor.getBenchTM());
-
-					addEvent();
-					Processor.increment();
-
-					//Squat fives
-					Processor.calculateFivesDay(Processor.getSquatTM());
-					addEvent();
-					Processor.incrementRest();
-
-					//OHP Fives 
-					Processor.calculateFivesDay(Processor.getOHPTM());
-					addEvent();
-					Processor.increment();
-
-					//Dead Fives
-					Processor.calculateFivesDay(Processor.getDeadTM());
-					addEvent();
-					Processor.incrementRest();
-
-					//bench triples
-					Processor.calculateTriplesDay(Processor.getBenchTM());
-					addEvent();
-					Processor.increment();
-
-
-					//Squat triples
-					Processor.calculateTriplesDay(Processor.getSquatTM());
-					addEvent();
-					Processor.incrementRest();
-
-					//OHP triples 
-					Processor.calculateTriplesDay(Processor.getOHPTM());
-					addEvent();
-					Processor.increment();
-
-					//bin
+					for (int j=0; j < myPattern.length; j++){
+					//create setCurrentLift function that sets current lift based on an enum
+					Processor.setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
+					//calculate fives day will have to be revamped - 
+						if (Processor.getCurrentTM() > 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
+							Processor.calculateFivesDay(Processor.getCurrentTM());
+							addEvent();
+						}
+					Processor.incrementDay();//for sake of being less cryptic i am separating increment because it was too small. if only i could fix my functions that are too big.
+					Processor.incrementLift(myPattern, myPattern[j]);//no matter what the day, we still need to incrementCycleAndUpdateTMs
+					}
 					
-					//Dead triples
-					Processor.calculateTriplesDay(Processor.getDeadTM());
-					addEvent();
-					Processor.incrementRest();
+					
+					for (int j=0; j < myPattern.length; j++){
+					//create setCurrentLift function that sets current lift based on an enum
+					Processor.setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
+					//calculate fives day will have to be revamped - 
+						if (Processor.getCurrentTM()> 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
+							Processor.calculateTriplesDay(Processor.getCurrentTM());
+							addEvent();
+						}
+					Processor.incrementDay();//no matter what the day, we still need to incrementCycleAndUpdateTMs
+					Processor.incrementLift(myPattern, myPattern[j]);
+					}
+					
+					for (int j=0; j < myPattern.length; j++){
+					//create setCurrentLift function that sets current lift based on an enum
+					Processor.setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
+					//calculate fives day will have to be revamped - 
+						if (Processor.getCurrentTM()> 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
+							Processor.calculateSingleDay(Processor.getCurrentTM());
+							addEvent();
+						}
+						Processor.incrementDay();//no matter what the day, we still need to incrementCycleAndUpdateTMs
+						Processor.incrementLift(myPattern, myPattern[j]);
+					}
+					
+					Processor.incrementCycleAndUpdateTMs();//still needs to be within loop
+					}
 
-					//bench single
-					Processor.calculateSingleDay(Processor.getBenchTM());
-					addEvent();
-					Processor.increment();
-
-					//Squat single
-					Processor.calculateSingleDay(Processor.getSquatTM());
-					addEvent();
-					Processor.incrementRest();
-
-					//OHP single 
-					Processor.calculateSingleDay(Processor.getOHPTM());
-					addEvent();
-					Processor.increment();
-
-					//Dead single
-					Processor.calculateSingleDay(Processor.getDeadTM());
-					addEvent();
-					Processor.incrementRest();
-
-					Processor.incrementCycleAndUpdateTMs();
+					
 				}
 
-			}
+			
 
 			double roundtoTwoDecimals(double d) 
 			{
