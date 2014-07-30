@@ -44,8 +44,10 @@ Who Was CNS 531 project progress
 7-22: Plugged in entirely new UI for third screen. Now uses dynamically created tablerows and looks oh so much better
 7-23: Found a proper display for training maxes and config button
 7-24: Finally plugged in logic that will support custom patterns of whatever user wants to do the lifts in. Still need to fix indidivual view scrolling. Currently have default scrolling implemented, but nothing else. Also need to rig up actual pattern chooser so I can really throw some test cases at my algorithms. (mostly my view ones, I'm pretty sure my calculate one is right.) 
-
+7-28: Lost log entries somewhere in a commit. whoops. Continuing to refactor today.
+7-28: set up hardware acceleration on linux machine, my life is a million times better now. Except for refactoring. In that sense I'd rather be on fire. Slowly but surely slimming classes down, not going to spend much more time on it.
  bug/suggestion list
+
 
 TO DO:.
  

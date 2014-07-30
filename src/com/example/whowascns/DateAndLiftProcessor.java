@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 //DateProcessor.java- processes dates passed to it in ThirdScreen-the main algorithm of this program
-public class DateProcessor {
+public class DateAndLiftProcessor {
 	//day classification definition (Proper call syntax- String myString = Lift.Bench.name())
 	enum Lift {Bench, Squat, OHP, Deadlift, REST};  
 	
@@ -149,7 +149,7 @@ public class DateProcessor {
 			if (UNIT_MODE_LBS)//lbs
 				CURRENT_FIRST =  round(CURRENT_FIRST, 5);//return first lift rounded to nearest 5lb
 			if (!UNIT_MODE_LBS)
-				CURRENT_FIRST = round(CURRENT_FIRST, 1);//return first lift rounded to nearest 1kg
+				CURRENT_FIRST = roundkg(CURRENT_FIRST, 2.5);//return first lift rounded to nearest 1kg
 		}	
 
 
@@ -163,7 +163,7 @@ public class DateProcessor {
 			if (UNIT_MODE_LBS)//lbs
 				CURRENT_SECOND =  round(CURRENT_SECOND, 5);//return first lift rounded to nearest 5lb
 			if (!UNIT_MODE_LBS)
-				CURRENT_SECOND = round(CURRENT_SECOND, 1);//return first lift rounded to nearest 1kg
+				CURRENT_SECOND = roundkg(CURRENT_SECOND, 2.5);//return first lift rounded to nearest 1kg
 		}	
 
 
@@ -177,7 +177,7 @@ public class DateProcessor {
 			if (UNIT_MODE_LBS)//lbs
 				CURRENT_THIRD =  round(CURRENT_THIRD, 5);//return first lift rounded to nearest 5lb
 			if (!UNIT_MODE_LBS)
-				CURRENT_THIRD = round(CURRENT_THIRD, 1);//return first lift rounded to nearest 1kg
+				CURRENT_THIRD = roundkg(CURRENT_THIRD, 2.5);//return first lift rounded to nearest 1kg
 		}	
 
 
@@ -373,11 +373,16 @@ public class DateProcessor {
 
 
 
-	double round(double i, int v) //first argument is rounded, 
+	double roundkg(double i, double v) //first argument is rounded, 
 	{
 		return (double) (Math.round(i/v) * v);
 	}
 
+	double round(double i, int v) //first argument is rounded, 
+	{
+		return (double) (Math.round(i/v) * v);
+	}
+	
 	public void initializePatternSize(int length) {
 		patternSize = length;
 		
@@ -413,5 +418,61 @@ public class DateProcessor {
 		}
 		
 	}
+
+	void calculateCycle(ThirdScreen thirdScreen)
+	{
+		//(max pattern of 7 days), 
+		//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  }; //be sure to use default naming patterns (like you've used in rest of program) 
+		//lets give the patern it's been dealing with since the start, however, now it's hopefully in a generalized algorithm
+		String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
+		//String[] myPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
+		//String[] myPattern = {"Squat", "Bench", "Rest", "Deadlift", "OHP", "Rest" };
+		
+		initializePatternSize(myPattern.length);//separate variable from liftTrack
+		setCycle(1);
+		for (int i=0; i < thirdScreen.getNumberCycles(); i++) 
+		{
+			for (int j=0; j < myPattern.length; j++){
+			//create setCurrentLift function that sets current lift based on an enum
+			setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
+			//calculate fives day will have to be revamped - 
+				if (getCurrentTM() > 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
+					calculateFivesDay(getCurrentTM());
+					thirdScreen.eventsData.addEvent(thirdScreen);
+				}
+			incrementDay();//for sake of being less cryptic i am separating increment because it was too small. if only i could fix my functions that are too big.
+			incrementLift(myPattern, myPattern[j]);//no matter what the day, we still need to incrementCycleAndUpdateTMs
+			}
+			
+			
+			for (int j=0; j < myPattern.length; j++){
+			//create setCurrentLift function that sets current lift based on an enum
+			setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
+			//calculate fives day will have to be revamped - 
+				if (getCurrentTM()> 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
+					calculateTriplesDay(getCurrentTM());
+					thirdScreen.eventsData.addEvent(thirdScreen);
+				}
+			incrementDay();//no matter what the day, we still need to incrementCycleAndUpdateTMs
+			incrementLift(myPattern, myPattern[j]);
+			}
+			
+			for (int j=0; j < myPattern.length; j++){
+			//create setCurrentLift function that sets current lift based on an enum
+			setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
+			//calculate fives day will have to be revamped - 
+				if (getCurrentTM()> 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
+					calculateSingleDay(getCurrentTM());
+					thirdScreen.eventsData.addEvent(thirdScreen);
+				}
+				incrementDay();//no matter what the day, we still need to incrementCycleAndUpdateTMs
+				incrementLift(myPattern, myPattern[j]);
+			}
+			
+			incrementCycleAndUpdateTMs();//still needs to be within loop
+			}
+	
+			
+		}
 
 }

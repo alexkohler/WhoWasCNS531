@@ -70,6 +70,7 @@
         android:layout_below="@+id/platesNeeded2_activity_three"
         android:layout_centerHorizontal="true"
         android:text="@string/twopointfive_text_test"
+         android:contentDescription ="@string/base_barbell_desc"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -87,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/weightTextView_activity_three"
         android:layout_centerHorizontal="true"
-        android:text="Large Text"
+        android:text="@string/lift_type"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -133,34 +134,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/platesNeeded2_activity_three"
         android:layout_below="@+id/platesNeeded1_activity_three"
-        android:text="@string/twos_text_test"
+        android:text="@string/onepointtwofive_text_test"
+        android:layout_centerHorizontal="true" 
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/platesNeeded_kgExtra2_activity_three"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/platesNeeded_kgExtra1_activity_three"
-        android:layout_centerHorizontal="true"
-        android:text="@string/onepointfive_text_test"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/platesNeeded_kgExtra4_activity_three"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/platesNeeded_kgExtra2_activity_three"
-        android:layout_below="@+id/platesNeeded_kgExtra3_activity_three"
-        android:text="@string/pointfives_text_test"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/platesNeeded_kgExtra3_activity_three"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/platesNeeded_kgExtra4_activity_three"
-        android:layout_below="@+id/platesNeeded_kgExtra2_activity_three"
-        android:text="@string/ones_text_test"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

@@ -79,7 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/weightTextView"
         android:layout_centerHorizontal="true"
-        android:text="Large Text"
+        android:text="@string/lift_type"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -115,7 +115,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/barbell_fortyfives_lb" />
+        android:src="@drawable/barbell_fortyfives_lb"
+        android:contentDescription ="@string/base_barbell_desc" />
 
     <TextView
         android:id="@+id/liftNumberTextView"
@@ -130,36 +131,9 @@
         android:id="@+id/platesNeeded_kgExtra1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/platesNeeded2"
         android:layout_below="@+id/platesNeeded1"
-        android:text="@string/twos_text_test"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/platesNeeded_kgExtra2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/platesNeeded_kgExtra1"
         android:layout_centerHorizontal="true"
-        android:text="@string/onepointfive_text_test"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/platesNeeded_kgExtra4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/platesNeeded_kgExtra2"
-        android:layout_below="@+id/platesNeeded_kgExtra3"
-        android:text="@string/pointfives_text_test"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/platesNeeded_kgExtra3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/platesNeeded_kgExtra4"
-        android:layout_below="@+id/platesNeeded_kgExtra2"
-        android:text="@string/ones_text_test"
+        android:text="@string/onepointtwofive_text_test"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

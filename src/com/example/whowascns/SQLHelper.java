@@ -3,7 +3,6 @@ package com.example.whowascns;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 import android.util.Log;
 
 /** Helper to the database, manages versions and creation */

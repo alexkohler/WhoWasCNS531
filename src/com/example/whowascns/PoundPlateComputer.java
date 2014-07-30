@@ -24,7 +24,7 @@ public class PoundPlateComputer {
 	String currentPlateName;
 
 
-	public void computeLbPlates (double myWeight, double barbellUsed)
+	public void computeLbPlates (double myWeight, double barbellUsed, Boolean lbFlags[])
 	{
 		weight = myWeight - barbellUsed;
 		plateWeight = round (weight, 5);

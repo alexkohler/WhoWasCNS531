@@ -29,7 +29,7 @@
 	<string name="lb_kg_text_view">Lb/Kg:</string>
 	
 	<string name="unit_mode_text_view">Mode:</string>
-	<string name="rounding_checkbox_text">Round to nearest 5lb/1kg?</string>
+	<string name="rounding_checkbox_text">Round to nearest 5lb/2.5kg?</string>
 	
 	<string-array name="cycles_array">
         <item>0</item>
@@ -53,15 +53,21 @@
 	<string name="ten_text_test">10s needed: X</string>
 	<string name="five_text_test">5s needed: X</string>
 	<string name="twopointfive_text_test">2.5s needed: X</string>
-	<string name="twos_text_test">2s needed: X</string>
-	<string name="onepointfive_text_test">1.5s needed: X</string>
-	<string name="ones_text_test">1s needed: X</string>
-	<string name="pointfives_text_test">.5s needed: X</string>
+	<string name="onepointtwofive_text_test">1.25s needed: X</string>
 	<string name="lift_one_tv">Lift 1</string>
 	<string name="lift_two_tv">Lift 2</string>
 	<string name="lift_three_tv">Lift 3</string>	
+	<string name="lift_type">Lift Type</string>	
+	<string name="base_barbell_desc">Base barbell</string>	
 	
 	
 	
-	
+	<string name="date_column">Date</string>	
+	<string name="cycle_column">Cycle</string>	
+	<string name="lift_column">Lift</string>	
+	<string name="freq_column">Freq</string>	
+	<string name="first_lift_column">1st</string>
+	<string name="second_lift_column">2nd</string>
+	<string name="third_lift_column">3rd</string>
+	<string name="training_maxes_text_test">Training maxes go here</string>
 </resources>

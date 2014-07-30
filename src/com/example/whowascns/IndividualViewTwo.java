@@ -1,11 +1,8 @@
 package com.example.whowascns;
 
-import java.text.DecimalFormat;
-
+import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.GestureDetector;
@@ -121,14 +118,11 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 	int tensNeeded_kg;
 	int fivesNeeded_kg;
 	int twopointfivesNeeded_kg;
-	int twosNeeded_kg;
-	int onepointfivesNeeded_kg;
-	int onesNeeded_kg;
-	int pointfivesNeeded_kg;
+	int onepointtwofivesNeeded_kg;
 	
 
     private static final int SWIPE_MIN_DISTANCE = 170;
-    private static final int SWIPE_MAX_OFF_PATH = 100;
+//    private static final int SWIPE_MAX_OFF_PATH = 100;
     private static final int SWIPE_THRESHOLD_VELOCITY = 100;
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
@@ -145,9 +139,6 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
     TextView platesNeeded2;
     TextView platesNeeded1;
     TextView platesNeeded_kgExtra1;
-    TextView platesNeeded_kgExtra2;
-    TextView platesNeeded_kgExtra3;
-    TextView platesNeeded_kgExtra4;
     int idCounter;
 
 	@Override
@@ -155,7 +146,6 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 		super.onCreate(savedInstanceState);
 		idCounter = 0;
 		setContentView(R.layout.activity_fifth);
-		int plateDepth = 0; 
 		dateTV = (TextView) findViewById(R.id.dateTextView_activity_two);
 		cycleTV = (TextView) findViewById(R.id.cycleTextView_activity_two);
 		liftTV = (TextView) findViewById(R.id.liftTypeTextView_activity_two);
@@ -168,9 +158,6 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 		platesNeeded2 = (TextView) findViewById(R.id.platesNeeded2_activity_two);
 		platesNeeded1 = (TextView) findViewById(R.id.platesNeeded1_activity_two);
 		platesNeeded_kgExtra1 = (TextView) findViewById(R.id.platesNeeded_kgExtra1_activity_two);
-		platesNeeded_kgExtra2 = (TextView) findViewById(R.id.platesNeeded_kgExtra2_activity_two);
-		platesNeeded_kgExtra3 = (TextView) findViewById(R.id.platesNeeded_kgExtra3_activity_two);
-		platesNeeded_kgExtra4 = (TextView) findViewById(R.id.platesNeeded_kgExtra4_activity_two);//chacaron
 		barbellImageView = (ImageView) findViewById(R.id.barbell_activity_two);
 		
         // Gesture detection
@@ -188,9 +175,9 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 		String cycle = intent.getStringExtra("cycle");
 		String liftType = intent.getStringExtra("liftType");
 		String frequency = intent.getStringExtra("frequency");
-		String firstLiftString = intent.getStringExtra("firstLift");
+//		String firstLiftString = intent.getStringExtra("firstLift");
 		String secondLiftString = intent.getStringExtra("secondLift");
-		String thirdLiftString = intent.getStringExtra("thirdLift");
+//		String thirdLiftString = intent.getStringExtra("thirdLift");
 		String lbmodeString = intent.getStringExtra("mode");
 		setLbMode(lbmodeString);
 		String frequencyBuffer = null;
@@ -219,7 +206,7 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 		//if the weight is greater than 45 (or equal to).... second and third lift will be handled in right swipe intent
 
 		//TODO add back button and 35 support 
-
+		relativeLayout =  (RelativeLayout) findViewById(R.id.individualViewTwo);
 		relativeLayout.setOnTouchListener(gestureListener);
 
 		//weight divisions 
@@ -312,7 +299,8 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 				relativeLayout.setOnClickListener(IndividualViewTwo.this); 
 
 				PoundPlateComputer platecomputer = new PoundPlateComputer();
-				platecomputer.computeLbPlates(firstLift, barbellWeight);
+				Boolean[] satisfier = null;
+				platecomputer.computeLbPlates(firstLift, barbellWeight, satisfier);
 				
 				
 				fortyfivesNeeded = platecomputer.getFortyFivesNeeded();
@@ -412,9 +400,6 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 				relativeLayout.invalidate();
 				
 				platesNeeded_kgExtra1 = (TextView) findViewById(R.id.platesNeeded_kgExtra1_activity_two);
-				platesNeeded_kgExtra2 = (TextView) findViewById(R.id.platesNeeded_kgExtra2_activity_two);
-				platesNeeded_kgExtra3 = (TextView) findViewById(R.id.platesNeeded_kgExtra3_activity_two);
-				platesNeeded_kgExtra4 = (TextView) findViewById(R.id.platesNeeded_kgExtra4_activity_two);//chacaron
 				platesNeeded6.setText("45s needed: " + fortyfivesNeeded);
 				platesNeeded5.setText("35s needed: " + thirtyfivesNeeded);
 				platesNeeded4.setText("25s needed: " + twentyfivesNeeded);
@@ -422,9 +407,7 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 				platesNeeded2.setText("5s needed: " + fivesNeeded);
 				platesNeeded1.setText("2.5s needed: " + twopointfivesNeeded);
 				platesNeeded_kgExtra1.setVisibility(View.INVISIBLE);
-				platesNeeded_kgExtra2.setVisibility(View.INVISIBLE);
-				platesNeeded_kgExtra3.setVisibility(View.INVISIBLE);
-				platesNeeded_kgExtra4.setVisibility(View.INVISIBLE);
+
 	
 			}//end else to checking if UI generation is even possible  
 
@@ -481,25 +464,10 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_twopointfive_kg)));
 					barbellWeight = 25;
 				}
-				else if ((firstLift <= 25) && (firstLift >= 24) )
-				{	
-					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_two_kg)));
-					barbellWeight = 24;
-				}
-				else if ((firstLift <= 24) && (firstLift >= 23) )
-				{	
-					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_onepointfive_kg)));
-					barbellWeight = 23;
-				}
 				else if ((firstLift <= 23) && (firstLift >= 22) )
 				{	
 					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_one_kg)));
-					barbellWeight = 22;
-				}
-				else if ((firstLift <= 22) && (firstLift >= 21) )
-				{	
-					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_pointfive_kg)));
-					barbellWeight = 21;
+					barbellWeight = 23;
 				}
 				
 				relativeLayout=  (RelativeLayout) findViewById(R.id.individualViewTwo);
@@ -507,7 +475,8 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 				relativeLayout.setOnClickListener(IndividualViewTwo.this); 
 
 				KilogramPlateComputer platecomputer = new KilogramPlateComputer();
-				platecomputer.computeKgPlates(firstLift, barbellWeight);
+				Boolean[] satisifer = null;
+				platecomputer.computeKgPlates(firstLift, barbellWeight, satisifer);
 				
 				
 				 twentyfivesNeeded_kg = platecomputer.getTwentyFivesNeeded();
@@ -516,10 +485,11 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 				 tensNeeded_kg = platecomputer.getTensNeeded();
 				 fivesNeeded_kg = platecomputer.getFivesNeeded();
 				 twopointfivesNeeded_kg = platecomputer.getTwopointfivesNeeded();
-				 twosNeeded_kg = platecomputer.getTwosNeeded();
-				 onepointfivesNeeded_kg = platecomputer.getOnepointfivesNeeded();
-				 onesNeeded_kg = platecomputer.getOnesNeeded();
-				 pointfivesNeeded_kg = platecomputer.getPointfivesNeeded();
+				 onepointtwofivesNeeded_kg = platecomputer.getOnepointtwofivesNeeded();
+//				 twosNeeded_kg = platecomputer.getTwosNeeded();
+//				 onepointfivesNeeded_kg = platecomputer.getOnepointfivesNeeded();
+//				 onesNeeded_kg = platecomputer.getOnesNeeded();
+//				 pointfivesNeeded_kg = platecomputer.getPointfivesNeeded();
 				
 				
 				
@@ -583,43 +553,14 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 				}
 				}
 				
-				if (twosNeeded_kg > 0)
-				{
-				int iterations = twosNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
-				for (int i=0; i < iterations; i++)
-				{
-				moveOut();
-				dynamicAddPlate(R.drawable.plate_two_kg);
-				}
-				}
 				
-				if (onepointfivesNeeded_kg > 0)
+				if (onepointtwofivesNeeded_kg > 0)
 				{
-				int iterations = onepointfivesNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
+				int iterations = onepointtwofivesNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
 				for (int i=0; i < iterations; i++)
 				{
 				moveOut();
 				dynamicAddPlate(R.drawable.plate_onepointfive_kg);
-				}
-				}
-				
-				if (onesNeeded_kg > 0)
-				{
-				int iterations = onesNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
-				for (int i=0; i < iterations; i++)
-				{
-				moveOut();
-				dynamicAddPlate(R.drawable.plate_one_kg);
-				}
-				}
-				
-				if (pointfivesNeeded_kg > 0)
-				{
-				int iterations = pointfivesNeeded_kg / 2; //e.g. 6 plates = 3 iterations  
-				for (int i=0; i < iterations; i++)
-				{
-				moveOut();
-				dynamicAddPlate(R.drawable.plate_pointfive_kg);
 				}
 				}
 				
@@ -646,14 +587,8 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 					twopointfivesNeeded_kg = twopointfivesNeeded_kg + 2;
 					break;
 				case 23:
-					onepointfivesNeeded_kg = onepointfivesNeeded_kg + 2;
+					onepointtwofivesNeeded_kg = onepointtwofivesNeeded_kg + 2;
 					break;	
-				case 22:
-					onesNeeded_kg = onesNeeded_kg + 2;
-					break;
-				case 21:
-					pointfivesNeeded_kg = pointfivesNeeded_kg + 2;
-					break;
 				}
 				relativeLayout.invalidate();
 				platesNeeded6 = (TextView) findViewById(R.id.platesNeeded6_activity_two);
@@ -670,10 +605,7 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 				platesNeeded3.setText("10s needed: " + tensNeeded_kg);
 				platesNeeded2.setText("5s needed: " + fivesNeeded_kg);
 				platesNeeded1.setText("2.5s needed: " + twopointfivesNeeded_kg);
-				platesNeeded_kgExtra1.setText("2s needed: " + twosNeeded_kg );
-				platesNeeded_kgExtra2.setText("1.5s needed: " + onepointfivesNeeded_kg );
-				platesNeeded_kgExtra3.setText("1s needed: " + onesNeeded_kg );;
-				platesNeeded_kgExtra4.setText(".5s needed: " + pointfivesNeeded_kg );
+				platesNeeded_kgExtra1.setText("1.25s needed: " + onepointtwofivesNeeded_kg );
 				//TODO add more textviews for the extra plates
 				
 			}//end else to checking if UI generation is even possible  
@@ -759,19 +691,13 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+			return false;		
 	}
 
 
 
 
+	@SuppressLint("InlinedApi")
 	public void dynamicAddPlate(int resource)
 	{
 		barbellImageView = (ImageView) findViewById(R.id.barbell_activity_two);
@@ -963,7 +889,8 @@ public class IndividualViewTwo extends ActionBarActivity implements OnClickListe
 
 	@Override
 	public void onClick(View v) {
-        Filter f = (Filter) v.getTag();
+//        @SuppressWarnings("unused")
+//		Filter f = (Filter) v.getTag();//TODO does this do anything
         //FilterFullscreenActivity.show(this, input, f);
 		
 	}

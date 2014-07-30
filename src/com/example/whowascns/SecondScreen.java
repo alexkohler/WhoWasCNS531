@@ -156,6 +156,19 @@ public class SecondScreen extends Activity {
 					String errorDead = deadEditText.getText().toString();
 					String errorStream = "";
 					//error name definitions (to make appends cleaner looking)
+					handleErrors(errorBench, errorSquat, errorOHP, errorDead,
+							errorStream);
+
+
+
+
+				}
+
+
+
+
+				private void handleErrors(String errorBench, String errorSquat,
+						String errorOHP, String errorDead, String errorStream) {
 					String emptyBenchString = "Please enter a starting bench number!";
 					String thousandBenchString = errorBench + " lbs? Lettuce be reality here. Enter your actual bench.";
 					String thousandBenchStringKgs = errorBench + "kgs? Lettuce be reality here. Enter your actual bench.";
@@ -360,10 +373,6 @@ public class SecondScreen extends Activity {
 						startActivity(intent);
 
 					}
-
-
-
-
 				}
 
 }

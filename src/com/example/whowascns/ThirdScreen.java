@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -50,6 +49,8 @@ public class ThirdScreen extends Activity {
 	String retStringSaver; //for sake of changing views
 	Cursor cursor;
 	String lbmode;
+	static Boolean[] kgBooleans;
+	static Boolean[] lbBooleans;
 
 	public enum CURRENT_VIEW {
 		DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), DEAD('D'), FIVES('5'), THREES('3'), ONES('1');
@@ -84,7 +85,7 @@ public class ThirdScreen extends Activity {
 	CURRENT_FREQ individualFreq; //^^
 
 	//initialize processor to process all lifts, dates, etc...
-	DateProcessor Processor = new DateProcessor();
+	DateAndLiftProcessor Processor = new DateAndLiftProcessor();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -111,113 +112,14 @@ public class ThirdScreen extends Activity {
 		String origin = intent.getStringExtra("origin");
 		if (origin.equals("individualView"))
 		{
-			String view = intent.getStringExtra("viewMode");
-			TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
-			switch(view)
-			{//		DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), DEAD('D'), FIVES('5'), THREES('3'), ONES('1');
-				case "DEFAULT":
-					setQuery(null);
-					tableRowPrincipal.removeAllViews();
-					cursor = getEvents();
-					showDefaultEvents(cursor);
-					break;
-				case "BENCH":
-					setQuery("Lift = 'Bench'");
-					tableRowPrincipal.removeAllViews();
-					cursor = getEvents();
-					insertStatus = false;
-					showDefaultEvents(cursor);
-					break;
-				case "SQUAT":
-					setQuery("Lift = 'Squat'");
-					tableRowPrincipal.removeAllViews();
-					cursor = getEvents();
-					insertStatus = false;
-					showDefaultEvents(cursor);
-					break;
-				case "OHP":
-					setQuery("Lift = 'OHP'");
-					tableRowPrincipal.removeAllViews();
-					cursor = getEvents();
-					insertStatus = false;
-					showDefaultEvents(cursor);
-					break;
-				case "DEAD":
-					setQuery("Lift = 'Deadlift'");
-					tableRowPrincipal.removeAllViews();
-					cursor = getEvents();
-					insertStatus = false;
-					showDefaultEvents(cursor);
-					break;	
-				case "FIVES":
-					setQuery("Frequency = '5-5-5'");
-					tableRowPrincipal.removeAllViews();
-					cursor = getEvents();
-					insertStatus = false;
-					showDefaultEvents(cursor);
-					break;	
-				case "THREES":
-					setQuery("Frequency = '3-3-3'");
-					tableRowPrincipal.removeAllViews();
-					cursor = getEvents();
-					insertStatus = false;
-					showDefaultEvents(cursor);
-					break;
-				case "ONES":
-					setQuery("Frequency = '5-3-1'");
-					tableRowPrincipal.removeAllViews();
-					cursor = getEvents();
-					insertStatus = false;
-					showDefaultEvents(cursor);
-					break;	
-
-			}
+			eventsData.reinflateTable(this, intent);
 		}
 		
 		
 		else if (origin.equals("second"))
 		{
 
-			db.delete("Lifts", null, null);
-			setQuery(null);
-			//determine whether to round or not
-			String areWeGoingToRound = intent.getStringExtra("round");
-			String roundMode = "error"; // if this is not changed from error, there was an error 
-			if (areWeGoingToRound.equals("true"))	
-				Processor.setRoundingFlag(true);
-			
-			else //revert to the default of no round
-				Processor.setRoundingFlag(false);
-			
-
-			//get unit mode
-			lbmode = intent.getStringExtra("mode");
-			if (lbmode.length() > 1)
-			{
-				setMode(lbmode);
-
-			}
-
-
-
-			Processor.setUnitMode(lbmode);
-
-
-
-			//set starting lifts (separate strings so title can them too) 
-			String startingBench = intent.getStringExtra("bench");
-			String startingSquat = intent.getStringExtra("squat");
-			String startingOHP   = intent.getStringExtra("OHP");
-			String startingDead  = intent.getStringExtra("dead");
-
-			//also set starting lifts locally 
-
-
-			Processor.setStartingLifts(startingBench, startingSquat, startingOHP, startingDead);
-			Processor.setStartingDate(startingDate);
-			Processor.setDate(startingDate);
-			int numberCycles =  Integer.parseInt(intent.getStringExtra("numberCycles"));
-			setNumberCycles(numberCycles);
+			eventsData.inflateTable(this, intent, startingDate, db);
 			new AsyncCaller().execute();
 		}
 
@@ -278,143 +180,17 @@ public class ThirdScreen extends Activity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								if (which == 0){
-								    final CharSequence[] lbPlates = {" 45lb "," 35lb "," 25lb "," 10lb ", " 5lb "," 2.5lb "};
-								    // arraylist to keep the selected items
-								    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
-								    
-								    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
-								    builder.setTitle("What plates does your gym have?");
-								    builder.setMultiChoiceItems(lbPlates, null,
-								            new DialogInterface.OnMultiChoiceClickListener() {
-								     @Override
-								     public void onClick(DialogInterface dialog, int indexSelected,
-								             boolean isChecked) {
-								         if (isChecked) {
-								             // If the user checked the item, add it to the selected items
-								             seletedItems.add(indexSelected);
-								         } else if (seletedItems.contains(indexSelected)) {
-								             // Else, if the item is already in the array, remove it
-								             seletedItems.remove(Integer.valueOf(indexSelected));
-								         }
-								     }
-								 })
-								  // Set the action buttons
-								 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-								     @Override
-								     public void onClick(DialogInterface dialog, int id) {
-								         //  Your code when user clicked on OK
-								         //  You can write the code  to save the selected item here
-								    	 for (int indexSelected : seletedItems)
-								    	 {
-								    		 switch (indexSelected)
-								    		 {
-								    		 case 0:
-								    		 	Boolean lbHaveFortyFive = true;//TODO fix logic 
-								    			break;
-								    		 case 1:	
-								    		 	Boolean lbHaveThirtyFive = true;
-								    			break;
-								    		 case 2:	
-								    			Boolean lbHaveTwentyFive = true;
-								    			break;
-								    		 case 3:	
-								    			Boolean lbHaveTen = true;
-								    			break;
-								    		 case 4:	
-								    			Boolean lbHaveFive = true;
-								    			break;
-								    		 case 5:	
-								    			Boolean lbHaveTwoPointFive = true;
-								    			break;
-								    		 }
-								    	 }
-
-								     }
-								 })
-								 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-								     @Override
-								     public void onClick(DialogInterface dialog, int id) {
-								        //  Your code when user clicked on Cancel
-
-								     }
-								 });
-
-								    dialog = builder.create();//AlertDialog dialog; create like this outside onClick
-								    ((Dialog) dialog).show();
+								    createLbBuilderMenu();
 								}
 								if (which == 1)
-								{// arrays are zero indexed
-								    final CharSequence[] kgPlates = {" 25kg "," 20kg "," 15kg "," 10kg "," 5kg ", " 2.5kg "," 1.25kg "};
-								    // arraylist to keep the selected items
-								    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
-
-								    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
-								    builder.setTitle("What plates does your gym have?");
-								    builder.setMultiChoiceItems(kgPlates, null,
-								            new DialogInterface.OnMultiChoiceClickListener() {
-								     @Override
-								     public void onClick(DialogInterface dialog, int indexSelected,
-								             boolean isChecked) {
-								         if (isChecked) {
-								             // If the user checked the item, add it to the selected items
-								             seletedItems.add(indexSelected);
-								         } else if (seletedItems.contains(indexSelected)) {
-								             // Else, if the item is already in the array, remove it
-								             seletedItems.remove(Integer.valueOf(indexSelected));
-								         }
-								     }
-								 })
-								  // Set the action buttons
-								 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-								     @Override
-								     public void onClick(DialogInterface dialog, int id) {
-								         //  Your code when user clicked on OK
-								         //  You can write the code  to save the selected item here
-								    	 for (int indexSelected : seletedItems)
-								    	 {
-								    		switch (indexSelected)
-								    		{
-								    		case 0:
-									    		Boolean kgHaveTwentyFive = true;
-									    		break;
-								    		case 1:
-									    		Boolean kgHaveTwenty = true;
-									    		break;
-								    		case 2:
-									    		Boolean kgHaveFifteen = true;
-									    		break;
-								    		case 3:
-								    			Boolean kgHaveTen  = true;
-								    			break;
-								    		case 4:	
-								    			Boolean kgHaveFive  = true;
-								    			break;
-								    		case 5:
-								    			Boolean kgHaveTwoPointFive = true;
-								    			break;
-								    		case 6:
-								    			Boolean kgHaveOnePointTwoFive = true;
-								    			break;
-								    		}
-								    	 }
-
-								     }
-								 })
-								 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-								     @Override
-								     public void onClick(DialogInterface dialog, int id) {
-								        //  Your code when user clicked on Cancel
-
-								     }
-								 });
-
-								    dialog = builder.create();//AlertDialog dialog; create like this outside onClick
-								    ((Dialog) dialog).show();	
-									
+								{
+									createKgBuilderMenu();		
 								}
 
 				
 							}//end inner onClick 
+
+
 						});//end inner which listener
 						builder.show();	
 					}
@@ -426,7 +202,7 @@ public class ThirdScreen extends Activity {
 						myIntent.putExtra("origin", "third");
 						String[] intentDataArray = new String[6];
 						intentDataArray = getSecondScreenData(intentDataArray);
-						myIntent.putExtra("key", Processor.getStartingDate()); //key is for get starting date, //TODO change that shit
+						myIntent.putExtra("key", Processor.getStartingDate()); //key is for get starting date  //TODO change 
 						myIntent.putExtra("bench", intentDataArray[0]);
 						myIntent.putExtra("squat", intentDataArray[1]);
 						myIntent.putExtra("ohp", intentDataArray[2]);
@@ -452,7 +228,6 @@ public class ThirdScreen extends Activity {
 				}
 
 				private String[] getSecondScreenData(String[] intentDataArray) {
-					SQLiteDatabase db = eventsData.getWritableDatabase();
 					setQuery("Lift = 'Bench' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
 					Cursor myCursor = getEvents(); //vladdy
 					myCursor.moveToNext();
@@ -604,159 +379,167 @@ public class ThirdScreen extends Activity {
 		}//end createViewBuilder
 
 		
+		private void createKgBuilderMenu() {
+			DialogInterface dialog;
+			// arrays are zero indexed
+			    final CharSequence[] kgPlates = {" 25kg "," 20kg "," 15kg "," 10kg "," 5kg ", " 2.5kg "," 1.25kg "};
+			    // arraylist to keep the selected items
+			    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
+
+			    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+			    builder.setTitle("What plates does your gym have?");
+			    builder.setMultiChoiceItems(kgPlates, null,
+			            new DialogInterface.OnMultiChoiceClickListener() {
+			     @Override
+			     public void onClick(DialogInterface dialog, int indexSelected,
+			             boolean isChecked) {
+			         if (isChecked) {
+			             // If the user checked the item, add it to the selected items
+			             seletedItems.add(indexSelected);
+			         } else if (seletedItems.contains(indexSelected)) {
+			             // Else, if the item is already in the array, remove it
+			             seletedItems.remove(Integer.valueOf(indexSelected));
+			         }
+			     }
+			 })
+			  // Set the action buttons
+			 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			     @Override
+			     public void onClick(DialogInterface dialog, int id) {
+			    	 Boolean kgHaveTwentyFive = null, kgHaveTwenty = null, kgHaveFifteen = null, kgHaveTen = null, 
+			    			 kgHaveFive = null , kgHaveTwoPointFive= null , kgHaveOnePointTwoFive= null;//actually name booleans for sanity purposes
+			    	 for (int indexSelected : seletedItems)
+			    	 {
+			    		switch (indexSelected)
+			    		{
+			    		case 0:
+				    		 kgHaveTwentyFive = true;
+				    		break;
+			    		case 1:
+				    		 kgHaveTwenty = true;
+				    		break;
+			    		case 2:
+				    		 kgHaveFifteen = true;
+				    		break;
+			    		case 3:
+			    			kgHaveTen  = true;
+			    			break;
+			    		case 4:	
+			    			kgHaveFive  = true;
+			    			break;
+			    		case 5:
+			    			 kgHaveTwoPointFive = true;
+			    			break;
+			    		case 6:
+			    			 kgHaveOnePointTwoFive = true;
+			    			break;
+			    		}
+			    	 }
+			    	 //after sorting through status, pack these up into a boolean array
+			    	 Boolean[] localkgBooleans = new Boolean[7];
+			    	 localkgBooleans[0] = kgHaveTwentyFive;
+			    	 localkgBooleans[1] = kgHaveTwenty;
+			    	 localkgBooleans[2] = kgHaveFifteen;
+			    	 localkgBooleans[3] = kgHaveTen;
+			    	 localkgBooleans[4] = kgHaveFive;
+			    	 localkgBooleans[5] = kgHaveTwoPointFive;
+			    	 localkgBooleans[6] = kgHaveOnePointTwoFive;
+			    	 setKgBooleans(localkgBooleans);
+			    	 
+			    	 
+			    	 
+			     }
+			 })
+			 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			     @Override
+			     public void onClick(DialogInterface dialog, int id) {
+			        //  Your code when user clicked on Cancel
+
+			     }
+			 });
+
+			    dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+			    ((Dialog) dialog).show();
+		}
 		
-		//modeBuilder
-		private OnClickListener kgLbConfig = new OnClickListener () {
-			CharSequence modes[] = new CharSequence[] {"Pounds", "Kilograms"};
-			@Override
-			public void onClick(View v) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
-				builder.setTitle("Unit menu");
-				builder.setItems(modes, new DialogInterface.OnClickListener() {
+	private void createLbBuilderMenu() {
+		DialogInterface dialog;
+		final CharSequence[] lbPlates = { " 45lb ", " 35lb ", " 25lb ",
+				" 10lb ", " 5lb ", " 2.5lb " };
+		// arraylist to keep the selected items
+		final ArrayList<Integer> seletedItems = new ArrayList<Integer>();
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+		builder.setTitle("What plates does your gym have?");
+		builder.setMultiChoiceItems(lbPlates, null,
+				new DialogInterface.OnMultiChoiceClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						if (which == 0){
-						    final CharSequence[] lbPlates = {" 45lb "," 35lb "," 25lb "," 10lb ", " 5lb "," 2.5lb "};
-						    // arraylist to keep the selected items
-						    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
-						    
-						    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
-						    builder.setTitle("What plates does your gym have?");
-						    builder.setMultiChoiceItems(lbPlates, null,
-						            new DialogInterface.OnMultiChoiceClickListener() {
-						     @Override
-						     public void onClick(DialogInterface dialog, int indexSelected,
-						             boolean isChecked) {
-						         if (isChecked) {
-						             // If the user checked the item, add it to the selected items
-						             seletedItems.add(indexSelected);
-						         } else if (seletedItems.contains(indexSelected)) {
-						             // Else, if the item is already in the array, remove it
-						             seletedItems.remove(Integer.valueOf(indexSelected));
-						         }
-						     }
-						 })
-						  // Set the action buttons
-						 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-						     @Override
-						     public void onClick(DialogInterface dialog, int id) {
-						         //  Your code when user clicked on OK
-						         //  You can write the code  to save the selected item here
-						    	 for (int indexSelected : seletedItems)
-						    	 {
-						    		 switch (indexSelected)
-						    		 {
-						    		 case 0:
-						    		 	Boolean lbHaveFortyFive = true;
-						    			break;
-						    		 case 1:	
-						    		 	Boolean lbHaveThirtyFive = true;
-						    			break;
-						    		 case 2:	
-						    			Boolean lbHaveTwentyFive = true;
-						    			break;
-						    		 case 3:	
-						    			Boolean lbHaveTen = true;
-						    			break;
-						    		 case 4:	
-						    			Boolean lbHaveFive = true;
-						    			break;
-						    		 case 5:	
-						    			Boolean lbHaveTwoPointFive = true;
-						    			break;
-						    		 }
-						    	 }
-
-						     }
-						 })
-						 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-						     @Override
-						     public void onClick(DialogInterface dialog, int id) {
-						        //  Your code when user clicked on Cancel
-
-						     }
-						 });
-
-						    dialog = builder.create();//AlertDialog dialog; create like this outside onClick
-						    ((Dialog) dialog).show();
+					public void onClick(DialogInterface dialog,
+							int indexSelected, boolean isChecked) {
+						if (isChecked) {
+							// If the user checked the item, add it to the
+							// selected items
+							seletedItems.add(indexSelected);
+						} else if (seletedItems.contains(indexSelected)) {
+							// Else, if the item is already in the array, remove
+							// it
+							seletedItems.remove(Integer.valueOf(indexSelected));
 						}
-						if (which == 1)
-						{// arrays are zero indexed
-						    final CharSequence[] kgPlates = {" 25kg "," 20kg "," 15kg "," 10kg "," 5kg ", " 2.5kg "," 1.25kg "};
-						    // arraylist to keep the selected items
-						    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
-
-						    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
-						    builder.setTitle("What plates does your gym have?");
-						    builder.setMultiChoiceItems(kgPlates, null,
-						            new DialogInterface.OnMultiChoiceClickListener() {
-						     @Override
-						     public void onClick(DialogInterface dialog, int indexSelected,
-						             boolean isChecked) {
-						         if (isChecked) {
-						             // If the user checked the item, add it to the selected items
-						             seletedItems.add(indexSelected);
-						         } else if (seletedItems.contains(indexSelected)) {
-						             // Else, if the item is already in the array, remove it
-						             seletedItems.remove(Integer.valueOf(indexSelected));
-						         }
-						     }
-						 })
-						  // Set the action buttons
-						 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-						     @Override
-						     public void onClick(DialogInterface dialog, int id) {
-						         //  Your code when user clicked on OK
-						         //  You can write the code  to save the selected item here
-						    	 for (int indexSelected : seletedItems)
-						    	 {
-						    		switch (indexSelected)
-						    		{
-						    		case 0:
-							    		Boolean kgHaveTwentyFive = true;
-							    		break;
-						    		case 1:
-							    		Boolean kgHaveTwenty = true;
-							    		break;
-						    		case 2:
-							    		Boolean kgHaveFifteen = true;
-							    		break;
-						    		case 3:
-						    			Boolean kgHaveTen  = true;
-						    			break;
-						    		case 4:	
-						    			Boolean kgHaveFive  = true;
-						    			break;
-						    		case 5:
-						    			Boolean kgHaveTwoPointFive = true;
-						    			break;
-						    		case 6:
-						    			Boolean kgHaveOnePointTwoFive = true;
-						    			break;
-						    		}
-						    	 }
-
-						     }
-						 })
-						 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-						     @Override
-						     public void onClick(DialogInterface dialog, int id) {
-						        //  Your code when user clicked on Cancel
-
-						     }
-						 });
-
-						    dialog = builder.create();//AlertDialog dialog; create like this outside onClick
-						    ((Dialog) dialog).show();	
-							
+					}
+				})
+				// Set the action buttons
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+				    	 Boolean lbHaveFortyFive = null, lbHaveThirtyFive = null, lbHaveTwentyFive = null, lbHaveTen = null, 
+				    			 lbHaveFive = null , lbHaveTwoPointFive= null;
+						for (int indexSelected : seletedItems) {
+							switch (indexSelected) {
+							case 0:
+								lbHaveFortyFive = true;// TODO fix logic
+								break;
+							case 1:
+								lbHaveThirtyFive = true;
+								break;
+							case 2:
+								lbHaveTwentyFive = true;
+								break;
+							case 3:
+								lbHaveTen = true;
+								break;
+							case 4:
+								lbHaveFive = true;
+								break;
+							case 5:
+								lbHaveTwoPointFive = true;
+								break;
+							}
 						}
+						//after running through boolean status, pack them up in an array.. is there a more elegant way? Probably, but that's why you need to hire me and teach me ;)
+						Boolean[] localLbStatus = new Boolean[6];
+						localLbStatus[0] = lbHaveFortyFive;
+						localLbStatus[1] = lbHaveThirtyFive;
+						localLbStatus[2] = lbHaveTwentyFive;
+						localLbStatus[3] = lbHaveTen;
+						localLbStatus[4] = lbHaveFive;
+						localLbStatus[5] = lbHaveTwoPointFive;
+						setLbBooleans(localLbStatus);
+						
 
-		
-					}//end inner onClick 
-				});//end inner which listener
-				builder.show();	
-				
-			}};
+					}
+				})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								// Your code when user clicked on Cancel
+
+							}
+						});
+
+			dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+			((Dialog) dialog).show();
+		}
 
 
 		public void setMode (String myMode )
@@ -770,52 +553,6 @@ public class ThirdScreen extends Activity {
 		}
 
 
-		public void addEvent() {
-			SQLiteDatabase db = eventsData.getWritableDatabase();
-			ContentValues values = new ContentValues();
-			//db.execSQL("ALTER TABLE Lifts ADD COLUMN column_lbFlag integer");
-			int sqlLitelbMode = 3; //booleans in sqllite are represented by 1 and 0
-			if (getModeFormat().contains("Lbs"))
-			sqlLitelbMode = 1;
-			if (getModeFormat().contains("Kgs")) //TODO change mode format just to hold raw data we need i think..
-			sqlLitelbMode = 0;
-			
-			
-			
-				
-			
-
-			values.put(EventsDataSQLHelper.LIFTDATE, Processor.getDate() );
-			values.put(EventsDataSQLHelper.CYCLE, Processor.getCycle());
-			values.put(EventsDataSQLHelper.LIFT, Processor.getLiftType());
-			values.put(EventsDataSQLHelper.FREQUENCY, Processor.getFreq());
-			values.put(EventsDataSQLHelper.FIRST, Processor.getFirstLift());
-			values.put(EventsDataSQLHelper.SECOND, Processor.getSecondLift());
-			values.put(EventsDataSQLHelper.THIRD, Processor.getThirdLift());
-			if ((Processor.getLiftType().equals("Bench")) && Processor.getCycle() == 1) //insert our initial training maxes into table instead of trying to pass them back and forth between intents 
-				{
-				values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getBenchTM());
-				values.put(EventsDataSQLHelper.LBFLAG, sqlLitelbMode);
-				}//(the first entry of each lift has a value in the "training_max" column for sake of easily generating title between changing views)
-				
-			if (Processor.getLiftType().equals("Squat") && Processor.getCycle() == 1 )	  		
-			{
-				values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getSquatTM());   
-				values.put(EventsDataSQLHelper.LBFLAG, sqlLitelbMode);
-			}
-			if (Processor.getLiftType().equals("OHP") && Processor.getCycle() == 1 )	   
-			{
-				values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getOHPTM());
-				values.put(EventsDataSQLHelper.LBFLAG, sqlLitelbMode);
-			}
-			if (Processor.getLiftType().equals("Deadlift") && Processor.getCycle() == 1 )	   
-			{
-				values.put(EventsDataSQLHelper.TRAINING_MAX, Processor.getDeadTM());
-				values.put(EventsDataSQLHelper.LBFLAG, sqlLitelbMode);
-			}
-			db.insert(EventsDataSQLHelper.TABLE, null, values);
-		}
-
 		public void setQuery(String myQuery)
 		{
 			CURRENT_SELECT_QUERY = myQuery;
@@ -826,8 +563,7 @@ public class ThirdScreen extends Activity {
 			return CURRENT_SELECT_QUERY;
 		}
 
-		@SuppressWarnings("deprecation")
-		private Cursor getEvents() {
+		@SuppressWarnings("deprecation") Cursor getEvents() {
 			SQLiteDatabase db = eventsData.getReadableDatabase();
 			Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, getQuery(), null, null,
 					null, null);
@@ -848,8 +584,7 @@ public class ThirdScreen extends Activity {
 			return test;
 		}
 
-		@SuppressWarnings("deprecation")
-		private void showDefaultEvents(Cursor cursor) {
+		@SuppressWarnings("deprecation") void showDefaultEvents(Cursor cursor) {
 			StringBuilder ret; 
 			ret = new StringBuilder("");
 			TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
@@ -916,7 +651,7 @@ public class ThirdScreen extends Activity {
 				tr.setGravity(Gravity.CENTER_HORIZONTAL);
 				//parse date (remove 20..., I don't think any cycles will be running for a millenium)
 				String insertDate = liftDate.substring(0, 6) + liftDate.substring(8, 10);
-				createColumns(tr, insertDate, cycle, lift, freq, first, String.valueOf(second), String.valueOf(third));
+				eventsData.createColumns(this, tr, insertDate, cycle, lift, freq, first, String.valueOf(second), String.valueOf(third));
 				
 				TextView entry = new TextView(this);
 				entry.setText(entryString); 
@@ -978,6 +713,11 @@ public class ThirdScreen extends Activity {
 						intent.putExtra("date", myDate);
 						intent.putExtra("mode", mode);
 						intent.putExtra("viewMode", viewMode);
+						
+						if (lbMode == 1) //if we are in lbs mode
+						intent.putExtra("boolArray", getLbBooleans());
+						if (lbMode ==0)// if we are in kgMode
+						intent.putExtra("boolArray", getKgBooleans());	
 						//intent.putExtra(liftPattern, "pattern"); monkey
 
 
@@ -985,7 +725,6 @@ public class ThirdScreen extends Activity {
 					}});	   
 				//tableRowPrincipal.addView(entry);
 				tableRowPrincipal.addView(tr);
-				//TODO encase everything in a linear layout, then you should have individualized views by date. be sure there is not too much of a performance hit 
 				//then parse by date (regex) and then either parse first second and third (along with any other additional info you may want to add for featues), and you should be good to go my nigga ;)
 			}
 
@@ -1000,79 +739,6 @@ public class ThirdScreen extends Activity {
 				
 			}};  */
 
-			private void createColumns(TableRow tr, String liftDate, String cycle, String lift, String freq, String first, String second, String third) {
-				//date column creation 
-				
-				
-				
-				TableRow.LayoutParams tvParams = new TableRow.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-				tvParams.setMargins(1, 1, 1, 1);
-				final int minHeight = 15;
-				TextView dateColumn = new TextView(this);
-				dateColumn.setText(liftDate);
-				dateColumn.setLayoutParams(tvParams);
-				dateColumn.setBackgroundColor(Color.WHITE);
-				dateColumn.setMinHeight(minHeight);
-				dateColumn.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr.addView(dateColumn);
-				
-				
-				//cycle column creation 
-				TextView cycleColumn = new TextView(this);
-				cycleColumn.setText(cycle);
-				cycleColumn.setLayoutParams(tvParams);
-				cycleColumn.setBackgroundColor(Color.WHITE);
-				cycleColumn.setMinHeight(minHeight);
-				cycleColumn.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr.addView(cycleColumn);
-				
-				//lift column creation 
-				TextView liftColumn = new TextView(this);
-				liftColumn.setText(lift);
-				liftColumn.setLayoutParams(tvParams);
-				liftColumn.setBackgroundColor(Color.WHITE);
-				liftColumn.setMinHeight(minHeight);
-				liftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr.addView(liftColumn);
-
-				//freq column creation 
-				TextView freqColumn = new TextView(this);
-				freqColumn.setText(freq);
-				freqColumn.setLayoutParams(tvParams);
-				freqColumn.setBackgroundColor(Color.WHITE);
-				freqColumn.setMinHeight(minHeight);
-				freqColumn.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr.addView(freqColumn);
-				
-				
-				//first lift column creation
-				TextView firstLiftColumn = new TextView(this);
-				firstLiftColumn.setText(first);
-				firstLiftColumn.setLayoutParams(tvParams);
-				firstLiftColumn.setBackgroundColor(Color.WHITE);
-				firstLiftColumn.setMinHeight(minHeight);
-				firstLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr.addView(firstLiftColumn);
-				
-				//second lift column creation
-				TextView secondLiftColumn = new TextView(this);
-				secondLiftColumn.setText(second);
-				secondLiftColumn.setLayoutParams(tvParams);
-				secondLiftColumn.setBackgroundColor(Color.WHITE);
-				secondLiftColumn.setMinHeight(minHeight);
-				secondLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr.addView(secondLiftColumn);
-				
-				//third lift column creation
-				TextView thirdLiftColumn = new TextView(this);
-				thirdLiftColumn.setText(third);
-				thirdLiftColumn.setLayoutParams(tvParams);
-				thirdLiftColumn.setBackgroundColor(Color.WHITE);
-				thirdLiftColumn.setMinHeight(minHeight);
-				thirdLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
-				tr.addView(thirdLiftColumn);
-		}
-
 			private void backToFirst()
 			{
 				SQLiteDatabase db = eventsData.getWritableDatabase();
@@ -1081,72 +747,30 @@ public class ThirdScreen extends Activity {
 			}		
 
 
-			private void calculateCycle()
-			{
-				//(max pattern of 7 days), 
-				//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  }; //be sure to use default naming patterns (like you've used in rest of program) 
-				//lets give the patern it's been dealing with since the start, however, now it's hopefully in a generalized algorithm
-				String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
-				//String[] myPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
-				//String[] myPattern = {"Squat", "Bench", "Rest", "Deadlift", "OHP", "Rest" };
-				
-				Processor.initializePatternSize(myPattern.length);//separate variable from liftTrack
-				Processor.setCycle(1);
-				for (int i=0; i < getNumberCycles(); i++) 
-				{
-					for (int j=0; j < myPattern.length; j++){
-					//create setCurrentLift function that sets current lift based on an enum
-					Processor.setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
-					//calculate fives day will have to be revamped - 
-						if (Processor.getCurrentTM() > 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
-							Processor.calculateFivesDay(Processor.getCurrentTM());
-							addEvent();
-						}
-					Processor.incrementDay();//for sake of being less cryptic i am separating increment because it was too small. if only i could fix my functions that are too big.
-					Processor.incrementLift(myPattern, myPattern[j]);//no matter what the day, we still need to incrementCycleAndUpdateTMs
-					}
-					
-					
-					for (int j=0; j < myPattern.length; j++){
-					//create setCurrentLift function that sets current lift based on an enum
-					Processor.setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
-					//calculate fives day will have to be revamped - 
-						if (Processor.getCurrentTM()> 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
-							Processor.calculateTriplesDay(Processor.getCurrentTM());
-							addEvent();
-						}
-					Processor.incrementDay();//no matter what the day, we still need to incrementCycleAndUpdateTMs
-					Processor.incrementLift(myPattern, myPattern[j]);
-					}
-					
-					for (int j=0; j < myPattern.length; j++){
-					//create setCurrentLift function that sets current lift based on an enum
-					Processor.setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
-					//calculate fives day will have to be revamped - 
-						if (Processor.getCurrentTM()> 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
-							Processor.calculateSingleDay(Processor.getCurrentTM());
-							addEvent();
-						}
-						Processor.incrementDay();//no matter what the day, we still need to incrementCycleAndUpdateTMs
-						Processor.incrementLift(myPattern, myPattern[j]);
-					}
-					
-					Processor.incrementCycleAndUpdateTMs();//still needs to be within loop
-					}
-
-					
-				}
-
-			
-
 			double roundtoTwoDecimals(double d) 
 			{
 				return Double.valueOf(twoDForm.format(d));
 			}
+			
+			public static Boolean[] getKgBooleans() {
+				return kgBooleans;
+			}
+
+			public static void setKgBooleans(Boolean[] kgBooleans) {
+				ThirdScreen.kgBooleans = kgBooleans;
+			}
+
+			public static Boolean[] getLbBooleans() {
+				return lbBooleans;
+			}
+
+			public static void setLbBooleans(Boolean[] lbBooleans) {
+				ThirdScreen.lbBooleans = lbBooleans;
+			}
 
 
 			//Async caller for threading
-			private class AsyncCaller extends AsyncTask<Void, Void, Void>
+			class AsyncCaller extends AsyncTask<Void, Void, Void>
 			{
 				ProgressDialog pdLoading = new ProgressDialog(ThirdScreen.this);
 				@Override
@@ -1160,7 +784,7 @@ public class ThirdScreen extends Activity {
 				}
 				@Override
 				protected Void doInBackground(Void... params) {
-					calculateCycle();
+					Processor.calculateCycle(ThirdScreen.this);
 					cursor = getEvents();
 
 					//this method will be running on background thread so don't update UI frome here

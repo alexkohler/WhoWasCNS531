@@ -11,7 +11,7 @@
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="0dip" 
         android:layout_weight="2"
          >
         
@@ -22,8 +22,6 @@
         android:id="@+id/tableLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:background="#000000"
         android:orientation="vertical"
@@ -43,7 +41,7 @@
                 android:layout_margin="1dp"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:text="Date" />
+                android:text="@string/date_column" />
 
             <TextView
                 android:id="@+id/cycleColumn"
@@ -52,7 +50,7 @@
                 android:layout_margin="1dp"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:text="Cycle" />
+                android:text="@string/cycle_column" />
 
             <TextView
                 android:id="@+id/liftColumn"
@@ -61,7 +59,7 @@
                 android:layout_margin="1dp"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:text="Lift" />
+                android:text="@string/lift_column" />
 
             <TextView
                 android:id="@+id/freqColumn"
@@ -70,7 +68,7 @@
                 android:layout_margin="1dp"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:text="Freq" />
+                android:text="@string/freq_column" />
 
             <TextView
                 android:id="@+id/firstLiftColumn"
@@ -79,7 +77,7 @@
                 android:layout_margin="1dp"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:text="1st" />
+                android:text="@string/first_lift_column" />
 
             <TextView
                 android:id="@+id/secondLiftColumn"
@@ -88,7 +86,7 @@
                 android:layout_margin="1dp"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:text="2nd" />
+                android:text="@string/second_lift_column" />
 
             <TextView
                 android:id="@+id/thirdLiftColumn"
@@ -97,7 +95,8 @@
                 android:layout_margin="1dp"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:text="3st" />
+                android:text="@string/third_lift_column" />
+
         </TableRow>
     </TableLayout>
 
@@ -108,7 +107,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="TextView" />
+        android:text="@string/training_maxes_text_test" />
 
     <Button
         android:id="@+id/configureButton"

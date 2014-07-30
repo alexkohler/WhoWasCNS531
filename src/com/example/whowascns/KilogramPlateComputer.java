@@ -19,42 +19,50 @@ public class KilogramPlateComputer {
 	int tensNeeded;
 	int fivesNeeded;
 	int twopointfivesNeeded;
-	int twosNeeded;
-	int onepointfivesNeeded;
-	int onesNeeded;
-	int pointfivesNeeded;
-
+	int onepointtwofivesNeeded;
 	int currentPlate_needed;
 	String currentPlateName;
 
 
-	public void computeKgPlates (double myWeight, double barbellUsed)
+	public void computeKgPlates (double myWeight, double barbellUsed, Boolean[] kgFlags)
 	{
+		//should unpack booleans....
 		weight = myWeight - barbellUsed;
-		plateWeight = round (weight, 1); //this will have to be dynamic depending on the plates they have 
+		plateWeight = round (weight, 2.5); //this will have to be dynamic depending on the plates they have 
 		//plateWeight = weight;
-
+		Boolean haveTwentyFive = kgFlags[0];
+		Boolean haveTwenty = kgFlags[1];
+		Boolean haveFifteen = kgFlags[2];
+		Boolean haveTen = kgFlags[3];
+		Boolean haveFive = kgFlags[4];
+		Boolean haveTwoPointFive = kgFlags[5];
+		Boolean haveOnePointTwoFives = kgFlags[6];
 
 		double currentPlate = 0;
 		//boolean thirtyfive_flag = true;
-		for (int i=0; i<9; i++)
+		for (int i=0; i<7; i++)
 		{
 			currentPlate_needed = 0;
 			switch (i){ 
 			case 0:
+				if(!haveTwentyFive) //could add a flag for each of these to allow user to specify what plates they have 
+				{
+					currentPlate = 0;
+					break;
+				}
 				currentPlate = 25;
 				break;
 			case 1:
-			//	if(!thirtyfive_flag) //could add a flag for each of these to allow user to specify what plates they have 
-				//{
-					//currentPlate = 0;
-				//	break;
-				//}
-				//if (thirtyfive_flag)
-				//{
+				if(!haveTwenty) //could add a flag for each of these to allow user to specify what plates they have 
+				{
+					currentPlate = 0;
+					break;
+				}
+				if (haveTwenty)
+				{
 					currentPlate = 20;
 					break;
-				//}
+				}
 			case 2:
 				currentPlate = 15;
 				break;
@@ -68,16 +76,7 @@ public class KilogramPlateComputer {
 				currentPlate = 2.5;
 				break;
 			case 6:
-				currentPlate = 2;
-				break;
-			case 7:	
-				currentPlate = 1.5;
-				break;
-			case 8:
-				currentPlate = 1;
-				break;
-			case 9:
-				currentPlate = .5;
+				currentPlate = 1.25;
 				break;
 			}//end switch
 
@@ -110,20 +109,11 @@ public class KilogramPlateComputer {
 					case "2.5":
 						setTwopointfivesNeeded(currentPlate_needed); //what's needed per side
 						break;	
-					case "2.0":
-						setTwosNeeded(currentPlate_needed);
+					case "1.25":
+						setOnepointtwofivesNeeded(currentPlate_needed);
 						break;
-					case "1.5":
-						setOnepointfivesNeeded(currentPlate_needed);
-						break;
-					case "1.0":
-						setOnepointfivesNeeded(currentPlate_needed);
-						break;
-					case "0.5":
-						setPointfivesNeeded(currentPlate_needed);
-						break;
-					default:
-						break;
+
+						
 
 					}//end switch
 
@@ -145,11 +135,16 @@ public class KilogramPlateComputer {
 		return weight;
 	}
 
+	
 
-
-
-	double round(double i, int v) //first argument is rounded, second argument is what to round to: (5 for lbs)... for kg just figure out a way to get close.. lol
-	{
+//One way is to multiply your number by a number that will allow rounding by Math.round(...) to do the correct rounding, and then
+	//divide by that number before using String.format(...) or 
+	//DecimalFormat to produce a nice String representation. 
+	//You could multiply the number by 0.4 or divide it by 2.5,
+	//then round it to the nearest int, then divide the result by 0.4 or multiply it by 2.5 to get the result,
+	//but then use a String formatting tool to round this to 1 decimal place. String.format("%.1f", myNumber) could work well for this. 
+	double round(double i,double v) //first argument is rounded, second argument is what to round to: (5 for lbs)... for kg just figure out a way to get close.. lol
+	{ 
 		return (double) (Math.round(i/v) * v);
 	}
 
@@ -248,67 +243,20 @@ public class KilogramPlateComputer {
 
 
 
-
-
-	public int getTwosNeeded() {
-		return twosNeeded;
+	public int getOnepointtwofivesNeeded() {
+		return onepointtwofivesNeeded;
 	}
 
 
 
 
 
-	public void setTwosNeeded(int twosNeeded) {
-		this.twosNeeded = twosNeeded;
+	public void setOnepointtwofivesNeeded(int onepointtwofivesNeeded) {
+		this.onepointtwofivesNeeded = onepointtwofivesNeeded;
 	}
 
-
-
-
-
-	public int getOnepointfivesNeeded() {
-		return onepointfivesNeeded;
-	}
-
-
-
-
-
-	public void setOnepointfivesNeeded(int onepointfivesNeeded) {
-		this.onepointfivesNeeded = onepointfivesNeeded;
-	}
-
-
-
-
-
-	public int getOnesNeeded() {
-		return onesNeeded;
-	}
-
-
-
-
-
-	public void setOnesNeeded(int onesNeeded) {
-		this.onesNeeded = onesNeeded;
-	}
-
-
-
-
-
-	public int getPointfivesNeeded() {
-		return pointfivesNeeded;
-	}
-
-
-
-
-
-	public void setPointfivesNeeded(int pointfivesNeeded) {
-		this.pointfivesNeeded = pointfivesNeeded;
-	}
+	
+	
 
 
 
