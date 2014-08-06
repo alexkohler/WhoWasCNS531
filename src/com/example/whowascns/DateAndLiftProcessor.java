@@ -95,7 +95,7 @@ public class DateAndLiftProcessor {
 		BENCH_TRAINING_MAX = Double.valueOf(startingBench);
 		SQUAT_TRAINING_MAX = Double.valueOf(startingSquat);
 		OHP_TRAINING_MAX = Double.valueOf(startingOHP);
-		DEAD_TRAINING_MAX = Double.valueOf(startingDead); 
+		DEAD_TRAINING_MAX = Double.valueOf(startingDead);;
 
 		//for sake of getStartingXXX method (title output on ThirdScreen)
 
@@ -419,12 +419,11 @@ public class DateAndLiftProcessor {
 		
 	}
 
-	void calculateCycle(ThirdScreen thirdScreen)
+	void calculateCycle(ThirdScreenActivity thirdScreen, String[] myPattern)
 	{
 		//(max pattern of 7 days), 
 		//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  }; //be sure to use default naming patterns (like you've used in rest of program) 
 		//lets give the patern it's been dealing with since the start, however, now it's hopefully in a generalized algorithm
-		String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
 		//String[] myPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
 		//String[] myPattern = {"Squat", "Bench", "Rest", "Deadlift", "OHP", "Rest" };
 		

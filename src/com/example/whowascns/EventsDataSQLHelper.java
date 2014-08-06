@@ -60,7 +60,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 			db.execSQL(sql);
 	}
 
-	public void addEvent(ThirdScreen thirdScreen) {
+	public void addEvent(ThirdScreenActivity thirdScreen) {
 		SQLiteDatabase db = getWritableDatabase();
 		ContentValues values = new ContentValues();
 		//db.execSQL("ALTER TABLE Lifts ADD COLUMN column_lbFlag integer");
@@ -106,7 +106,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		db.insert(EventsDataSQLHelper.TABLE, null, values);
 	}
 
-	void createColumns(ThirdScreen thirdScreen, TableRow tr, String liftDate, String cycle, String lift, String freq, String first, String second, String third) {
+	void createColumns(ThirdScreenActivity thirdScreen, TableRow tr, String liftDate, String cycle, String lift, String freq, String first, String second, String third) {
 		//date column creation 
 		
 		
@@ -179,7 +179,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		tr.addView(thirdLiftColumn);
 	}
 
-	void inflateTable(ThirdScreen thirdScreen, Intent intent, String startingDate, SQLiteDatabase db) {
+	void inflateTable(ThirdScreenActivity thirdScreen, Intent intent, String startingDate, SQLiteDatabase db) {
 		db.delete("Lifts", null, null);
 		thirdScreen.setQuery(null);
 		//determine whether to round or not
@@ -222,7 +222,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 
 	}
 
-	void reinflateTable(ThirdScreen thirdScreen, Intent intent) {
+	void reinflateTable(ThirdScreenActivity thirdScreen, Intent intent) {
 		String view = intent.getStringExtra("viewMode");
 		TableLayout tableRowPrincipal = (TableLayout)thirdScreen.findViewById(id.tableLayout1);
 		switch(view)

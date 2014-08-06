@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">WhoWasCNS531</string>
     <string name="set_button_text_view">Set</string>
     <string name="dialog_text_view">Choose your starting date</string>
@@ -7,67 +8,93 @@
     <string name="title_activity_second">Second</string>
     <string name="second_screen_text_view">Second Screen</string>
     <string name="back_text_view">Back</string>
-    
     <string name="reset_text_view">Reset</string>
-    
     <string name="training_maxes_title">Training Max</string>
     <string name="bench_training_max_title">Bench</string>
-	<string name="squat_training_max_title">Squat</string>
-	<string name="OHP_training_max">OHP</string>
-	<string name="dead_training_max">Deadlift</string>
-	<string name="schedule_creation_text_view">Create schedule</string>
+    <string name="squat_training_max_title">Squat</string>
+    <string name="OHP_training_max">OHP</string>
+    <string name="dead_training_max">Deadlift</string>
+    <string name="schedule_creation_text_view">Create schedule</string>
+    <string name="sync_with_calendar_text_view">Sync</string>
+    <string name="clear_database_text_view">Clear</string>
+    <string name="email_text_view">Export to email</string>
+    <string name="blank_text_view"></string>
+    <string name="Number_of_cycles_text_view">Cycles to project:</string>
+    <string name="lb_radio_button">Lbs</string>
+    <string name="kg_radio_button">Kgs</string>
+    <string name="lb_kg_text_view">Lb/Kg:</string>
+    <string name="unit_mode_text_view">Mode:</string>
+    <string name="rounding_checkbox_text">Round to nearest 5lb/2.5kg?</string>
 
-	<string name="sync_with_calendar_text_view">Sync</string>
-	<string name="clear_database_text_view">Clear</string>
-	<string name="email_text_view">Export to email</string>
-	
-	<string name="blank_text_view"> </string>
-	
-	<string name="Number_of_cycles_text_view">Cycles to project:</string>
-	<string name="lb_radio_button">Lbs</string>
-	<string name="kg_radio_button">Kgs</string>
-	<string name="lb_kg_text_view">Lb/Kg:</string>
-	
-	<string name="unit_mode_text_view">Mode:</string>
-	<string name="rounding_checkbox_text">Round to nearest 5lb/2.5kg?</string>
-	
-	<string-array name="cycles_array">
+    <string-array name="cycles_array">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
-	
-	<string name="options_checkbox_test">Configure</string>
-	<string name="view_existing_text_view">View existing projection</string>
-	
-	
-	
-	<string name="date_text_test">XX-XX-XXXX</string>
-	<string name="cycle_text_test">Cycle: #</string>
-	<string name="weight_text_test">###</string>
-	<string name="mode_text_test">Mode: lbs</string>
-	<string name="fourtyfive_text_test">45s needed: X</string>
-	<string name="thirtyfive_text_test">35s needed: X</string>
-	<string name="twentyfive_text_test">25s needed: X</string>
-	<string name="ten_text_test">10s needed: X</string>
-	<string name="five_text_test">5s needed: X</string>
-	<string name="twopointfive_text_test">2.5s needed: X</string>
-	<string name="onepointtwofive_text_test">1.25s needed: X</string>
-	<string name="lift_one_tv">Lift 1</string>
-	<string name="lift_two_tv">Lift 2</string>
-	<string name="lift_three_tv">Lift 3</string>	
-	<string name="lift_type">Lift Type</string>	
-	<string name="base_barbell_desc">Base barbell</string>	
-	
-	
-	
-	<string name="date_column">Date</string>	
-	<string name="cycle_column">Cycle</string>	
-	<string name="lift_column">Lift</string>	
-	<string name="freq_column">Freq</string>	
-	<string name="first_lift_column">1st</string>
-	<string name="second_lift_column">2nd</string>
-	<string name="third_lift_column">3rd</string>
-	<string name="training_maxes_text_test">Training maxes go here</string>
+
+    <string name="options_checkbox_test">Configure</string>
+    <string name="view_existing_text_view">View existing projection</string>
+    <string name="date_text_test">XX-XX-XXXX</string>
+    <string name="cycle_text_test">Cycle: #</string>
+    <string name="weight_text_test">###</string>
+    <string name="mode_text_test">Mode: lbs</string>
+    <string name="fourtyfive_text_test">45s needed: X</string>
+    <string name="thirtyfive_text_test">35s needed: X</string>
+    <string name="twentyfive_text_test">25s needed: X</string>
+    <string name="ten_text_test">10s needed: X</string>
+    <string name="five_text_test">5s needed: X</string>
+    <string name="twopointfive_text_test">2.5s needed: X</string>
+    <string name="onepointtwofive_text_test">1.25s needed: X</string>
+    <string name="lift_one_tv">Lift 1</string>
+    <string name="lift_two_tv">Lift 2</string>
+    <string name="lift_three_tv">Lift 3</string>
+    <string name="lift_type">Lift Type</string>
+    <string name="base_barbell_desc">Base barbell</string>
+    <string name="date_column">Date</string>
+    <string name="cycle_column">Cycle</string>
+    <string name="lift_column">Lift</string>
+    <string name="freq_column">Freq</string>
+    <string name="first_lift_column">1st</string>
+    <string name="second_lift_column">2nd</string>
+    <string name="third_lift_column">3rd</string>
+    <string name="training_maxes_text_test">Training maxes go here</string>
+    <string name="adjust_lift_pattern_text_view">Adjust Lift Pattern</string>
+    <string name="title_activity_adjust_lift_pattern">AdjustLiftPatternActivity</string>
+	<string name="current_lift_pattern_text_view">Current Lift Pattern: B - S - R - O - D - R</string>
+    
+    <string name="intro">Place these foods in your order of preference.</string>
+<string name="option_1">Bench</string>
+<string name="option_2">Squat</string>
+<string name="option_3">OHP</string>
+<string name="option_4">Deadlift</string>
+<string name="option_5">Rest</string>
+
+
+<string name="choice_1">First</string>
+<string name="choice_2">Second</string>
+<string name="choice_3">Third</string>
+<string name="choice_4">Fourth</string>
+<string name="choice_5">Fifth</string>
+<string name="choice_6">Sixth</string>
+<string name="choice_7">Seventh</string>
+
+<!-- Button title definitoins -->
+<string name="AdjustActivity_Back">Back</string>
+<string name="AdjustActivity_Reset">Reset</string>
+<string name="AdjustActivity_Save">Save</string>
+
+
+<!--Spinner contents definition  -->
+
+    <string-array name="Pattern_Size_Array">
+        <item>How big is your pattern?</item>
+        <item>4 days</item>
+        <item>5 days</item>
+        <item>6 days</item>
+        <item>7 days</item>
+        <item>Add more after testing</item>
+    </string-array>
+    
+    
 </resources>

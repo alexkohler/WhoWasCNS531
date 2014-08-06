@@ -1,0 +1,161 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp" >
+
+        <TextView
+            android:id="@+id/option1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/option"
+            android:gravity="center"
+            android:text="@string/option_1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/option2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/option"
+            android:gravity="center"
+            android:text="@string/option_2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/option3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/option"
+            android:gravity="center"
+            android:text="@string/option_3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/option4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/option"
+            android:gravity="center"
+            android:text="@string/option_4"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/option5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/option"
+            android:gravity="center"
+            android:text="@string/option_5"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/choice_1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_1" />
+
+        <TextView
+            android:id="@+id/choice_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_2" />
+
+        <TextView
+            android:id="@+id/choice_3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_3" />
+
+        <TextView
+            android:id="@+id/choice_4"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_4" />
+
+        <TextView
+            android:id="@+id/choice_5"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_5" />
+
+        <TextView
+            android:id="@+id/choice_6"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_6" />
+
+        <TextView
+            android:id="@+id/choice_7"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_7" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/adjustActivityBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/AdjustActivity_Back" />
+
+    <Button
+        android:id="@+id/adjustActivitySaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/AdjustActivity_Save" />
+
+    <Button
+        android:id="@+id/adjustActivityResetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/AdjustActivity_Reset" />
+
+    <Spinner
+        android:id="@+id/patternSizeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
+        android:entries="@array/Pattern_Size_Array" />
+
+</RelativeLayout>

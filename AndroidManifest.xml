@@ -3,26 +3,22 @@
     package="com.example.whowascns"
     android:versionCode="1"
     android:versionName="1.0" >
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
-    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
-    
-        <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    
 
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        
-
-        
+        android:theme="@style/AppBaseTheme" >
         <activity
             android:name="com.example.whowascns.MainActivity"
             android:label="@string/app_name" >
@@ -32,38 +28,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="com.example.whowascns.Second"
             android:label="@string/title_activity_second" >
         </activity>
-        
-        <activity android:name="SecondScreen"></activity>
-        <activity 
-            android:name="ThirdScreen">
-             <intent-filter>
+        <activity android:name="com.example.whowascns.SecondScreenActivity" >
+        </activity>
+        <activity android:name="com.example.whowascns.ThirdScreenActivity" >
+            <intent-filter>
                 <action android:name="com.example.whowascns.Second" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="com.example.whowascns.IndividualView" />
             </intent-filter>
         </activity>
-        
-         <activity android:name="com.example.whowascns.IndividualView">  
-           <intent-filter>
-                <action android:name="com.example.whowascns.IndividualViewTwo" />
-            </intent-filter>  
-
-         </activity>   
-         
-         <activity android:name="com.example.whowascns.IndividualViewTwo"></activity>   
-         <activity android:name="com.example.whowascns.IndividualViewThree"></activity> 
+        <activity android:name="com.example.whowascns.IndividualViewActivity" >
+            <intent-filter>
+                <action android:name="com.example.whowascns.IndividualViewTwoActivity" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.whowascns.IndividualViewTwoActivity" >
+        </activity>
+        <activity android:name="com.example.whowascns.IndividualViewThreeActivity" >
+        </activity>
+        <activity
+            android:name="com.example.whowascns.AdjustLiftPatternActivity"
+            android:label="@string/title_activity_adjust_lift_pattern" >
+        </activity>
     </application>
-    
-    
-    
-    
-    
-    
-    
 
 </manifest>

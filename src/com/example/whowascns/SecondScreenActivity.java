@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SecondScreen extends Activity {
+public class SecondScreenActivity extends Activity {
 
 	EditText benchEditText;
 	EditText squatEditText;
@@ -37,6 +37,8 @@ public class SecondScreen extends Activity {
 	String restoredSquat;
 	String restoredOHP;
 	String restoredDead;
+	
+	String[] liftPattern = new String[7];
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -96,7 +98,13 @@ public class SecondScreen extends Activity {
 			squatEditText.setText(thirdToSecondIntent.getStringExtra("squat"));
 			ohpEditText.setText(thirdToSecondIntent.getStringExtra("ohp"));
 			deadEditText.setText(thirdToSecondIntent.getStringExtra("dead"));
+			liftPattern = thirdToSecondIntent.getStringArrayExtra("liftPattern");
 			
+		}
+		
+		if (origin.equals("first"))
+		{
+			liftPattern = thirdToSecondIntent.getStringArrayExtra("liftPattern");
 		}
 
 
@@ -204,8 +212,9 @@ public class SecondScreen extends Activity {
 
 					String message = intent.getStringExtra("key");
 
-					intent = new Intent(SecondScreen.this, ThirdScreen.class);
+					intent = new Intent(SecondScreenActivity.this, ThirdScreenActivity.class);
 					intent.putExtra("key2", message);
+					intent.putExtra("liftPattern", liftPattern);
 
 					//second, get our starting lifts
 					String bench = benchEditText.getText().toString();
@@ -352,13 +361,13 @@ public class SecondScreen extends Activity {
 
 						if (lbs.equals(true)){
 							unit_mode = "Lbs";	  
-							Toast.makeText(SecondScreen.this, "Displaying in lbs", Toast.LENGTH_SHORT).show();
+							Toast.makeText(SecondScreenActivity.this, "Displaying in lbs", Toast.LENGTH_SHORT).show();
 							intent.putExtra("mode", unit_mode);
 						}
 						if (lbs.equals(false))
 						{
 							unit_mode = "Kgs";
-							Toast.makeText(SecondScreen.this, "Displaying in kgs", Toast.LENGTH_SHORT).show();
+							Toast.makeText(SecondScreenActivity.this, "Displaying in kgs", Toast.LENGTH_SHORT).show();
 							intent.putExtra("mode", unit_mode);
 						}
 

@@ -47,11 +47,11 @@ Who Was CNS 531 project progress
 7-28: Lost log entries somewhere in a commit. whoops. Continuing to refactor today.
 7-28: set up hardware acceleration on linux machine, my life is a million times better now. Except for refactoring. In that sense I'd rather be on fire. Slowly but surely slimming classes down, not going to spend much more time on it.
 7-29: slight refactoring and adding in plate booleans to specify what plates one does and doesn't have
- bug/suggestion list
-
-
+7-30: environment issue, got boolean logic completely plugged in but can't deploy to test it... maybe it's back to dreaded windows tomorrow. Theme is fucked too 
+7-31: Got a lot done today, took care of boolean error this morning. Took care of environment issue last night :)  eclipse still likes to crash a lot more on ubuntu than windows. Worth it. Took pattern choosing UI to another project just to iron out issues and make integration a lot less painful. Going well, got back end hooked up to pattern choosing, followed a nice tutorial. Next up is hook up error handling and parsing what the user chose. This will probably be "worst' part. Won't be able to work tomorrow, hopefully get it sorted out on Monday. To bring Monday me up to speed, take a look at the MainActivity comments in the patternchooser UI project. 
+8-2 hooked merged UI activity into main activity with problems (what merge doesn't have those?) Got all of those sorted out. Dynamic day adding for easier error handling for me. Tomorrow is hooking up error handling in back/front end (returning bools/making toast. Then pass your pattern via intent after a couple debug runs and try to break your code. Don't forget the date in your intents.
 TO DO:.
- 
+****UBUNTU: IF YOU CANNOT GET YOUR ACTIONBAR TO IMPORT CONFIGURE BUILD PATH>ANDROID and add your compat library to the path 
 "Export..."  in however many formats you can take  
 gradient buttons? - http://www.dibbus.com/2011/02/gradient-buttons-for-android/ 
 reflection: http://stackoverflow.com/questions/16353140/android-textview-arrays
@@ -89,70 +89,4 @@ hook up back end to plate addition UI
 
 
 training max bug when adjusting lifts and then going back, training maxes are wrong i think 
-
-you may want these... you're welcome hope you got your fucking weblogic working
-	private String[] getNextLiftDefault(Calendar c1, String[] myPattern, String currentLift, String incrementedString) {
-		//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
-		//each case: getnextliftfunctiondefault that finds the lift we are at case of, gets the column index,
-		//increments (or decrements) that column indexes WHILE incrementing or decrementing the day until it runs into a day that isn't rest.
-		//returns a 2 dimensioned array, with the first value being nextLift and the second value being incremented string
-		String[] results = new String[2];
-		int i = 0;
-		//find our column index of our current lift...
-		while (!myPattern[i].equals(currentLift))
-			i++;
-		//we need to increment at least once, but there may be more than one rest day we we have loop implemented..
-		int j = i + 1;//set a new incrementer for i
-		incrementedString = incrementDay(c1, 1);
-		if (j >= myPattern.length) //may not need second declaration?
-			j = 0;
-		
-		while (myPattern[j].equals("Rest"))
-			{
-			j++;
-			incrementedString = incrementDay(c1, 1);
-			if (j >= myPattern.length )
-				j = 0; //go back to beginnig
-			}
-		//assert: if we broke out of this loop then myPattern[j] is NOT a rest day, and hence our next lift
-		String nextLift = myPattern[j];
-		
-		results[0] = nextLift;
-		results[1] = incrementedString;
-		
-		return results;
-	}
-
-
-	private String[] getPreviousLiftDefault(Calendar c1, String[] myPattern, String currentLift, String incrementedString) {
-		//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
-		//each case: getnextliftfunctiondefault that finds the lift we are at case of, gets the column index, increments (or decrements) that column indexes WHILE incrementing or decrementing the day until it runs into a day that isn't rest.
-		//returns a 2 dimensioned array, with the first value being nextLift and the second value being incremented string
-		String[] results = new String[2];
-		int i = 0;
-		//find our column index of our current lift...
-		while (!myPattern[i].equals(currentLift))
-			i++;
-		//we need to increment at least once, but there may be more than one rest day we we have loop implemented..
-		int j = i - 1;//set a new incrementer for i
-		if (j < 0)//don't allow negatives 
-			j = myPattern.length - 1; // put j back at the top
-		incrementedString = decrementDay(c1, 1);
-		if (j == 0 && myPattern[j].equals("Rest"))//rest part is for bounds protection, if it is not equal to rest we don't need to worry about it going into the next while loop, we already found our prevlift
-			j = myPattern.length - 1; //start at the top
-		
-		while (myPattern[j].equals("Rest"))
-			{
-			j--;
-			incrementedString = decrementDay(c1, 1);
-			if (j == myPattern.length )
-				j = myPattern.length - 1; //go back to top
-			}
-		//assert: if we broke out of this loop then myPattern[j] is NOT a rest day, and hence our next lift
-		String prevLift = myPattern[j];
-		
-		results[0] = prevLift;
-		results[1] = incrementedString;
-		
-		return results;
-	}
+If you are having jar troubles just import the android-support-v7 jar and the android-support-v4 jar

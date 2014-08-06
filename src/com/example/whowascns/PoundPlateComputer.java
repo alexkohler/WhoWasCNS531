@@ -24,11 +24,17 @@ public class PoundPlateComputer {
 	String currentPlateName;
 
 
-	public void computeLbPlates (double myWeight, double barbellUsed, Boolean lbFlags[])
+	public void computeLbPlates (double myWeight, double barbellUsed, boolean lbFlags[])
 	{
 		weight = myWeight - barbellUsed;
 		plateWeight = round (weight, 5);
-
+        Boolean lbHaveFortyFive = null, lbHaveThirtyFive = null, lbHaveTwentyFive = null, lbHaveTen = null, lbHaveFive = null , lbHaveTwoPointFive= null;
+        lbHaveFortyFive = lbFlags[0];
+        lbHaveThirtyFive = lbFlags[1] ;
+        lbHaveTwentyFive = lbFlags[2];
+        lbHaveTen = lbFlags[3];
+        lbHaveFive = lbFlags[4];
+        lbHaveTwoPointFive = lbFlags[5];
 
 
 		double currentPlate = 0;
@@ -38,31 +44,71 @@ public class PoundPlateComputer {
 			currentPlate_needed = 0;
 			switch (i){
 			case 0:
-				currentPlate = 45;
-				break;
+				if (!lbHaveFortyFive)
+				{	
+					currentPlate=0;
+					break;
+				}
+				if (lbHaveFortyFive)
+				{
+					currentPlate = 45;
+					break;
+				}
 			case 1:
-				if(!thirtyfive_flag)
+				if(!lbHaveThirtyFive)
 				{
 					currentPlate = 0;
 					break;
 				}
-				if (thirtyfive_flag)
+				if (lbHaveThirtyFive)
 				{
 					currentPlate = 35;
 					break;
 				}
 			case 2:
-				currentPlate = 25;
-				break;
+				if (!lbHaveTwentyFive)
+				{
+					currentPlate = 0;
+					break;
+				}
+				if (lbHaveTwentyFive)
+				{
+					currentPlate = 25;
+					break;
+				}
 			case 3:
-				currentPlate = 10;
-				break;
+				if (!lbHaveTen)
+				{
+					currentPlate = 0;
+					break;
+				}
+				if (lbHaveTen)
+				{
+					currentPlate = 10;
+					break;
+				}
 			case 4: 
+				if (!lbHaveFive)
+				{
+				currentPlate = 0;
+				break;
+				}				
+				if (lbHaveFive)
+				{
 				currentPlate = 5;
 				break;
+				}
 			case 5:
+				if (!lbHaveTwoPointFive)
+				{
+				currentPlate = 0;
+				break;
+				}
+				if (lbHaveTwoPointFive)
+				{
 				currentPlate = 2.5;
 				break;
+				}
 			}//end switch
 
 			if (currentPlate > 0) //weed out unneeded 35

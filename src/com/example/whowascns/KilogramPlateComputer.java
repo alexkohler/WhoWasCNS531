@@ -24,7 +24,7 @@ public class KilogramPlateComputer {
 	String currentPlateName;
 
 
-	public void computeKgPlates (double myWeight, double barbellUsed, Boolean[] kgFlags)
+	public void computeKgPlates (double myWeight, double barbellUsed, boolean[] kgFlags)
 	{
 		//should unpack booleans....
 		weight = myWeight - barbellUsed;
@@ -36,7 +36,7 @@ public class KilogramPlateComputer {
 		Boolean haveTen = kgFlags[3];
 		Boolean haveFive = kgFlags[4];
 		Boolean haveTwoPointFive = kgFlags[5];
-		Boolean haveOnePointTwoFives = kgFlags[6];
+		Boolean haveOnePointTwoFive = kgFlags[6];
 
 		double currentPlate = 0;
 		//boolean thirtyfive_flag = true;
@@ -50,8 +50,11 @@ public class KilogramPlateComputer {
 					currentPlate = 0;
 					break;
 				}
-				currentPlate = 25;
-				break;
+				if (haveTwentyFive)
+				{
+					currentPlate = 25;
+					break;
+				}
 			case 1:
 				if(!haveTwenty) //could add a flag for each of these to allow user to specify what plates they have 
 				{
@@ -64,20 +67,60 @@ public class KilogramPlateComputer {
 					break;
 				}
 			case 2:
-				currentPlate = 15;
-				break;
+				if (!haveFifteen)
+				{
+					currentPlate = 0;
+					break;
+				}
+				if (haveFifteen)
+				{
+					currentPlate = 15;
+					break;
+				}
 			case 3:
-				currentPlate = 10;
-				break;
+				if (!haveTen)
+				{
+					currentPlate = 0;
+					break;
+				}
+				if (haveTen)
+				{
+					currentPlate = 10;
+					break;
+				}
 			case 4: 
+				if (!haveFive)
+				{
+					currentPlate = 0;
+					break;
+				}
+				if (haveFive)
+				{
 				currentPlate = 5;
 				break;
+				}
 			case 5:
-				currentPlate = 2.5;
-				break;
+				if (!haveTwoPointFive)
+				{
+					currentPlate = 0;
+					break;
+				}
+				if (haveTwoPointFive)
+				{
+					currentPlate = 2.5;
+					break;					
+				}
 			case 6:
-				currentPlate = 1.25;
-				break;
+				if (!haveOnePointTwoFive)
+				{
+					currentPlate = 0;
+					break;
+				}
+				if (haveOnePointTwoFive)
+				{
+					currentPlate = 1.25;
+					break;
+				}
 			}//end switch
 
 			if (currentPlate > 0) //weed out unneeded 35

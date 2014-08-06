@@ -35,7 +35,7 @@ public class ConfigTool {
     }
     
     
-	public Intent configurePreviousSet(String myDate, String myPrevLift,  String viewMode, String mode/*, String[] liftPattern*/)
+	public Intent configurePreviousSet(String myDate, String myPrevLift,  String viewMode, String mode, boolean[] boolArray, String[] liftPattern)
 	{
 		String prevLft = myPrevLift;
 		//Boolean topCornerCaseFlag = false;
@@ -66,7 +66,7 @@ public class ConfigTool {
 		third = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD))));
 		}
 		
-		Intent intent  = new Intent(mContext, IndividualView.class);
+		Intent intent  = new Intent(mContext, IndividualViewActivity.class);
 		intent.putExtra("cycle", cycle);
 		intent.putExtra("frequency", freq);
 		intent.putExtra("liftType", lift);
@@ -76,7 +76,8 @@ public class ConfigTool {
 		intent.putExtra("date", liftDate);
 		intent.putExtra("viewMode", viewMode);
 		intent.putExtra("mode", mode);
-		//intent.putExtra("pattern", liftPattern);monkey
+		intent.putExtra("boolArray", boolArray);
+		intent.putExtra("liftPattern", liftPattern);
 		//forwardIntent.putExtra("mode", lbmodeString);
 		//TODO take care of mode
 		db.close();
@@ -91,7 +92,7 @@ public class ConfigTool {
 	}
 	
 	
-	public Intent configureNextSet(String myDate, String myNextLift, String viewMode, String lbMode/*, String[] pattern*/)
+	public Intent configureNextSet(String myDate, String myNextLift, String viewMode, String lbMode, boolean[] boolArray, String[] pattern)
 	{
 		String nextLift = myNextLift;
 		String liftDate = null;
@@ -123,7 +124,7 @@ public class ConfigTool {
 		third = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD))));
 		}
 		
-		Intent intent  = new Intent(mContext, IndividualView.class);
+		Intent intent  = new Intent(mContext, IndividualViewActivity.class);
 		intent.putExtra("cycle", cycle);
 		intent.putExtra("frequency", freq);
 		intent.putExtra("liftType", lift);
@@ -133,7 +134,8 @@ public class ConfigTool {
 		intent.putExtra("date", liftDate);
 		intent.putExtra("viewMode", viewMode);
 		intent.putExtra("mode", lbMode);
-		//intent.putExtra("pattern", pattern);monkey
+		intent.putExtra("boolArray", boolArray);
+		intent.putExtra("liftPattern", pattern);
 		//forwardIntent.putExtra("mode", lbmodeString);
 		//TODO take care of mode
 		db.close();

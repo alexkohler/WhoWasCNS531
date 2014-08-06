@@ -5,12 +5,11 @@ import java.util.Calendar;
 import java.util.Date;
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.LayoutInflater.Filter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -19,8 +18,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.example.whowascns.ThirdScreen;
-public class IndividualView extends ActionBarActivity implements OnClickListener {
+import com.example.whowascns.ThirdScreenActivity;
+public class IndividualViewActivity extends Activity implements OnClickListener {
 
 	static int CURRENT_LEFT_ANCHOR_ID  = 0;
 	static int CURRENT_RIGHT_ANCHOR_ID = 0;
@@ -101,8 +100,8 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 	//at the least you should be able to do this with reused code
 	//dynamic shit can be done later... for now just do manual labor so you don't get lost in the code. 
 	Boolean lbmode = true;//for now 
-	Boolean thirtyFiveFlag = true;
-
+	static boolean[] boolArray = new boolean[7];
+	static String[] liftPattern;
 	
 	
 	
@@ -160,6 +159,7 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 		String lbModeString = intent.getStringExtra("mode");
 		setLbMode(lbModeString);
 		setViewModeString(intent.getStringExtra("viewMode"));
+		setLiftPattern(intent.getStringArrayExtra("liftPattern"));
 		
 		String frequencyBuffer = null;
 		switch (frequency)
@@ -176,13 +176,13 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 		
 		}
 //		BarbellConfig barbellconfig = new BarbellConfig(IndividualView.this);
-		
-		configureBarbell(firstLiftString, barbellImageView, relativeLayout);
+        boolArray = intent.getBooleanArrayExtra("boolArray");
+		configureBarbell(firstLiftString, barbellImageView, relativeLayout, boolArray);
 		dateTV.setText(date);
 		cycleTV.setText("Cycle: " + cycle);
 		liftTV.setText(liftType);
 		weightTV.setText(firstLiftString + frequencyBuffer);
-		
+
 
 		//if the weight is greater than 45 (or equal to).... second and third lift will be handled in right swipe intent
 
@@ -240,7 +240,7 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 		return viewMode;
 	}
 	
-	public void configureBarbell(String myFirstLiftString, ImageView barbellImageView, RelativeLayout relativeLayout, Boolean[] booleanArray) //pass barbellimageView, relative layout, first lift
+	public void configureBarbell(String myFirstLiftString, ImageView barbellImageView, RelativeLayout relativeLayout, boolean[] booleanArray) //pass barbellimageView, relative layout, first lift
 	{
 		//lbNeeded declarations
 		int fortyfivesNeeded;
@@ -271,15 +271,17 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 		Double firstLift;
 		
 		String firstLiftString = myFirstLiftString;
-		/*if (lbmodeString.contains("Lbs"))
-		lbmode = true;
-		if (lbmodeString.contains("Kgs"))
-		lbmode = false;*/ //need to figure something out to keep lbmode when viewing an existing projection
 		firstLift = Double.valueOf(firstLiftString);
-		//Toast.makeText(IndividualView.this, date + cycle + liftType + frequency + firstLiftString + lbmodeString, Toast.LENGTH_SHORT).show();
-		//mode
 		if (getLbMode())
 		{
+            boolean 
+           lbHaveFortyFive = booleanArray[0],
+           lbHaveThirtyFive = booleanArray[1],
+           lbHaveTwentyFive = booleanArray[2],
+           lbHaveTen = booleanArray[3],
+           lbHaveFive = booleanArray[4],
+           lbHaveTwoPointFive = booleanArray[5]; 	
+			
 			if (firstLift < 50)//then completely skip UI generation.. could have an empty barbell sprite but meh 	
 			{
 				barbellImageView.setVisibility(View.INVISIBLE);
@@ -292,41 +294,45 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 					barbellWeight = 45;
 				}
 				//do something like setting plates here.. 
-				if (firstLift >= 135 ) //can we use our base barebell?	
+				if (firstLift >= 135 && lbHaveFortyFive ) //can we use our base barebell?	
 				{
 				barbellImageView.setImageResource(R.drawable.barbell_fortyfives_lb); 
 				barbellWeight = 135;
 				}
 
-				else if ( (firstLift <= 135) && (firstLift >= 115) /*&& thirtyFiveFlag*/)//assert: lift must be less than 135 to make it to this else 
+				else if ( (firstLift <= 135) && (firstLift >= 115) && lbHaveThirtyFive)//assert: lift must be less than 135 to make it to this else 
 				{	
 					barbellImageView.setImageResource(R.drawable.barbell_thirtyfives);
 					barbellWeight = 115;
 				}
 
-				else if ((firstLift <= 115) && (firstLift >= 95)) // assert: lift must be less than 115 to make it to this else
+				else if ((firstLift <= 115) && (firstLift >= 95) && lbHaveTwentyFive) // assert: lift must be less than 115 to make it to this else
 				{
 					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_twentyfives)));
 					barbellWeight = 95;
 				}
 
-				else if ((firstLift <= 95) && (firstLift >= 65))
+				else if ((firstLift <= 95) && (firstLift >= 65) && lbHaveTen)
 				{
 					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_tens)));
 					barbellWeight = 65;
 				}
-				else if ((firstLift <= 65) && (firstLift >= 50) )
+				else if ((firstLift <= 65) && (firstLift >= 55) && lbHaveFive )
+				{	
+					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_fives_lb)));
+					barbellWeight = 50;
+				}
+				else if ((firstLift <= 55) && (firstLift >= 50) && lbHaveTwoPointFive )
 				{	
 					barbellImageView.setImageDrawable((getResources().getDrawable(R.drawable.barbell_twopointfives)));
 					barbellWeight = 50;
 				}
 				relativeLayout=  (RelativeLayout) findViewById(R.id.individualView);
 				setContentView(relativeLayout);
-				relativeLayout.setOnClickListener(IndividualView.this); 
+				relativeLayout.setOnClickListener(IndividualViewActivity.this); 
 
 				PoundPlateComputer platecomputer = new PoundPlateComputer();
-				Boolean[] lbBools = booleanArray;
-				platecomputer.computeLbPlates(firstLift, barbellWeight, lbBools);
+				platecomputer.computeLbPlates(firstLift, barbellWeight, booleanArray);
 				
 				
 				fortyfivesNeeded = platecomputer.getFortyFivesNeeded();
@@ -485,11 +491,10 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 				
 				relativeLayout=  (RelativeLayout) findViewById(R.id.individualView);
 				setContentView(relativeLayout);
-				relativeLayout.setOnClickListener(IndividualView.this); 
+				relativeLayout.setOnClickListener(IndividualViewActivity.this); 
 
 				KilogramPlateComputer platecomputer = new KilogramPlateComputer();
-				Boolean[] kgBools = booleanArray;
-				platecomputer.computeKgPlates(firstLift, barbellWeight, kgBools);
+				platecomputer.computeKgPlates(firstLift, barbellWeight, booleanArray);
 				
 				
 				 twentyfivesNeeded_kg = platecomputer.getTwentyFivesNeeded();
@@ -671,21 +676,19 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 	    
 	    String liftType = myIntent.getStringExtra("liftType"); 
 		String viewMode = myIntent.getStringExtra("viewMode");
-		//candy dick
 		String mode = myIntent.getStringExtra("mode");
-		//String[] liftPattern = myIntent.getStringArrayExtra("pattern"); monkey
+		liftPattern = myIntent.getStringArrayExtra("liftPattern"); 
+		setLiftPattern(liftPattern);
 		String nextLift = null;
 	    String incrementedString = null;
-		String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
-		//String[] myPattern = {"Squat", "Bench", "Rest", "Deadlift", "OHP", "Rest" };
 	    String[] result = new String[2];
-	    ConfigTool helper = new ConfigTool(IndividualView.this);
-		result = helper.getNextLift(c1, myPattern, liftType, viewMode);//getNextLiftDefault returns a result array which has nextLift and incrementedString
+	    ConfigTool helper = new ConfigTool(IndividualViewActivity.this);
+		result = helper.getNextLift(c1, liftPattern, liftType, viewMode);//getNextLiftDefault returns a result array which has nextLift and incrementedString
 		nextLift = result[0];
 		incrementedString = result[1];
 
 			    
-	    Intent nextLiftIntent = helper.configureNextSet(incrementedString, nextLift, viewMode, mode/*, liftPattern*/);//monkey
+	    Intent nextLiftIntent = helper.configureNextSet(incrementedString, nextLift, viewMode, mode, boolArray, liftPattern);
 	    if (!helper.bottomCase())
 	    {
 	    	startActivity(nextLiftIntent);
@@ -713,18 +716,16 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 	    String incrementedString = null;
 		String viewMode = myIntent.getStringExtra("viewMode");
 		String mode = myIntent.getStringExtra("mode");
-		//String[] myPattern = {"Squat", "Bench", "Rest", "Deadlift", "OHP", "Rest" };
-		String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
 	     String[] result = new String[2];
-		//String[] liftPattern = myIntent.getStringArrayExtra("pattern"); monkey
-	     ConfigTool helper = new ConfigTool(IndividualView.this);
-		 result = helper.getPrevLift(c1, myPattern, liftType, viewMode);//getNextLiftDefault returns a result array which has nextLift and incrementedString
+	     liftPattern = myIntent.getStringArrayExtra("liftPattern"); 
+	     ConfigTool helper = new ConfigTool(IndividualViewActivity.this);
+		 result = helper.getPrevLift(c1, liftPattern, liftType, viewMode);//getNextLiftDefault returns a result array which has nextLift and incrementedString
 		 nextLift = result[0];
 		 incrementedString = result[1];
 	    
 	    
 	    
-	    Intent prevLiftIntent =  helper.configurePreviousSet(incrementedString, nextLift, viewMode, mode/*, liftPattern*/);
+	    Intent prevLiftIntent =  helper.configurePreviousSet(incrementedString, nextLift, viewMode, mode, boolArray, liftPattern);
 	    if (!helper.topCase())
 	    {
 	    	startActivity(prevLiftIntent);
@@ -738,15 +739,26 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 	
 	@Override
 	public void onBackPressed() {
-		
-		Intent intent = new Intent(IndividualView.this, ThirdScreen.class);
+		Intent preIntent = getIntent();
+		Intent intent = new Intent(IndividualViewActivity.this, ThirdScreenActivity.class);
 		intent.putExtra("origin", "individualView");//reusing flag I use to jump to third from first. 
+		intent.putExtra("liftPattern", getLiftPattern());
 		intent.putExtra("viewMode", getViewModeString());
 		startActivity(intent);
 		overridePendingTransition(0,R.anim.exit_slide_right);
 	}
 	
-    class MyGestureDetector extends SimpleOnGestureListener {
+    private String[] getLiftPattern() {
+		
+		return liftPattern;
+	}
+    
+    private void setLiftPattern (String[] myPattern)
+    {
+    	liftPattern = myPattern;
+    }
+
+	class MyGestureDetector extends SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             try {
@@ -805,8 +817,8 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 		barbellImageView = (ImageView) findViewById(R.id.barbell);
 		
 		//Right/left 45 Setup
-		CURRENT_RIGHT_IMAGEVIEW = new ImageView(IndividualView.this);
-		CURRENT_LEFT_IMAGEVIEW = new ImageView(IndividualView.this);
+		CURRENT_RIGHT_IMAGEVIEW = new ImageView(IndividualViewActivity.this);
+		CURRENT_LEFT_IMAGEVIEW = new ImageView(IndividualViewActivity.this);
 		//setting image resource
 		//setting image position
 		CURRENT_RIGHT_IMAGEVIEW.setImageResource(resource);
@@ -863,9 +875,10 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 		String secondLiftString = intent.getStringExtra("secondLift");
 		String thirdLiftString = intent.getStringExtra("thirdLift");
 		String lbmodeString = intent.getStringExtra("mode");
+		String[] pattern = intent.getStringArrayExtra("liftPattern");
+		boolean[] plateconfig = intent.getBooleanArrayExtra("boolArray"); // monkey)
 		
-		
-		Intent forwardIntent  = new Intent(IndividualView.this, IndividualViewTwo.class);
+		Intent forwardIntent  = new Intent(IndividualViewActivity.this, IndividualViewTwoActivity.class);
 		forwardIntent.putExtra("cycle", cycle);
 		forwardIntent.putExtra("frequency", frequency);
 		forwardIntent.putExtra("liftType", liftType);
@@ -874,6 +887,7 @@ public class IndividualView extends ActionBarActivity implements OnClickListener
 		forwardIntent.putExtra("thirdLift", thirdLiftString);
 		forwardIntent.putExtra("date", date);
 		forwardIntent.putExtra("mode", lbmodeString);
+		forwardIntent.putExtra("boolArray", plateconfig);
 		startActivity(forwardIntent);
     }
 	

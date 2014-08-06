@@ -34,7 +34,7 @@ import android.widget.Toast;
 //small victories :) 
 
 
-public class ThirdScreen extends Activity {
+public class ThirdScreenActivity extends Activity {
 
 	EventsDataSQLHelper eventsData;
 	TextView OUTPUT;
@@ -49,8 +49,8 @@ public class ThirdScreen extends Activity {
 	String retStringSaver; //for sake of changing views
 	Cursor cursor;
 	String lbmode;
-	static Boolean[] kgBooleans;
-	static Boolean[] lbBooleans;
+	static boolean[] kgBooleans = new boolean[]{true, true, true, true, true, true, true};
+	static boolean[] lbBooleans = new boolean[]{true, true, true, true, true, true, true}; //defaults until plateconfig is changed
 
 	public enum CURRENT_VIEW {
 		DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), DEAD('D'), FIVES('5'), THREES('3'), ONES('1');
@@ -102,6 +102,7 @@ public class ThirdScreen extends Activity {
 		Intent intent = getIntent();
 
 		String startingDate = intent.getStringExtra("key2");
+		liftPattern = intent.getStringArrayExtra("liftPattern");
 		
 
 		
@@ -120,7 +121,7 @@ public class ThirdScreen extends Activity {
 		{
 
 			eventsData.inflateTable(this, intent, startingDate, db);
-			new AsyncCaller().execute();
+			new AsyncCaller(liftPattern).execute();
 		}
 
 
@@ -163,9 +164,9 @@ public class ThirdScreen extends Activity {
 		@Override
 		public void onClick(View v) {
 			//Options menu -- wrap up in a checkbox Listener 
-			CharSequence colors[] = new CharSequence[] {"Plate Config", "Adjust Lifts", "Reset", "Export...", "View By...", "Back"};
+			CharSequence colors[] = new CharSequence[] {"Plate Config", "Adjust Lifts", /*"Export.."*/ "Reset", "View By...", "Back"};
 
-			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 			builder.setTitle("Options menu");
 			//final LinearLayout myLL = (LinearLayout)findViewById(R.id.linearLayout1);
 			builder.setItems(colors, new DialogInterface.OnClickListener() {
@@ -174,7 +175,7 @@ public class ThirdScreen extends Activity {
 					if (which==0)
 					{
 						CharSequence modes[] = new CharSequence[] {"Pounds", "Kilograms"};
-						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 						builder.setTitle("Unit menu");
 						builder.setItems(modes, new DialogInterface.OnClickListener() {
 							@Override
@@ -198,7 +199,7 @@ public class ThirdScreen extends Activity {
 					
 					if (which == 1){
 						SQLiteDatabase db = eventsData.getWritableDatabase();
-						Intent myIntent = new Intent(ThirdScreen.this, SecondScreen.class);
+						Intent myIntent = new Intent(ThirdScreenActivity.this, SecondScreenActivity.class);
 						myIntent.putExtra("origin", "third");
 						String[] intentDataArray = new String[6];
 						intentDataArray = getSecondScreenData(intentDataArray);
@@ -207,6 +208,7 @@ public class ThirdScreen extends Activity {
 						myIntent.putExtra("squat", intentDataArray[1]);
 						myIntent.putExtra("ohp", intentDataArray[2]);
 						myIntent.putExtra("dead", intentDataArray[3]);
+						myIntent.putExtra("liftPattern", liftPattern);
 						db.delete("Lifts", null, null);
 						startActivity(myIntent);
 					}
@@ -219,7 +221,7 @@ public class ThirdScreen extends Activity {
 
 					}
 					//nothing for export yet
-					if (which == 4)
+					if (which == 3)
 					{
 						createViewBuilder();
 					}
@@ -263,7 +265,7 @@ public class ThirdScreen extends Activity {
 		{
 			CharSequence colors[] = new CharSequence[] {"Show all", "Bench Only", "Squat Only", "OHP Only", "Deadlift only", "5-5-5 Days only", "3-3-3 Days only", "5-3-1 days only", "Back"};
 
-			AlertDialog.Builder builder2 = new AlertDialog.Builder(ThirdScreen.this);
+			AlertDialog.Builder builder2 = new AlertDialog.Builder(ThirdScreenActivity.this);
 			builder2.setTitle("Show by:");
 
 			builder2.setItems(colors, new DialogInterface.OnClickListener() {
@@ -274,7 +276,7 @@ public class ThirdScreen extends Activity {
 					switch (which){
 					case 0:
 						curView = CURRENT_VIEW.DEFAULT;
-						Toast.makeText(ThirdScreen.this, "View Selected: Show All", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ThirdScreenActivity.this, "View Selected: Show All", Toast.LENGTH_SHORT).show();
 						setQuery(null);
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -283,7 +285,7 @@ public class ThirdScreen extends Activity {
 						break;
 					case 1:
 						curView = CURRENT_VIEW.BENCH;
-						Toast.makeText(ThirdScreen.this, "View Selected: Bench Only", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ThirdScreenActivity.this, "View Selected: Bench Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Bench'");
 						tableRowPrincipal.removeAllViews(); //try something like this 
 						cursor = getEvents();
@@ -292,7 +294,7 @@ public class ThirdScreen extends Activity {
 						break;	
 					case 2:
 						curView = CURRENT_VIEW.SQUAT;
-						Toast.makeText(ThirdScreen.this, "View Selected: Squat Only", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ThirdScreenActivity.this, "View Selected: Squat Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Squat'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -301,7 +303,7 @@ public class ThirdScreen extends Activity {
 						break;	
 					case 3:
 						curView = CURRENT_VIEW.OHP;
-						Toast.makeText(ThirdScreen.this, "View Selected: OHP Only", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ThirdScreenActivity.this, "View Selected: OHP Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'OHP'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -310,7 +312,7 @@ public class ThirdScreen extends Activity {
 						break;		
 					case 4:
 						curView = CURRENT_VIEW.DEAD;
-						Toast.makeText(ThirdScreen.this, "View Selected: Deadlift Only", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ThirdScreenActivity.this, "View Selected: Deadlift Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Deadlift'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -319,7 +321,7 @@ public class ThirdScreen extends Activity {
 						break;
 					case 5:
 						curView = CURRENT_VIEW.FIVES;
-						Toast.makeText(ThirdScreen.this, "View Selected: Fives Days Only", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ThirdScreenActivity.this, "View Selected: Fives Days Only", Toast.LENGTH_SHORT).show();
 						setQuery("Frequency = '5-5-5'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -328,7 +330,7 @@ public class ThirdScreen extends Activity {
 						break;
 					case 6:
 						curView = CURRENT_VIEW.THREES;
-						Toast.makeText(ThirdScreen.this, "View Selected: Triples Days Only", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ThirdScreenActivity.this, "View Selected: Triples Days Only", Toast.LENGTH_SHORT).show();
 						setQuery("Frequency = '3-3-3'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -337,7 +339,7 @@ public class ThirdScreen extends Activity {
 						break;
 					case 7:
 						curView = CURRENT_VIEW.ONES;
-						Toast.makeText(ThirdScreen.this, "View Selected: 5-3-1 Days Only", Toast.LENGTH_SHORT).show();
+						Toast.makeText(ThirdScreenActivity.this, "View Selected: 5-3-1 Days Only", Toast.LENGTH_SHORT).show();
 						setQuery("Frequency = '5-3-1'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -347,7 +349,7 @@ public class ThirdScreen extends Activity {
 					case 8:
 						CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", "Export...", "View By...", "Back"};
 
-						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 						builder.setTitle("Options menu");
 						builder.setItems(colors, new DialogInterface.OnClickListener() {
 							@Override
@@ -386,7 +388,7 @@ public class ThirdScreen extends Activity {
 			    // arraylist to keep the selected items
 			    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
 
-			    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+			    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 			    builder.setTitle("What plates does your gym have?");
 			    builder.setMultiChoiceItems(kgPlates, null,
 			            new DialogInterface.OnMultiChoiceClickListener() {
@@ -406,8 +408,8 @@ public class ThirdScreen extends Activity {
 			 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			     @Override
 			     public void onClick(DialogInterface dialog, int id) {
-			    	 Boolean kgHaveTwentyFive = null, kgHaveTwenty = null, kgHaveFifteen = null, kgHaveTen = null, 
-			    			 kgHaveFive = null , kgHaveTwoPointFive= null , kgHaveOnePointTwoFive= null;//actually name booleans for sanity purposes
+			    	 boolean kgHaveTwentyFive = false, kgHaveTwenty = false, kgHaveFifteen = false, kgHaveTen = false, 
+			    			 kgHaveFive = false , kgHaveTwoPointFive= false , kgHaveOnePointTwoFive= false;//actually name booleans for sanity purposes
 			    	 for (int indexSelected : seletedItems)
 			    	 {
 			    		switch (indexSelected)
@@ -436,7 +438,7 @@ public class ThirdScreen extends Activity {
 			    		}
 			    	 }
 			    	 //after sorting through status, pack these up into a boolean array
-			    	 Boolean[] localkgBooleans = new Boolean[7];
+			    	 boolean[] localkgBooleans = new boolean[7];
 			    	 localkgBooleans[0] = kgHaveTwentyFive;
 			    	 localkgBooleans[1] = kgHaveTwenty;
 			    	 localkgBooleans[2] = kgHaveFifteen;
@@ -469,7 +471,7 @@ public class ThirdScreen extends Activity {
 		// arraylist to keep the selected items
 		final ArrayList<Integer> seletedItems = new ArrayList<Integer>();
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreen.this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 		builder.setTitle("What plates does your gym have?");
 		builder.setMultiChoiceItems(lbPlates, null,
 				new DialogInterface.OnMultiChoiceClickListener() {
@@ -491,8 +493,8 @@ public class ThirdScreen extends Activity {
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int id) {
-				    	 Boolean lbHaveFortyFive = null, lbHaveThirtyFive = null, lbHaveTwentyFive = null, lbHaveTen = null, 
-				    			 lbHaveFive = null , lbHaveTwoPointFive= null;
+				    	 Boolean lbHaveFortyFive = false, lbHaveThirtyFive = false, lbHaveTwentyFive = false, lbHaveTen = false, 
+				    			 lbHaveFive = false , lbHaveTwoPointFive= false;
 						for (int indexSelected : seletedItems) {
 							switch (indexSelected) {
 							case 0:
@@ -516,7 +518,7 @@ public class ThirdScreen extends Activity {
 							}
 						}
 						//after running through boolean status, pack them up in an array.. is there a more elegant way? Probably, but that's why you need to hire me and teach me ;)
-						Boolean[] localLbStatus = new Boolean[6];
+						boolean[] localLbStatus = new boolean[6];
 						localLbStatus[0] = lbHaveFortyFive;
 						localLbStatus[1] = lbHaveThirtyFive;
 						localLbStatus[2] = lbHaveTwentyFive;
@@ -687,10 +689,10 @@ public class ThirdScreen extends Activity {
 							iterator++;
 						}	
 
-						Toast.makeText(ThirdScreen.this, myEntries[2], Toast.LENGTH_SHORT).show();
+						Toast.makeText(ThirdScreenActivity.this, myEntries[2], Toast.LENGTH_SHORT).show();
 
 
-						Intent intent = new Intent(ThirdScreen.this, IndividualView.class);
+						Intent intent = new Intent(ThirdScreenActivity.this, IndividualViewActivity.class);
 
 						String myFrequency = myEntries[2];	
 						String myLiftType = myEntries[1];
@@ -713,6 +715,7 @@ public class ThirdScreen extends Activity {
 						intent.putExtra("date", myDate);
 						intent.putExtra("mode", mode);
 						intent.putExtra("viewMode", viewMode);
+						intent.putExtra("liftPattern", liftPattern);
 						
 						if (lbMode == 1) //if we are in lbs mode
 						intent.putExtra("boolArray", getLbBooleans());
@@ -752,27 +755,33 @@ public class ThirdScreen extends Activity {
 				return Double.valueOf(twoDForm.format(d));
 			}
 			
-			public static Boolean[] getKgBooleans() {
+			public static boolean[] getKgBooleans() {
 				return kgBooleans;
 			}
 
-			public static void setKgBooleans(Boolean[] kgBooleans) {
-				ThirdScreen.kgBooleans = kgBooleans;
+			public static void setKgBooleans(boolean[] kgBooleans) {
+				ThirdScreenActivity.kgBooleans = kgBooleans;
 			}
 
-			public static Boolean[] getLbBooleans() {
+			public static boolean[] getLbBooleans() {
 				return lbBooleans;
 			}
 
-			public static void setLbBooleans(Boolean[] lbBooleans) {
-				ThirdScreen.lbBooleans = lbBooleans;
+			public static void setLbBooleans(boolean[] lbBooleans) {
+				ThirdScreenActivity.lbBooleans = lbBooleans;
 			}
 
 
 			//Async caller for threading
 			class AsyncCaller extends AsyncTask<Void, Void, Void>
 			{
-				ProgressDialog pdLoading = new ProgressDialog(ThirdScreen.this);
+				String[] LiftPattern;
+				public AsyncCaller(String[] liftPattern)
+				{
+					LiftPattern = liftPattern;
+				}
+				
+				ProgressDialog pdLoading = new ProgressDialog(ThirdScreenActivity.this);
 				@Override
 				protected void onPreExecute() {
 					super.onPreExecute();
@@ -784,7 +793,7 @@ public class ThirdScreen extends Activity {
 				}
 				@Override
 				protected Void doInBackground(Void... params) {
-					Processor.calculateCycle(ThirdScreen.this);
+					Processor.calculateCycle(ThirdScreenActivity.this, LiftPattern);
 					cursor = getEvents();
 
 					//this method will be running on background thread so don't update UI frome here

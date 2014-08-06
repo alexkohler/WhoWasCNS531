@@ -115,8 +115,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/barbell_fortyfives_lb"
-        android:contentDescription ="@string/base_barbell_desc" />
+        android:contentDescription="@string/base_barbell_desc"
+        android:src="@drawable/empty_barbell" />
 
     <TextView
         android:id="@+id/liftNumberTextView"
