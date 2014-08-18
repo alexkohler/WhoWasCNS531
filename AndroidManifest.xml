@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.whowascns"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="com.kohlerbear.whowascns"
+    android:versionCode="3"
+    android:versionName="1.11" >
 
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="1"
         android:targetSdkVersion="19" />
-
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:allowBackup="true"
@@ -20,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppBaseTheme" >
         <activity
-            android:name="com.example.whowascns.MainActivity"
+            android:name="com.kohlerbear.whowascns.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,31 +24,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.whowascns.Second"
+            android:name="com.kohlerbear.whowascns.Second"
             android:label="@string/title_activity_second" >
         </activity>
-        <activity android:name="com.example.whowascns.SecondScreenActivity" >
+        <activity android:name="com.kohlerbear.whowascns.SecondScreenActivity" >
         </activity>
-        <activity android:name="com.example.whowascns.ThirdScreenActivity" >
+        <activity android:name="com.kohlerbear.whowascns.ThirdScreenActivity" >
             <intent-filter>
-                <action android:name="com.example.whowascns.Second" />
+                <action android:name="com.kohlerbear.whowascns.Second" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <action android:name="com.example.whowascns.IndividualView" />
+                <action android:name="com.kohlerbear.whowascns.IndividualView" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.whowascns.IndividualViewActivity" >
+        <activity android:name="com.kohlerbear.whowascns.IndividualViewActivity" >
             <intent-filter>
-                <action android:name="com.example.whowascns.IndividualViewTwoActivity" />
+                <action android:name="com.kohlerbear.whowascns.IndividualViewTwoActivity" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.whowascns.IndividualViewTwoActivity" >
+        <activity android:name="com.kohlerbear.whowascns.IndividualViewTwoActivity" >
         </activity>
-        <activity android:name="com.example.whowascns.IndividualViewThreeActivity" >
+        <activity android:name="com.kohlerbear.whowascns.IndividualViewThreeActivity" >
         </activity>
         <activity
-            android:name="com.example.whowascns.AdjustLiftPatternActivity"
+            android:name="com.kohlerbear.whowascns.AdjustLiftPatternActivity"
             android:label="@string/title_activity_adjust_lift_pattern" >
         </activity>
     </application>
