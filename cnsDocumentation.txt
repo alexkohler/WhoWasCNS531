@@ -50,6 +50,7 @@ Who Was CNS 531 project progress
 7-30: environment issue, got boolean logic completely plugged in but can't deploy to test it... maybe it's back to dreaded windows tomorrow. Theme is fucked too 
 7-31: Got a lot done today, took care of boolean error this morning. Took care of environment issue last night :)  eclipse still likes to crash a lot more on ubuntu than windows. Worth it. Took pattern choosing UI to another project just to iron out issues and make integration a lot less painful. Going well, got back end hooked up to pattern choosing, followed a nice tutorial. Next up is hook up error handling and parsing what the user chose. This will probably be "worst' part. Won't be able to work tomorrow, hopefully get it sorted out on Monday. To bring Monday me up to speed, take a look at the MainActivity comments in the patternchooser UI project. 
 8-2 hooked merged UI activity into main activity with problems (what merge doesn't have those?) Got all of those sorted out. Dynamic day adding for easier error handling for me. Tomorrow is hooking up error handling in back/front end (returning bools/making toast. Then pass your pattern via intent after a couple debug runs and try to break your code. Don't forget the date in your intents.
+8-3: Added richer error handling and improved some layout features.
 TO DO:.
 ****UBUNTU: IF YOU CANNOT GET YOUR ACTIONBAR TO IMPORT CONFIGURE BUILD PATH>ANDROID and add your compat library to the path 
 "Export..."  in however many formats you can take  

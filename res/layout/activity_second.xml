@@ -121,22 +121,6 @@
         android:layout_marginTop="27dp"
         android:text="@string/blank_text_view" />
 
-    <TextView
-        android:id="@+id/NumberCyclesTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/deadTextView"
-        android:layout_centerVertical="true"
-        android:text="@string/Number_of_cycles_text_view" />
-
-    <Spinner
-        android:id="@+id/numberCyclesSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/secondToFirstButton"
-        android:entries="@array/cycles_array" />
-
     <RadioGroup
         android:id="@+id/unitModeGroup"
         android:layout_width="wrap_content"
@@ -144,27 +128,48 @@
         android:layout_below="@+id/NumberCyclesTextView"
         android:layout_toRightOf="@+id/squatTextView"
         android:orientation="horizontal" >
-
-        <RadioButton
-            android:id="@+id/kgRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/kg_radio_button" />
-
-        <RadioButton
-            android:id="@+id/lbRadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/lb_radio_button" />
     </RadioGroup>
+
+    <RadioButton
+        android:id="@+id/lbRadioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberCyclesSpinner"
+        android:layout_toRightOf="@+id/NumberCyclesTextView"
+        android:checked="true"
+        android:text="@string/lb_radio_button" />
+
+    <RadioButton
+        android:id="@+id/kgRadioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lbRadioButton"
+        android:layout_alignBottom="@+id/lbRadioButton"
+        android:layout_alignRight="@+id/NumberCyclesTextView"
+        android:text="@string/kg_radio_button" />
 
     <CheckBox
         android:id="@+id/roundingCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/NumberCyclesTextView"
-        android:layout_alignLeft="@+id/NumberCyclesTextView"
+        android:layout_alignLeft="@+id/deadTextView"
+        android:layout_below="@+id/deadEditText"
         android:text="@string/rounding_checkbox_text" />
+
+    <Spinner
+        android:id="@+id/numberCyclesSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/NumberCyclesTextView"
+        android:layout_toRightOf="@+id/NumberCyclesTextView"
+        android:entries="@array/cycles_array" />
+
+    <TextView
+        android:id="@+id/NumberCyclesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/roundingCheckBox"
+        android:layout_below="@+id/roundingCheckBox"
+        android:text="@string/Number_of_cycles_text_view" />
 
 </RelativeLayout>

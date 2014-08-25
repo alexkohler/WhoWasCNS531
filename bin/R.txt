@@ -352,8 +352,8 @@ int id individualView 0x7f05004b
 int id individualViewThree 0x7f050071
 int id individualViewTwo 0x7f05003c
 int id insertValues 0x7f050082
-int id kgRadioButton 0x7f05006e
-int id lbRadioButton 0x7f05006f
+int id kgRadioButton 0x7f05006f
+int id lbRadioButton 0x7f05006d
 int id liftColumn 0x7f050085
 int id liftNumberTextView 0x7f050049
 int id liftTicker 0x7f05005e
@@ -370,7 +370,7 @@ int id modeTextView_activity_two 0x7f05003d
 int id never 0x7f050009
 int id none 0x7f050010
 int id normal 0x7f050000
-int id numberCyclesSpinner 0x7f05006c
+int id numberCyclesSpinner 0x7f05006e
 int id ohpEditText 0x7f050067
 int id ohpTextView 0x7f050065
 int id option1 0x7f05008d
@@ -434,7 +434,7 @@ int id thirdScreenLayout 0x7f05007f
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020
 int id trainingMaxesTV 0x7f05008a
-int id unitModeGroup 0x7f05006d
+int id unitModeGroup 0x7f05006c
 int id up 0x7f050021
 int id useLogo 0x7f050003
 int id weightTextView 0x7f050055
@@ -560,6 +560,7 @@ int string unit_mode_text_view 0x7f0a0023
 int string view_existing_text_view 0x7f0a0026
 int string weight_text_test 0x7f0a0029
 int style AppBaseTheme 0x7f0b008b
+int style AppBaseThemeNoTitleBar 0x7f0b008c
 int style TextAppearance_AppCompat_Base_CompactMenu_Dialog 0x7f0b0063
 int style TextAppearance_AppCompat_Base_SearchResult 0x7f0b006d
 int style TextAppearance_AppCompat_Base_SearchResult_Subtitle 0x7f0b006f
