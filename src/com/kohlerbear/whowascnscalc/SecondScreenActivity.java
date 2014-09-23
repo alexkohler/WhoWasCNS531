@@ -1,6 +1,9 @@
 package com.kohlerbear.whowascnscalc;
 
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,7 +54,7 @@ public class SecondScreenActivity extends Activity {
 		backButton.setOnClickListener(goToFirstListener);
 
 		Button createScheduleButton = (Button) findViewById(R.id.secondScreenNextButton);
-		createScheduleButton.setOnClickListener(goToThirdListener); //because fuck inline listeners 
+		createScheduleButton.setOnClickListener(goToThirdListener);
 
 		errorTextView = (TextView) findViewById(R.id.dynamicTextView);
 		errorTextView.setText("");
@@ -217,8 +220,22 @@ public class SecondScreenActivity extends Activity {
 					intent.putExtra("key2", message);
 					intent.putExtra("liftPattern", liftPattern);
 
+					NumberFormat nf = NumberFormat.getInstance(java.util.Locale.getDefault()); //get user's locale to make sure we parse correctly
+					
 					//second, get our starting lifts
 					String bench = benchEditText.getText().toString();
+
+				//	Number myNumber = nf.parse(myString);
+
+					double benchDouble = 0;
+					    try {
+							benchDouble = nf.parse(bench).doubleValue();
+						} catch (ParseException e) 
+						{
+							benchDouble = Double.parseDouble(bench); //otherwise revert to our old way. Still not quite as robust but I think the locale will fix crashes.
+						}
+					
+					//Some android phones are capable of accessing their full keyboard, add error checking to ensure that no commas,
 
 					//null error handling
 					if (bench.equals("")){	
@@ -229,7 +246,7 @@ public class SecondScreenActivity extends Activity {
 					}
 
 					else{
-						if ((Double.parseDouble(bench) >= 1000 && lbs) || (Double.parseDouble(bench) >= 500 && !lbs))
+						if ((benchDouble >= 1000 && lbs) || (benchDouble >= 500 && !lbs))
 						{
 							if (lbs)
 								benchEditText.setError(thousandBenchString);
@@ -238,7 +255,7 @@ public class SecondScreenActivity extends Activity {
 							benchErrorFlag = true;
 							
 						}
-						if (Double.parseDouble(bench) == 0) {
+						if (benchDouble == 0) {
 							benchEditText.setError(zeroBenchString);
 							benchErrorFlag = true;
 						}			
@@ -252,14 +269,23 @@ public class SecondScreenActivity extends Activity {
 
 
 					String squat = squatEditText.getText().toString();
+					
+					double squatDouble = 0;
+				    try {
+				    	squatDouble = nf.parse(squat).doubleValue();
+					} catch (ParseException e) 
+					{
+						squatDouble = Double.parseDouble(squat); //otherwise revert to our old way. Still not quite as robust but I think the locale will fix crashes.
+					}
+					
 					//null error handling
 					if (squat.equals("")){	
 						squatEditText.setError(emptySquatString);
 						squatErrorFlag = true;
 					}
-
+					
 					else{
-						if ((Double.parseDouble(squat) >= 1500 && lbs) || (Double.parseDouble(squat) > 600 && !lbs))
+						if ((squatDouble >= 1500 && lbs) || (squatDouble > 600 && !lbs))
 						{
 							if (lbs)
 								squatEditText.setError(thousandSquatString);
@@ -267,7 +293,7 @@ public class SecondScreenActivity extends Activity {
 								squatEditText.setError(thousandSquatStringKgs);
 							squatErrorFlag = true;
 						}
-						if (Double.parseDouble(squat) == 0) {
+						if (squatDouble == 0) {
 							squatEditText.setError(zeroSquatString);
 							squatErrorFlag = true;
 						}			
@@ -281,6 +307,18 @@ public class SecondScreenActivity extends Activity {
 
 
 					String OHP = ohpEditText.getText().toString();
+					
+					
+					double ohpDouble = 0;
+				    try {
+				    	ohpDouble = nf.parse(OHP).doubleValue();
+					} catch (ParseException e) 
+					{
+						ohpDouble = Double.parseDouble(OHP); //otherwise revert to our old way. Still not quite as robust but I think the locale will fix crashes.
+					}
+					
+					
+					
 					//null error handling
 					if (OHP.equals("")){	
 						//technically don't need endline char first time...
@@ -289,7 +327,7 @@ public class SecondScreenActivity extends Activity {
 					}
 
 					else{
-						if ((Double.parseDouble(OHP) >= 1000 && lbs) || (Double.parseDouble(OHP) >= 400 && !lbs) )
+						if ((ohpDouble >= 1000 && lbs) || (ohpDouble >= 400 && !lbs) )
 						{
 							if (lbs)
 								ohpEditText.setError(thousandOHPString);
@@ -297,7 +335,7 @@ public class SecondScreenActivity extends Activity {
 								ohpEditText.setError(thousandOHPStringKgs);
 							ohpErrorFlag = true;
 						}
-						if (Double.parseDouble(OHP) == 0) {
+						if (ohpDouble == 0) {
 							ohpEditText.setError(zeroOHPString);
 							ohpErrorFlag = true;
 						}			
@@ -309,6 +347,17 @@ public class SecondScreenActivity extends Activity {
 
 
 					String dead = deadEditText.getText().toString();
+					
+					double deadDouble = 0;
+				    try {
+				    	deadDouble = nf.parse(dead).doubleValue();
+					} catch (ParseException e) 
+					{
+						deadDouble = Double.parseDouble(dead); //otherwise revert to our old way. Still not quite as robust but I think the locale will fix crashes.
+					}
+					
+					
+					
 					if (dead.equals("")){	
 						//technically don't need endline char first time...
 						deadEditText.setError(emptyDeadliftString);
@@ -316,7 +365,7 @@ public class SecondScreenActivity extends Activity {
 					}
 
 					else{
-						if ((Double.parseDouble(dead) >= 1500 && lbs ) || (Double.parseDouble(dead) >= 700 && !lbs) )
+						if ((deadDouble >= 1500 && lbs ) || (deadDouble >= 700 && !lbs) )
 						{
 							if (lbs)
 							deadEditText.setError(thousandDeadliftString);
@@ -324,7 +373,7 @@ public class SecondScreenActivity extends Activity {
 							deadEditText.setError(thousandDeadliftStringKgs);
 							deadErrorFlag = true;
 						}
-						if (Double.parseDouble(dead) == 0) {
+						if (deadDouble == 0) {
 							deadEditText.setError(zeroDeadliftString);
 							deadErrorFlag = true;
 						}			

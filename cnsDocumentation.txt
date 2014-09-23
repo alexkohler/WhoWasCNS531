@@ -51,43 +51,6 @@ Who Was CNS 531 project progress
 7-31: Got a lot done today, took care of boolean error this morning. Took care of environment issue last night :)  eclipse still likes to crash a lot more on ubuntu than windows. Worth it. Took pattern choosing UI to another project just to iron out issues and make integration a lot less painful. Going well, got back end hooked up to pattern choosing, followed a nice tutorial. Next up is hook up error handling and parsing what the user chose. This will probably be "worst' part. Won't be able to work tomorrow, hopefully get it sorted out on Monday. To bring Monday me up to speed, take a look at the MainActivity comments in the patternchooser UI project. 
 8-2 hooked merged UI activity into main activity with problems (what merge doesn't have those?) Got all of those sorted out. Dynamic day adding for easier error handling for me. Tomorrow is hooking up error handling in back/front end (returning bools/making toast. Then pass your pattern via intent after a couple debug runs and try to break your code. Don't forget the date in your intents.
 8-3: Added richer error handling and improved some layout features.
-TO DO:.
-****UBUNTU: IF YOU CANNOT GET YOUR ACTIONBAR TO IMPORT CONFIGURE BUILD PATH>ANDROID and add your compat library to the path 
-"Export..."  in however many formats you can take  
-gradient buttons? - http://www.dibbus.com/2011/02/gradient-buttons-for-android/ 
-reflection: http://stackoverflow.com/questions/16353140/android-textview-arrays
-create text size based on how big screen is?
-clean up your code it's fucking juvenile and ugly 
-check your program against the excel sheet you wrote
-moving imageview via animation http://stackoverflow.com/questions/11144421/move-an-imageview-to-different-position-in-animated-way-in-androidmay need to resize 45 barbell
-"go to today's lift" button (on thirdScreen)
-***"i don't have the following plates: then recalculate based on that
-***prettier row layout
-create an algorithm that allows you to choose pattern... It's totally possible but there's gonna be hella code revamping
-display for weights less than 45
-Maybe add swipe support to thirdScreen to go back? (but nothing on first and second screens) 
-might want to programmatically change color of 45 to save space
-empty barbell addition
+9-21: Fixed number parsing locale issues, despite taking care of date locales beautifully, I seem to have forgot that some countries use commas instead of periods and parseDouble must not automatically take locale into consideration. Still need to add google analytics, try to support decimals and get this update out today. Added decimal support, just need analytics and then package up that apk and get this update out to keep with an update every 8 days. Update isn't happening. Do some reading on apk 
 
-
-TODO:
-Prettier row layout - 
-http://stackoverflow.com/questions/8447234/android-creating-two-columns-in-a-linearlayout
-Can highlight each entry, toggle between two colors
-Programmatically change gravity and layout weight, have a toggle function for what color you want to insert
-Move config to options listener thing 
-Can also make text a little bigger 
-
-
-I don't have the following plates:
-Add to config in individualView/thirdScreen
-You will then have to have dynamic rounding depending on what plates they give oyou
-allow users to specify what plates they have, just like you did with 35lb plate flag, you could do that for each and every plate and have an input screen that will set those booleans based on a bunch of check boxes
-error handling as a result: 
-** if you decide to have an okay and back button make sure your back button recognizes when something changes and they just hit back instead of okay and be like yo do you want to save these changes
-** you can save these preferences in app data so user doesn't have to change them every time, however, you will want an option to change the shit in config somewhere  
-hook up back end to plate addition UI 
-
-
-training max bug when adjusting lifts and then going back, training maxes are wrong i think 
-If you are having jar troubles just import the android-support-v7 jar and the android-support-v4 jar
+Premium feature: allow logging to be added, do a check if it's one of the projected days, if so, say what day it was otherwise still allow work to be logged. Perhaps a template manager or something... Your UI will need to be fixed before this I think. You want a prettier menu. Look for layouts tomorrow morning too.

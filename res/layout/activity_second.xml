@@ -42,7 +42,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:ems="10"
-        android:inputType="number" >
+        android:inputType="numberDecimal" >
 
         <requestFocus />
     </EditText>
@@ -80,7 +80,7 @@
         android:layout_alignLeft="@+id/benchEditText"
         android:layout_alignRight="@+id/benchEditText"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/ohpEditText"
@@ -91,7 +91,7 @@
         android:layout_alignLeft="@+id/squatEditText"
         android:layout_alignRight="@+id/squatEditText"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/deadEditText"
@@ -101,7 +101,7 @@
         android:layout_alignLeft="@+id/ohpEditText"
         android:layout_alignRight="@+id/ohpEditText"
         android:ems="10"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
 
     <TextView
         android:id="@+id/deadTextView"

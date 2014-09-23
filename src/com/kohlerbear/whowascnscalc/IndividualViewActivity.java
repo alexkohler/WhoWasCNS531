@@ -18,8 +18,6 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.kohlerbear.whowascnscalc.R;
 import com.kohlerbear.whowascnscalc.ThirdScreenActivity;
 public class IndividualViewActivity extends Activity implements OnClickListener {
 
@@ -741,7 +739,7 @@ public class IndividualViewActivity extends Activity implements OnClickListener 
 	
 	@Override
 	public void onBackPressed() {
-		Intent preIntent = getIntent();
+//		Intent preIntent = getIntent();
 		Intent intent = new Intent(IndividualViewActivity.this, ThirdScreenActivity.class);
 		intent.putExtra("origin", "individualView");//reusing flag I use to jump to third from first. 
 		intent.putExtra("liftPattern", getLiftPattern());
@@ -877,7 +875,7 @@ public class IndividualViewActivity extends Activity implements OnClickListener 
 		String secondLiftString = intent.getStringExtra("secondLift");
 		String thirdLiftString = intent.getStringExtra("thirdLift");
 		String lbmodeString = intent.getStringExtra("mode");
-		String[] pattern = intent.getStringArrayExtra("liftPattern");
+//		String[] pattern = intent.getStringArrayExtra("liftPattern");
 		boolean[] plateconfig = intent.getBooleanArrayExtra("boolArray"); // monkey)
 		
 		Intent forwardIntent  = new Intent(IndividualViewActivity.this, IndividualViewTwoActivity.class);

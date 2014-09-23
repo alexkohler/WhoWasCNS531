@@ -311,7 +311,7 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 			if ((currentLift.equals("First") || currentLift.equals("Second") || currentLift.equals("Third") || currentLift.equals("Fourth")
 				|| currentLift.equals("Fifth") || currentLift.equals("Sixth") || currentLift.equals("Seventh")) && !toastThrown)
 			{
-			Toast.makeText(AdjustLiftPatternActivity.this, "You left a spot open! Please use all spots or choose a smaller pattern size.", Toast.LENGTH_SHORT).show();	
+			Toast.makeText(AdjustLiftPatternActivity.this, "You left a spot open! Please use all spots or choose a smaller pattern size.", Toast.LENGTH_LONG).show();	
 			toastThrown = true;
 			}
 			switch (currentLift)
@@ -335,14 +335,17 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 			return true;
 		else
 			{
+			String addBuffer = "Please add the following days to your pattern: ";
 			if (!benchBool)
-			Toast.makeText(AdjustLiftPatternActivity.this, "Please add a bench day to your pattern", Toast.LENGTH_SHORT).show();
+			addBuffer = addBuffer + "Bench ";
 			if (!squatBool)
-			Toast.makeText(AdjustLiftPatternActivity.this, "Please add a squat day to your pattern", Toast.LENGTH_SHORT).show();
+			addBuffer = addBuffer + "Squat ";
 			if (!deadBool)
-			Toast.makeText(AdjustLiftPatternActivity.this, "Please add a deadlift day to your pattern", Toast.LENGTH_SHORT).show();
+			addBuffer = addBuffer + "Deadlift ";
 			if (!ohpBool)
-			Toast.makeText(AdjustLiftPatternActivity.this, "Please add an OHP day to your pattern", Toast.LENGTH_SHORT).show();
+			addBuffer = addBuffer + "OHP ";
+			
+			Toast.makeText(AdjustLiftPatternActivity.this, addBuffer, Toast.LENGTH_LONG).show();
 
 			return false;
 		

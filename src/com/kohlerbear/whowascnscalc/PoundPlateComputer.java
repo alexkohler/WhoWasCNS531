@@ -38,7 +38,6 @@ public class PoundPlateComputer {
 
 
 		double currentPlate = 0;
-		boolean thirtyfive_flag = true;
 		for (int i=0; i<6; i++)
 		{
 			currentPlate_needed = 0;

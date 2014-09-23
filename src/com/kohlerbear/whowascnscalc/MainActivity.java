@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,11 +20,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
+
 
 
 
 public class MainActivity extends Activity {
 
+	//private EasyTracker easyTracker = null;
+	
 	//to be used in activity 3 - may not be most efficient but for testing purposes 
 	static int startingDateDay;
 	static int startingDateMonth;
@@ -33,12 +40,22 @@ public class MainActivity extends Activity {
 	String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"  };
 	String[] liftPattern = new String[7];
 	TextView liftTicker;
+	Tracker tracker = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTheme(R.style.AppBaseThemeNoTitleBar);
 		setContentView(R.layout.activity_main);
+		//Initialize tracker
+		// Sending the same screen view hit using MapBuilder.createAppView()
+		GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
+		tracker = GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
+		HashMap<String, String> hitParameters = new HashMap<String, String>();
+		hitParameters.put(Fields.HIT_TYPE, "appview");
+		hitParameters.put(Fields.SCREEN_NAME, "Home Screen");
 
+		tracker.send(hitParameters);
 
 		final DatePicker dp = (DatePicker) findViewById(R.id.dp);
 		final Button setBtn = (Button) findViewById(R.id.set);
@@ -99,6 +116,17 @@ public class MainActivity extends Activity {
 
 
 	}//end method onCreate 
+	
+	 @Override
+	  public void onStart() {
+	    super.onStart();
+	    EasyTracker.getInstance(this).activityStart(this);  // Add this method.
+	  }
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	  }
 
 
 	private OnClickListener goToThirdListener = new OnClickListener(){

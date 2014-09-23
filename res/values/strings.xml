@@ -27,10 +27,11 @@
     <string name="rounding_checkbox_text">Round to nearest 5lb/2.5kg?</string>
 
     <string-array name="cycles_array">
-        <item>0</item>
-        <item>1</item>
+        <item>1</item>-
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 
     <string name="options_checkbox_test">Configure</string>
@@ -93,7 +94,6 @@
         <item>5 days</item>
         <item>6 days</item>
         <item>7 days</item>
-        <item>Add more after testing</item>
     </string-array>
     
     

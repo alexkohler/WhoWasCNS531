@@ -1,7 +1,5 @@
 package com.kohlerbear.whowascnscalc;
 
-
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -164,7 +162,7 @@ public class ThirdScreenActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			//Options menu -- wrap up in a checkbox Listener 
-			CharSequence colors[] = new CharSequence[] {"Plate Config", "Adjust Lifts", /*"Export.."*/ "Reset", "View By...", "Back"};
+			CharSequence colors[] = new CharSequence[] {"Plate Config", "Adjust Lifts", /*"Export.."*/ "Reset", "View By...", "Cancel"};
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 			builder.setTitle("Options menu");
@@ -837,7 +835,6 @@ public class ThirdScreenActivity extends Activity {
 
 
 }//end thirdscreen activiy 
-
 
 
 

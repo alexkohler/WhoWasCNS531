@@ -686,9 +686,9 @@ public class IndividualViewTwoActivity extends Activity implements OnClickListen
                 
                 //up and down swipes 
                 if(e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                    Toast.makeText(IndividualViewTwoActivity.this, "Up? Swipe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(IndividualViewTwoActivity.this, "Swipe up/down feature only available on first lift.", Toast.LENGTH_SHORT).show();
                 }  else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                    Toast.makeText(IndividualViewTwoActivity.this, "Down? Swipe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(IndividualViewTwoActivity.this, "Swipe up/down feature only available on first lift.", Toast.LENGTH_SHORT).show();
                 }
                 
                 
