@@ -2,6 +2,7 @@ package com.kohlerbear.whowascnscalc;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +29,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
+
 
 //small victories :) 
 
@@ -49,6 +54,9 @@ public class ThirdScreenActivity extends Activity {
 	String lbmode;
 	static boolean[] kgBooleans = new boolean[]{true, true, true, true, true, true, true};
 	static boolean[] lbBooleans = new boolean[]{true, true, true, true, true, true, true}; //defaults until plateconfig is changed
+	
+	
+	Tracker tracker = null;
 
 	public enum CURRENT_VIEW {
 		DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), DEAD('D'), FIVES('5'), THREES('3'), ONES('1');
@@ -102,7 +110,12 @@ public class ThirdScreenActivity extends Activity {
 		String startingDate = intent.getStringExtra("key2");
 		liftPattern = intent.getStringArrayExtra("liftPattern");
 		
+		tracker = GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
+		HashMap<String, String> hitParameters = new HashMap<String, String>();
+		hitParameters.put(Fields.HIT_TYPE, "appview");
+		hitParameters.put(Fields.SCREEN_NAME, "Third Screen");
 
+		tracker.send(hitParameters);
 		
 		eventsData = new EventsDataSQLHelper(this);
 		SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper

@@ -3,6 +3,7 @@ package com.kohlerbear.whowascnscalc;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,15 +12,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.CheckBox;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
+import com.google.analytics.tracking.android.Tracker;
 
 public class SecondScreenActivity extends Activity {
 
@@ -44,6 +50,7 @@ public class SecondScreenActivity extends Activity {
 	
 	String[] liftPattern = new String[7];
 
+	Tracker tracker = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -69,6 +76,13 @@ public class SecondScreenActivity extends Activity {
 
 		lbRadioButton = (RadioButton) findViewById(R.id.lbRadioButton);
 		kgRadioButton = (RadioButton) findViewById(R.id.kgRadioButton);
+		
+		tracker = GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
+		HashMap<String, String> hitParameters = new HashMap<String, String>();
+		hitParameters.put(Fields.HIT_TYPE, "appview");
+		hitParameters.put(Fields.SCREEN_NAME, "Second Screen");
+
+		tracker.send(hitParameters);
 
 
 		RadioGroup unitModeGroup = (RadioGroup) findViewById(R.id.unitModeGroup);
@@ -182,23 +196,23 @@ public class SecondScreenActivity extends Activity {
 				private void handleErrors(String errorBench, String errorSquat,
 						String errorOHP, String errorDead, String errorStream) {
 					String emptyBenchString = "Please enter a starting bench number!";
-					String thousandBenchString = errorBench + " lbs? Lettuce be reality here. Enter your actual bench.";
-					String thousandBenchStringKgs = errorBench + "kgs? Lettuce be reality here. Enter your actual bench.";
+					String thousandBenchString = errorBench + " lbs? Let's be real here. Enter your actual bench.";
+					String thousandBenchStringKgs = errorBench + "kgs? Let's be real here. Enter your actual bench.";
 					String zeroBenchString = "Please enter a bench greater than 0lbs!";
 
 					String emptySquatString = "Please enter a starting squat number!";
-					String thousandSquatString = errorSquat + " lbs? Lettuce be actual reality here. Enter your actual squat.";
-					String thousandSquatStringKgs = errorSquat + " kgs? Lettuce be actual reality here. Enter your actual squat.";
+					String thousandSquatString = errorSquat + " lbs? Let's be real here. Enter your actual squat.";
+					String thousandSquatStringKgs = errorSquat + " kgs? Let's be real here. Enter your actual squat.";
 					String zeroSquatString = "Please enter a squat greater than 0lbs!";
 
 					String emptyOHPString = "Please enter a starting OHP number!";
-					String thousandOHPString = errorOHP  + " lbs? Lettuce be actual reality here. Enter your actual OHP.";
-					String thousandOHPStringKgs = errorOHP + " kgs? Lettuce be actual reality here. Enter your actual OHP.";
+					String thousandOHPString = errorOHP  + " lbs? Let's be real here. Enter your actual OHP.";
+					String thousandOHPStringKgs = errorOHP + " kgs? Let's be real here. Enter your actual OHP.";
 					String zeroOHPString = "Please enter a OHP greater than 0lbs!";
 
 					String emptyDeadliftString = "Please enter a starting deadlift number!";
-					String thousandDeadliftString = errorDead +  " lbs? Lettuce be actual reality here. Enter your actual deadlift.";
-					String thousandDeadliftStringKgs = errorDead + " kgs? Lettuce be actual reality here. Enter your actual deadlift.";
+					String thousandDeadliftString = errorDead +  " lbs? Let's be real here. Enter your actual deadlift.";
+					String thousandDeadliftStringKgs = errorDead + " kgs? Let's be real here. Enter your actual deadlift.";
 					String zeroDeadliftString = "Please enter a deadlift greater than 0lbs!";
 
 					String zeroCycleString = "Please choose how many cycles you wish to project!";
@@ -220,7 +234,7 @@ public class SecondScreenActivity extends Activity {
 					intent.putExtra("key2", message);
 					intent.putExtra("liftPattern", liftPattern);
 
-					NumberFormat nf = NumberFormat.getInstance(java.util.Locale.getDefault()); //get user's locale to make sure we parse correctly
+					NumberFormat nf = NumberFormat.getInstance(); //get user's locale to make sure we parse correctly
 					
 					//second, get our starting lifts
 					String bench = benchEditText.getText().toString();
@@ -232,7 +246,11 @@ public class SecondScreenActivity extends Activity {
 							benchDouble = nf.parse(bench).doubleValue();
 						} catch (ParseException e) 
 						{
-							benchDouble = Double.parseDouble(bench); //otherwise revert to our old way. Still not quite as robust but I think the locale will fix crashes.
+							if (bench.matches("^[0-9]+(.[0-9]{1,3})?$"))
+								sendTrackerException("ParseException", bench);
+							
+							else
+								benchEditText.setError("Please check the format of your training max");
 						}
 					
 					//Some android phones are capable of accessing their full keyboard, add error checking to ensure that no commas,
@@ -275,7 +293,12 @@ public class SecondScreenActivity extends Activity {
 				    	squatDouble = nf.parse(squat).doubleValue();
 					} catch (ParseException e) 
 					{
-						squatDouble = Double.parseDouble(squat); //otherwise revert to our old way. Still not quite as robust but I think the locale will fix crashes.
+
+						if (squat.matches("^[0-9]+(.[0-9]{1,3})?$")) //If a legitimate number was entered (regex for decimal, regardless of comma/decimal
+							sendTrackerException("ParseException", squat);
+						
+						else
+						squatEditText.setError("Please check the format of your training max.");
 					}
 					
 					//null error handling
@@ -314,7 +337,11 @@ public class SecondScreenActivity extends Activity {
 				    	ohpDouble = nf.parse(OHP).doubleValue();
 					} catch (ParseException e) 
 					{
-						ohpDouble = Double.parseDouble(OHP); //otherwise revert to our old way. Still not quite as robust but I think the locale will fix crashes.
+						if (OHP.matches("^[0-9]+(.[0-9]{1,3})?$"))
+							sendTrackerException("ParseException", OHP);
+						
+						else
+							ohpEditText.setError("Please check the format of your training max.");
 					}
 					
 					
@@ -353,7 +380,11 @@ public class SecondScreenActivity extends Activity {
 				    	deadDouble = nf.parse(dead).doubleValue();
 					} catch (ParseException e) 
 					{
-						deadDouble = Double.parseDouble(dead); //otherwise revert to our old way. Still not quite as robust but I think the locale will fix crashes.
+						if (dead.matches("^[0-9]+(.[0-9]{1,3})?$"))
+						sendTrackerException("ParseException", dead);
+						
+						else
+							deadEditText.setError("Please check the format of your training max.");
 					}
 					
 					
@@ -421,6 +452,20 @@ public class SecondScreenActivity extends Activity {
 						startActivity(intent);
 
 					}
+				}
+
+
+
+
+				private void sendTrackerException(String exceptionType, String value) {
+					Toast.makeText(SecondScreenActivity.this, "Sorry! :( Something went wrong, crash report sent.", Toast.LENGTH_LONG).show();
+					  tracker.send(MapBuilder
+						      .createEvent("Exception",     // Event category (required)
+						                   exceptionType,  // Event action (required)
+						                   value,   // Event label
+						                   null)            // Event value
+						      .build());
+					
 				}
 
 }

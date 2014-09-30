@@ -1,6 +1,12 @@
 package com.kohlerbear.whowascnscalc;
 
 
+import java.util.HashMap;
+
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
+
 import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -27,7 +33,7 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 	Button backButton, resetButton, saveButton;
 	String [] liftPattern = new String[7]; //max size of 7 
 	Spinner patternSizeSpinner;
-
+	Tracker tracker = null;
 
 	//http://code.tutsplus.com/tutorials/android-sdk-implementing-drag-and-drop-functionality--mobile-14402
 	//NEED TO RESIZE ARRAYS
@@ -46,6 +52,13 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 		backButton.setOnClickListener(backListener);
 		resetButton.setOnClickListener(resetListener);
 		saveButton.setOnClickListener(saveListener);
+		
+		tracker = GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
+		HashMap<String, String> hitParameters = new HashMap<String, String>();
+		hitParameters.put(Fields.HIT_TYPE, "appview");
+		hitParameters.put(Fields.SCREEN_NAME, "Pattern Screen");
+
+		tracker.send(hitParameters);
 		
 		patternSizeSpinner = (Spinner) findViewById (R.id.patternSizeSpinner);
 		
