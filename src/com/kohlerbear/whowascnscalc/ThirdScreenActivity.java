@@ -185,26 +185,7 @@ public class ThirdScreenActivity extends Activity {
 				public void onClick(DialogInterface dialog, int which) {
 					if (which==0)
 					{
-						CharSequence modes[] = new CharSequence[] {"Pounds", "Kilograms"};
-						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
-						builder.setTitle("Unit menu");
-						builder.setItems(modes, new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								if (which == 0){
-								    createLbBuilderMenu();
-								}
-								if (which == 1)
-								{
-									createKgBuilderMenu();		
-								}
-
-				
-							}//end inner onClick 
-
-
-						});//end inner which listener
-						builder.show();	
+						//do nothing, this is unsupported
 					}
 					
 					
@@ -411,167 +392,6 @@ public class ThirdScreenActivity extends Activity {
 		}//end createViewBuilder
 
 		
-		private void createKgBuilderMenu() {
-			DialogInterface dialog;
-			// arrays are zero indexed
-			    final CharSequence[] kgPlates = {" 25kg "," 20kg "," 15kg "," 10kg "," 5kg ", " 2.5kg "," 1.25kg "};
-			    // arraylist to keep the selected items
-			    final ArrayList<Integer> seletedItems=new ArrayList<Integer>();
-
-			    AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
-			    builder.setTitle("What plates does your gym have?");
-			    builder.setMultiChoiceItems(kgPlates, null,
-			            new DialogInterface.OnMultiChoiceClickListener() {
-			     @Override
-			     public void onClick(DialogInterface dialog, int indexSelected,
-			             boolean isChecked) {
-			         if (isChecked) {
-			             // If the user checked the item, add it to the selected items
-			             seletedItems.add(indexSelected);
-			         } else if (seletedItems.contains(indexSelected)) {
-			             // Else, if the item is already in the array, remove it
-			             seletedItems.remove(Integer.valueOf(indexSelected));
-			         }
-			     }
-			 })
-			  // Set the action buttons
-			 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			     @Override
-			     public void onClick(DialogInterface dialog, int id) {
-			    	 boolean kgHaveTwentyFive = false, kgHaveTwenty = false, kgHaveFifteen = false, kgHaveTen = false, 
-			    			 kgHaveFive = false , kgHaveTwoPointFive= false , kgHaveOnePointTwoFive= false;//actually name booleans for sanity purposes
-			    	 for (int indexSelected : seletedItems)
-			    	 {
-			    		switch (indexSelected)
-			    		{
-			    		case 0:
-				    		 kgHaveTwentyFive = true;
-				    		break;
-			    		case 1:
-				    		 kgHaveTwenty = true;
-				    		break;
-			    		case 2:
-				    		 kgHaveFifteen = true;
-				    		break;
-			    		case 3:
-			    			kgHaveTen  = true;
-			    			break;
-			    		case 4:	
-			    			kgHaveFive  = true;
-			    			break;
-			    		case 5:
-			    			 kgHaveTwoPointFive = true;
-			    			break;
-			    		case 6:
-			    			 kgHaveOnePointTwoFive = true;
-			    			break;
-			    		}
-			    	 }
-			    	 //after sorting through status, pack these up into a boolean array
-			    	 boolean[] localkgBooleans = new boolean[7];
-			    	 localkgBooleans[0] = kgHaveTwentyFive;
-			    	 localkgBooleans[1] = kgHaveTwenty;
-			    	 localkgBooleans[2] = kgHaveFifteen;
-			    	 localkgBooleans[3] = kgHaveTen;
-			    	 localkgBooleans[4] = kgHaveFive;
-			    	 localkgBooleans[5] = kgHaveTwoPointFive;
-			    	 localkgBooleans[6] = kgHaveOnePointTwoFive;
-			    	 setKgBooleans(localkgBooleans);
-			    	 
-			    	 
-			    	 
-			     }
-			 })
-			 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-			     @Override
-			     public void onClick(DialogInterface dialog, int id) {
-			        //  Your code when user clicked on Cancel
-
-			     }
-			 });
-
-			    dialog = builder.create();//AlertDialog dialog; create like this outside onClick
-			    ((Dialog) dialog).show();
-		}
-		
-	private void createLbBuilderMenu() {
-		DialogInterface dialog;
-		final CharSequence[] lbPlates = { " 45lb ", " 35lb ", " 25lb ",
-				" 10lb ", " 5lb ", " 2.5lb " };
-		// arraylist to keep the selected items
-		final ArrayList<Integer> seletedItems = new ArrayList<Integer>();
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
-		builder.setTitle("What plates does your gym have?");
-		builder.setMultiChoiceItems(lbPlates, null,
-				new DialogInterface.OnMultiChoiceClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog,
-							int indexSelected, boolean isChecked) {
-						if (isChecked) {
-							// If the user checked the item, add it to the
-							// selected items
-							seletedItems.add(indexSelected);
-						} else if (seletedItems.contains(indexSelected)) {
-							// Else, if the item is already in the array, remove
-							// it
-							seletedItems.remove(Integer.valueOf(indexSelected));
-						}
-					}
-				})
-				// Set the action buttons
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-				    	 Boolean lbHaveFortyFive = false, lbHaveThirtyFive = false, lbHaveTwentyFive = false, lbHaveTen = false, 
-				    			 lbHaveFive = false , lbHaveTwoPointFive= false;
-						for (int indexSelected : seletedItems) {
-							switch (indexSelected) {
-							case 0:
-								lbHaveFortyFive = true;// TODO fix logic
-								break;
-							case 1:
-								lbHaveThirtyFive = true;
-								break;
-							case 2:
-								lbHaveTwentyFive = true;
-								break;
-							case 3:
-								lbHaveTen = true;
-								break;
-							case 4:
-								lbHaveFive = true;
-								break;
-							case 5:
-								lbHaveTwoPointFive = true;
-								break;
-							}
-						}
-						//after running through boolean status, pack them up in an array.. is there a more elegant way? Probably, but that's why you need to hire me and teach me ;)
-						boolean[] localLbStatus = new boolean[6];
-						localLbStatus[0] = lbHaveFortyFive;
-						localLbStatus[1] = lbHaveThirtyFive;
-						localLbStatus[2] = lbHaveTwentyFive;
-						localLbStatus[3] = lbHaveTen;
-						localLbStatus[4] = lbHaveFive;
-						localLbStatus[5] = lbHaveTwoPointFive;
-						setLbBooleans(localLbStatus);
-						
-
-					}
-				})
-				.setNegativeButton("Cancel",
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int id) {
-								// Your code when user clicked on Cancel
-
-							}
-						});
-
-			dialog = builder.create();//AlertDialog dialog; create like this outside onClick
-			((Dialog) dialog).show();
-		}
 
 
 		public void setMode (String myMode )
@@ -722,7 +542,7 @@ public class ThirdScreenActivity extends Activity {
 						Toast.makeText(ThirdScreenActivity.this, myEntries[2], Toast.LENGTH_SHORT).show();
 
 
-						Intent intent = new Intent(ThirdScreenActivity.this, IndividualViewActivity.class);
+						Intent intent = new Intent(ThirdScreenActivity.this, IndividualViews.class);
 
 						String myFrequency = myEntries[2];	
 						String myLiftType = myEntries[1];
@@ -747,15 +567,10 @@ public class ThirdScreenActivity extends Activity {
 						intent.putExtra("viewMode", viewMode);
 						intent.putExtra("liftPattern", liftPattern);
 						
-						if (lbMode == 1) //if we are in lbs mode
-						intent.putExtra("boolArray", getLbBooleans());
-						if (lbMode ==0)// if we are in kgMode
-						intent.putExtra("boolArray", getKgBooleans());	
-						//intent.putExtra(liftPattern, "pattern"); monkey
 
 
 						startActivity(intent);
-					}});	   
+					}});   
 				//tableRowPrincipal.addView(entry);
 				tableRowPrincipal.addView(tr);
 				//then parse by date (regex) and then either parse first second and third (along with any other additional info you may want to add for featues), and you should be good to go my nigga ;)
@@ -785,21 +600,6 @@ public class ThirdScreenActivity extends Activity {
 				return Double.valueOf(twoDForm.format(d));
 			}
 			
-			public static boolean[] getKgBooleans() {
-				return kgBooleans;
-			}
-
-			public static void setKgBooleans(boolean[] kgBooleans) {
-				ThirdScreenActivity.kgBooleans = kgBooleans;
-			}
-
-			public static boolean[] getLbBooleans() {
-				return lbBooleans;
-			}
-
-			public static void setLbBooleans(boolean[] lbBooleans) {
-				ThirdScreenActivity.lbBooleans = lbBooleans;
-			}
 
 
 			//Async caller for threading

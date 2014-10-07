@@ -53,8 +53,11 @@ Who Was CNS 531 project progress
 8-3: Added richer error handling and improved some layout features.
 9-21: Fixed number parsing locale issues, despite taking care of date locales beautifully, I seem to have forgot that some countries use commas instead of periods and parseDouble must not automatically take locale into consideration. Still need to add google analytics, try to support decimals and get this update out today. Added decimal support, just need analytics and then package up that apk and get this update out to keep with an update every 8 days. Update isn't happening. Do some reading on apk 
 9-28/29: Still running into some locale errors, changed nf to simply getInstance() instead of getInstance(getDefault), changed errors to be more mature, gonna try to set up an event for analytics to send the string the user used if an exception is caught. Added hit senders on adjust pattern, send up a method to send an error IF the entered training max string passed through a locale-independent decimal regular expression. Will send the training max string in question. Can't seem to find root of noclassdef exception a couple people seem to be having, probably won't have a fix in for this update. Will keep an eye after this update to see if it keeps showing up and pursue it via analytics reporting.  
-
-Regular todo: Remember existing pattern (only within session for now)
+10-6-14: Changing individual view to be like iphone in a single screen
+Regular todo:
+Remember existing pattern (only within session for now)
+dashboarding
+view existing pattern all on one page
 
 Premium feature: allow logging to be added, do a check if it's one of the projected days, if so, say what day it was otherwise still allow work to be logged. Perhaps a template manager or something... Your UI will need to be fixed before this I think. You want a prettier menu. Look for layouts tomorrow morning too.
 Consideration: How will logging work? Will there be another entry in the database? Should it be a separate database?

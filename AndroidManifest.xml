@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kohlerbear.whowascnscalc"
-    android:versionCode="6"
-    android:versionName="1.3" >
-    
+    android:versionCode="8"
+    android:versionName="1.6" >
 
     <uses-sdk
-        android:minSdkVersion="1"
-        android:targetSdkVersion="19" />
-    
+        android:minSdkVersion="7"
+        android:targetSdkVersion="20" />
+
     <uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppBaseTheme" >
         <activity
-            android:name="com.kohlerbear.whowascnscalc.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,12 +26,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.kohlerbear.whowascnscalc.Second"
+            android:name=".Second"
             android:label="@string/title_activity_second" >
         </activity>
-        <activity android:name="com.kohlerbear.whowascnscalc.SecondScreenActivity" >
+        <activity android:name=".SecondScreenActivity" >
         </activity>
-        <activity android:name="com.kohlerbear.whowascnscalc.ThirdScreenActivity" >
+        <activity android:name=".ThirdScreenActivity" >
             <intent-filter>
                 <action android:name="com.kohlerbear.whowascnscalc.Second" />
 
@@ -41,18 +40,22 @@
                 <action android:name="com.kohlerbear.whowascnscalc.IndividualView" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kohlerbear.whowascnscalc.IndividualViewActivity" >
+        <activity android:name=".IndividualViewActivity" >
             <intent-filter>
                 <action android:name="com.kohlerbear.whowascnscalc.IndividualViewTwoActivity" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kohlerbear.whowascnscalc.IndividualViewTwoActivity" >
+        <activity android:name=".IndividualViewTwoActivity" >
         </activity>
-        <activity android:name="com.kohlerbear.whowascnscalc.IndividualViewThreeActivity" >
+        <activity android:name=".IndividualViewThreeActivity" >
         </activity>
         <activity
-            android:name="com.kohlerbear.whowascnscalc.AdjustLiftPatternActivity"
+            android:name=".AdjustLiftPatternActivity"
             android:label="@string/title_activity_adjust_lift_pattern" >
+        </activity>
+        <activity
+            android:name=".IndividualViews"
+            android:label="@string/title_activity_individual_views" >
         </activity>
     </application>
 

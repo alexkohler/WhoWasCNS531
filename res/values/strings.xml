@@ -27,8 +27,8 @@
     <string name="rounding_checkbox_text">Round to nearest 5lb/2.5kg?</string>
 
     <string-array name="cycles_array">
-        <item>1</item>-
-        <item>2</item>
+        <item>1</item>
+-        <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -62,31 +62,27 @@
     <string name="training_maxes_text_test">Training maxes go here</string>
     <string name="adjust_lift_pattern_text_view">Adjust Lift Pattern</string>
     <string name="title_activity_adjust_lift_pattern">AdjustLiftPatternActivity</string>
-	<string name="current_lift_pattern_text_view">Current Lift Pattern: B - S - R - O - D - R</string>
-    
+    <string name="current_lift_pattern_text_view">Current Lift Pattern: B - S - R - O - D - R</string>
     <string name="intro">Place these foods in your order of preference.</string>
-<string name="option_1">Bench</string>
-<string name="option_2">Squat</string>
-<string name="option_3">OHP</string>
-<string name="option_4">Deadlift</string>
-<string name="option_5">Rest</string>
+    <string name="option_1">Bench</string>
+    <string name="option_2">Squat</string>
+    <string name="option_3">OHP</string>
+    <string name="option_4">Deadlift</string>
+    <string name="option_5">Rest</string>
+    <string name="choice_1">First</string>
+    <string name="choice_2">Second</string>
+    <string name="choice_3">Third</string>
+    <string name="choice_4">Fourth</string>
+    <string name="choice_5">Fifth</string>
+    <string name="choice_6">Sixth</string>
+    <string name="choice_7">Seventh</string>
 
+    <!-- Button title definitoins -->
+    <string name="AdjustActivity_Back">Back</string>
+    <string name="AdjustActivity_Reset">Reset</string>
+    <string name="AdjustActivity_Save">Save</string>
 
-<string name="choice_1">First</string>
-<string name="choice_2">Second</string>
-<string name="choice_3">Third</string>
-<string name="choice_4">Fourth</string>
-<string name="choice_5">Fifth</string>
-<string name="choice_6">Sixth</string>
-<string name="choice_7">Seventh</string>
-
-<!-- Button title definitoins -->
-<string name="AdjustActivity_Back">Back</string>
-<string name="AdjustActivity_Reset">Reset</string>
-<string name="AdjustActivity_Save">Save</string>
-
-
-<!--Spinner contents definition  -->
+    <!-- Spinner contents definition -->
 
     <string-array name="Pattern_Size_Array">
         <item>How big is your pattern?</item>
@@ -95,6 +91,8 @@
         <item>6 days</item>
         <item>7 days</item>
     </string-array>
-    
-    
+
+    <string name="title_activity_individual_views">IndividualViews</string>
+    <string name="typeFreq">Bench - 5/5/5</string>
+
 </resources>

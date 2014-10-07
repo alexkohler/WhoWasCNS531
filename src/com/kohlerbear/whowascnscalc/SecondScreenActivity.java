@@ -92,7 +92,9 @@ public class SecondScreenActivity extends Activity {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 
 				if (lbRadioButton.isChecked())
+				{
 					lbs = true;
+				}
 
 
 				if (kgRadioButton.isChecked())
@@ -104,7 +106,6 @@ public class SecondScreenActivity extends Activity {
 
 
 		roundingCheckBox = (CheckBox) findViewById(R.id.roundingCheckBox);	
-
 
 		
 		

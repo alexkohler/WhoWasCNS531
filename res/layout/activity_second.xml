@@ -128,7 +128,7 @@
         android:layout_below="@+id/NumberCyclesTextView"
         android:layout_toRightOf="@+id/squatTextView"
         android:orientation="horizontal" >
-    </RadioGroup>
+
 
     <RadioButton
         android:id="@+id/lbRadioButton"
@@ -136,8 +136,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/numberCyclesSpinner"
         android:layout_toRightOf="@+id/NumberCyclesTextView"
-        android:checked="true"
-        android:text="@string/lb_radio_button" />
+        android:text="@string/lb_radio_button" 
+        android:checked="true" />
 
     <RadioButton
         android:id="@+id/kgRadioButton"
@@ -147,6 +147,8 @@
         android:layout_alignBottom="@+id/lbRadioButton"
         android:layout_alignRight="@+id/NumberCyclesTextView"
         android:text="@string/kg_radio_button" />
+    
+        </RadioGroup>
 
     <CheckBox
         android:id="@+id/roundingCheckBox"
