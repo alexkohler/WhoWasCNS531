@@ -4,490 +4,585 @@
     android:layout_height="match_parent"
     tools:context="com.kohlerbear.whowascnscalc.IndividualViews" >
 
-    <ImageView
-        android:id="@+id/lift1r1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/indVTypeFreq"
-        android:layout_marginTop="15dp"
-        android:layout_toRightOf="@+id/liftOneBarbell"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+        <View
+            android:id="@+id/Divider2"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="148dp"
+            android:background="@android:color/black" />
 
-    <ImageView
-        android:id="@+id/lift1r2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1r1"
-        android:layout_toRightOf="@+id/lift1r1"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+        <View
+            android:id="@+id/Divider1"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="150dp"
+            android:background="@android:color/black" />
 
-    <ImageView
-        android:id="@+id/lift1l1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1r1"
-        android:layout_toLeftOf="@+id/liftOneBarbell"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+        <RelativeLayout
+            android:id="@+id/lift1Layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/Divider1"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" >
+          	<!--  Barbell definition -->
+                <ImageView
+                android:id="@+id/liftOneBarbell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/barbell" />
 
-    <ImageView
-        android:id="@+id/lift1l2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1l1"
-        android:layout_toLeftOf="@+id/lift1l1"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift1r1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/liftOneBarbell"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1r3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1r2"
-        android:layout_toRightOf="@+id/lift1r2"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift1r2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift1r1"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1r4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1r3"
-        android:layout_toRightOf="@+id/lift1r3"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift1r3"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift1r2"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1r5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1r4"
-        android:layout_toRightOf="@+id/lift1r4"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift1r4"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift1r3"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1r6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1r5"
-        android:layout_toRightOf="@+id/lift1r5"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift1r5"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift1r4"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1l3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1l2"
-        android:layout_toLeftOf="@+id/lift1l2"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift1r6"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift1r5"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1l4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1l3"
-        android:layout_toLeftOf="@+id/lift1l3"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift1r7"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift1r6"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1l5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1l4"
-        android:layout_toLeftOf="@+id/lift1l4"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift1r8"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift1r7"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
+                 
+                 <!--  Left plate definitions -->
 
-    <ImageView
-        android:id="@+id/lift1r7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1r6"
-        android:layout_toRightOf="@+id/lift1r6"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift1l1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/liftOneBarbell"
+                android:src="@drawable/plate_fourtyfive_lbs" />
+                 
+                <ImageView
+                android:id="@+id/lift1l2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift1l1"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1l6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1l5"
-        android:layout_toLeftOf="@+id/lift1l5"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift1l3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift1l2"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1l7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1l6"
-        android:layout_toLeftOf="@+id/lift1l6"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift1l4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift1l3"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1l8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1l7"
-        android:layout_toLeftOf="@+id/lift1l7"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift1l5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift1l4"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift1r8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1r7"
-        android:layout_toRightOf="@+id/lift1r7"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift1l6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift1l5"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <TextView
-        android:id="@+id/indVDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/lift1l7"
-        android:text="@string/date_column"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                <ImageView
+                android:id="@+id/lift1l7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift1l6"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <TextView
-        android:id="@+id/indVTypeFreq"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/indVDate"
-        android:layout_below="@+id/indVDate"
-        android:text="@string/typeFreq"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                <ImageView
+                android:id="@+id/lift1l8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift1l7"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <TextView
-        android:id="@+id/indVLiftOne"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lift1l1"
-        android:layout_marginTop="18dp"
-        android:layout_toRightOf="@+id/lift1l8"
-        android:text="@string/typeFreq"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+		<!-- Various textview definitions -->
+                <TextView
+                android:id="@+id/lift1ErrText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/indVLiftOne"
+                android:layout_alignParentLeft="true"
+                android:text="@string/sampleentry"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/red"
+                android:visibility="invisible" />
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/indVLiftOne"
-        android:background="@android:color/black" />
+               <TextView
+               android:id="@+id/indVLiftOne"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentBottom="true"
+               android:layout_alignParentLeft="true"
+               android:text="@string/sampleentry"
+               android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <ImageView
-        android:id="@+id/lift2r1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/view1"
-        android:layout_marginTop="40dp"
-        android:layout_toLeftOf="@+id/lift1r2"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+               <RelativeLayout
+                   android:id="@+id/TitleLayout"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_above="@+id/lift1r1"
+                   android:layout_alignLeft="@+id/lift1l8"
+                   android:layout_alignParentRight="true"
+                   android:layout_alignParentTop="true" >
 
-    <ImageView
-        android:id="@+id/lift2l1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2r1"
-        android:layout_toLeftOf="@+id/liftTwoBarbell"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                   <TextView
+                       android:id="@+id/dataMarquee"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_centerHorizontal="true"
+                       android:layout_centerVertical="true"
+                       android:text="Large Text"
+                       android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <View
-        android:id="@+id/View01"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/lift2r1"
-        android:layout_marginTop="24dp"
-        android:background="@android:color/black" />
+               </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/lift2r2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/View01"
-        android:layout_toLeftOf="@+id/lift1r3"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+        </RelativeLayout>
 
-    <TextView
-        android:id="@+id/indVLiftTwo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/View01"
-        android:layout_alignLeft="@+id/indVLiftOne"
-        android:text="@string/typeFreq"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <RelativeLayout
+            android:id="@+id/lift2Layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/Divider2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/Divider1" >
+            
+                    <!--  Barbell definition -->
+                    <ImageView
+                    android:id="@+id/liftTwoBarbell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/barbell" />
 
-    <ImageView
-        android:id="@+id/lift3l1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:layout_toRightOf="@+id/lift1l2"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <!--  Right plate definitions -->
 
-    <ImageView
-        android:id="@+id/lift3r1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3l1"
-        android:layout_toLeftOf="@+id/lift2r2"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift2r1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/liftTwoBarbell"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/liftThreeBarbell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3r1"
-        android:layout_marginTop="36dp"
-        android:layout_toLeftOf="@+id/lift3r1"
-        android:src="@drawable/barbell" />
+                 <ImageView
+                 android:id="@+id/lift2r2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift2r1"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/liftTwoBarbell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2r1"
-        android:layout_marginTop="36dp"
-        android:layout_toLeftOf="@+id/lift2r1"
-        android:src="@drawable/barbell" />
+                 <ImageView
+                 android:id="@+id/lift2r3"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift2r2"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/liftOneBarbell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift1r1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:src="@drawable/barbell" />
+                 <ImageView
+                 android:id="@+id/lift2r4"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift2r3"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2r3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/View01"
-        android:layout_toLeftOf="@+id/lift1r4"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift2r5"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift2r4"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2r4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2r3"
-        android:layout_toLeftOf="@+id/lift1r5"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift2r6"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift2r5"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2r5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2r4"
-        android:layout_toLeftOf="@+id/lift1r6"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift2r7"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift2r6"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2r6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/View01"
-        android:layout_toLeftOf="@+id/lift1r7"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift2r8"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift2r7"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
+                 
+                 <!--  Left plate definitions -->
 
-    <ImageView
-        android:id="@+id/lift2r7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2r6"
-        android:layout_toLeftOf="@+id/lift1r8"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift2l1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/liftTwoBarbell"
+                android:src="@drawable/plate_fourtyfive_lbs" />
+                 
+                <ImageView
+                android:id="@+id/lift2l2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift2l1"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2r8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lift1r8"
-        android:layout_alignTop="@+id/lift2r7"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift2l3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift2l2"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2l2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2l1"
-        android:layout_toLeftOf="@+id/lift2l1"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift2l4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift2l3"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2l3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2l2"
-        android:layout_toLeftOf="@+id/lift2l2"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift2l5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift2l4"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2l4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2l3"
-        android:layout_toRightOf="@+id/lift1l5"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift2l6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift2l5"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2l5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lift1l5"
-        android:layout_alignTop="@+id/lift2l4"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift2l7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift2l6"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2l6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2l5"
-        android:layout_toRightOf="@+id/lift1l7"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                android:id="@+id/lift2l8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift2l7"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift2l7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2l6"
-        android:layout_toRightOf="@+id/lift1l8"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+		<!-- Various textview definitions -->
+                <TextView
+                android:id="@+id/lift2ErrText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/indVLiftTwo"
+                android:layout_alignParentLeft="true"
+                android:text="@string/sampleentry"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/red"
+                android:visibility="invisible" />
 
-    <ImageView
-        android:id="@+id/lift2l8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift2l7"
-        android:layout_toLeftOf="@+id/lift2l7"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+               <TextView
+               android:id="@+id/indVLiftTwo"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentBottom="true"
+               android:layout_alignParentLeft="true"
+               android:text="@string/sampleentry"
+               android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <ImageView
-        android:id="@+id/lift3r2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3r1"
-        android:layout_toLeftOf="@+id/lift2r3"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+               <RelativeLayout
+                   android:id="@+id/arrowLayout"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentBottom="true"
+                   android:layout_alignParentLeft="true"
+                   android:layout_alignParentRight="true"
+                   android:layout_alignParentTop="true" >
 
-    <ImageView
-        android:id="@+id/lift3r3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3r2"
-        android:layout_toLeftOf="@+id/lift2r4"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                   <ImageView
+                       android:id="@+id/nextButton"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentRight="true"
+                       android:layout_alignParentTop="true"
+                       android:src="@drawable/right_arrow" />
 
-    <ImageView
-        android:id="@+id/lift3r4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3r3"
-        android:layout_toLeftOf="@+id/lift2r5"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                   <ImageView
+                       android:id="@+id/prevButton"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentLeft="true"
+                       android:layout_alignParentTop="true"
+                       android:src="@drawable/left_arrow" />
 
-    <ImageView
-        android:id="@+id/lift3r5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3r4"
-        android:layout_toRightOf="@+id/lift3r4"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+               </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/lift3r6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3r5"
-        android:layout_toLeftOf="@+id/lift2r7"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+        </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/lift3r7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3r6"
-        android:layout_toLeftOf="@+id/lift2r8"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+        <RelativeLayout
+            android:id="@+id/lift3Layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/Divider2" >
+           		 <!--  Barbell definition -->
+                <ImageView
+                    android:id="@+id/liftThreeBarbell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/barbell" />
+                
+                
+                <!--  Right plate definitions -->
 
-    <ImageView
-        android:id="@+id/lift3r8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lift2r8"
-        android:layout_alignTop="@+id/lift3r7"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                <ImageView
+                    android:id="@+id/lift3r1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/liftThreeBarbell"
+                    android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift3l2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3l1"
-        android:layout_toRightOf="@+id/lift2l3"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift3r2"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift3r1"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift3l3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3l2"
-        android:layout_toRightOf="@+id/lift2l4"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift3r3"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift3r2"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift3l4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3l3"
-        android:layout_toRightOf="@+id/lift2l5"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift3r4"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift3r3"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift3l5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3l4"
-        android:layout_toRightOf="@+id/lift2l6"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift3r5"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift3r4"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift3l6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3l5"
-        android:layout_toRightOf="@+id/lift2l7"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift3r6"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift3r5"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift3l7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3l6"
-        android:layout_toLeftOf="@+id/lift3l6"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift3r7"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift3r6"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <ImageView
-        android:id="@+id/lift3l8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/lift3l7"
-        android:layout_toLeftOf="@+id/lift3l7"
-        android:src="@drawable/plate_fourtyfive_lbs" />
+                 <ImageView
+                 android:id="@+id/lift3r8"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/lift3r7"
+                 android:src="@drawable/plate_fourtyfive_lbs" />
+                 
+                 <!--  Left plate definitions -->
 
-    <TextView
-        android:id="@+id/indVLiftThree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/lift3l8"
-        android:text="@string/typeFreq"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                <ImageView
+                android:id="@+id/lift3l1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/liftThreeBarbell"
+                android:src="@drawable/plate_fourtyfive_lbs" />
+                 
+                <ImageView
+                android:id="@+id/lift3l2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift3l1"
+                android:src="@drawable/plate_fourtyfive_lbs" />
 
-    <TextView
-        android:id="@+id/indVCycle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/indVTypeFreq"
-        android:layout_alignParentRight="true"
-        android:text="@string/typeFreq"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                <ImageView
+                android:id="@+id/lift3l3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift3l2"
+                android:src="@drawable/plate_fourtyfive_lbs" />
+
+                <ImageView
+                android:id="@+id/lift3l4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift3l3"
+                android:src="@drawable/plate_fourtyfive_lbs" />
+
+                <ImageView
+                android:id="@+id/lift3l5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift3l4"
+                android:src="@drawable/plate_fourtyfive_lbs" />
+
+                <ImageView
+                android:id="@+id/lift3l6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift3l5"
+                android:src="@drawable/plate_fourtyfive_lbs" />
+
+                <ImageView
+                android:id="@+id/lift3l7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift3l6"
+                android:src="@drawable/plate_fourtyfive_lbs" />
+
+                <ImageView
+                android:id="@+id/lift3l8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lift3l7"
+                android:src="@drawable/plate_fourtyfive_lbs" />
+
+		<!-- Various textview definitions -->
+                <TextView
+                android:id="@+id/lift3ErrText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/indVLiftThree"
+                android:layout_alignParentLeft="true"
+                android:text="@string/sampleentry"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/red"
+                android:visibility="invisible" />
+
+               <TextView
+               android:id="@+id/indVLiftThree"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentBottom="true"
+               android:layout_alignParentLeft="true"
+               android:text="@string/sampleentry"
+               android:textAppearance="?android:attr/textAppearanceMedium" />
+		
+        </RelativeLayout>
 
 </RelativeLayout>

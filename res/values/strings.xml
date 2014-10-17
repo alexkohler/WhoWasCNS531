@@ -28,7 +28,7 @@
 
     <string-array name="cycles_array">
         <item>1</item>
--        <item>2</item>
+-                <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -94,5 +94,12 @@
 
     <string name="title_activity_individual_views">IndividualViews</string>
     <string name="typeFreq">Bench - 5/5/5</string>
+    <string name="title_activity_tabbed_individual_view">TabbedIndividualVIew</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="sampleentry">Lift X: 300x5!</string>
+    <string name="next">next</string>
+    <string name="prev">prev</string>
 
 </resources>

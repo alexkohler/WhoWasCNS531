@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -53,6 +54,7 @@ public class SecondScreenActivity extends Activity {
 	Tracker tracker = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_second);
 		//declare our button, tie it to listener, code listener

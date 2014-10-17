@@ -54,11 +54,19 @@ Who Was CNS 531 project progress
 9-21: Fixed number parsing locale issues, despite taking care of date locales beautifully, I seem to have forgot that some countries use commas instead of periods and parseDouble must not automatically take locale into consideration. Still need to add google analytics, try to support decimals and get this update out today. Added decimal support, just need analytics and then package up that apk and get this update out to keep with an update every 8 days. Update isn't happening. Do some reading on apk 
 9-28/29: Still running into some locale errors, changed nf to simply getInstance() instead of getInstance(getDefault), changed errors to be more mature, gonna try to set up an event for analytics to send the string the user used if an exception is caught. Added hit senders on adjust pattern, send up a method to send an error IF the entered training max string passed through a locale-independent decimal regular expression. Will send the training max string in question. Can't seem to find root of noclassdef exception a couple people seem to be having, probably won't have a fix in for this update. Will keep an eye after this update to see if it keeps showing up and pursue it via analytics reporting.  
 10-6-14: Changing individual view to be like iphone in a single screen
+10-7-14: Something is screwed up in your imageview. Lift one done, lift two still needs done. Everything is more complicated in android
+10-8-14: Got pound generation done, kilograms shouldn't be too bad but take your time and make sure you do it right. I don't think there's much to do beyond creating a switch statement and adding a conditional in your generateWeights statement that will generate a different barbell standard, use a different rounding protocol, and have a different array of weights. Finish this up tomorrow, shouldn't be too bad. Even for Android ;)
+10-9-14: Finally got around to robusting the roundtotwodecimals crash that has been plauging the application. Figure out if you can fix the plate spaces if not whatever not a huge deal. Some UI stuff and then just let this cook out, fix bugs but forget these big overhauls. Make a stable and straightforward and decent looking app and that's all you really need.
+10-14-14: Add arrows to new individualview page, get a "next" algorithm working (do you want up/down arrows or left/right arrows?.. Probably gonna go with up/down to keep old look and feel and for sake of room.)
+10-15-14: Added back end to next/prev stuff, need to find pretty arrows for that and truly fucking fix this dumbass individual view stuff. Create separate layouts and see where that gets you. Beyond that UI and then drop this fucker for awhile
+10-16-14: Finally fixed all barbell troubles with 3 separate layouts for each weight :) I think you're gonna want a twitter-like nav bar with the home page being dashboardy with personal bests, bodyweight, etc..
+(Eventually)
+For now, make twitter button equivalent of home to be the projection, if they don't have a projection have them at the second button which is basically your app (first screen with pattern adjuster, training maxes screen, and then redirect them to (current) home screen, will eventually want to do the dashboarding stuff. This is just brainstorming, decide button order. 
+  
 Regular todo:
 Remember existing pattern (only within session for now)
 dashboarding
-view existing pattern all on one page
 
-Premium feature: allow logging to be added, do a check if it's one of the projected days, if so, say what day it was otherwise still allow work to be logged. Perhaps a template manager or something... Your UI will need to be fixed before this I think. You want a prettier menu. Look for layouts tomorrow morning too.
+Feature: allow logging to be added, do a check if it's one of the projected days, if so, say what day it was otherwise still allow work to be logged. Perhaps a template manager or something... Your UI will need to be fixed before this I think. You want a prettier menu. Look for layouts tomorrow morning too.
 Consideration: How will logging work? Will there be another entry in the database? Should it be a separate database?
 

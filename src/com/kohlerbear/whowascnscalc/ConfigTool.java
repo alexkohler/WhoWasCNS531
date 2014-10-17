@@ -35,7 +35,7 @@ public class ConfigTool {
     }
     
     
-	public Intent configurePreviousSet(String myDate, String myPrevLift,  String viewMode, String mode, boolean[] boolArray, String[] liftPattern)
+	public Intent configurePreviousSet(String myDate, String myPrevLift,  String viewMode, String mode, String[] liftPattern)
 	{
 		String prevLft = myPrevLift;
 		//Boolean topCornerCaseFlag = false;
@@ -66,7 +66,7 @@ public class ConfigTool {
 		third = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD))));
 		}
 		
-		Intent intent  = new Intent(mContext, IndividualViewActivity.class);
+		Intent intent  = new Intent(mContext, IndividualViews.class);
 		intent.putExtra("cycle", cycle);
 		intent.putExtra("frequency", freq);
 		intent.putExtra("liftType", lift);
@@ -76,7 +76,6 @@ public class ConfigTool {
 		intent.putExtra("date", liftDate);
 		intent.putExtra("viewMode", viewMode);
 		intent.putExtra("mode", mode);
-		intent.putExtra("boolArray", boolArray);
 		intent.putExtra("liftPattern", liftPattern);
 		//forwardIntent.putExtra("mode", lbmodeString);
 		//TODO take care of mode
@@ -92,7 +91,7 @@ public class ConfigTool {
 	}
 	
 	
-	public Intent configureNextSet(String myDate, String myNextLift, String viewMode, String lbMode, boolean[] boolArray, String[] pattern)
+	public Intent configureNextSet(String myDate, String myNextLift, String viewMode, String lbMode, String[] pattern)
 	{
 		String nextLift = myNextLift;
 		String liftDate = null;
@@ -124,7 +123,7 @@ public class ConfigTool {
 		third = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD))));
 		}
 		
-		Intent intent  = new Intent(mContext, IndividualViewActivity.class);
+		Intent intent  = new Intent(mContext, IndividualViews.class);
 		intent.putExtra("cycle", cycle);
 		intent.putExtra("frequency", freq);
 		intent.putExtra("liftType", lift);
@@ -134,7 +133,6 @@ public class ConfigTool {
 		intent.putExtra("date", liftDate);
 		intent.putExtra("viewMode", viewMode);
 		intent.putExtra("mode", lbMode);
-		intent.putExtra("boolArray", boolArray);
 		intent.putExtra("liftPattern", pattern);
 		//forwardIntent.putExtra("mode", lbmodeString);
 		//TODO take care of mode

@@ -5,7 +5,7 @@
     android:versionName="1.6" >
 
     <uses-sdk
-        android:minSdkVersion="7"
+        android:minSdkVersion="14"
         android:targetSdkVersion="20" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,8 +14,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppBaseTheme" >
+        android:label="@string/app_name">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -27,14 +26,19 @@
         </activity>
         <activity
             android:name=".Second"
-            android:label="@string/title_activity_second" >
+            android:label="@string/title_activity_second" 
+	        android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"  >
         </activity>
-        <activity android:name=".SecondScreenActivity" >
+        <activity 
+            android:name=".SecondScreenActivity" 
+        	android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" >
         </activity>
-        <activity android:name=".ThirdScreenActivity" >
+        <activity 
+            android:name=".ThirdScreenActivity" 
+        	android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="com.kohlerbear.whowascnscalc.Second" />
-
+				
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <action android:name="com.kohlerbear.whowascnscalc.IndividualView" />
@@ -55,7 +59,12 @@
         </activity>
         <activity
             android:name=".IndividualViews"
-            android:label="@string/title_activity_individual_views" >
+            android:label="@string/title_activity_individual_views" 
+	        android:theme="@style/AppBaseTheme"> 
+        </activity>
+        <activity
+            android:name=".TabbedIndividualVIew"
+            android:label="@string/title_activity_tabbed_individual_view" >
         </activity>
     </application>
 

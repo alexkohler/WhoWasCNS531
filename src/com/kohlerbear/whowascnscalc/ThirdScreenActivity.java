@@ -1,18 +1,16 @@
 package com.kohlerbear.whowascnscalc;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -28,7 +26,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
@@ -122,7 +119,7 @@ public class ThirdScreenActivity extends Activity {
 
 		//if we are coming from second screen
 		String origin = intent.getStringExtra("origin");
-		if (origin.equals("individualView"))
+		if (origin.equals("individualViews"))
 		{
 			eventsData.reinflateTable(this, intent);
 		}
@@ -140,7 +137,7 @@ public class ThirdScreenActivity extends Activity {
 		else
 		{
 			Cursor cursor = getEvents();
-			showDefaultEvents(cursor);
+			showDefaultEvents(cursor, cursor);
 		}
 	}//end method oncreate 
 
@@ -175,7 +172,7 @@ public class ThirdScreenActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			//Options menu -- wrap up in a checkbox Listener 
-			CharSequence colors[] = new CharSequence[] {"Plate Config", "Adjust Lifts", /*"Export.."*/ "Reset", "View By...", "Cancel"};
+			CharSequence colors[] = new CharSequence[] {/*"Plate Config",*/ "Adjust Lifts", /*"Export.."*/ "Reset", "View By...", "Cancel"};
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 			builder.setTitle("Options menu");
@@ -183,13 +180,9 @@ public class ThirdScreenActivity extends Activity {
 			builder.setItems(colors, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					if (which==0)
-					{
-						//do nothing, this is unsupported
-					}
 					
 					
-					if (which == 1){
+					if (which == 0){
 						SQLiteDatabase db = eventsData.getWritableDatabase();
 						Intent myIntent = new Intent(ThirdScreenActivity.this, SecondScreenActivity.class);
 						myIntent.putExtra("origin", "third");
@@ -204,7 +197,7 @@ public class ThirdScreenActivity extends Activity {
 						db.delete("Lifts", null, null);
 						startActivity(myIntent);
 					}
-					if (which == 2) 
+					if (which == 1) 
 					{// arrays are zero indexed
 						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 						builder.setMessage("Are you sure you want to reset?").setPositiveButton("Yes", dialogClickListener)
@@ -212,11 +205,11 @@ public class ThirdScreenActivity extends Activity {
 
 					}
 					//nothing for export yet
-					if (which == 3)
+					if (which == 2)
 					{
 						createViewBuilder();
 					}
-					//if (which== 4) 
+					//if (which== 3) 
 					//no need to worry about Back case, takes care of itself
 				}
 
@@ -283,6 +276,7 @@ public class ThirdScreenActivity extends Activity {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Cursor cursor = getEvents();
+					Cursor subcursor = getEvents();
 					TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
 					switch (which){
 					case 0:
@@ -292,7 +286,7 @@ public class ThirdScreenActivity extends Activity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor);
+						showDefaultEvents(cursor, cursor);
 						break;
 					case 1:
 						curView = CURRENT_VIEW.BENCH;
@@ -301,7 +295,7 @@ public class ThirdScreenActivity extends Activity {
 						tableRowPrincipal.removeAllViews(); //try something like this 
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor);
+						showDefaultEvents(cursor, subcursor);
 						break;	
 					case 2:
 						curView = CURRENT_VIEW.SQUAT;
@@ -310,7 +304,7 @@ public class ThirdScreenActivity extends Activity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true; 
-						showDefaultEvents(cursor);
+						showDefaultEvents(cursor, cursor);
 						break;	
 					case 3:
 						curView = CURRENT_VIEW.OHP;
@@ -319,7 +313,7 @@ public class ThirdScreenActivity extends Activity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor);
+						showDefaultEvents(cursor, cursor);
 						break;		
 					case 4:
 						curView = CURRENT_VIEW.DEAD;
@@ -328,7 +322,7 @@ public class ThirdScreenActivity extends Activity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor);
+						showDefaultEvents(cursor, cursor);
 						break;
 					case 5:
 						curView = CURRENT_VIEW.FIVES;
@@ -337,7 +331,7 @@ public class ThirdScreenActivity extends Activity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor);
+						showDefaultEvents(cursor, cursor);
 						break;
 					case 6:
 						curView = CURRENT_VIEW.THREES;
@@ -346,7 +340,7 @@ public class ThirdScreenActivity extends Activity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor);
+						showDefaultEvents(cursor, cursor);
 						break;
 					case 7:
 						curView = CURRENT_VIEW.ONES;
@@ -355,7 +349,7 @@ public class ThirdScreenActivity extends Activity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor);
+						showDefaultEvents(cursor, cursor);
 						break;				
 					case 8:
 						CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", /*"Export...",*/ "View By...", "Back"};
@@ -436,22 +430,24 @@ public class ThirdScreenActivity extends Activity {
 			return test;
 		}
 
-		@SuppressWarnings("deprecation") void showDefaultEvents(Cursor cursor) {
+		@SuppressWarnings("deprecation") void showDefaultEvents(Cursor cursor, Cursor subcursor) {
 			StringBuilder ret; 
 			ret = new StringBuilder("");
 			TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
+			System.out.println(DatabaseUtils.dumpCursorToString(cursor));
+			System.out.println( DatabaseUtils.dumpCursorToString(subcursor));
 			while (cursor.moveToNext()) {
 				if (!this.insertStatus){//has title been inserted?
 					String temp = getQuery(); //temporarily hold query
 					setQuery(null);
-					Cursor subcursor = cursor;//create a subcursor to get our training maxes 
-					ret = new StringBuilder("Start TMs [Bench: " + subcursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]");
+					subcursor.moveToFirst();
+					ret = new StringBuilder("Start TMs [Bench: " + subcursor.getString(subcursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]");
 					subcursor.moveToNext();
-					ret.append(" [Squat: " + subcursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]");
+					ret.append(" [Squat: " + subcursor.getString(subcursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]");
 					subcursor.moveToNext();
-					ret.append(" [OHP: " + subcursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
+					ret.append(" [OHP: " + subcursor.getString(subcursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
 					subcursor.moveToNext();
-					ret.append(" [Dead: " + subcursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
+					ret.append(" [Dead: " + subcursor.getString(subcursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
 					lbMode = cursor.getInt((cursor.getColumnIndex(EventsDataSQLHelper.LBFLAG)));
 					if (lbMode == 1)
 					ret.append("	Mode: lbs");
@@ -493,9 +489,13 @@ public class ThirdScreenActivity extends Activity {
 				String cycle = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.CYCLE));
 				String lift = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
 				String freq = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.FREQUENCY));
+				try
+				{
 				String first = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST))));
 				Double second = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND)));
 				Double third = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD)));
+
+				
 				final String entryString = liftDate + "|" + cycle + "|" + lift + "|" + freq + "|" + first + "|" + second + "|" + third + "|\n";
 				TableRow tr = new TableRow(this);
 				LayoutParams trParams = tableRowPrincipal.getLayoutParams();
@@ -521,6 +521,7 @@ public class ThirdScreenActivity extends Activity {
 				entry.setBackgroundColor(Color.LTGRAY);
 				tableColorToggle = true;
 				}
+				
 				tr.setOnClickListener(new TableRowClickListener(entryString){
 
 					@Override
@@ -551,7 +552,7 @@ public class ThirdScreenActivity extends Activity {
 						String mySecondLift =  myEntries[4];
 						String myThirdLift = myEntries[5];
 						String viewMode = curView.name().toString(); 
-						String mode = String.valueOf(lbMode);
+						String mode = String.valueOf(lbMode);//1 or 0 
 						
 						
 
@@ -573,6 +574,11 @@ public class ThirdScreenActivity extends Activity {
 					}});   
 				//tableRowPrincipal.addView(entry);
 				tableRowPrincipal.addView(tr);
+				} // end numberformatexception block
+				catch (NumberFormatException e)
+				{
+					Toast.makeText(ThirdScreenActivity.this, "There was an error processing your lift numbers, please double check them!", Toast.LENGTH_LONG).show();
+				}
 				//then parse by date (regex) and then either parse first second and third (along with any other additional info you may want to add for featues), and you should be good to go my nigga ;)
 			}
 
@@ -636,7 +642,7 @@ public class ThirdScreenActivity extends Activity {
 				@Override
 				protected void onPostExecute(Void result) {
 					super.onPostExecute(result);
-					showDefaultEvents(cursor);
+					showDefaultEvents(cursor, cursor);
 
 					pdLoading.dismiss();
 				}

@@ -5,6 +5,8 @@ package com.kohlerbear.whowascnscalc;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
@@ -226,62 +228,66 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	void reinflateTable(ThirdScreenActivity thirdScreen, Intent intent) {
 		String view = intent.getStringExtra("viewMode");
 		TableLayout tableRowPrincipal = (TableLayout)thirdScreen.findViewById(R.id.tableLayout1);
+		thirdScreen.setQuery("Frequency = '5-5-5'");
+		Cursor subcursor = thirdScreen.getEvents();
 		switch(view)
 		{//		DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), DEAD('D'), FIVES('5'), THREES('3'), ONES('1');
 			case "DEFAULT":
 				thirdScreen.setQuery(null);
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
-				thirdScreen.showDefaultEvents(thirdScreen.cursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor, thirdScreen.cursor);
 				break;
 			case "BENCH":
 				thirdScreen.setQuery("Lift = 'Bench'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor);
+				System.out.println(DatabaseUtils.dumpCursorToString(thirdScreen.cursor));
+				System.out.println( DatabaseUtils.dumpCursorToString(subcursor));
+				thirdScreen.showDefaultEvents(thirdScreen.cursor, subcursor);
 				break;
 			case "SQUAT":
 				thirdScreen.setQuery("Lift = 'Squat'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor, subcursor);
 				break;
 			case "OHP":
 				thirdScreen.setQuery("Lift = 'OHP'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor, subcursor);
 				break;
 			case "DEAD":
 				thirdScreen.setQuery("Lift = 'Deadlift'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor, subcursor);
 				break;	
 			case "FIVES":
 				thirdScreen.setQuery("Frequency = '5-5-5'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor, thirdScreen.cursor);
 				break;	
 			case "THREES":
 				thirdScreen.setQuery("Frequency = '3-3-3'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor, thirdScreen.cursor);;
 				break;
 			case "ONES":
 				thirdScreen.setQuery("Frequency = '5-3-1'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor, thirdScreen.cursor);
 				break;	
 	
 		}

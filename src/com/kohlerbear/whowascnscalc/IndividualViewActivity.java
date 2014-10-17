@@ -688,7 +688,7 @@ public class IndividualViewActivity extends Activity implements OnClickListener 
 		incrementedString = result[1];
 
 			    
-	    Intent nextLiftIntent = helper.configureNextSet(incrementedString, nextLift, viewMode, mode, boolArray, liftPattern);
+	    Intent nextLiftIntent = helper.configureNextSet(incrementedString, nextLift, viewMode, mode, liftPattern);
 	    if (!helper.bottomCase())
 	    {
 	    	startActivity(nextLiftIntent);
@@ -725,7 +725,7 @@ public class IndividualViewActivity extends Activity implements OnClickListener 
 	    
 	    
 	    
-	    Intent prevLiftIntent =  helper.configurePreviousSet(incrementedString, nextLift, viewMode, mode, boolArray, liftPattern);
+	    Intent prevLiftIntent =  helper.configurePreviousSet(incrementedString, nextLift, viewMode, mode, liftPattern);
 	    if (!helper.topCase())
 	    {
 	    	startActivity(prevLiftIntent);
