@@ -3,12 +3,6 @@ package com.kohlerbear.whowascnscalc;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-
-import com.google.analytics.tracking.android.Fields;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.MapBuilder;
-import com.google.analytics.tracking.android.Tracker;
-
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -19,10 +13,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
+import com.google.analytics.tracking.android.Tracker;
 
 public class IndividualViews extends ActionBarActivity {
 	
@@ -243,7 +241,7 @@ public class IndividualViews extends ActionBarActivity {
 //		cycleTV.setText("Cycle: " + String.valueOf(cycle));
 	    setTitle(date);
 	    TextView dataMarquee = (TextView) findViewById(R.id.dataMarquee);
-	    dataMarquee.setText(liftType + " " + frequency  + "Cycle " + cycle);
+	    dataMarquee.setText(liftType + " " + frequency  + " Cycle " + cycle);
 		firstLiftTV.setText(String.valueOf("Lift 1: " + firstLift + "x" + frequency.charAt(0)));
 		secondLiftTV.setText(String.valueOf("Lift 2: " + secondLift+ "x" + frequency.charAt(2)));
 		thirdLiftTV.setText(String.valueOf("Lift 3: "  + thirdLift)+ "x" + frequency.charAt(4));
@@ -266,7 +264,8 @@ public class IndividualViews extends ActionBarActivity {
     
 void generateWeights(double weight, int liftOneTwoOrThree)
     {
-
+	try
+	{
 	 int barbellWeight;
 	 double[] plateVals;
         //NEED CONDITIONAL HERE 
@@ -298,9 +297,12 @@ void generateWeights(double weight, int liftOneTwoOrThree)
         while (plateWeight != 0)
         {
             currentNeeded = (int) (plateWeight / (plateVals[plateValIterator] * 2));
-            if (currentNeeded > 0)
+            if (currentNeeded > 0 && plateValIterator < plateVals.length) //NOTE added this arraycheck
             {
+            	if (usingLbs)
                 plateWeight = (int) (plateWeight - (2 * currentNeeded * plateVals[plateValIterator]));
+            	else
+            	plateWeight = (double) (plateWeight - (2 * currentNeeded * plateVals[plateValIterator]));
                 System.out.println(plateVals[plateValIterator] + " needed per side " + currentNeeded);
                 int numberOfTimesToAddPlateToEachSide = currentNeeded;
                 while (numberOfTimesToAddPlateToEachSide >= 1)
@@ -316,6 +318,15 @@ void generateWeights(double weight, int liftOneTwoOrThree)
             
             
         }
+	}
+	catch (Exception e)
+	{
+		
+/*		Toast.makeText(getApplicationContext(), 
+				"An error occured. An error report has been sent:)",
+				Toast.LENGTH_SHORT).show();*/
+			sendTrackerException("GenerateWeightsException", e.getLocalizedMessage());
+	}
     }
 
 void setPlateImageAtRow(int row, int plateIndex, int liftNumber)
