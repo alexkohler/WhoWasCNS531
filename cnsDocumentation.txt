@@ -70,4 +70,4 @@ dashboarding
 
 Feature: allow logging to be added, do a check if it's one of the projected days, if so, say what day it was otherwise still allow work to be logged. Perhaps a template manager or something... Your UI will need to be fixed before this I think. You want a prettier menu. Look for layouts tomorrow morning too.
 Consideration: How will logging work? Will there be another entry in the database? Should it be a separate database?
-
+p
