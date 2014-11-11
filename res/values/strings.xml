@@ -28,7 +28,7 @@
 
     <string-array name="cycles_array">
         <item>1</item>
--                <item>2</item>
+-                        <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -63,7 +63,6 @@
     <string name="adjust_lift_pattern_text_view">Adjust Lift Pattern</string>
     <string name="title_activity_adjust_lift_pattern">AdjustLiftPatternActivity</string>
     <string name="current_lift_pattern_text_view">Current Lift Pattern: B - S - R - O - D - R</string>
-    <string name="intro">Place these foods in your order of preference.</string>
     <string name="option_1">Bench</string>
     <string name="option_2">Squat</string>
     <string name="option_3">OHP</string>
@@ -85,7 +84,7 @@
     <!-- Spinner contents definition -->
 
     <string-array name="Pattern_Size_Array">
-        <item>How big is your pattern?</item>
+        <item>Pattern size</item>
         <item>4 days</item>
         <item>5 days</item>
         <item>6 days</item>
@@ -95,11 +94,15 @@
     <string name="title_activity_individual_views">IndividualViews</string>
     <string name="typeFreq">Bench - 5/5/5</string>
     <string name="title_activity_tabbed_individual_view">TabbedIndividualVIew</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Dashboard</string>
+    <string name="title_section2">Create new projection</string>
+    <string name="title_section3">View existing projection</string>
     <string name="sampleentry">Lift X: 300x5!</string>
     <string name="next">next</string>
     <string name="prev">prev</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
 
 </resources>

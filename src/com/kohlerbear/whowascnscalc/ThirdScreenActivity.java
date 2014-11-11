@@ -434,8 +434,8 @@ public class ThirdScreenActivity extends Activity {
 			StringBuilder ret; 
 			ret = new StringBuilder("");
 			TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
-			System.out.println(DatabaseUtils.dumpCursorToString(cursor));
-			System.out.println( DatabaseUtils.dumpCursorToString(subcursor));
+//			System.out.println(DatabaseUtils.dumpCursorToString(cursor));
+//			System.out.println( DatabaseUtils.dumpCursorToString(subcursor));
 			while (cursor.moveToNext()) {
 				if (!this.insertStatus){//has title been inserted?
 					String temp = getQuery(); //temporarily hold query

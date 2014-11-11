@@ -77,6 +77,7 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 	    choice5 = (TextView)findViewById(R.id.choice_5);
 	    choice6 = (TextView)findViewById(R.id.choice_6);
 	    choice7 = (TextView)findViewById(R.id.choice_7); 
+	    TextView[] choices = {choice1, choice2, choice3, choice4, choice5, choice6, choice7};
 	    
 	    
 	  //set touch listeners
@@ -97,6 +98,32 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 	    
 	    //add spinner listener
 	    patternSizeSpinner.setOnItemSelectedListener(spinnerListener);
+	    
+	    Intent intent = getIntent();
+	    String[] pattern = intent.getStringArrayExtra("pattern");
+	    liftPattern = pattern;
+	    int patternIndex = 0;
+	    //0 - adjust pattern
+	    //1 - 4 days
+	    //2 - 5 days
+	    //3 - 6 days
+	    //4 - 7 days
+	    patternSizeSpinner.setSelection(liftPattern.length - 3);
+	    while (patternIndex < liftPattern.length)
+	    {
+	    	choices[patternIndex].setText(liftPattern[patternIndex]);
+	    	patternIndex++;
+	    }	    
+	    if (patternIndex < choices.length)
+	    {
+		    while (patternIndex < choices.length)
+		    {
+		    	TextView choice = choices[patternIndex];
+		    	choice.setVisibility(View.INVISIBLE);
+		    	patternIndex++;
+		    }
+	    }
+	    
 	}
 
 	private final class ChoiceTouchListener implements OnTouchListener {
@@ -266,7 +293,7 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 				choice4.setVisibility(View.VISIBLE);
 				choice5.setVisibility(View.VISIBLE);
 				choice6.setVisibility(View.INVISIBLE);
-				choice7.setVisibility(View.INVISIBLE);;
+				choice7.setVisibility(View.INVISIBLE);
 				break;
 			case 3://patterm size is 6
 				liftPattern = new String[6];
@@ -286,7 +313,7 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 				choice4.setVisibility(View.VISIBLE);
 				choice5.setVisibility(View.VISIBLE);
 				choice6.setVisibility(View.VISIBLE);
-				choice7.setVisibility(View.INVISIBLE);
+				choice7.setVisibility(View.VISIBLE);
 			}
 			
 		}
@@ -301,7 +328,8 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 	private boolean validatePattern()
 	{
 		//traverse the array and make sure all four lifts are used. 
-		boolean benchBool = false, squatBool = false, ohpBool = false, deadBool = false, liftValidity = false, toastThrown = false;
+		int benchCount = 0, squatCount = 0, ohpCount = 0, deadCount = 0; 
+		boolean liftValidity = false, toastThrown = false;
 		for (int i=0; i < liftPattern.length; i++)
 		{
 			liftPattern[0] = choice1.getText().toString();
@@ -330,36 +358,75 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 			switch (currentLift)
 			{
 			case "Bench":
-				benchBool = true;
+				benchCount++;
 				break;
 			case "Squat":
-				squatBool = true;
+				squatCount++;
 				break;
 			case "Deadlift":
-				deadBool = true;
+				deadCount++;
 				break;
 			case "OHP":
-				ohpBool = true;
+				ohpCount++;
 				break;
 			}
 		}//end loop
-		liftValidity = benchBool && squatBool && deadBool && ohpBool && !toastThrown;
+		
+		liftValidity = (benchCount == 1) && (squatCount == 1) && (deadCount == 1) && (ohpCount  == 1) && !toastThrown;
 		if (liftValidity)
 			return true;
 		else
 			{
+			boolean multipleLifts = false;
+			boolean zeroLifts = false;;
 			String addBuffer = "Please add the following days to your pattern: ";
-			if (!benchBool)
-			addBuffer = addBuffer + "Bench ";
-			if (!squatBool)
-			addBuffer = addBuffer + "Squat ";
-			if (!deadBool)
-			addBuffer = addBuffer + "Deadlift ";
-			if (!ohpBool)
-			addBuffer = addBuffer + "OHP ";
-			
-			Toast.makeText(AdjustLiftPatternActivity.this, addBuffer, Toast.LENGTH_LONG).show();
+			String multipleBuffer = "You have multiples of the following lifts: ";
+			if ((benchCount == 0))
+			{
+				addBuffer = addBuffer + "Bench ";
+				zeroLifts = true;
+			}
+			else if (benchCount > 1)
+			{
+				multipleBuffer = multipleBuffer + "Bench ";
+				multipleLifts = true;
+			}
+			if ((squatCount == 0))
+			{
+				addBuffer = addBuffer + "Squat ";
+				zeroLifts = true;
+			}	
+			else if (squatCount > 1)
+			{
+				multipleBuffer = multipleBuffer + "Squat ";
+				multipleLifts = true;
+			}	
+			if ((deadCount == 0))
+			{
+				addBuffer = addBuffer + "Deadlift ";
+				zeroLifts = true;
+			}		
+			else if (deadCount > 1)
+			{
+				multipleLifts = true;
+				multipleBuffer = multipleBuffer + "Deadlift ";
+			}	
+			if ((ohpCount == 0))
+			{
+				addBuffer = addBuffer + "OHP ";
+				zeroLifts = true;
+			}
+			else if (ohpCount > 1)
+			{
+				multipleLifts = true;
+				multipleBuffer = multipleBuffer + "OHP";
+			}
+			if (zeroLifts)
+			Toast.makeText(AdjustLiftPatternActivity.this, addBuffer, Toast.LENGTH_SHORT).show();
 
+			if (multipleLifts)
+				Toast.makeText(AdjustLiftPatternActivity.this, multipleBuffer, Toast.LENGTH_SHORT).show();
+			
 			return false;
 		
 			}

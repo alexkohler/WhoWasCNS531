@@ -61,13 +61,14 @@ Who Was CNS 531 project progress
 10-15-14: Added back end to next/prev stuff, need to find pretty arrows for that and truly fucking fix this dumbass individual view stuff. Create separate layouts and see where that gets you. Beyond that UI and then drop this fucker for awhile
 10-16-14: Finally fixed all barbell troubles with 3 separate layouts for each weight :) I think you're gonna want a twitter-like nav bar with the home page being dashboardy with personal bests, bodyweight, etc..
 10-30-14: KG bug fixes, weird date bug, gonna get out of this project for awhile.
-(Eventually)
-For now, make twitter button equivalent of home to be the projection, if they don't have a projection have them at the second button which is basically your app (first screen with pattern adjuster, training maxes screen, and then redirect them to (current) home screen, will eventually want to do the dashboarding stuff. This is just brainstorming, decide button order. 
+11-10-14: Made some improvements to adjustpattern, fixed bug with generating preview buffer (the first letter buffer thing you do on create new projection page) , also followed in iOS version's steps and allowed previous pattern to be viewed when adjust pattern is pressed making it feel MUCH more native. Created a method to derive lift pattern from database rather than making a schema change. (I am unsure how to cleanly do this and didn't want to cause a crisis. View existing projection is now supported on dashboard. I would double check over your pattern derivation algorithm because it's pretty ugly, so test that before hopping into anything else. After that add nav bar to all screens. (Beware of back button repercussions this may cause!!!)
   
-Regular todo:
-Remember existing pattern (only within session for now)
-dashboarding
 
+Regular todo:
+dashboarding - make an actual dashboard with current weight, current training maxes etc. Add marginally :) 
+
+(Eventually)
+For now, make twitter button equivalent of home to be the projection, if they don't have a projection have them at the second button which is basically your app (first screen with pattern adjuster, training maxes screen, and then redirect them to (current) home screen, will eventually want to do the dashboarding stuff.  
 Feature: allow logging to be added, do a check if it's one of the projected days, if so, say what day it was otherwise still allow work to be logged. Perhaps a template manager or something... Your UI will need to be fixed before this I think. You want a prettier menu. Look for layouts tomorrow morning too.
 Consideration: How will logging work? Will there be another entry in the database? Should it be a separate database?
 p
