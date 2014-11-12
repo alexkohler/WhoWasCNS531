@@ -8,15 +8,21 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,13 +48,49 @@ public class MainActivity extends Activity {
 	String[] liftPattern = new String[7];
 	TextView liftTicker;
 	Tracker tracker = null;
+	private String[] drawerListViewItems;
+	private ListView drawerListView;
+	DrawerLayout drawerLayout;
+	ActionBarDrawerToggle actionBarDrawerToggle;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(R.style.AppBaseThemeNoTitleBar);
+		setTheme(R.style.AppBaseTheme);
 		setContentView(R.layout.activity_main);
 		//Initialize tracker
+		
+		 drawerListViewItems = getResources().getStringArray(R.array.items);
+		 
+        // get ListView defined in activity_main.xml
+        drawerListView = (ListView) findViewById(R.id.left_drawer);
+ 
+                // Set the adapter for the list view
+        drawerListView.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_activated_1, 
+                drawerListViewItems));
+		
+        
+        
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        
+        
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                drawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.navigation_drawer_open,  /* "open drawer" description */
+                R.string.navigation_drawer_close  /* "close drawer" description */
+                );
+ 
+        // Set actionBarDrawerToggle as the DrawerListener
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+ 
+        getActionBar().setDisplayHomeAsUpEnabled(true); 
+ 
+        // just styling option add shadow the right edge of the drawer
+   //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        
 		// Sending the same screen view hit using MapBuilder.createAppView()
 		GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
 		tracker = GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
@@ -111,6 +153,32 @@ public class MainActivity extends Activity {
 
 
 	}//end method onCreate 
+	
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+ 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+ 
+         // call ActionBarDrawerToggle.onOptionsItemSelected(), if it returns true
+        // then it has handled the app icon touch event
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        actionBarDrawerToggle.syncState();
+    }
+
+
 	
 	 @Override
 	  public void onStart() {

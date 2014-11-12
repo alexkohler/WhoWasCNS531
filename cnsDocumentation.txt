@@ -63,6 +63,7 @@ Who Was CNS 531 project progress
 10-30-14: KG bug fixes, weird date bug, gonna get out of this project for awhile.
 11-10-14: Made some improvements to adjustpattern, fixed bug with generating preview buffer (the first letter buffer thing you do on create new projection page) , also followed in iOS version's steps and allowed previous pattern to be viewed when adjust pattern is pressed making it feel MUCH more native. Created a method to derive lift pattern from database rather than making a schema change. (I am unsure how to cleanly do this and didn't want to cause a crisis. View existing projection is now supported on dashboard. I would double check over your pattern derivation algorithm because it's pretty ugly, so test that before hopping into anything else. After that add nav bar to all screens. (Beware of back button repercussions this may cause!!!)
   
+11-11-14: wrestled with adding a nav drawer to first activity. Colors still need fixed and there is no back end
 
 Regular todo:
 dashboarding - make an actual dashboard with current weight, current training maxes etc. Add marginally :) 
