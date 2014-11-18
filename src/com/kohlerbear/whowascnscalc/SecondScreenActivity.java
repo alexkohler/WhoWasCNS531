@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +29,7 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
 
-public class SecondScreenActivity extends Activity {
+public class SecondScreenActivity extends BaseActivity {
 
 	EditText benchEditText;
 	EditText squatEditText;
@@ -52,11 +53,30 @@ public class SecondScreenActivity extends Activity {
 	String[] liftPattern = new String[7];
 
 	Tracker tracker = null;
+	
+	private String[] navMenuTitles;
+	private TypedArray navMenuIcons;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_second);
+		//set up our navigation drawer
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load
+		// titles
+		// from
+		// strings.xml
+
+		navMenuIcons = getResources()
+		.obtainTypedArray(R.array.nav_drawer_icons);// load icons from
+		// strings.xml
+		
+		set(navMenuTitles, navMenuIcons);
+		
+		
+		
+		
+		
 		//declare our button, tie it to listener, code listener
 
 		Button backButton = (Button) findViewById(R.id.secondToFirstButton);

@@ -27,6 +27,20 @@ public final class R {
         public static final int Pattern_Size_Array=0x7f0c0001;
         public static final int cycles_array=0x7f0c0000;
         public static final int items=0x7f0c0002;
+        /** 
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        
+         */
+        public static final int nav_drawer_icons=0x7f0c0004;
+        /**  <item>Third</item>
+        <item>Fourth</item>
+        <item>Fifth</item>
+        <item>Sixth</item> 
+         */
+        public static final int nav_drawer_items=0x7f0c0003;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -1142,8 +1156,9 @@ containing a value of this type.
         public static final int plate_twopointfive_lbs=0x7f02007f;
         public static final int right_arrow=0x7f020080;
         public static final int rightarrow=0x7f020081;
-        public static final int zyzzbird=0x7f020082;
-        public static final int zyzzbirdmdpi=0x7f020083;
+        public static final int selector_navigation_drawer=0x7f020082;
+        public static final int zyzzbird=0x7f020083;
+        public static final int zyzzbirdmdpi=0x7f020084;
     }
     public static final class id {
         public static final int Divider1=0x7f05005d;
@@ -1158,15 +1173,15 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f050023;
         public static final int action_bar_title=0x7f050022;
         public static final int action_context_bar=0x7f05001d;
-        public static final int action_example=0x7f0500e7;
+        public static final int action_example=0x7f0500e8;
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f0500e6;
+        public static final int action_settings=0x7f0500e7;
         public static final int activity_chooser_view_content=0x7f050025;
-        public static final int adjustActivityBackButton=0x7f0500e1;
-        public static final int adjustActivityResetButton=0x7f0500e3;
-        public static final int adjustActivitySaveButton=0x7f0500e2;
+        public static final int adjustActivityBackButton=0x7f0500e2;
+        public static final int adjustActivityResetButton=0x7f0500e4;
+        public static final int adjustActivitySaveButton=0x7f0500e3;
         public static final int adjustPatternButton=0x7f0500a4;
         public static final int always=0x7f05000b;
         public static final int arrowLayout=0x7f050088;
@@ -1177,23 +1192,23 @@ containing a value of this type.
         public static final int benchEditText=0x7f0500ab;
         public static final int benchTextView=0x7f0500a8;
         public static final int checkbox=0x7f05002d;
-        public static final int choice_1=0x7f0500da;
-        public static final int choice_2=0x7f0500db;
-        public static final int choice_3=0x7f0500dc;
-        public static final int choice_4=0x7f0500dd;
-        public static final int choice_5=0x7f0500de;
-        public static final int choice_6=0x7f0500df;
-        public static final int choice_7=0x7f0500e0;
+        public static final int choice_1=0x7f0500db;
+        public static final int choice_2=0x7f0500dc;
+        public static final int choice_3=0x7f0500dd;
+        public static final int choice_4=0x7f0500de;
+        public static final int choice_5=0x7f0500df;
+        public static final int choice_6=0x7f0500e0;
+        public static final int choice_7=0x7f0500e1;
         public static final int collapseActionView=0x7f05000d;
-        public static final int configureButton=0x7f0500d3;
+        public static final int configureButton=0x7f0500d4;
         public static final int container=0x7f05003d;
         public static final int content_frame=0x7f05009f;
-        public static final int cycleColumn=0x7f0500cc;
+        public static final int cycleColumn=0x7f0500cd;
         public static final int cycleTextView=0x7f050050;
         public static final int cycleTextView_activity_three=0x7f0500bc;
         public static final int cycleTextView_activity_two=0x7f050041;
         public static final int dataMarquee=0x7f050073;
-        public static final int dateColumn=0x7f0500cb;
+        public static final int dateColumn=0x7f0500cc;
         public static final int dateTextView=0x7f050059;
         public static final int dateTextView_activity_three=0x7f0500c5;
         public static final int dateTextView_activity_two=0x7f05004a;
@@ -1212,8 +1227,8 @@ containing a value of this type.
         public static final int existingProjectionButton=0x7f0500a3;
         public static final int expand_activities_button=0x7f050026;
         public static final int expanded_menu=0x7f05002c;
-        public static final int firstLiftColumn=0x7f0500cf;
-        public static final int freqColumn=0x7f0500ce;
+        public static final int firstLiftColumn=0x7f0500d0;
+        public static final int freqColumn=0x7f0500cf;
         public static final int generalTrainingMaxTextView=0x7f0500a9;
         public static final int home=0x7f050014;
         public static final int homeAsUp=0x7f050005;
@@ -1226,7 +1241,7 @@ containing a value of this type.
         public static final int individualView=0x7f05004e;
         public static final int individualViewThree=0x7f0500b9;
         public static final int individualViewTwo=0x7f05003f;
-        public static final int insertValues=0x7f0500ca;
+        public static final int insertValues=0x7f0500cb;
         public static final int kgRadioButton=0x7f0500b7;
         public static final int lbRadioButton=0x7f0500b5;
         public static final int left_drawer=0x7f0500a6;
@@ -1284,7 +1299,7 @@ containing a value of this type.
         public static final int lift3r6=0x7f050092;
         public static final int lift3r7=0x7f050093;
         public static final int lift3r8=0x7f050094;
-        public static final int liftColumn=0x7f0500cd;
+        public static final int liftColumn=0x7f0500ce;
         public static final int liftNumberTextView=0x7f05004c;
         public static final int liftOneBarbell=0x7f05005f;
         public static final int liftThreeBarbell=0x7f05008c;
@@ -1293,7 +1308,7 @@ containing a value of this type.
         public static final int liftTypeTextView=0x7f050057;
         public static final int liftTypeTextView_activity_three=0x7f0500c3;
         public static final int liftTypeTextView_activity_two=0x7f050048;
-        public static final int linearLayout1=0x7f0500d4;
+        public static final int linearLayout1=0x7f0500d5;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
         public static final int middle=0x7f050012;
@@ -1308,12 +1323,12 @@ containing a value of this type.
         public static final int numberCyclesSpinner=0x7f0500b6;
         public static final int ohpEditText=0x7f0500af;
         public static final int ohpTextView=0x7f0500ad;
-        public static final int option1=0x7f0500d5;
-        public static final int option2=0x7f0500d6;
-        public static final int option3=0x7f0500d7;
-        public static final int option4=0x7f0500d8;
-        public static final int option5=0x7f0500d9;
-        public static final int patternSizeSpinner=0x7f0500e4;
+        public static final int option1=0x7f0500d6;
+        public static final int option2=0x7f0500d7;
+        public static final int option3=0x7f0500d8;
+        public static final int option4=0x7f0500d9;
+        public static final int option5=0x7f0500da;
+        public static final int patternSizeSpinner=0x7f0500e5;
         public static final int platesNeeded1=0x7f050056;
         public static final int platesNeeded1_activity_three=0x7f0500c2;
         public static final int platesNeeded1_activity_two=0x7f050047;
@@ -1340,7 +1355,7 @@ containing a value of this type.
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
         public static final int roundingCheckBox=0x7f0500b8;
-        public static final int scrollView1=0x7f0500c8;
+        public static final int scrollView1=0x7f0500c9;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
         public static final int search_button=0x7f050033;
@@ -1351,10 +1366,10 @@ containing a value of this type.
         public static final int search_plate=0x7f050036;
         public static final int search_src_text=0x7f050037;
         public static final int search_voice_btn=0x7f05003b;
-        public static final int secondLiftColumn=0x7f0500d0;
+        public static final int secondLiftColumn=0x7f0500d1;
         public static final int secondScreenNextButton=0x7f0500ac;
         public static final int secondToFirstButton=0x7f0500a7;
-        public static final int section_label=0x7f0500e5;
+        public static final int section_label=0x7f0500e6;
         public static final int set=0x7f0500a2;
         public static final int shortcut=0x7f05002e;
         public static final int showCustom=0x7f050007;
@@ -1365,12 +1380,13 @@ containing a value of this type.
         public static final int squatTextView=0x7f0500aa;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int tableLayout1=0x7f0500c9;
-        public static final int thirdLiftColumn=0x7f0500d1;
-        public static final int thirdScreenLayout=0x7f0500c7;
+        public static final int tableLayout1=0x7f0500ca;
+        public static final int textView1=0x7f0500c7;
+        public static final int thirdLiftColumn=0x7f0500d2;
+        public static final int thirdScreenLayout=0x7f0500c8;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
-        public static final int trainingMaxesTV=0x7f0500d2;
+        public static final int trainingMaxesTV=0x7f0500d3;
         public static final int unitModeGroup=0x7f0500b4;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
@@ -1436,13 +1452,17 @@ containing a value of this type.
         public static final int activity_main=0x7f03001c;
         public static final int activity_second=0x7f03001d;
         public static final int activity_sixth=0x7f03001e;
-        public static final int activity_third=0x7f03001f;
-        public static final int adjustliftpattern=0x7f030020;
-        public static final int drawer_listview_item=0x7f030021;
-        public static final int fragment_dashboard=0x7f030022;
-        public static final int fragment_main=0x7f030023;
-        public static final int fragment_navigation_drawer=0x7f030024;
-        public static final int support_simple_spinner_dropdown_item=0x7f030025;
+        public static final int activity_test=0x7f03001f;
+        public static final int activity_test_nav_drawer=0x7f030020;
+        public static final int activity_test_nav_drawer_activity_two=0x7f030021;
+        public static final int activity_third=0x7f030022;
+        public static final int adjustliftpattern=0x7f030023;
+        public static final int drawer=0x7f030024;
+        public static final int drawer_list_item=0x7f030025;
+        public static final int fragment_dashboard=0x7f030026;
+        public static final int fragment_main=0x7f030027;
+        public static final int fragment_navigation_drawer=0x7f030028;
+        public static final int support_simple_spinner_dropdown_item=0x7f030029;
     }
     public static final class menu {
         public static final int adjust_lift_pattern=0x7f0d0000;
@@ -1451,6 +1471,9 @@ containing a value of this type.
         public static final int individual_views=0x7f0d0003;
         public static final int main=0x7f0d0004;
         public static final int tabbed_individual_view=0x7f0d0005;
+        public static final int test=0x7f0d0006;
+        public static final int test_nav_drawer=0x7f0d0007;
+        public static final int test_nav_drawer_activity_two=0x7f0d0008;
     }
     public static final class string {
         /**  Button title definitoins 
@@ -1500,7 +1523,7 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
-        public static final int action_example=0x7f0a005e;
+        public static final int action_example=0x7f0a005f;
         public static final int action_settings=0x7f0a0011;
         public static final int adjust_lift_pattern_text_view=0x7f0a0040;
         public static final int app_name=0x7f0a000e;
@@ -1531,6 +1554,7 @@ containing a value of this type.
         /** Replace placeholder ID with your tracking ID
          */
         public static final int ga_trackingId=0x7f0a000d;
+        public static final int hello_world=0x7f0a0061;
         public static final int kg_radio_button=0x7f0a0022;
         public static final int lb_kg_text_view=0x7f0a0023;
         public static final int lb_radio_button=0x7f0a0021;
@@ -1540,9 +1564,9 @@ containing a value of this type.
         public static final int lift_two_tv=0x7f0a0034;
         public static final int lift_type=0x7f0a0036;
         public static final int mode_text_test=0x7f0a002b;
-        public static final int navigation_drawer_close=0x7f0a005d;
-        public static final int navigation_drawer_open=0x7f0a005c;
-        public static final int next=0x7f0a0059;
+        public static final int navigation_drawer_close=0x7f0a005e;
+        public static final int navigation_drawer_open=0x7f0a005d;
+        public static final int next=0x7f0a005a;
         public static final int onepointtwofive_text_test=0x7f0a0032;
         public static final int option_1=0x7f0a0043;
         public static final int option_2=0x7f0a0044;
@@ -1550,10 +1574,10 @@ containing a value of this type.
         public static final int option_4=0x7f0a0046;
         public static final int option_5=0x7f0a0047;
         public static final int options_checkbox_test=0x7f0a0026;
-        public static final int prev=0x7f0a005a;
+        public static final int prev=0x7f0a005b;
         public static final int reset_text_view=0x7f0a0015;
         public static final int rounding_checkbox_text=0x7f0a0025;
-        public static final int sampleentry=0x7f0a0058;
+        public static final int sampleentry=0x7f0a0059;
         public static final int schedule_creation_text_view=0x7f0a001b;
         public static final int second_lift_column=0x7f0a003d;
         public static final int second_screen_text_view=0x7f0a0013;
@@ -1564,13 +1588,17 @@ containing a value of this type.
         public static final int third_lift_column=0x7f0a003e;
         public static final int thirtyfive_text_test=0x7f0a002d;
         public static final int title_activity_adjust_lift_pattern=0x7f0a0041;
-        public static final int title_activity_dashboard=0x7f0a005b;
+        public static final int title_activity_dashboard=0x7f0a005c;
         public static final int title_activity_individual_views=0x7f0a0052;
         public static final int title_activity_second=0x7f0a0012;
         public static final int title_activity_tabbed_individual_view=0x7f0a0054;
+        public static final int title_activity_test=0x7f0a0063;
+        public static final int title_activity_test_nav_drawer=0x7f0a0060;
+        public static final int title_activity_test_nav_drawer_activity_two=0x7f0a0062;
         public static final int title_section1=0x7f0a0055;
         public static final int title_section2=0x7f0a0056;
         public static final int title_section3=0x7f0a0057;
+        public static final int title_section4=0x7f0a0058;
         public static final int training_maxes_text_test=0x7f0a003f;
         public static final int training_maxes_title=0x7f0a0016;
         public static final int twentyfive_text_test=0x7f0a002e;

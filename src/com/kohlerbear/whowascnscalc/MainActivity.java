@@ -9,6 +9,7 @@ import java.util.HashMap;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -35,7 +36,7 @@ import com.google.analytics.tracking.android.Tracker;
 
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
 	//private EasyTracker easyTracker = null;
 	
@@ -48,43 +49,27 @@ public class MainActivity extends Activity {
 	String[] liftPattern = new String[7];
 	TextView liftTicker;
 	Tracker tracker = null;
-	private String[] drawerListViewItems;
-	private ListView drawerListView;
-	DrawerLayout drawerLayout;
-	ActionBarDrawerToggle actionBarDrawerToggle;
+	private String[] navMenuTitles;
+	private TypedArray navMenuIcons;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTheme(R.style.AppBaseTheme);
+		//setTheme(R.style.AppBaseTheme);
 		setContentView(R.layout.activity_main);
 		//Initialize tracker
-		
-		 drawerListViewItems = getResources().getStringArray(R.array.items);
-		 
-        // get ListView defined in activity_main.xml
-        drawerListView = (ListView) findViewById(R.id.left_drawer);
- 
-                // Set the adapter for the list view
-        drawerListView.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_activated_1, 
-                drawerListViewItems));
-		
-        
-        
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        
-        
-        actionBarDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                drawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
-                R.string.navigation_drawer_open,  /* "open drawer" description */
-                R.string.navigation_drawer_close  /* "close drawer" description */
-                );
- 
-        // Set actionBarDrawerToggle as the DrawerListener
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load
+																					// titles
+																					// from
+																					// strings.xml
+
+		navMenuIcons = getResources()
+				.obtainTypedArray(R.array.nav_drawer_icons);// load icons from
+															// strings.xml
+
+		set(navMenuTitles, navMenuIcons);
+
  
         getActionBar().setDisplayHomeAsUpEnabled(true); 
  
@@ -153,32 +138,6 @@ public class MainActivity extends Activity {
 
 
 	}//end method onCreate 
-	
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        actionBarDrawerToggle.onConfigurationChanged(newConfig);
-    }
- 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
- 
-         // call ActionBarDrawerToggle.onOptionsItemSelected(), if it returns true
-        // then it has handled the app icon touch event
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        actionBarDrawerToggle.syncState();
-    }
-
-
 	
 	 @Override
 	  public void onStart() {

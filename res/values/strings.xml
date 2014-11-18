@@ -28,7 +28,7 @@
 
     <string-array name="cycles_array">
         <item>1</item>
--                        <item>2</item>
+-                                                <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -97,6 +97,7 @@
     <string name="title_section1">Dashboard</string>
     <string name="title_section2">Create new projection</string>
     <string name="title_section3">View existing projection</string>
+    <string name="title_section4">Test nav drawer</string>
     <string name="sampleentry">Lift X: 300x5!</string>
     <string name="next">next</string>
     <string name="prev">prev</string>
@@ -104,12 +105,37 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
-    
-    
-        <string-array name="items">
-        <item>Item 1</item>
-        <item>Item 2</item>
-        <item>Item 3</item>
+
+    <string-array name="items">
+        <item>Dashboard</item>
+        <item>Create new projection</item>
+        <item>View existing projection</item>
     </string-array>
+
+    <string name="title_activity_test_nav_drawer">TestNavDrawerActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_test_nav_drawer_activity_two">TestNavDrawerActivityTwo</string>
+    <string name="title_activity_test">TestActivity</string>
+    
+        <string-array name="nav_drawer_items">
+        <item>First</item>
+        <item>Second</item>
+        <!-- <item>Third</item>
+        <item>Fourth</item>
+        <item>Fifth</item>
+        <item>Sixth</item> -->
+    </string-array>
+
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <!--
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        -->
+
+    </array>
 
 </resources>

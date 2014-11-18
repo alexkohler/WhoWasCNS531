@@ -15,7 +15,9 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
-  <!--      <activity
+
+        <!--
+            <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
@@ -23,8 +25,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> -->
-                <activity
+        </activity>
+        -->
+        <activity
             android:name=".Dashboard"
             android:label="@string/title_activity_dashboard" >
             <intent-filter>
@@ -33,11 +36,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-		<activity
+        <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_second"
-            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" >
+            android:theme="@style/AppBaseTheme" >
         </activity>
         <activity
             android:name=".Second"
@@ -46,11 +48,11 @@
         </activity>
         <activity
             android:name=".SecondScreenActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" >
+            android:theme="@style/AppBaseTheme" >
         </activity>
         <activity
             android:name=".ThirdScreenActivity"
-            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" >
+            android:theme="@style/AppBaseTheme" >
             <intent-filter>
                 <action android:name="com.kohlerbear.whowascnscalc.Second" />
 
@@ -80,6 +82,19 @@
         <activity
             android:name=".TabbedIndividualVIew"
             android:label="@string/title_activity_tabbed_individual_view" >
+        </activity>
+        <activity
+            android:name=".TestNavDrawerActivity"
+            android:label="@string/title_activity_test_nav_drawer" >
+        </activity>
+        <activity
+            android:name=".TestNavDrawerActivityTwo"
+            android:label="@string/title_activity_test_nav_drawer_activity_two" >
+        </activity>
+        <activity
+            android:name=".TestActivity"
+            android:label="@string/title_activity_test" 
+            android:theme="@style/AppBaseTheme" >
         </activity>
     </application>
 

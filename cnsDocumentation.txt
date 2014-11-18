@@ -65,6 +65,12 @@ Who Was CNS 531 project progress
   
 11-11-14: wrestled with adding a nav drawer to first activity. Colors still need fixed and there is no back end
 
+11-12-14: Wrestled with fragments, didn't even help, go back to activity brainstorming as to why you're getting that nullpointerexception metinks
+
+11-17-14: After way too much wrestling with navdraweractivities I found an object oriented way to go about it and it's beautiful. You still need to implement it in the dashboard (I held back because I want to take some UI tips and anything else that I can steal from the fragment activity (has cutesy stuff for first time running app, etc.. and I also kinda dig the color scheme. Add in a back end for your already implemented navdraweractivities (since you'll only have to do it in one spot WOO) and then work on the navdrawerpretty. I think you'll want to keep the android robot icons it uses and replace them with cute little abstract images. Don't have redundancy with buttons on the dashboard like you were originally thinking, have a weight recorder and all that cutesey stuff first. But priority right now is to get navdrawer up and running. 
+------
+TL;DR: hook up the back end to navdrawer, root through dashboard and steal anything you like that the fragment does that your current implementation doesn't, then finally switch over the dashboard to use the new navigation drawer (which will probably involve creating a new activity) 
+
 Regular todo:
 dashboarding - make an actual dashboard with current weight, current training maxes etc. Add marginally :) 
 

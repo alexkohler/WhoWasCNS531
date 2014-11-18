@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,7 +35,7 @@ import com.google.analytics.tracking.android.Tracker;
 //small victories :) 
 
 
-public class ThirdScreenActivity extends Activity {
+public class ThirdScreenActivity extends BaseActivity {
 
 	EventsDataSQLHelper eventsData;
 	TextView OUTPUT;
@@ -51,6 +52,9 @@ public class ThirdScreenActivity extends Activity {
 	String lbmode;
 	static boolean[] kgBooleans = new boolean[]{true, true, true, true, true, true, true};
 	static boolean[] lbBooleans = new boolean[]{true, true, true, true, true, true, true}; //defaults until plateconfig is changed
+	
+	private String[] navMenuTitles;
+	private TypedArray navMenuIcons;
 	
 	
 	Tracker tracker = null;
@@ -94,6 +98,16 @@ public class ThirdScreenActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_third);
+		
+		//set up navigation drawer
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
+
+	navMenuIcons = getResources()
+	.obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
+	
+	set(navMenuTitles, navMenuIcons);
+		
+		
 
 		Button configureButton = (Button) findViewById(R.id.configureButton);
 		
