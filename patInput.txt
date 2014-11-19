@@ -1,0 +1,19 @@
+
+
+first page:
+	Change the datepicker to only thing on the left
+	Introduce people to the app - tell them what it is an extensnion of  
+	thanks for downloading my 5-3-1 calclualtor, it does this this and this 	and this
+	Set is unclear, button is fine. Make good textured buttons
+	Should buttons be centered or take up whole screen
+	Cancel button is broken - perhaps change to back
+	introduce the page
+
+Second page:
+	literally put training maxes - show what training max means 
+	type out overhead press
+	pounds and kilograms at top 
+	introduce the page
+        don't need back button 	
+
+

@@ -103,6 +103,7 @@ public class IndividualViews extends ActionBarActivity {
 	Tracker tracker = null;
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
+    	setTheme(R.style.AppBaseLightThemeNoTitleBar);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_individual_views);
 		

@@ -44,7 +44,7 @@
         <activity
             android:name=".Second"
             android:label="@string/title_activity_second"
-            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" >
+            android:theme="@style/AppBaseTheme" >
         </activity>
         <activity
             android:name=".SecondScreenActivity"
@@ -76,8 +76,7 @@
         </activity>
         <activity
             android:name=".IndividualViews"
-            android:label="@string/title_activity_individual_views"
-            android:theme="@style/AppBaseTheme" >
+            android:label="@string/title_activity_individual_views">
         </activity>
         <activity
             android:name=".TabbedIndividualVIew"

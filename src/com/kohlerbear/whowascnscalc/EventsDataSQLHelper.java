@@ -120,7 +120,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		TextView dateColumn = new TextView(thirdScreen);
 		dateColumn.setText(liftDate);
 		dateColumn.setLayoutParams(tvParams);
-		dateColumn.setBackgroundColor(Color.WHITE);
+		dateColumn.setBackgroundColor(Color.BLACK);
 		dateColumn.setMinHeight(minHeight);
 		dateColumn.setGravity(Gravity.CENTER_HORIZONTAL);
 		tr.addView(dateColumn);
@@ -130,7 +130,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		TextView cycleColumn = new TextView(thirdScreen);
 		cycleColumn.setText(cycle);
 		cycleColumn.setLayoutParams(tvParams);
-		cycleColumn.setBackgroundColor(Color.WHITE);
+		cycleColumn.setBackgroundColor(Color.BLACK);
 		cycleColumn.setMinHeight(minHeight);
 		cycleColumn.setGravity(Gravity.CENTER_HORIZONTAL);
 		tr.addView(cycleColumn);
@@ -138,8 +138,9 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		//lift column creation 
 		TextView liftColumn = new TextView(thirdScreen);
 		liftColumn.setText(lift);
+		liftColumn.setTextColor(Color.WHITE);
 		liftColumn.setLayoutParams(tvParams);
-		liftColumn.setBackgroundColor(Color.WHITE);
+		liftColumn.setBackgroundColor(Color.BLACK);
 		liftColumn.setMinHeight(minHeight);
 		liftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
 		tr.addView(liftColumn);
@@ -148,7 +149,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		TextView freqColumn = new TextView(thirdScreen);
 		freqColumn.setText(freq);
 		freqColumn.setLayoutParams(tvParams);
-		freqColumn.setBackgroundColor(Color.WHITE);
+		freqColumn.setBackgroundColor(Color.BLACK);
 		freqColumn.setMinHeight(minHeight);
 		freqColumn.setGravity(Gravity.CENTER_HORIZONTAL);
 		tr.addView(freqColumn);
@@ -158,7 +159,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		TextView firstLiftColumn = new TextView(thirdScreen);
 		firstLiftColumn.setText(first);
 		firstLiftColumn.setLayoutParams(tvParams);
-		firstLiftColumn.setBackgroundColor(Color.WHITE);
+		firstLiftColumn.setBackgroundColor(Color.BLACK);
 		firstLiftColumn.setMinHeight(minHeight);
 		firstLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
 		tr.addView(firstLiftColumn);
@@ -167,7 +168,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		TextView secondLiftColumn = new TextView(thirdScreen);
 		secondLiftColumn.setText(second);
 		secondLiftColumn.setLayoutParams(tvParams);
-		secondLiftColumn.setBackgroundColor(Color.WHITE);
+		secondLiftColumn.setBackgroundColor(Color.BLACK);
 		secondLiftColumn.setMinHeight(minHeight);
 		secondLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
 		tr.addView(secondLiftColumn);
@@ -176,7 +177,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		TextView thirdLiftColumn = new TextView(thirdScreen);
 		thirdLiftColumn.setText(third);
 		thirdLiftColumn.setLayoutParams(tvParams);
-		thirdLiftColumn.setBackgroundColor(Color.WHITE);
+		thirdLiftColumn.setBackgroundColor(Color.BLACK);
 		thirdLiftColumn.setMinHeight(minHeight);
 		thirdLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
 		tr.addView(thirdLiftColumn);

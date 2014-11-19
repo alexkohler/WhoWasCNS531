@@ -39,7 +39,7 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 	//NEED TO RESIZE ARRAYS
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.AppBaseThemeNoTitleBar);
+		setTheme(R.style.AppBaseLightThemeNoTitleBar);//PEOFIJOWEIRJOQEIRJFIEQJROIQJERPOIJQEPORGPDOFVJADKFMVLKDMFNGOPKEJROPFI change me if you want theme to actually change 
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.adjustliftpattern);
 	    

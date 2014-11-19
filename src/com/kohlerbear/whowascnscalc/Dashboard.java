@@ -55,8 +55,14 @@ public class Dashboard extends Activity implements
 		case 1://Create new projection
 			Intent newProjectionIntent = new Intent(Dashboard.this, MainActivity.class);
 			newProjectionIntent.putExtra("origin", "dashboard");
-			newProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
-			startActivity(newProjectionIntent);
+			if (!ct.dbEmpty())
+				newProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
+			else
+			{
+				String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"  };			
+				newProjectionIntent.putExtra("liftPattern", defaultPattern);
+			}
+				startActivity(newProjectionIntent);
 			break;
 		case 2://View existing projection
 /*			if (!ct.dbEmpty())
