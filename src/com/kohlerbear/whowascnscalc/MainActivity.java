@@ -86,6 +86,7 @@ public class MainActivity extends BaseActivity {
 		tracker.send(hitParameters);
 
 		final DatePicker dp = (DatePicker) findViewById(R.id.dp);
+		dp.setCalendarViewShown(false);
 		final Button setBtn = (Button) findViewById(R.id.set);
 		final Button adjustLiftPatternButton = (Button) findViewById(R.id.adjustPatternButton);
 		liftTicker = (TextView) findViewById(R.id.liftTicker);

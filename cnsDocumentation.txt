@@ -71,11 +71,10 @@ Who Was CNS 531 project progress
 ------
 TL;DR: hook up the back end to navdrawer, root through dashboard and steal anything you like that the fragment does that your current implementation doesn't, then finally switch over the dashboard to use the new navigation drawer (which will probably involve creating a new activity) 
 
-11-18-14:  
+11-18-14: Fixed pattern adjust bug, wasn't passing an array and was causing some odd errors. Hooked up back end for some basic intent stuff. Create new projection is smart, if you have an existing database it will query it and grab the pattern from there :) Also played with UI, should definitely wait on colors however take a look at Pat's input so your app doesn't look like something made in VB.  
+Take a look at Pat's input, he brought up a lot of good points
 Option to switch between black and white themes
 Toast colors need changed
-Take a look at Pat's input, he brought up a lot of good points
-
 
 Regular todo:
 dashboarding - make an actual dashboard with current weight, current training maxes etc. Add marginally :) 

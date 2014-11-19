@@ -141,21 +141,37 @@ public class BaseActivity extends ActionBarActivity {
 	 * Diplaying fragment view for selected nav drawer list item
 	 * */
 	private void displayView(int position) {
-
+		ConfigTool ct = new ConfigTool(this);
 		switch (position) {
-		case 0:
+		case 0://dashboard
 			Intent intent = new Intent(this, Dashboard.class);
 			startActivity(intent);
 			finish();// finishes the current activity
 			break;
-		case 1:
-			Toast.makeText(BaseActivity.this, "HERE'S TO THE OLD NOSEGRIND", Toast.LENGTH_SHORT).show();
+		case 1://Create new projection
+
+			Intent newProjectionIntent = new Intent(this, MainActivity.class);
+			newProjectionIntent.putExtra("origin", "dashboard");
+			if (!ct.dbEmpty())
+				newProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
+			else
+			{
+				String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"  };			
+				newProjectionIntent.putExtra("liftPattern", defaultPattern);
+			}
+			startActivity(newProjectionIntent);
 			break;
-		// case 2:
-		// Intent intent2 = new Intent(this, third.class);
-		// startActivity(intent2);
-		// finish();
-		// break;
+		 case 2:
+			if (!ct.dbEmpty())
+			{
+				Intent viewExistingProjectionIntent = new Intent(this, ThirdScreenActivity.class);
+				viewExistingProjectionIntent.putExtra("origin", "dashboard");
+				viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
+				startActivity(viewExistingProjectionIntent);
+			}
+			else
+				Toast.makeText(this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
+			break;
 		// case 3:
 		// Intent intent3 = new Intent(this, fourth.class);
 		// startActivity(intent3);

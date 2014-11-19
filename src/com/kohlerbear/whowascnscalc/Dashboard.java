@@ -65,7 +65,7 @@ public class Dashboard extends Activity implements
 				startActivity(newProjectionIntent);
 			break;
 		case 2://View existing projection
-/*			if (!ct.dbEmpty())
+			if (!ct.dbEmpty())
 			{
 			Intent viewExistingProjectionIntent = new Intent(Dashboard.this, ThirdScreenActivity.class);
 			viewExistingProjectionIntent.putExtra("origin", "dashboard");
@@ -74,10 +74,7 @@ public class Dashboard extends Activity implements
 			}
 			else
 				Toast.makeText(Dashboard.this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
-*/
-			Intent intent = new Intent(Dashboard.this, TestActivity.class);
-			startActivity(intent);
-			break;
+
 /*		case 3:
 			Intent wintent = new Intent(Dashboard.this, TestNavDrawerActivity.class);
 			startActivity(wintent);
