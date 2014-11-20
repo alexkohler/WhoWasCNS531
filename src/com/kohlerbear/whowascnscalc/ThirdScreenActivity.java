@@ -4,14 +4,12 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -223,8 +221,10 @@ public class ThirdScreenActivity extends BaseActivity {
 					{
 						createViewBuilder();
 					}
-					//if (which== 3) 
-					//no need to worry about Back case, takes care of itself
+					if (which== 3) 
+					{
+						dialog.cancel();
+					}
 				}
 
 				private String[] getSecondScreenData(String[] intentDataArray) {
@@ -272,7 +272,7 @@ public class ThirdScreenActivity extends BaseActivity {
 		            break;
 
 		        case DialogInterface.BUTTON_NEGATIVE:
-		            //No button clicked
+		            dialog.cancel();
 		            break;
 		        }
 		    }
@@ -383,8 +383,8 @@ public class ThirdScreenActivity extends BaseActivity {
 								{
 									createViewBuilder();
 								}
-								//if (which== 4) 
-									//no need to worry about Back case, takes care of itself
+								if (which== 3) 
+									dialog.cancel();
 							}//end inner onClick 
 						});//end inner which listener
 						builder.show();	

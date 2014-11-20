@@ -76,11 +76,15 @@ Take a look at Pat's input, he brought up a lot of good points
 Option to switch between black and white themes
 Toast colors need changed
 
+11-19-14: Fixed dialog cancel bug. I `think` I fixed the getPatternFromDB method, but I'm gonna have to keep an eye on it
+
 Regular todo:
 dashboarding - make an actual dashboard with current weight, current training maxes etc. Add marginally :) 
 
-(Eventually)
+Actually test your getPatternFromDB method 
+
 For now, make twitter button equivalent of home to be the projection, if they don't have a projection have them at the second button which is basically your app (first screen with pattern adjuster, training maxes screen, and then redirect them to (current) home screen, will eventually want to do the dashboarding stuff.  
+
 Feature: allow logging to be added, do a check if it's one of the projected days, if so, say what day it was otherwise still allow work to be logged. Perhaps a template manager or something... Your UI will need to be fixed before this I think. You want a prettier menu. Look for layouts tomorrow morning too.
 Consideration: How will logging work? Will there be another entry in the database? Should it be a separate database?
 p

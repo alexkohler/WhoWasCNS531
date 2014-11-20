@@ -7,7 +7,6 @@ first page:
 			--> Use TYPE_SHOT_ONE - code example on http://forum.xda-developers.com/showthread.php?t=2419939&page=3
 			
 
-
 	thanks for downloading my 5-3-1 calclualtor, it does this this and this 	and this
 	
 	
@@ -15,11 +14,6 @@ first page:
 		--Try to create a lack of buttons 
 
 	
-	
-	Cancel button is broken - perhaps change title to back
-		public void onClick(DialogInterface dialog,int id) {
-		// if this button is clicked, just close // the dialog box and do nothing
-			***dialog.cancel();****
 
 Second page:
 	literally put training maxes - show what training max means 
@@ -32,3 +26,26 @@ Second page:
         don't need back button 	
 
 
+
+Pat notes two
+	Have an about page in the dropdown menu (show this in your )	
+	What is 5/3/1, what's it about, go into detail in about page 
+
+First screen
+	Shortened description to 15 words and put that above your datepicker. 
+
+	Choose your starting date --> choose your starting 
+
+	Center the datepicker, and see if it looks better  with or with
+
+	Below datepicker, have button (change set to something else) --> Get rid of year?
+
+	Get rid of zyzzbird picture
+	
+	String that displays current lift pattern kind of looks out of place
+
+Second screen
+	Datepicker, drag and drop with custom fields and a way to move around rests, this will completely get rid of your adjust pattern screen, keep pat updated
+
+	Default button
+	

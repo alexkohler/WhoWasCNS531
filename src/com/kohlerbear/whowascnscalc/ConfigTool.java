@@ -344,7 +344,7 @@ public class ConfigTool {
 				cal.add(Calendar.DAY_OF_MONTH, 1);
 				Date incrementedPrevDate = cal.getTime();
 				String incrementedPrevDateString = dateFormat.format(incrementedPrevDate);
-				 if (currentLiftDate.intern().equals(incrementedPrevDateString.intern()))
+				if (currentLiftDate.intern().equals(incrementedPrevDateString.intern()))
 					myPattern.add(currentLift);
 				else
 					{
@@ -352,13 +352,14 @@ public class ConfigTool {
 					//take double rest days into account
 					cal.add(Calendar.DAY_OF_MONTH, 1);
 					String doublyIncrementedPrevDateString = dateFormat.format(cal.getTime());
-					if (doublyIncrementedPrevDateString.intern().equals(currentLiftDate.intern()))
+					if (currentLift.intern().equals(firstLift.intern()))
+						break;
+					else if (doublyIncrementedPrevDateString.intern().equals(currentLiftDate.intern()))
 						myPattern.add(currentLift);
 					else
 						myPattern.add("Rest");
 					}	
-				 if (currentLift.intern().equals(firstLift.intern()))
-						break;
+
 			}
 			
 		}

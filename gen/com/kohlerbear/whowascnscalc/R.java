@@ -27,9 +27,7 @@ public final class R {
         public static final int Pattern_Size_Array=0x7f0c0001;
         public static final int cycles_array=0x7f0c0000;
         public static final int items=0x7f0c0002;
-        /** 
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
+        /**  <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         
@@ -1606,7 +1604,8 @@ containing a value of this type.
         public static final int weight_text_test=0x7f0a002a;
     }
     public static final class style {
-        public static final int AppBaseLightThemeNoTitleBar=0x7f0b008d;
+        public static final int AppBaseLight=0x7f0b008d;
+        public static final int AppBaseLightThemeNoTitleBar=0x7f0b008e;
         /** 
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
@@ -1622,6 +1621,7 @@ containing a value of this type.
     
          */
         public static final int AppBaseTheme=0x7f0b008b;
+        public static final int AppBaseThemeNoTitleBar=0x7f0b008c;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0063;
@@ -1824,7 +1824,6 @@ containing a value of this type.
         public static final int Widget_AppCompat_ProgressBar=0x7f0b000a;
         public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0b0009;
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0b0022;
-        public static final int Widget_EditText_Black=0x7f0b008c;
     }
     public static final class styleable {
         /**  ============================================ 
