@@ -49,3 +49,11 @@ Second screen
 
 	Default button
 	
+
+
+
+
+Training maxes brainstorming
+	You're gonna wanna mimic your adjust pattern page exactly at first (make a mock activity)
+	Add an entry your fragment's navdrawer (or have a run config option to start on that screen if 		possible) 
+		Figure out a way to associate a certain lift drag to know its identity
