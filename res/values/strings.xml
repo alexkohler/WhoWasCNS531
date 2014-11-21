@@ -28,7 +28,7 @@
 
     <string-array name="cycles_array">
         <item>1</item>
--                                                <item>2</item>
+-                                                                <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -113,29 +113,35 @@
     </string-array>
 
     <string name="title_activity_test_nav_drawer">TestNavDrawerActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="pattern_size">Patern size</string>
     <string name="title_activity_test_nav_drawer_activity_two">TestNavDrawerActivityTwo</string>
     <string name="title_activity_test">TestActivity</string>
-    
-        <string-array name="nav_drawer_items">
+
+    <string-array name="nav_drawer_items">
         <item>Dashboard</item>
         <item>Create New Projection</item>
-       	<item>View Exisiting Projection</item>
-       <!-- <item>Fourth</item>
+        <item>View Exisiting Projection</item>
+        <item>About</item>
+		<!-- 
         <item>Fifth</item>
-        <item>Sixth</item> -->
+        <item>Sixth</item>
+        -->
     </string-array>
 
     <array name="nav_drawer_icons">
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
-        
         <item>@drawable/ic_launcher</item>
-        <!-- <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+		<!-- 
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         -->
 
     </array>
+
+    <string name="title_activity_revampedsecond_screen">REVAMPEDSecondScreenActivity</string>
+    <string name="title_activity_about531">About531</string>
+    <string name="hello_world">DASHUND MERWEIRGERMANGRUNDEN</string>
 
 </resources>

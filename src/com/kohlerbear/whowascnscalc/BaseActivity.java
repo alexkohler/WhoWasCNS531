@@ -172,11 +172,11 @@ public class BaseActivity extends ActionBarActivity {
 			else
 				Toast.makeText(this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
 			break;
-		// case 3:
-		// Intent intent3 = new Intent(this, fourth.class);
-		// startActivity(intent3);
-		// finish();
-		// break;
+		 case 3:
+		 Intent intent3 = new Intent(this, About531.class);
+		 startActivity(intent3);
+		 finish();
+		 break; //finish current activity
 		// case 4:
 		// Intent intent4 = new Intent(this, fifth.class);
 		// startActivity(intent4);

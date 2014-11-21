@@ -58,7 +58,9 @@ public class MainActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		//setTheme(R.style.AppBaseTheme);
 		setContentView(R.layout.activity_main);
-		//Initialize tracker
+		
+		
+		//Set up our navigation drawer
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load
 																					// titles
 																					// from
@@ -75,6 +77,8 @@ public class MainActivity extends BaseActivity {
  
         // just styling option add shadow the right edge of the drawer
    //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        
+		//Initialize tracker
         
 		// Sending the same screen view hit using MapBuilder.createAppView()
 		GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");

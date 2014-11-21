@@ -76,7 +76,7 @@
         </activity>
         <activity
             android:name=".IndividualViews"
-            android:label="@string/title_activity_individual_views">
+            android:label="@string/title_activity_individual_views" >
         </activity>
         <activity
             android:name=".TabbedIndividualVIew"
@@ -92,7 +92,16 @@
         </activity>
         <activity
             android:name=".TestActivity"
-            android:label="@string/title_activity_test" 
+            android:label="@string/title_activity_test"
+            android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name=".REVAMPEDSecondScreenActivity"
+            android:label="@string/title_activity_revampedsecond_screen" >
+        </activity>
+        <activity
+            android:name=".About531"
+            android:label="@string/title_activity_about531" 
             android:theme="@style/AppBaseTheme" >
         </activity>
     </application>

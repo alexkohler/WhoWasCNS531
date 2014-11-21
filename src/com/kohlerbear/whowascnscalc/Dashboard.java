@@ -65,7 +65,7 @@ public class Dashboard extends Activity implements
 				startActivity(newProjectionIntent);
 			break;
 		case 2://View existing projection
-			if (!ct.dbEmpty())
+/*			if (!ct.dbEmpty())
 			{
 			Intent viewExistingProjectionIntent = new Intent(Dashboard.this, ThirdScreenActivity.class);
 			viewExistingProjectionIntent.putExtra("origin", "dashboard");
@@ -73,13 +73,19 @@ public class Dashboard extends Activity implements
 			startActivity(viewExistingProjectionIntent);
 			}
 			else
-				Toast.makeText(Dashboard.this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
-
-/*		case 3:
-			Intent wintent = new Intent(Dashboard.this, TestNavDrawerActivity.class);
+				Toast.makeText(Dashboard.this, "No previous projection exists!", Toast.LENGTH_SHORT).show();*/
+			Intent wintent = new Intent(Dashboard.this, REVAMPEDSecondScreenActivity.class);
+			String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest" }; 
+			wintent.putExtra("pattern", defaultPattern); //I don't think you will need the pattern dependency any more
 			startActivity(wintent);
 			break;
-			*/
+		case 3:
+			Intent sintent = new Intent(Dashboard.this, REVAMPEDSecondScreenActivity.class);
+			String[] pat = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest" };
+			sintent.putExtra("pattern", pat); 
+			startActivity(sintent);
+			break;
+			
 			
 	}
 	
