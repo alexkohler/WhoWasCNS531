@@ -68,19 +68,24 @@ Who Was CNS 531 project progress
 11-12-14: Wrestled with fragments, didn't even help, go back to activity brainstorming as to why you're getting that nullpointerexception metinks
 
 11-17-14: After way too much wrestling with navdraweractivities I found an object oriented way to go about it and it's beautiful. You still need to implement it in the dashboard (I held back because I want to take some UI tips and anything else that I can steal from the fragment activity (has cutesy stuff for first time running app, etc.. and I also kinda dig the color scheme. Add in a back end for your already implemented navdraweractivities (since you'll only have to do it in one spot WOO) and then work on the navdrawerpretty. I think you'll want to keep the android robot icons it uses and replace them with cute little abstract images. Don't have redundancy with buttons on the dashboard like you were originally thinking, have a weight recorder and all that cutesey stuff first. But priority right now is to get navdrawer up and running. 
-------
-TL;DR: hook up the back end to navdrawer, root through dashboard and steal anything you like that the fragment does that your current implementation doesn't, then finally switch over the dashboard to use the new navigation drawer (which will probably involve creating a new activity) 
 
 11-18-14: Fixed pattern adjust bug, wasn't passing an array and was causing some odd errors. Hooked up back end for some basic intent stuff. Create new projection is smart, if you have an existing database it will query it and grab the pattern from there :) Also played with UI, should definitely wait on colors however take a look at Pat's input so your app doesn't look like something made in VB.  
 Take a look at Pat's input, he brought up a lot of good points
-Option to switch between black and white themes
-Toast colors need changed
+
 
 11-19-14: Fixed dialog cancel bug. I `think` I fixed the getPatternFromDB method, but I'm gonna have to keep an eye on it
+
+11-20-14: Combined pattern + training max for a MUCH better looking page, smart fields based on drag and drop and day spinner
+
+11-21-14: Some back end work on fields knowing what lift they should be associated with (bench, squat, ohp, dead, nothing (for numeric and rest)),
+added placeholder for about page
+
 
 Regular todo:
 dashboarding - make an actual dashboard with current weight, current training maxes etc. Add marginally :) 
 
+Option to switch between black and white themes?
+Toast colors need changed
 Actually test your getPatternFromDB method 
 
 For now, make twitter button equivalent of home to be the projection, if they don't have a projection have them at the second button which is basically your app (first screen with pattern adjuster, training maxes screen, and then redirect them to (current) home screen, will eventually want to do the dashboarding stuff.  
