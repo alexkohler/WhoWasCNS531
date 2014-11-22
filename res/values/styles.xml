@@ -8,17 +8,21 @@
      
     <style name="AppBaseTheme" parent="Theme.AppCompat">
                 <item name="android:background">@color/black</item>
-    </style>
+				<item name="android:icon">@android:color/transparent</item> <!--  Remove app icon from action bar -->
+     </style>
     
      <style name="AppBaseThemeNoTitleBar" parent="Theme.AppCompat">
             <item name="android:windowNoTitle">true</item>
+            <item name="android:icon">@android:color/transparent</item> <!--  Remove app icon from action bar -->
     </style>
     
         <style name="AppBaseLight" parent="Theme.AppCompat.Light">
+        <item name="android:icon">@android:color/transparent</item> <!--  Remove app icon from action bar -->
     </style>
     
         <style name="AppBaseLightThemeNoTitleBar" parent="Theme.AppCompat.Light">
             <item name="android:windowNoTitle">true</item>
+    		<item name="android:icon">@android:color/transparent</item> <!--  Remove app icon from action bar -->
     </style>
     
 </resources>

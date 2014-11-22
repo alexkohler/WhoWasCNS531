@@ -5,13 +5,11 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.HashMap;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -72,7 +70,7 @@ public class SecondScreenActivity extends BaseActivity {
 		// strings.xml
 		
 		set(navMenuTitles, navMenuIcons);
-		
+		navMenuIcons.recycle();
 		
 		
 		

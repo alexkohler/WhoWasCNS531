@@ -219,7 +219,7 @@ public class IndividualViews extends ActionBarActivity {
 	 */
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		
+		actionBar.setDisplayShowHomeEnabled(false);
 		
 	    int cycle = Integer.valueOf(prevScreen.getStringExtra("cycle"));
 	    String frequency = prevScreen.getStringExtra("frequency");

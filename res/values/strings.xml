@@ -28,7 +28,7 @@
 
     <string-array name="cycles_array">
         <item>1</item>
--                                                                <item>2</item>
+-                                                                        <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -122,9 +122,8 @@
         <item>Create New Projection</item>
         <item>View Exisiting Projection</item>
         <item>About</item>
-		<!-- 
-        <item>Fifth</item>
-        <item>Sixth</item>
+        <item>Settings</item>
+       <!-- <item>Sixth</item>
         -->
     </string-array>
 
@@ -133,15 +132,17 @@
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
-		<!-- 
+        
         <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
+        <!--  -<item>@drawable/ic_launcher</item>
         -->
 
     </array>
 
     <string name="title_activity_revampedsecond_screen">REVAMPEDSecondScreenActivity</string>
     <string name="title_activity_about531">About531</string>
-    <string name="hello_world">DASHUND MERWEIRGERMANGRUNDEN</string>
+    <string name="about_placeholder">About 5/3/1 will go here</string>
+    <string name="settings_placeholder">Setings will go here</string>
+    <string name="title_activity_setting">SettingActivity</string>
 
 </resources>

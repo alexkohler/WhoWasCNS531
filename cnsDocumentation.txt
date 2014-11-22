@@ -80,11 +80,15 @@ Take a look at Pat's input, he brought up a lot of good points
 11-21-14: Some back end work on fields knowing what lift they should be associated with (bench, squat, ohp, dead, nothing (for numeric and rest)),
 added placeholder for about page
 
-Create settings placeholder in navdrawer
-Create settings activity
-Remove zyzz bird from action bar
+11-22-14: 
+	Added settings activity placeholder
+	Added settings to navdrawer
+	Removed ugliness from action bar
+	Removed old/unused activity xmls/javas
+
+	Handle errors needs moved back in 
+	Hook in new second screen activity page
 Dial in second screen components placement
-Code cleanup
 
 
 Roboelectric for unit tests?

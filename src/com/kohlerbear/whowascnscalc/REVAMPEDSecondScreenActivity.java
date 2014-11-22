@@ -1,9 +1,9 @@
 package com.kohlerbear.whowascnscalc;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Locale;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
@@ -210,7 +210,7 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 		    	String dropArea = (String) dropTarget.getText();
 		    	//update the text in the target view to reflect the data being dropped
 		    	dropTarget.setText(dropped.getText());
-		    	updateLiftArray(dropArea.toLowerCase(), (String) dropped.getText());
+		    	updateLiftArray(dropArea.toLowerCase(Locale.getDefault()), (String) dropped.getText());
 		    	//make it bold to highlight the fact that an item has been dropped
 		    	dropTarget.setTypeface(Typeface.DEFAULT_BOLD);
 		    	//if an item has already been dropped here, there will be a tag

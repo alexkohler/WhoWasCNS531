@@ -15,18 +15,6 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
-
-        <!--
-            <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        -->
         <activity
             android:name=".Dashboard"
             android:label="@string/title_activity_dashboard" >
@@ -58,17 +46,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <action android:name="com.kohlerbear.whowascnscalc.IndividualView" />
             </intent-filter>
-        </activity>
-        <activity android:name=".IndividualViewActivity" >
-            <intent-filter>
-                <action android:name="com.kohlerbear.whowascnscalc.IndividualViewTwoActivity" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".IndividualViewTwoActivity" >
-        </activity>
-        <activity android:name=".IndividualViewThreeActivity" >
         </activity>
         <activity
             android:name=".AdjustLiftPatternActivity"
@@ -79,29 +57,17 @@
             android:label="@string/title_activity_individual_views" >
         </activity>
         <activity
-            android:name=".TabbedIndividualVIew"
-            android:label="@string/title_activity_tabbed_individual_view" >
-        </activity>
-        <activity
-            android:name=".TestNavDrawerActivity"
-            android:label="@string/title_activity_test_nav_drawer" >
-        </activity>
-        <activity
-            android:name=".TestNavDrawerActivityTwo"
-            android:label="@string/title_activity_test_nav_drawer_activity_two" >
-        </activity>
-        <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppBaseTheme" >
-        </activity>
-        <activity
             android:name=".REVAMPEDSecondScreenActivity"
             android:label="@string/title_activity_revampedsecond_screen" >
         </activity>
         <activity
             android:name=".About531"
-            android:label="@string/title_activity_about531" 
+            android:label="@string/title_activity_about531"
+            android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_setting" 
             android:theme="@style/AppBaseTheme" >
         </activity>
     </application>

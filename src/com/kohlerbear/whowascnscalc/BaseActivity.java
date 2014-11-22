@@ -71,6 +71,7 @@ public class BaseActivity extends ActionBarActivity {
 		// enabling action bar app icon and behaving it as toggle button
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(false);//DON'T show home icon 
 		// getSupportActionBar().setIcon(R.drawable.ic_drawer);
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
@@ -177,11 +178,11 @@ public class BaseActivity extends ActionBarActivity {
 		 startActivity(intent3);
 		 finish();
 		 break; //finish current activity
-		// case 4:
-		// Intent intent4 = new Intent(this, fifth.class);
-		// startActivity(intent4);
-		// finish();
-		// break;
+		 case 4:
+		 Intent intent4 = new Intent(this, SettingsActivity.class);
+		 startActivity(intent4);
+		 finish(); //finish current activity
+		 break;
 		// case 5:
 		// Intent intent5 = new Intent(this, sixth.class);
 		// startActivity(intent5);
