@@ -1,4 +1,18 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   <android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- The main content view -->
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+<!--  CONTENT GOES HERE -->
+
+
+<RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
@@ -24,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/AdjustActivity_Reset" />
+        android:text="@string/AdjustActivity_Custom" />
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -190,6 +204,36 @@
             android:layout_alignLeft="@+id/choice6Field"
             android:ems="10"
             android:inputType="numberDecimal" />
+
+        <RadioGroup
+            android:id="@+id/unitModeGroupNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/lbRadioButtonNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/lb_radio_button" />
+
+            <RadioButton
+                android:id="@+id/kgRadioButtonNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/kg_radio_button" />
+        </RadioGroup>
+        
+        <CheckBox
+        android:id="@+id/roundingCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/unitModeGroupNew"
+        android:text="@string/rounding_checkbox_text" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -268,7 +312,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/linearLayout1" >
-
+        
+        
+        
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
@@ -281,7 +327,7 @@
             android:text="@string/pattern_size" />
 
         <Spinner
-            android:id="@+id/patternSizeSpinner"
+            android:id="@+id/patternSizeSpinnerNew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -289,6 +335,15 @@
             android:layout_marginTop="65dp"
             android:layout_toRightOf="@+id/textView1"
             android:entries="@array/Pattern_Size_Array" />
+        
+            <Spinner
+        android:id="@+id/numberCyclesSpinnerNew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/cycles_array" />
+            
+            
+            
     </RelativeLayout>
 
     <LinearLayout
@@ -311,8 +366,24 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="KIlograms" />
+            android:text="KIiograms" />
+        
+        
 
     </LinearLayout>
 
 </RelativeLayout>
+
+
+    </FrameLayout>
+
+    <!-- The navigation drawer -->
+    <ListView android:id="@+id/left_drawer"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="#e5e5e5"
+        android:dividerHeight="1dp"
+        android:background="#d6d6d6"/>
+</android.support.v4.widget.DrawerLayout>

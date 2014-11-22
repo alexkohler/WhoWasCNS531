@@ -28,7 +28,7 @@
 
     <string-array name="cycles_array">
         <item>1</item>
--                                                                        <item>2</item>
+-                                                                                <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -78,7 +78,7 @@
 
     <!-- Button title definitoins -->
     <string name="AdjustActivity_Back">Back</string>
-    <string name="AdjustActivity_Reset">Reset</string>
+    <string name="AdjustActivity_Custom">Custom</string>
     <string name="AdjustActivity_Save">Save</string>
 
     <!-- Spinner contents definition -->
@@ -117,25 +117,27 @@
     <string name="title_activity_test_nav_drawer_activity_two">TestNavDrawerActivityTwo</string>
     <string name="title_activity_test">TestActivity</string>
 
+    
+    
+    <!--  Arrays for navdrawer -->
     <string-array name="nav_drawer_items">
         <item>Dashboard</item>
         <item>Create New Projection</item>
         <item>View Exisiting Projection</item>
         <item>About</item>
         <item>Settings</item>
-       <!-- <item>Sixth</item>
-        -->
+ 	    <item>TestSecond</item> 
+<!--  <item>Sixth</item> -->
     </string-array>
-
+<!-- Nav drawer icons that correspond to each navdrawer array entry -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
-        
         <item>@drawable/ic_launcher</item>
-        <!--  -<item>@drawable/ic_launcher</item>
-        -->
+	    <item>@drawable/ic_launcher</item> 
+<!--   -<item>@drawable/ic_launcher</item> -->
 
     </array>
 
@@ -144,5 +146,7 @@
     <string name="about_placeholder">About 5/3/1 will go here</string>
     <string name="settings_placeholder">Setings will go here</string>
     <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_opening_dashboard">OpeningDashboardActivity</string>
+    <string name="opening_dash_placeholder">Dashboard placeholder</string>
 
 </resources>

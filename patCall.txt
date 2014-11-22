@@ -8,7 +8,6 @@ Page two (Starting date)
 	adjust lift pattern - gone completely (your method to get lift pattern is FUCKED) 
 	Choose your starting date --> (Choose date to begin first day of cycle)
 	Center datepicker
-	Remove actionbar icon
 
 Page three (training maxes/adjust pattern)
 	Custom lift order- hide the drag fields	

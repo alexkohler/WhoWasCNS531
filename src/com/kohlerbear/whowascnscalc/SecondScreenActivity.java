@@ -129,21 +129,21 @@ public class SecondScreenActivity extends BaseActivity {
 
 		
 		
-		Intent thirdToSecondIntent = getIntent();
-		String origin = thirdToSecondIntent.getStringExtra("origin");
+		Intent previousIntent = getIntent();
+		String origin = previousIntent.getStringExtra("origin");
 		if (origin.equals("third"))
 		{
-			benchEditText.setText(thirdToSecondIntent.getStringExtra("bench"));
-			squatEditText.setText(thirdToSecondIntent.getStringExtra("squat"));
-			ohpEditText.setText(thirdToSecondIntent.getStringExtra("ohp"));
-			deadEditText.setText(thirdToSecondIntent.getStringExtra("dead"));
-			liftPattern = thirdToSecondIntent.getStringArrayExtra("liftPattern");
+			benchEditText.setText(previousIntent.getStringExtra("bench"));
+			squatEditText.setText(previousIntent.getStringExtra("squat"));
+			ohpEditText.setText(previousIntent.getStringExtra("ohp"));
+			deadEditText.setText(previousIntent.getStringExtra("dead"));
+			liftPattern = previousIntent.getStringArrayExtra("liftPattern");
 			
 		}
 		
 		if (origin.equals("first"))
 		{
-			liftPattern = thirdToSecondIntent.getStringArrayExtra("liftPattern");
+			liftPattern = previousIntent.getStringArrayExtra("liftPattern");
 		}
 
 
@@ -249,7 +249,7 @@ public class SecondScreenActivity extends BaseActivity {
 					//first, get data from previous screen (starting date passed to second from first)
 					Intent intent = getIntent();
 
-					String message = intent.getStringExtra("key");
+					String message = intent.getStringExtra("key");//TODO what
 
 					intent = new Intent(SecondScreenActivity.this, ThirdScreenActivity.class);
 					intent.putExtra("key2", message);

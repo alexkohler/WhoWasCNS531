@@ -172,7 +172,7 @@ public class MainActivity extends BaseActivity {
 			SQLiteDatabase db = eventsData.getWritableDatabase();
 			db.execSQL("drop table Lifts");
 			db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_lbFlag integer)");
-			Intent intent = new Intent(MainActivity.this, SecondScreenActivity.class);
+			Intent intent = new Intent(MainActivity.this, REVAMPEDSecondScreenActivity.class); //TODO just change this back to second if things go awry
 			intent.putExtra("key", formattedDate );
 			intent.putExtra("origin", "first");
 			intent.putExtra("liftPattern", liftPattern);

@@ -145,7 +145,7 @@ public class BaseActivity extends ActionBarActivity {
 		ConfigTool ct = new ConfigTool(this);
 		switch (position) {
 		case 0://dashboard
-			Intent intent = new Intent(this, Dashboard.class);
+			Intent intent = new Intent(this, OpeningDashboardActivity.class);
 			startActivity(intent);
 			finish();// finishes the current activity
 			break;
@@ -174,20 +174,21 @@ public class BaseActivity extends ActionBarActivity {
 				Toast.makeText(this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
 			break;
 		 case 3:
-		 Intent intent3 = new Intent(this, About531.class);
-		 startActivity(intent3);
-		 finish();
-		 break; //finish current activity
+			 Intent intent3 = new Intent(this, About531.class);
+			 startActivity(intent3);
+			 finish();
+			 break; //finish current activity
 		 case 4:
-		 Intent intent4 = new Intent(this, SettingsActivity.class);
-		 startActivity(intent4);
-		 finish(); //finish current activity
+			 Intent intent4 = new Intent(this, SettingsActivity.class);
+			 startActivity(intent4);
+			 finish(); //finish current activity
 		 break;
-		// case 5:
-		// Intent intent5 = new Intent(this, sixth.class);
-		// startActivity(intent5);
-		// finish();
-		// break;
+		 case 5:
+			Intent wintent = new Intent(this, REVAMPEDSecondScreenActivity.class);
+			String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest" }; 
+			wintent.putExtra("pattern", defaultPattern); //I don't think you will need the pattern dependency any more
+			startActivity(wintent);
+			break;
 		default:
 			break;
 		}

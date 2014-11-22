@@ -81,21 +81,31 @@ Take a look at Pat's input, he brought up a lot of good points
 added placeholder for about page
 
 11-22-14: 
+     :::Commit 1
 	Added settings activity placeholder
 	Added settings to navdrawer
 	Removed ugliness from action bar
 	Removed old/unused activity xmls/javas
+	Removed dash fragment from manifest and added in actual dashboard activity
 
-	Handle errors needs moved back in 
-	Hook in new second screen activity page
-Dial in second screen components placement
+     :::Commit 2
+	Hooked up new hybrid pattern/TM activity
+	Added custom button to replace reset button
+	Fixed training max screen
+	Made TM stream retrieval much prettier
+
+
+	Make sure your TM stream works for custom patterns 
+	Dial in second screen components placement
+	Steal whatever you can from dashboard fragment
+	Fix analytics logging
+
+
 
 
 Roboelectric for unit tests?
 
-
-Regular todo:
-Create a settings page placeholder
+Regular TODO:
   Ability to reset weight tracking
   Ability to change theme?
   

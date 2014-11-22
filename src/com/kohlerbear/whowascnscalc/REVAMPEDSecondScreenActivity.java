@@ -1,12 +1,14 @@
 package com.kohlerbear.whowascnscalc;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Locale;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -18,17 +20,22 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
 
-public class REVAMPEDSecondScreenActivity extends Activity {
+public class REVAMPEDSecondScreenActivity extends BaseActivity {
 
 
 	TextView option1, option2, option3, option4, option5;
@@ -40,9 +47,10 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 	EditText choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F;
 	EditText[] choiceFields = {choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F};
 	
-    Button backButton, resetButton, saveButton;
+    Button backButton, customButton, saveButton;
 	String [] liftPattern = new String[7]; //max size of 7 
 	String [] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
+	String[] emptyPattern = { "First", "Second", "Third", "Fourth", "Fifth", "Sixth"};
 	Spinner patternSizeSpinner;
 	
 	EditText benchEditText;
@@ -50,34 +58,108 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 	EditText ohpEditText;
 	EditText deadEditText;
 	
+	//TM widgets
+	Spinner numberCyclesSpinner;
+	RadioButton lbRadioButton;
+	RadioButton kgRadioButton;
+	CheckBox roundingCheckBox;
+	
+	
+	//TM vars
+	Boolean lbs = true;
+	String unit_mode;
+	
+	
+	
 	Tracker tracker = null;
 
+	//nav drawer vars
+	private String[] navMenuTitles;
+	private TypedArray navMenuIcons;
+	
+	
 	//http://code.tutsplus.com/tutorials/android-sdk-implementing-drag-and-drop-functionality--mobile-14402
 	//NEED TO RESIZE ARRAYS
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.AppBaseLightThemeNoTitleBar);//PEOFIJOWEIRJOQEIRJFIEQJROIQJERPOIJQEPORGPDOFVJADKFMVLKDMFNGOPKEJROPFI change me if you want theme to actually change 
+		setTheme(R.style.AppBaseLight);//PEOFIJOWEIRJOQEIRJFIEQJROIQJERPOIJQEPORGPDOFVJADKFMVLKDMFNGOPKEJROPFI change me if you want theme to actually change 
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.activity_revampedsecond_screen);
 	    
+		//Set up our navigation drawer
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
+		navMenuIcons = getResources()
+				.obtainTypedArray(R.array.nav_drawer_icons);// load icons from
+															// strings.xml
+
+		set(navMenuTitles, navMenuIcons);
+		navMenuIcons.recycle();
+ 
+        getActionBar().setDisplayHomeAsUpEnabled(true); 
+	    
+	    
+	    
 	    //button declarations
 		backButton = (Button) findViewById(R.id.adjustActivityBackButton);
-		resetButton = (Button) findViewById(R.id.adjustActivityResetButton);
+		customButton = (Button) findViewById(R.id.adjustActivityResetButton);
 		saveButton = (Button) findViewById(R.id.adjustActivitySaveButton);
-	  
+		
 		
 		backButton.setOnClickListener(backListener);
-		resetButton.setOnClickListener(resetListener);
+		customButton.setOnClickListener(customListener);
 		saveButton.setOnClickListener(saveListener);
 		
+
+		//TM COMPONENTS
+		numberCyclesSpinner = (Spinner) findViewById(R.id.numberCyclesSpinnerNew);
+		numberCyclesSpinner.setOnItemSelectedListener(numberCyclesSpinnerListener);   //TODO check if listener is even needed
+		
+		
+		roundingCheckBox = (CheckBox) findViewById(R.id.roundingCheckBox);	
+		
+		
+		
+		patternSizeSpinner = (Spinner) findViewById (R.id.patternSizeSpinnerNew);
+		
+		RadioGroup unitModeGroup = (RadioGroup) findViewById(R.id.unitModeGroupNew);
+		lbRadioButton = (RadioButton) findViewById(R.id.lbRadioButtonNew);
+		kgRadioButton = (RadioButton) findViewById(R.id.kgRadioButtonNew);
+		unitModeGroup.setOnCheckedChangeListener(radioGroupListener);
+		
+		//set up intent stuff
+		Intent previousIntent = getIntent();
+		String origin = previousIntent.getStringExtra("origin");
+		if (origin.equals("third"))
+		{
+			benchEditText.setText(previousIntent.getStringExtra("bench"));
+			squatEditText.setText(previousIntent.getStringExtra("squat"));
+			ohpEditText.setText(previousIntent.getStringExtra("ohp"));
+			deadEditText.setText(previousIntent.getStringExtra("dead"));
+			liftPattern = previousIntent.getStringArrayExtra("liftPattern");
+		}
+		
+		else if (origin.equals("first"))
+		{
+			liftPattern = previousIntent.getStringArrayExtra("liftPattern");
+		}
+		
+		else if (origin.equals("custom"))
+		{
+			//do we need to do anything here?
+			//hide the seventh to keep default pattern size
+		}
+		
+		
+		
+		
+		//set up analytics tracking 
 		tracker = GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
 		HashMap<String, String> hitParameters = new HashMap<String, String>();
 		hitParameters.put(Fields.HIT_TYPE, "appview");
 		hitParameters.put(Fields.SCREEN_NAME, "Pattern Screen");
 
 		tracker.send(hitParameters);
-		
-		patternSizeSpinner = (Spinner) findViewById (R.id.patternSizeSpinner);
+
 		
 	    
 	  //views to drag
@@ -129,12 +211,19 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 	    //add spinner listener
 	    patternSizeSpinner.setOnItemSelectedListener(spinnerListener);
 	    
+	    inflatePatternButtons(origin);
+	    
+	}
+	
+	
+	private void inflatePatternButtons(String origin)
+	{
 	    Intent intent = getIntent();
 	    String[] pattern = intent.getStringArrayExtra("pattern");
 	    if (pattern != null)
-	    liftPattern = pattern;
+	    	liftPattern = pattern;
 	    else
-	    liftPattern = defaultPattern;
+	    	liftPattern = defaultPattern;
 	    int patternIndex = 0;
 	    //0 - adjust pattern
 	    //1 - 4 days
@@ -142,9 +231,11 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 	    //3 - 6 days
 	    //4 - 7 days
 	    patternSizeSpinner.setSelection(liftPattern.length - 3);
+	    
 	    while (patternIndex < liftPattern.length)
 	    {
 	    	choices[patternIndex].setText(liftPattern[patternIndex]);
+	    	if (!origin.equals("custom")) //if we are coming from a custom, don't bold the numerics
 	    	choices[patternIndex].setTypeface(Typeface.DEFAULT_BOLD);
 	    	patternIndex++;
 	    }	    
@@ -157,9 +248,45 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 		    	choiceFields[patternIndex].setVisibility(View.INVISIBLE);
 		    	patternIndex++;
 		    }
+		    	
 	    }
-	    
 	}
+	
+	
+	//spinner listener //TODO check if this is even needed
+	private OnItemSelectedListener numberCyclesSpinnerListener = new OnItemSelectedListener(){
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view,
+				int position, long id) {
+			return;
+
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+			return;
+
+		}};	
+		
+		//radiogroup listener
+		private OnCheckedChangeListener radioGroupListener = new OnCheckedChangeListener(){
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+				if (lbRadioButton.isChecked())
+				{
+					lbs = true;
+				}
+
+
+				if (kgRadioButton.isChecked())
+					lbs = false;
+
+
+			}};
+				
 
 	private final class ChoiceTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -267,14 +394,15 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 
 
 
-	private OnClickListener resetListener = new OnClickListener(){
+	private OnClickListener customListener = new OnClickListener(){
 
 		@Override
 		public void onClick(View v) {
-				Intent resetIntent = new Intent(REVAMPEDSecondScreenActivity.this, REVAMPEDSecondScreenActivity.class);
+				Intent customPatternIntent = new Intent(REVAMPEDSecondScreenActivity.this, REVAMPEDSecondScreenActivity.class);
 				//pass date or whatever here I think... (you'll be geting it from first screen (mainActivity) 
-				resetIntent.putExtra("pattern", defaultPattern);
-				startActivity(resetIntent);
+				customPatternIntent.putExtra("pattern", emptyPattern);
+				customPatternIntent.putExtra("origin", "custom");
+				startActivity(customPatternIntent);
 				overridePendingTransition(0, 0); //no animation on reset
 			}};
 
@@ -284,7 +412,6 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			Intent backToFirst = new Intent (REVAMPEDSecondScreenActivity.this, MainActivity.class);
-			//TODO add back date here i think
 			startActivity(backToFirst);
 			
 		}};	
@@ -293,14 +420,16 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			forwardToThird(); 
 			if (validatePattern())
 			{
-			Intent patternToFirst = new Intent(REVAMPEDSecondScreenActivity.this, MainActivity.class);//TODO change this intent to ThirdScreen, no longer need to go back to MainActivity
+/*			Intent patternToFirst = new Intent(REVAMPEDSecondScreenActivity.this, MainActivity.class);//TODO change this intent to ThirdScreen, no longer need to go back to MainActivity
 			//pass useful shit here (i.e. the date and the pattern
 			patternToFirst.putExtra("origin", "patternAdjust");
 			patternToFirst.putExtra("liftPattern", liftPattern);
-			startActivity(patternToFirst);
+			startActivity(patternToFirst);*/
+			forwardToThird();	
+				
+				
 			}
 		}};
 		
@@ -665,10 +794,8 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 
 	}
 
-	void handleErrors(String errorBench, String errorSquat, String errorOHP, String errorDead, String errorStream) { //stand in method 
-	}
 	
-/*	private void handleErrors(String errorBench, String errorSquat,
+	private void handleErrors(String errorBench, String errorSquat,
 			String errorOHP, String errorDead, String errorStream) {
 		String emptyBenchString = "Please enter a starting bench number!";
 		String thousandBenchString = errorBench + " lbs? Let's be real here. Enter your actual bench.";
@@ -734,7 +861,7 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 		if (bench.equals("")){	
 			//technically don't need endline char first time...
 			benchEditText.setError(emptyBenchString);
-//			errorTextView.setText(errorStream); //TODO take a look and make sue you don't need this 
+//			errorTextView.setText(errorStream); //don;t think errortextview is used anymore
 			benchErrorFlag = true;
 		}
 
@@ -891,7 +1018,7 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 		if (numberCyclesSpinner.getSelectedItem().toString().equals("0")) 
 		{
 			errorStream = errorStream + "\n" + zeroCycleString;
-			errorTextView.setText(errorStream);
+//			errorTextView.setText(errorStream);
 			spinnerErrorFlag = true;
 		}
 
@@ -927,8 +1054,19 @@ public class REVAMPEDSecondScreenActivity extends Activity {
 			startActivity(intent);
 
 		}
-	}*/
+	}
 	
 	
+	//analytics error handling
+	private void sendTrackerException(String exceptionType, String value) {
+		Toast.makeText(REVAMPEDSecondScreenActivity.this, "Sorry! :( Something went wrong, crash report sent.", Toast.LENGTH_LONG).show();
+		  tracker.send(MapBuilder
+			      .createEvent("Exception",     // Event category (required)
+			                   exceptionType,  // Event action (required)
+			                   value,   // Event label
+			                   null)            // Event value
+			      .build());
+		
+	}	
 
 }

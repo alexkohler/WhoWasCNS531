@@ -194,17 +194,17 @@ public class ThirdScreenActivity extends BaseActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					
 					
-					if (which == 0){
+					if (which == 0){//adjust lifts
 						SQLiteDatabase db = eventsData.getWritableDatabase();
 						Intent myIntent = new Intent(ThirdScreenActivity.this, SecondScreenActivity.class);
 						myIntent.putExtra("origin", "third");
-						String[] intentDataArray = new String[6];
-						intentDataArray = getSecondScreenData(intentDataArray);
+						String[] trainingMaxes = new String[6];
+						trainingMaxes = getTrainingMaxesInDefaultOrder();
 						myIntent.putExtra("key", Processor.getStartingDate()); //key is for get starting date  //TODO change 
-						myIntent.putExtra("bench", intentDataArray[0]);
-						myIntent.putExtra("squat", intentDataArray[1]);
-						myIntent.putExtra("ohp", intentDataArray[2]);
-						myIntent.putExtra("dead", intentDataArray[3]);
+						myIntent.putExtra("bench", trainingMaxes[0]);
+						myIntent.putExtra("squat", trainingMaxes[1]);
+						myIntent.putExtra("ohp", trainingMaxes[2]);
+						myIntent.putExtra("dead", trainingMaxes[3]);
 						myIntent.putExtra("liftPattern", liftPattern);
 						db.delete("Lifts", null, null);
 						startActivity(myIntent);
@@ -227,36 +227,37 @@ public class ThirdScreenActivity extends BaseActivity {
 					}
 				}
 
-				private String[] getSecondScreenData(String[] intentDataArray) {
-					setQuery("Lift = 'Bench' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
-					Cursor myCursor = getEvents(); //vladdy
-					myCursor.moveToNext();
-					String benchTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
-					setQuery("Lift = 'Squat' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
-					myCursor = getEvents(); //vladdy
-					myCursor.moveToNext();
-					String squatTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
-					setQuery("Lift = 'OHP' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
-					myCursor = getEvents(); //vladdy
-					myCursor.moveToNext();
-					String ohpTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
-					setQuery("Lift = 'Deadlift' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
-					myCursor = getEvents(); //vladdy
-					myCursor.moveToNext();
-					String deadTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
-					
-					intentDataArray[0] = benchTM;
-					intentDataArray[1] = squatTM;
-					intentDataArray[2] = ohpTM;
-					intentDataArray[3] = deadTM;
-					
-					return intentDataArray;
-				}
+
 			});
 			builder.show();
 
 		}};
 
+		private String[] getTrainingMaxesInDefaultOrder() {
+			setQuery("Lift = 'Bench' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+			Cursor myCursor = getEvents(); //vladdy
+			myCursor.moveToNext();
+			String benchTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
+			setQuery("Lift = 'Squat' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+			myCursor = getEvents(); //vladdy
+			myCursor.moveToNext();
+			String squatTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
+			setQuery("Lift = 'OHP' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+			myCursor = getEvents(); //vladdy
+			myCursor.moveToNext();
+			String ohpTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
+			setQuery("Lift = 'Deadlift' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+			myCursor = getEvents(); //vladdy
+			myCursor.moveToNext();
+			String deadTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
+			String[] trainingMaxes = new String[4];
+			trainingMaxes[0] = benchTM;
+			trainingMaxes[1] = squatTM;
+			trainingMaxes[2] = ohpTM;
+			trainingMaxes[3] = deadTM;
+			
+			return trainingMaxes;
+		}
 		
 		//"Are you sure?" builder template (Used in reset)
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -453,15 +454,21 @@ public class ThirdScreenActivity extends BaseActivity {
 			while (cursor.moveToNext()) {
 				if (!this.insertStatus){//has title been inserted?
 					String temp = getQuery(); //temporarily hold query
+					//call get second screen data?
+					String[] TMS = getTrainingMaxesInDefaultOrder();
+					String benchTM = TMS[0];
+					String squatTM = TMS[1];
+					String deadTM = TMS[2];
+					String ohpTM = TMS[3];
 					setQuery(null);
 					subcursor.moveToFirst();
-					ret = new StringBuilder("Start TMs [Bench: " + subcursor.getString(subcursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]");
+					ret = new StringBuilder("Start TMs [Bench: " + benchTM + "]");
 					subcursor.moveToNext();
-					ret.append(" [Squat: " + subcursor.getString(subcursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]");
+					ret.append(" [Squat: " + squatTM + "]");
 					subcursor.moveToNext();
-					ret.append(" [OHP: " + subcursor.getString(subcursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
+					ret.append(" [OHP: " + ohpTM + "]" );
 					subcursor.moveToNext();
-					ret.append(" [Dead: " + subcursor.getString(subcursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX)) + "]" );
+					ret.append(" [Dead: " + deadTM + "]" );
 					lbMode = cursor.getInt((cursor.getColumnIndex(EventsDataSQLHelper.LBFLAG)));
 					if (lbMode == 1)
 					ret.append("	Mode: lbs");
