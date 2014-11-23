@@ -1,5 +1,6 @@
 package com.kohlerbear.whowascnscalc;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -123,8 +125,6 @@ public class MainActivity extends BaseActivity {
 				startingDateMonth = dp.getMonth();
 				startingDateYear = dp.getYear();
 
-
-
 				goToSecond();
 			}
 		});
@@ -171,7 +171,7 @@ public class MainActivity extends BaseActivity {
 			EventsDataSQLHelper eventsData = new EventsDataSQLHelper(this);
 			SQLiteDatabase db = eventsData.getWritableDatabase();
 			db.execSQL("drop table Lifts");
-			db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_lbFlag integer)");
+			db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_lbFlag integer, pattern text not null)"); //TODO why is there here?
 			Intent intent = new Intent(MainActivity.this, REVAMPEDSecondScreenActivity.class); //TODO just change this back to second if things go awry
 			intent.putExtra("key", formattedDate );
 			intent.putExtra("origin", "first");
@@ -191,7 +191,8 @@ public class MainActivity extends BaseActivity {
 				intent.putExtra("origin", "first");
 				//to read a previous lift pattern, we can break down the textview back into an array
 				//liftPattern = populateArrayBasedOnTextView();//horrible, use the database instead
-				liftPattern = populateArrayBasedOnDatabase();
+				ConfigTool ct = new ConfigTool(MainActivity.this);
+				liftPattern = ct.populateArrayBasedOnDatabase();
 				intent.putExtra("liftPattern", liftPattern);
 				
 				startActivity(intent);
@@ -200,87 +201,9 @@ public class MainActivity extends BaseActivity {
 				Toast.makeText(MainActivity.this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
 		}
 		
-		private String[] populateArrayBasedOnDatabase() {
-			ArrayList<String> myPattern = new ArrayList<String>(); //using arraylist because array size not known at runtime
-/*			String liftBuffer = liftTicker.getText().toString().substring(19);
-			for (int i=0; i < liftBuffer.length(); i++)
-			{
-				switch (liftBuffer.charAt(i))
-				{
-				case 'B':
-					myPattern.add("Bench");
-					break;
-				case 'S':
-					myPattern.add("Squat");
-					break;
-				case 'D':
-					myPattern.add("Deadlift");
-					break;
-				case 'O':
-					myPattern.add("OHP");
-					break;
-				case 'R':
-					myPattern.add("Rest");
-					break;
-				}
-			}*/
-			EventsDataSQLHelper eventsData = new EventsDataSQLHelper(this);
-			SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
-			Cursor mCursor = db.rawQuery("SELECT Lift, liftDate FROM Lifts where cycle = ?", new String[]{"1"});
-			boolean first = true;
-			Calendar cal = Calendar.getInstance();
-			String firstLift = "";
-			while (mCursor.moveToNext())
-			{
-				String currentLiftDate = mCursor.getString(1);
-				if (first)
-				{
-					firstLift = mCursor.getString(0);
-					myPattern.add(firstLift);
-					first = false;
-				}
-				else //a non first empty
-				{
-					mCursor.moveToPrevious();
-					String prevDate = mCursor.getString(1);
-					mCursor.moveToNext(); //assert -we can maintain loop integrity here because we moved back before moving forward
-					String currentLift = mCursor.getString(0);
-					
-					//xx - xx - xxxx
-					//01 2 34 5 6789
-					int year = Integer.valueOf(prevDate.substring(6, 10));
-					int day = Integer.valueOf(prevDate.substring(3, 5)); 
-					int month = Integer.valueOf(prevDate.substring(0, 2)) - 1;
-					cal.set(year, month, day);
-
-					SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault());
-					Date previousDate = cal.getTime();
-					cal.add(Calendar.DAY_OF_MONTH, 1);
-					Date incrementedPrevDate = cal.getTime();
-					String incrementedPrevDateString = dateFormat.format(incrementedPrevDate);
-					 if (currentLiftDate.intern().equals(incrementedPrevDateString.intern()))
-						myPattern.add(currentLift);
-					else
-						{
-						myPattern.add("Rest");
-						//take double rest days into account
-						cal.add(Calendar.DAY_OF_MONTH, 1);
-						String doublyIncrementedPrevDateString = dateFormat.format(cal.getTime());
-						if (doublyIncrementedPrevDateString.intern().equals(currentLiftDate.intern()))
-							myPattern.add(currentLift);
-						else
-							myPattern.add("Rest");
-						}	
-					 if (currentLift.intern().equals(firstLift.intern()))
-							break;
-				}
-				
-			}
-			System.out.println("Then pattern will be " + myPattern.toString());
-			return myPattern.toArray(new String[myPattern.size()]);
-		}
-
-
+		
+		
+		
 
 		private String[] populateArrayBasedOnTextView() {
 			ArrayList<String> myPattern = new ArrayList<String>(); //using arraylist because array size not known at runtime

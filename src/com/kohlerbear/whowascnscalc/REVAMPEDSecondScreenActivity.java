@@ -68,7 +68,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	//TM vars
 	Boolean lbs = true;
 	String unit_mode;
-	
+	String startingDate; 
 	
 	
 	Tracker tracker = null;
@@ -141,12 +141,12 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		else if (origin.equals("first"))
 		{
 			liftPattern = previousIntent.getStringArrayExtra("liftPattern");
+			startingDate = previousIntent.getStringExtra("key");
 		}
 		
 		else if (origin.equals("custom"))
 		{
-			//do we need to do anything here?
-			//hide the seventh to keep default pattern size
+			startingDate = previousIntent.getStringExtra("key");
 		}
 		
 		
@@ -402,6 +402,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 				//pass date or whatever here I think... (you'll be geting it from first screen (mainActivity) 
 				customPatternIntent.putExtra("pattern", emptyPattern);
 				customPatternIntent.putExtra("origin", "custom");
+				customPatternIntent.putExtra("key", startingDate);
 				startActivity(customPatternIntent);
 				overridePendingTransition(0, 0); //no animation on reset
 			}};
@@ -830,10 +831,12 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		//first, get data from previous screen (starting date passed to second from first)
 		Intent intent = getIntent();
 
-		String message = intent.getStringExtra("key");
+		ConfigTool ct = new ConfigTool(REVAMPEDSecondScreenActivity.this);
+		if (startingDate == null && !ct.dbEmpty())
+			startingDate = ct.getStartingDateFromDatabase();
 
 		intent = new Intent(REVAMPEDSecondScreenActivity.this, ThirdScreenActivity.class);
-		intent.putExtra("key2", message);
+		intent.putExtra("key2", startingDate);
 		intent.putExtra("liftPattern", liftPattern);
 
 		NumberFormat nf = NumberFormat.getInstance(); //get user's locale to make sure we parse correctly

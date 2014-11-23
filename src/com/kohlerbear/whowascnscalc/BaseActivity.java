@@ -72,6 +72,7 @@ public class BaseActivity extends ActionBarActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayShowHomeEnabled(false);//DON'T show home icon 
+		//getSupportActionBar().setDisplayShowTitleEnabled(false);
 		// getSupportActionBar().setIcon(R.drawable.ic_drawer);
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
@@ -154,7 +155,7 @@ public class BaseActivity extends ActionBarActivity {
 			Intent newProjectionIntent = new Intent(this, MainActivity.class);
 			newProjectionIntent.putExtra("origin", "dashboard");
 			if (!ct.dbEmpty())
-				newProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
+				newProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());//TODO change this to new method
 			else
 			{
 				String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"  };			
@@ -162,12 +163,21 @@ public class BaseActivity extends ActionBarActivity {
 			}
 			startActivity(newProjectionIntent);
 			break;
-		 case 2:
+		 case 2://view existing
 			if (!ct.dbEmpty())
 			{
 				Intent viewExistingProjectionIntent = new Intent(this, ThirdScreenActivity.class);
 				viewExistingProjectionIntent.putExtra("origin", "dashboard");
-				viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
+				viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());//TODO change this to new method
+				String startingDate = ct.getStartingDateFromDatabase();
+				viewExistingProjectionIntent.putExtra("key2", startingDate);
+				viewExistingProjectionIntent.putExtra("round", "true"); //TODO don't hard code this, get schema change on database for rounding 
+				
+				//THIS INTENT ALSO NEEDS TO PASS A "mode" intent 
+				//YOU ALSO NEED TO PASS  a "round" intent
+				
+				//populate both method bodies in configtool and call 
+				
 				startActivity(viewExistingProjectionIntent);
 			}
 			else

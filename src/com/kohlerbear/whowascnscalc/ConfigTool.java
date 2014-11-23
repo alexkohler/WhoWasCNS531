@@ -20,9 +20,11 @@ public class ConfigTool {
 	Context mContext;
 	Boolean topCornerCaseFlag = false;
 	Boolean bottomCornerCaseFlag = false;
+	EventsDataSQLHelper eventsData;
 	
     public ConfigTool(Context context){
         mContext = context;
+		eventsData = new EventsDataSQLHelper(mContext);
     }
 	
     public Boolean topCase()
@@ -47,7 +49,6 @@ public class ConfigTool {
 		String first = null;
 		String second = null;
 		String third = null;
-		EventsDataSQLHelper eventsData = new EventsDataSQLHelper(mContext);
 		SQLiteDatabase db = eventsData.getReadableDatabase();
 		Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, "liftDate = '" + myDate + "' AND Lift = '" + prevLft + "'", null, null, null, null);
 		if (!cursor.moveToNext())
@@ -102,7 +103,6 @@ public class ConfigTool {
 		String first = null;
 		String second = null;
 		String third = null;
-		EventsDataSQLHelper eventsData = new EventsDataSQLHelper(mContext);
 		SQLiteDatabase db = eventsData.getReadableDatabase();
 		Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, "liftDate = '" + myDate + "' AND Lift = '" + nextLift + "'", null, null,
 				null, null);
@@ -288,7 +288,13 @@ public class ConfigTool {
 	
 	public String[] populateArrayBasedOnDatabase() {
 		ArrayList<String> myPattern = new ArrayList<String>(); //using arraylist because array size not known at runtime
-/*			String liftBuffer = liftTicker.getText().toString().substring(19);
+		SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
+		Cursor cursor = db.rawQuery("SELECT pattern FROM Lifts limit 1", null);
+		String liftBuffer = "";
+		if (cursor.moveToNext())
+			liftBuffer = cursor.getString(0);
+		else
+			Toast.makeText(mContext, "A database error occured", Toast.LENGTH_LONG).show();//TODO add better analytics logging here (if it's even possible to get the tracker in here) 
 		for (int i=0; i < liftBuffer.length(); i++)
 		{
 			switch (liftBuffer.charAt(i))
@@ -309,69 +315,47 @@ public class ConfigTool {
 				myPattern.add("Rest");
 				break;
 			}
-		}*/
-		EventsDataSQLHelper eventsData = new EventsDataSQLHelper(mContext);
-		SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
-		Cursor mCursor = db.rawQuery("SELECT Lift, liftDate FROM Lifts where cycle = ?", new String[]{"1"});
-		boolean first = true;
-		Calendar cal = Calendar.getInstance();
-		String firstLift = "";
-		while (mCursor.moveToNext())
-		{
-			String currentLiftDate = mCursor.getString(1);
-			if (first)
-			{
-				firstLift = mCursor.getString(0);
-				myPattern.add(firstLift);
-				first = false;
-			}
-			else //a non first empty
-			{
-				mCursor.moveToPrevious();
-				String prevDate = mCursor.getString(1);
-				mCursor.moveToNext(); //assert -we can maintain loop integrity here because we moved back before moving forward
-				String currentLift = mCursor.getString(0);
-				
-				//xx - xx - xxxx
-				//01 2 34 5 6789
-				int year = Integer.valueOf(prevDate.substring(6, 10));
-				int day = Integer.valueOf(prevDate.substring(3, 5)); 
-				int month = Integer.valueOf(prevDate.substring(0, 2)) - 1;
-				cal.set(year, month, day);
-
-				SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault());
-				Date previousDate = cal.getTime();
-				cal.add(Calendar.DAY_OF_MONTH, 1);
-				Date incrementedPrevDate = cal.getTime();
-				String incrementedPrevDateString = dateFormat.format(incrementedPrevDate);
-				if (currentLiftDate.intern().equals(incrementedPrevDateString.intern()))
-					myPattern.add(currentLift);
-				else
-					{
-					myPattern.add("Rest");
-					//take double rest days into account
-					cal.add(Calendar.DAY_OF_MONTH, 1);
-					String doublyIncrementedPrevDateString = dateFormat.format(cal.getTime());
-					if (currentLift.intern().equals(firstLift.intern()))
-						break;
-					else if (doublyIncrementedPrevDateString.intern().equals(currentLiftDate.intern()))
-						myPattern.add(currentLift);
-					else
-						myPattern.add("Rest");
-					}	
-
-			}
-			
 		}
-		System.out.println("Then pattern will be " + myPattern.toString());
+		
 		return myPattern.toArray(new String[myPattern.size()]);
 	}
+	
 
+/*public String getRoundingFlagFromDatabase()//TODO change me from a stub to a real boy (method) 
+{
+	SQLiteDatabase db = eventsData.getWritableDatabase();
+	Cursor cursor = db.rawQuery("Select column_lbFlag from Lifts limit 1", null);
+	if (cursor.moveToNext())
+		startingDate = cursor.getString(0);
+	
+	return startingDate;
+}
 
+public String getUnitModeFromDatabase()//TODO change me from a stub to a real boy (method) 
+{
+	SQLiteDatabase db = eventsData.getWritableDatabase();
+	Cursor cursor = db.rawQuery("Select column_lbFlag from Lifts limit 1", null);
+	if (cursor.moveToNext())
+		startingDate = cursor.getString(0);
+	
+	return startingDate;
+}*/
+	
+	
+public String getStartingDateFromDatabase()
+{
+	SQLiteDatabase db = eventsData.getWritableDatabase();
+	Cursor cursor = db.rawQuery("Select liftDate from Lifts limit 1", null);
+	String startingDate = "11-11-11";//TODO think of better way to error handle this
+	if (cursor.moveToNext())
+		startingDate = cursor.getString(0);
+	
+	return startingDate;
+
+}
 
 public boolean dbEmpty()
 {
-	EventsDataSQLHelper eventsData = new EventsDataSQLHelper(mContext);
 	SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
 	Cursor mCursor = db.rawQuery("SELECT * FROM " + EventsDataSQLHelper.TABLE, null);
 	Boolean rowExists;

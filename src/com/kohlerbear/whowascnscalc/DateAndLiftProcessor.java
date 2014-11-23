@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 //DateProcessor.java- processes dates passed to it in ThirdScreen-the main algorithm of this program
 public class DateAndLiftProcessor {
@@ -70,6 +71,9 @@ public class DateAndLiftProcessor {
 
 	static int patternSize; //size of user specified pattern
 	//logic is funky but will stay for now
+	
+	String PATTERN_ACRONYM;
+	
 	public void setStartingDate (String myDate)
 	{
 
@@ -371,6 +375,22 @@ public class DateAndLiftProcessor {
 		CURRENT_FIRST  = myLift * SINGLE_1;
 		CURRENT_SECOND = myLift * SINGLE_2;
 		CURRENT_THIRD  = myLift * SINGLE_3;
+	}
+	
+	public void setPatternAcronym(String[] pattern)
+	{
+		PATTERN_ACRONYM = "";
+		for (String day : pattern)
+		{
+			PATTERN_ACRONYM = PATTERN_ACRONYM + day.substring(0, 1).toUpperCase(Locale.US); //For internal use on a switch statement, no need to use user's locale
+		}
+		
+	}
+	
+	
+	public String getPatternAcronym()
+	{
+		return PATTERN_ACRONYM;
 	}
 
 

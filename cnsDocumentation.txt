@@ -94,14 +94,31 @@ added placeholder for about page
 	Fixed training max screen
 	Made TM stream retrieval much prettier
 
+    :::Commit 3
+	Changed starting date text
+	Schema change for pattern
+	bench dead rest rest squat overhead rest
+	Bug fixes
 
-	Make sure your TM stream works for custom patterns 
+
+	After you fix pattern bug, you have an intent issue on ThirdScreenActivity in the final else around line 150
+	Fix hardcoding of rounding in BaseActivity
+	Change starting date textview
+	Swipe nav for first page
+	Remove unneccessary components first page (all buttons)
 	Dial in second screen components placement
 	Steal whatever you can from dashboard fragment
 	Fix analytics logging
+	Remove useless buttons from first screen
+	Second background -tan(peachy tan)
 
+	Second -turqoise background, green
+	Second page - swipe navigation
+	Second page - "not quite" segemented buttons  - definitely want the not quite segmented button	 (See pats snooki fb message)
+	Remove the checkbox and put onto third screeen
+	Keep configure (but remove reset and adjust lifts and have it go straight to the view by builder menu
 
-
+	Patrick - activity titles?
 
 Roboelectric for unit tests?
 

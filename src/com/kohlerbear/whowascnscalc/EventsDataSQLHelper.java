@@ -35,6 +35,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	public static final String THIRD = "Third_Lift";
 	public static final String TRAINING_MAX = "Training_Max";
 	public static final String LBFLAG = "column_lbFlag";
+	public static final String PATTERN = "Pattern";
 	public EventsDataSQLHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -42,7 +43,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		//this was originally alter table
-		String sql = "create table " + TABLE + "(liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_lbFlag integer);";
+		String sql = "create table " + TABLE + "(liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_lbFlag integer, Pattern text);";
 		Log.d("EventsData", "onCreate: " + sql);
 		db.execSQL(sql);
 	}
@@ -85,6 +86,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		values.put(EventsDataSQLHelper.FIRST, thirdScreen.Processor.getFirstLift());
 		values.put(EventsDataSQLHelper.SECOND, thirdScreen.Processor.getSecondLift());
 		values.put(EventsDataSQLHelper.THIRD, thirdScreen.Processor.getThirdLift());
+		values.put(EventsDataSQLHelper.PATTERN, thirdScreen.Processor.getPatternAcronym());
 		if ((thirdScreen.Processor.getLiftType().equals("Bench")) && thirdScreen.Processor.getCycle() == 1) //insert our initial training maxes into table instead of trying to pass them back and forth between intents 
 			{
 			values.put(EventsDataSQLHelper.TRAINING_MAX, thirdScreen.Processor.getBenchTM());
@@ -237,58 +239,58 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 				thirdScreen.setQuery(null);
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
-				thirdScreen.showDefaultEvents(thirdScreen.cursor, thirdScreen.cursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;
 			case "BENCH":
 				thirdScreen.setQuery("Lift = 'Bench'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				System.out.println(DatabaseUtils.dumpCursorToString(thirdScreen.cursor));
-				System.out.println( DatabaseUtils.dumpCursorToString(subcursor));
-				thirdScreen.showDefaultEvents(thirdScreen.cursor, subcursor);
+//				System.out.println(DatabaseUtils.dumpCursorToString(thirdScreen.cursor));
+//				System.out.println( DatabaseUtils.dumpCursorToString(subcursor));
+				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;
 			case "SQUAT":
 				thirdScreen.setQuery("Lift = 'Squat'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor, subcursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;
 			case "OHP":
 				thirdScreen.setQuery("Lift = 'OHP'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor, subcursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;
 			case "DEAD":
 				thirdScreen.setQuery("Lift = 'Deadlift'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor, subcursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;	
 			case "FIVES":
 				thirdScreen.setQuery("Frequency = '5-5-5'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor, thirdScreen.cursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;	
 			case "THREES":
 				thirdScreen.setQuery("Frequency = '3-3-3'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor, thirdScreen.cursor);;
+				thirdScreen.showDefaultEvents(thirdScreen.cursor);;
 				break;
 			case "ONES":
 				thirdScreen.setQuery("Frequency = '5-3-1'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-				thirdScreen.showDefaultEvents(thirdScreen.cursor, thirdScreen.cursor);
+				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;	
 	
 		}

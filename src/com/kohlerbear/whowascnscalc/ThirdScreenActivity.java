@@ -137,19 +137,19 @@ public class ThirdScreenActivity extends BaseActivity {
 		}
 		
 		
-		else if (origin.equals("second"))
+		else if (origin.equals("second") || origin.equals("dashboard"))
 		{
 
-			eventsData.inflateTable(this, intent, startingDate, db);
+			eventsData.inflateTable(this, intent, startingDate, db); 
 			new AsyncCaller(liftPattern).execute();
 		}
 
 
 
-		else
+		else//this should only be used for refreshes?
 		{
-			Cursor cursor = getEvents();
-			showDefaultEvents(cursor, cursor);
+			Cursor cursor = getEvents();//TODO you have a bug with an intent here i think, I think you need to call the asynccaller no matter what because the pattern needs passed.  
+			showDefaultEvents(cursor);
 		}
 	}//end method oncreate 
 
@@ -301,7 +301,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor, cursor);
+						showDefaultEvents(cursor);
 						break;
 					case 1:
 						curView = CURRENT_VIEW.BENCH;
@@ -310,7 +310,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						tableRowPrincipal.removeAllViews(); //try something like this 
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor, subcursor);
+						showDefaultEvents(cursor);
 						break;	
 					case 2:
 						curView = CURRENT_VIEW.SQUAT;
@@ -319,7 +319,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true; 
-						showDefaultEvents(cursor, cursor);
+						showDefaultEvents(cursor);
 						break;	
 					case 3:
 						curView = CURRENT_VIEW.OHP;
@@ -328,7 +328,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor, cursor);
+						showDefaultEvents(cursor);
 						break;		
 					case 4:
 						curView = CURRENT_VIEW.DEAD;
@@ -337,7 +337,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor, cursor);
+						showDefaultEvents(cursor);
 						break;
 					case 5:
 						curView = CURRENT_VIEW.FIVES;
@@ -346,7 +346,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor, cursor);
+						showDefaultEvents(cursor);
 						break;
 					case 6:
 						curView = CURRENT_VIEW.THREES;
@@ -355,7 +355,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor, cursor);
+						showDefaultEvents(cursor);
 						break;
 					case 7:
 						curView = CURRENT_VIEW.ONES;
@@ -364,7 +364,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
-						showDefaultEvents(cursor, cursor);
+						showDefaultEvents(cursor);
 						break;				
 					case 8:
 						CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", /*"Export...",*/ "View By...", "Back"};
@@ -433,24 +433,11 @@ public class ThirdScreenActivity extends BaseActivity {
 			return cursor;
 		}
 		
-		static String test = null;
 		
-		static void setTest (String myString)
-		{
-			test = myString;
-		}
-		
-		static String getTest()
-		{
-			return test;
-		}
 
-		@SuppressWarnings("deprecation") void showDefaultEvents(Cursor cursor, Cursor subcursor) {
-			StringBuilder ret; 
-			ret = new StringBuilder("");
+		@SuppressWarnings("deprecation") void showDefaultEvents(Cursor cursor) {
+			StringBuilder ret = new StringBuilder("");
 			TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
-//			System.out.println(DatabaseUtils.dumpCursorToString(cursor));
-//			System.out.println( DatabaseUtils.dumpCursorToString(subcursor));
 			while (cursor.moveToNext()) {
 				if (!this.insertStatus){//has title been inserted?
 					String temp = getQuery(); //temporarily hold query
@@ -461,13 +448,9 @@ public class ThirdScreenActivity extends BaseActivity {
 					String deadTM = TMS[2];
 					String ohpTM = TMS[3];
 					setQuery(null);
-					subcursor.moveToFirst();
 					ret = new StringBuilder("Start TMs [Bench: " + benchTM + "]");
-					subcursor.moveToNext();
 					ret.append(" [Squat: " + squatTM + "]");
-					subcursor.moveToNext();
 					ret.append(" [OHP: " + ohpTM + "]" );
-					subcursor.moveToNext();
 					ret.append(" [Dead: " + deadTM + "]" );
 					lbMode = cursor.getInt((cursor.getColumnIndex(EventsDataSQLHelper.LBFLAG)));
 					if (lbMode == 1)
@@ -650,6 +633,7 @@ public class ThirdScreenActivity extends BaseActivity {
 				}
 				@Override
 				protected Void doInBackground(Void... params) {
+					Processor.setPatternAcronym(LiftPattern);
 					Processor.calculateCycle(ThirdScreenActivity.this, LiftPattern);
 					cursor = getEvents();
 
@@ -663,7 +647,7 @@ public class ThirdScreenActivity extends BaseActivity {
 				@Override
 				protected void onPostExecute(Void result) {
 					super.onPostExecute(result);
-					showDefaultEvents(cursor, cursor);
+					showDefaultEvents(cursor);
 
 					pdLoading.dismiss();
 				}
