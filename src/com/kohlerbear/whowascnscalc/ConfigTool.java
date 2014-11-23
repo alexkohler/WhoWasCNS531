@@ -321,25 +321,27 @@ public class ConfigTool {
 	}
 	
 
-/*public String getRoundingFlagFromDatabase()//TODO change me from a stub to a real boy (method) 
+public String getRoundingFlagFromDatabase()//TODO change me from a stub to a real boy (method) 
 {
 	SQLiteDatabase db = eventsData.getWritableDatabase();
-	Cursor cursor = db.rawQuery("Select column_lbFlag from Lifts limit 1", null);
+	Cursor cursor = db.rawQuery("Select RoundFlag from Lifts limit 1", null);
+	String roundingFlag = "1"; //true by default
 	if (cursor.moveToNext())
-		startingDate = cursor.getString(0);
+		roundingFlag = cursor.getString(0);
 	
-	return startingDate;
+	return roundingFlag;
 }
 
-public String getUnitModeFromDatabase()//TODO change me from a stub to a real boy (method) 
+public String getLbModeFromDatabase()//TODO change me from a stub to a real boy (method) 
 {
 	SQLiteDatabase db = eventsData.getWritableDatabase();
 	Cursor cursor = db.rawQuery("Select column_lbFlag from Lifts limit 1", null);
+	String unitMode = "error";
 	if (cursor.moveToNext())
-		startingDate = cursor.getString(0);
+		unitMode = cursor.getString(0); 
 	
-	return startingDate;
-}*/
+	return unitMode;
+}
 	
 	
 public String getStartingDateFromDatabase()

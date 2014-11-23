@@ -250,6 +250,11 @@ public class DateAndLiftProcessor {
 	{
 		ROUND_FLAG = roundFlag;
 	}
+	
+	public boolean getRoundingFlag ()
+	{
+		return ROUND_FLAG;
+	}
 
 	//calculation/misc definitions
 

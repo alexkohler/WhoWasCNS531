@@ -34,7 +34,8 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	public static final String SECOND = "Second_Lift";
 	public static final String THIRD = "Third_Lift";
 	public static final String TRAINING_MAX = "Training_Max";
-	public static final String LBFLAG = "column_lbFlag";
+	public static final String LBFLAG = "column_LbFlag";//TODO get rid of column_lbFlag
+	public static final String ROUNDFLAG = "RoundFlag";
 	public static final String PATTERN = "Pattern";
 	public EventsDataSQLHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -43,7 +44,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		//this was originally alter table
-		String sql = "create table " + TABLE + "(liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_lbFlag integer, Pattern text);";
+		String sql = "create table " + TABLE + "(liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_LbFlag integer, RoundFlag integer, Pattern text);";
 		Log.d("EventsData", "onCreate: " + sql);
 		db.execSQL(sql);
 	}
@@ -69,7 +70,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		//db.execSQL("ALTER TABLE Lifts ADD COLUMN column_lbFlag integer");
 		int sqlLitelbMode = 3; //booleans in sqllite are represented by 1 and 0
-		if (thirdScreen.getModeFormat().contains("Lbs"))
+		if (thirdScreen.getModeFormat().contains("Lbs"))//TODO add this into round mode \
 		sqlLitelbMode = 1;
 		if (thirdScreen.getModeFormat().contains("Kgs")) 
 		sqlLitelbMode = 0;
@@ -77,7 +78,6 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		
 		
 			
-		
 	
 		values.put(EventsDataSQLHelper.LIFTDATE, thirdScreen.Processor.getDate() );
 		values.put(EventsDataSQLHelper.CYCLE, thirdScreen.Processor.getCycle());
@@ -87,10 +87,14 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		values.put(EventsDataSQLHelper.SECOND, thirdScreen.Processor.getSecondLift());
 		values.put(EventsDataSQLHelper.THIRD, thirdScreen.Processor.getThirdLift());
 		values.put(EventsDataSQLHelper.PATTERN, thirdScreen.Processor.getPatternAcronym());
+		int roundFlagString = thirdScreen.Processor.getRoundingFlag() ? 1 : 0; //make sure this proper then remove, needs tested
+		values.put(EventsDataSQLHelper.ROUNDFLAG, thirdScreen.Processor.getRoundingFlag() ? 1 : 0);
+		
+		
 		if ((thirdScreen.Processor.getLiftType().equals("Bench")) && thirdScreen.Processor.getCycle() == 1) //insert our initial training maxes into table instead of trying to pass them back and forth between intents 
 			{
 			values.put(EventsDataSQLHelper.TRAINING_MAX, thirdScreen.Processor.getBenchTM());
-			values.put(EventsDataSQLHelper.LBFLAG, sqlLitelbMode);
+			values.put(EventsDataSQLHelper.LBFLAG, sqlLitelbMode);//TODO move these outside the loop..it's okay to keep all these entries in the table
 			}//(the first entry of each lift has a value in the "training_max" column for sake of easily generating title between changing views)
 			
 		if (thirdScreen.Processor.getLiftType().equals("Squat") && thirdScreen.Processor.getCycle() == 1 )	  		
@@ -219,7 +223,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	
 		//also set starting lifts locally 
 	
-	
+		
 		thirdScreen.Processor.setStartingLifts(startingBench, startingSquat, startingOHP, startingDead);
 		thirdScreen.Processor.setStartingDate(startingDate);
 		thirdScreen.Processor.setDate(startingDate);

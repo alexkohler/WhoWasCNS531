@@ -25,21 +25,9 @@
 
     <Button
         android:id="@+id/set"
-        android:layout_width="220dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/set_button_text_view" />
-
-    <Button
-        android:id="@+id/existingProjectionButton"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:text="@string/view_existing_text_view" />
-
-    <Button
-        android:id="@+id/adjustPatternButton"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:text="@string/adjust_lift_pattern_text_view" />
 
     <TextView
         android:id="@+id/liftTicker"

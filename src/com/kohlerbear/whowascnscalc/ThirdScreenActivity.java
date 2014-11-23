@@ -137,7 +137,7 @@ public class ThirdScreenActivity extends BaseActivity {
 		}
 		
 		
-		else if (origin.equals("second") || origin.equals("dashboard"))
+		else if (origin.equals("second"))
 		{
 
 			eventsData.inflateTable(this, intent, startingDate, db); 

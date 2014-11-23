@@ -86,7 +86,6 @@ public class MainActivity extends BaseActivity {
 		final DatePicker dp = (DatePicker) findViewById(R.id.dp);
 		dp.setCalendarViewShown(false);
 		final Button setBtn = (Button) findViewById(R.id.set);
-		final Button adjustLiftPatternButton = (Button) findViewById(R.id.adjustPatternButton);
 		liftTicker = (TextView) findViewById(R.id.liftTicker);
 		
 		Intent patternAdjusterIntent = getIntent();
@@ -104,17 +103,7 @@ public class MainActivity extends BaseActivity {
 		liftTickerBuffer = liftTickerBuffer.substring(0, liftTickerBuffer.length() - 2); //remove last dash
 		
 		liftTicker.setText(liftTickerBuffer);
-
 		
-		adjustLiftPatternButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent firstActivityToAdjustPattern = new Intent(MainActivity.this, AdjustLiftPatternActivity.class);
-				firstActivityToAdjustPattern.putExtra("pattern", liftPattern); //ASSERT: lift pattern won't be null because of the case statement in onCreate
-				startActivity(firstActivityToAdjustPattern);
-				
-			}});
 
 		setBtn.setOnClickListener(new OnClickListener() {
 
@@ -130,8 +119,6 @@ public class MainActivity extends BaseActivity {
 		});
 
 
-		Button existingProjectionButton = (Button) findViewById(R.id.existingProjectionButton);
-		existingProjectionButton.setOnClickListener(goToThirdListener);
 
 
 	}//end method onCreate 
@@ -148,14 +135,6 @@ public class MainActivity extends BaseActivity {
 	  }
 
 
-	private OnClickListener goToThirdListener = new OnClickListener(){
-
-		@Override
-		public void onClick(View v) {
-			goToThird();
-
-		}};
-
 
 		private void goToSecond()
 		{
@@ -170,8 +149,9 @@ public class MainActivity extends BaseActivity {
 			//if this db does not have a database....
 			EventsDataSQLHelper eventsData = new EventsDataSQLHelper(this);
 			SQLiteDatabase db = eventsData.getWritableDatabase();
-			db.execSQL("drop table Lifts");
-			db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_lbFlag integer, pattern text not null)"); //TODO why is there here?
+			//TODO check repercussions of tis...
+	//		db.execSQL("drop table Lifts");
+			//db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_LbFlag integer, RoundFlag integer, pattern text not null)"); //TODO why is there here?
 			Intent intent = new Intent(MainActivity.this, REVAMPEDSecondScreenActivity.class); //TODO just change this back to second if things go awry
 			intent.putExtra("key", formattedDate );
 			intent.putExtra("origin", "first");
@@ -181,56 +161,6 @@ public class MainActivity extends BaseActivity {
 			db.close();
 			startActivity(intent);
 
-		}
-
-		private void goToThird()
-		{
-			if (!dbEmpty())
-			{
-				Intent intent = new Intent(MainActivity.this, ThirdScreenActivity.class);
-				intent.putExtra("origin", "first");
-				//to read a previous lift pattern, we can break down the textview back into an array
-				//liftPattern = populateArrayBasedOnTextView();//horrible, use the database instead
-				ConfigTool ct = new ConfigTool(MainActivity.this);
-				liftPattern = ct.populateArrayBasedOnDatabase();
-				intent.putExtra("liftPattern", liftPattern);
-				
-				startActivity(intent);
-			}
-			else
-				Toast.makeText(MainActivity.this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
-		}
-		
-		
-		
-		
-
-		private String[] populateArrayBasedOnTextView() {
-			ArrayList<String> myPattern = new ArrayList<String>(); //using arraylist because array size not known at runtime
-			String liftBuffer = liftTicker.getText().toString().substring(19);
-			for (int i=0; i < liftBuffer.length(); i++)
-			{
-				switch (liftBuffer.charAt(i))
-				{
-				case 'B':
-					myPattern.add("Bench");
-					break;
-				case 'S':
-					myPattern.add("Squat");
-					break;
-				case 'D':
-					myPattern.add("Deadlift");
-					break;
-				case 'O':
-					myPattern.add("OHP");
-					break;
-				case 'R':
-					myPattern.add("Rest");
-					break;
-				}
-			}
-			
-			return myPattern.toArray(new String[myPattern.size()]);
 		}
 
 		@Override

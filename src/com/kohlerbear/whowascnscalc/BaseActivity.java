@@ -171,10 +171,36 @@ public class BaseActivity extends ActionBarActivity {
 				viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());//TODO change this to new method
 				String startingDate = ct.getStartingDateFromDatabase();
 				viewExistingProjectionIntent.putExtra("key2", startingDate);
-				viewExistingProjectionIntent.putExtra("round", "true"); //TODO don't hard code this, get schema change on database for rounding 
 				
-				//THIS INTENT ALSO NEEDS TO PASS A "mode" intent 
-				//YOU ALSO NEED TO PASS  a "round" intent
+				//THIS INTENT ALSO NEEDS TO PASS A "mode" intent
+																								/*				if (thirdScreen.getModeFormat().contains("Lbs"))
+																													sqlLitelbMode = 1;
+																													if (thirdScreen.getModeFormat().contains("Kgs")) 
+																													sqlLitelbMode = 0;*/
+				String modeInt = ct.getLbModeFromDatabase().intern();
+				String modeString = "";
+				if (modeInt.equals("1"))
+					modeString = "Lbs";
+				else
+					modeString = "Kgs";
+				viewExistingProjectionIntent.putExtra("mode", modeString); 
+				//YOU ALSO NEED TO PASS  a "round" intent - schema change needs done here
+															/*				String areWeGoingToRound = intent.getStringExtra("round");
+															if (areWeGoingToRound.equals("true"))	
+																thirdScreen.Processor.setRoundingFlag(true);
+															
+															else //revert to the default of no round
+																thirdScreen.Processor.setRoundingFlag(false);*/
+				int roundingFlag = Integer.valueOf(ct.getRoundingFlagFromDatabase());
+				String intentRoundingStringBool = "true";
+				if (roundingFlag == 1)
+					intentRoundingStringBool = "true";
+				else
+					intentRoundingStringBool = "false";
+				
+				viewExistingProjectionIntent.putExtra("round", intentRoundingStringBool); 
+
+				
 				
 				//populate both method bodies in configtool and call 
 				
