@@ -47,7 +47,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	EditText choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F;
 	EditText[] choiceFields = {choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F};
 	
-    Button backButton, customButton, saveButton;
+    Button customButton, saveButton;
 	String [] liftPattern = new String[7]; //max size of 7 
 	String [] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
 	String[] emptyPattern = { "First", "Second", "Third", "Fourth", "Fifth", "Sixth"};
@@ -60,6 +60,12 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	
 	//TM widgets
 	Spinner numberCyclesSpinner;
+	RadioGroup patternSegmentGroup; //to replace numberOfDays in patterns pi
+	RadioButton patternFourDaysRadioButton;
+	RadioButton patternFiveDaysRadioButton;
+	RadioButton patternSixDaysRadioButton;
+	RadioButton patternSevenDaysRadioButton;
+	
 	RadioButton lbRadioButton;
 	RadioButton kgRadioButton;
 	CheckBox roundingCheckBox;
@@ -100,12 +106,10 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    
 	    
 	    //button declarations
-		backButton = (Button) findViewById(R.id.adjustActivityBackButton);
 		customButton = (Button) findViewById(R.id.adjustActivityResetButton);
 		saveButton = (Button) findViewById(R.id.adjustActivitySaveButton);
 		
 		
-		backButton.setOnClickListener(backListener);
 		customButton.setOnClickListener(customListener);
 		saveButton.setOnClickListener(saveListener);
 		
@@ -121,10 +125,20 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		
 		patternSizeSpinner = (Spinner) findViewById (R.id.patternSizeSpinnerNew);
 		
-		RadioGroup unitModeGroup = (RadioGroup) findViewById(R.id.unitModeGroupNew);
-		lbRadioButton = (RadioButton) findViewById(R.id.lbRadioButtonNew);
-		kgRadioButton = (RadioButton) findViewById(R.id.kgRadioButtonNew);
-		unitModeGroup.setOnCheckedChangeListener(radioGroupListener);
+		RadioGroup unitModeGroup = (RadioGroup) findViewById(R.id.poundKilogramSegmentedButtonGroup);
+		lbRadioButton = (RadioButton) findViewById(R.id.lbSegmentedButton);
+		kgRadioButton = (RadioButton) findViewById(R.id.kgSegmentedButton);
+		//unitModeGroup.setOnCheckedChangeListener(poundKilogramSegmentListener);
+		
+		
+		patternSegmentGroup = (RadioGroup) findViewById(R.id.patternSegmentGroup);
+		
+		patternFourDaysRadioButton = (RadioButton) findViewById(R.id.patternButtonFourDays);
+		patternFiveDaysRadioButton = (RadioButton) findViewById(R.id.patternButtonFiveDays);
+		patternSixDaysRadioButton  = (RadioButton) findViewById(R.id.patternButtonSixDays);
+		patternSevenDaysRadioButton = (RadioButton) findViewById(R.id.patternButtonSevenDays);
+		patternSegmentGroup.setOnCheckedChangeListener(patternSizeSegmentListener);
+		
 		
 		//set up intent stuff
 		Intent previousIntent = getIntent();
@@ -232,6 +246,27 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    //4 - 7 days
 	    patternSizeSpinner.setSelection(liftPattern.length - 3);
 	    
+	    int radioButtonToCheck = liftPattern.length;//lift pattern can be a max size of 7 and a minimum size of four
+	    int radioButtonIDToCheck = 0;
+	    switch (radioButtonToCheck)
+	    {
+	    case 4:
+	    	radioButtonIDToCheck = patternFourDaysRadioButton.getId();
+	    	break;
+	    case 5:
+	    	radioButtonIDToCheck = patternFiveDaysRadioButton.getId();
+	    	break;
+	    case 6:
+	    	radioButtonIDToCheck = patternSixDaysRadioButton.getId();
+	    	break;
+	    case 7:
+	    	radioButtonIDToCheck = patternSevenDaysRadioButton.getId();
+	    	break;
+	    }
+
+	    patternSegmentGroup.check(radioButtonIDToCheck);
+	    
+	    
 	    while (patternIndex < liftPattern.length)
 	    {
 	    	choices[patternIndex].setText(liftPattern[patternIndex]);
@@ -270,7 +305,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		}};	
 		
 		//radiogroup listener
-		private OnCheckedChangeListener radioGroupListener = new OnCheckedChangeListener(){
+		private OnCheckedChangeListener poundKilogramSegmentListener = new OnCheckedChangeListener(){
 
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -286,6 +321,204 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 
 
 			}};
+			
+		private OnCheckedChangeListener patternSizeSegmentListener = new OnCheckedChangeListener(){
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				switch (checkedId)
+				{
+				//TODO do this with loops good christ are you stupid?
+				case R.id.patternButtonFourDays: //pattern size is 4
+					//choices
+//					liftPattern = new String[4];
+					choice1.setVisibility(View.VISIBLE);
+					choice2.setVisibility(View.VISIBLE);
+					choice3.setVisibility(View.VISIBLE);
+					choice4.setVisibility(View.VISIBLE);
+					choice5.setVisibility(View.INVISIBLE);
+					choice6.setVisibility(View.INVISIBLE);
+					choice7.setVisibility(View.INVISIBLE);
+					//fields
+					//choice 1 field 
+					if (!choice1.getText().toString().equals("Rest") && !choice1.getText().toString().equals("First"))
+						choice1F.setVisibility(View.VISIBLE);
+					else
+						choice1F.setVisibility(View.INVISIBLE);
+					
+					//choice 2 field 
+					if (!choice2.getText().toString().equals("Rest") && !choice2.getText().toString().equals("Second"))
+						choice2F.setVisibility(View.VISIBLE);
+					else
+						choice2F.setVisibility(View.INVISIBLE);
+					
+					//choice 3 field 
+					if (!choice3.getText().toString().equals("Rest") && !choice3.getText().toString().equals("Third"))
+						choice3F.setVisibility(View.VISIBLE);
+					else
+						choice3F.setVisibility(View.INVISIBLE);
+					
+					//choice 4 field
+					if (!choice4.getText().toString().equals("Rest") && !choice4.getText().toString().equals("Fourth"))
+						choice4F.setVisibility(View.VISIBLE);
+					else
+						choice4F.setVisibility(View.INVISIBLE);
+					
+					choice5F.setVisibility(View.INVISIBLE);
+					choice6F.setVisibility(View.INVISIBLE);
+					choice7F.setVisibility(View.INVISIBLE);
+					break;
+				case R.id.patternButtonFiveDays: //pattern size is 5
+//					liftPattern = new String[5];
+					//choices
+					choice1.setVisibility(View.VISIBLE);
+					choice2.setVisibility(View.VISIBLE);
+					choice3.setVisibility(View.VISIBLE);
+					choice4.setVisibility(View.VISIBLE);
+					choice5.setVisibility(View.VISIBLE);
+					choice6.setVisibility(View.INVISIBLE);
+					choice7.setVisibility(View.INVISIBLE);
+					//fields
+					
+					//choice 1 field 
+					if (!choice1.getText().toString().equals("Rest") && !choice1.getText().toString().equals("First"))
+						choice1F.setVisibility(View.VISIBLE);
+					else
+						choice1F.setVisibility(View.INVISIBLE);
+					
+					//choice 2 field 
+					if (!choice2.getText().toString().equals("Rest") && !choice2.getText().toString().equals("Second"))
+						choice2F.setVisibility(View.VISIBLE);
+					else
+						choice2F.setVisibility(View.INVISIBLE);
+					
+					//choice 3 field 
+					if (!choice3.getText().toString().equals("Rest") && !choice3.getText().toString().equals("Third"))
+						choice3F.setVisibility(View.VISIBLE);
+					else
+						choice3F.setVisibility(View.INVISIBLE);
+					
+					//choice 4 field
+					if (!choice4.getText().toString().equals("Rest") && !choice4.getText().toString().equals("Fourth"))
+						choice4F.setVisibility(View.VISIBLE);
+					else
+						choice4F.setVisibility(View.INVISIBLE);
+					
+					//choice 5 field 
+					if (!choice5.getText().toString().equals("Rest") && !choice5.getText().toString().equals("Fifth"))
+						choice5F.setVisibility(View.VISIBLE);
+					else
+						choice5F.setVisibility(View.INVISIBLE);
+					
+					
+					choice6F.setVisibility(View.INVISIBLE);
+					choice7F.setVisibility(View.INVISIBLE);
+					break;
+				case R.id.patternButtonSixDays://patterm size is 6
+//					liftPattern = new String[6];
+					//choices
+					choice1.setVisibility(View.VISIBLE);
+					choice2.setVisibility(View.VISIBLE);
+					choice3.setVisibility(View.VISIBLE);
+					choice4.setVisibility(View.VISIBLE);
+					choice5.setVisibility(View.VISIBLE);
+					choice6.setVisibility(View.VISIBLE);
+					choice7.setVisibility(View.INVISIBLE);
+					//fields
+					//choice 1 field 
+					if (!choice1.getText().toString().equals("Rest") && !choice1.getText().toString().equals("First"))
+						choice1F.setVisibility(View.VISIBLE);
+					else
+						choice1F.setVisibility(View.INVISIBLE);
+					
+					//choice 2 field 
+					if (!choice2.getText().toString().equals("Rest") && !choice2.getText().toString().equals("Second"))
+						choice2F.setVisibility(View.VISIBLE);
+					else
+						choice2F.setVisibility(View.INVISIBLE);
+					
+					//choice 3 field 
+					if (!choice3.getText().toString().equals("Rest") && !choice3.getText().toString().equals("Third"))
+						choice3F.setVisibility(View.VISIBLE);
+					else
+						choice3F.setVisibility(View.INVISIBLE);
+					
+					//choice 4 field
+					if (!choice4.getText().toString().equals("Rest") && !choice4.getText().toString().equals("Fourth"))
+						choice4F.setVisibility(View.VISIBLE);
+					else
+						choice4F.setVisibility(View.INVISIBLE);
+					
+					//choice 5 field 
+					if (!choice5.getText().toString().equals("Rest") && !choice5.getText().toString().equals("Fifth"))
+						choice5F.setVisibility(View.VISIBLE);
+					else
+						choice5F.setVisibility(View.INVISIBLE);
+					
+					//choice 6 field 
+					if (!choice6.getText().toString().equals("Rest") && !choice6.getText().toString().equals("Sixth"))
+						choice6F.setVisibility(View.VISIBLE);
+					else
+						choice6F.setVisibility(View.INVISIBLE);
+					
+					choice7F.setVisibility(View.INVISIBLE);
+					break;
+				case R.id.patternButtonSevenDays:// pattern size is 7
+//					liftPattern = new String[7];
+					//choices
+					choice1.setVisibility(View.VISIBLE);
+					choice2.setVisibility(View.VISIBLE);
+					choice3.setVisibility(View.VISIBLE);
+					choice4.setVisibility(View.VISIBLE);
+					choice5.setVisibility(View.VISIBLE);
+					choice6.setVisibility(View.VISIBLE);
+					choice7.setVisibility(View.VISIBLE);
+					//fields
+					//choice 1 field 
+					if (!choice1.getText().toString().equals("Rest") && !choice1.getText().toString().equals("First"))
+						choice1F.setVisibility(View.VISIBLE);
+					else
+						choice1F.setVisibility(View.INVISIBLE);
+					
+					//choice 2 field 
+					if (!choice2.getText().toString().equals("Rest") && !choice2.getText().toString().equals("Second"))
+						choice2F.setVisibility(View.VISIBLE);
+					else
+						choice2F.setVisibility(View.INVISIBLE);
+					
+					//choice 3 field 
+					if (!choice3.getText().toString().equals("Rest") && !choice3.getText().toString().equals("Third"))
+						choice3F.setVisibility(View.VISIBLE);
+					else
+						choice3F.setVisibility(View.INVISIBLE);
+					
+					//choice 4 field
+					if (!choice4.getText().toString().equals("Rest") && !choice4.getText().toString().equals("Fourth"))
+						choice4F.setVisibility(View.VISIBLE);
+					else
+						choice4F.setVisibility(View.INVISIBLE);
+					
+					//choice 5 field 
+					if (!choice5.getText().toString().equals("Rest") && !choice5.getText().toString().equals("Fifth"))
+						choice5F.setVisibility(View.VISIBLE);
+					else
+						choice5F.setVisibility(View.INVISIBLE);
+					
+					//choice 6 field 
+					if (!choice6.getText().toString().equals("Rest") && !choice6.getText().toString().equals("Sixth"))
+						choice6F.setVisibility(View.VISIBLE);
+					else
+						choice6F.setVisibility(View.INVISIBLE);
+					
+					//choice 7 field 
+					if (!choice7.getText().toString().equals("Rest") && !choice7.getText().toString().equals("Seventh"))
+						choice7F.setVisibility(View.VISIBLE);
+					else
+						choice7F.setVisibility(View.INVISIBLE);
+				}
+				
+			}};	
+			
 				
 
 	private final class ChoiceTouchListener implements OnTouchListener {
@@ -407,7 +640,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 				overridePendingTransition(0, 0); //no animation on reset
 			}};
 
-		
+	//ununsed and may not even be needed but keeping as a placeholder
 	private OnClickListener backListener = new OnClickListener(){
 
 		@Override
@@ -434,7 +667,8 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 			}
 		}};
 		
-	private OnItemSelectedListener spinnerListener = new OnItemSelectedListener(){
+	@Deprecated	
+	private OnItemSelectedListener spinnerListener = new OnItemSelectedListener(){//TODO need to redo this to use your button group instead of spinner
 
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -638,6 +872,9 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		
 
 		
+		
+		
+		
 	private boolean validatePattern()
 	{
 		//traverse the array and make sure all four lifts are used. 
@@ -752,6 +989,13 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		
 		//first, grab spinner selection so we know what fields have the possibility of being visible
 		Integer visibleFields = Integer.valueOf(patternSizeSpinner.getSelectedItem().toString().substring(0, 1));
+		//pwd
+		//		Integer visibleFieldsFromSegmentGroup -
+		int buttonID = patternSegmentGroup.getCheckedRadioButtonId();
+		View selectedRadioButton = patternSegmentGroup.findViewById(buttonID);
+		int selectedIndex = patternSegmentGroup.indexOfChild(selectedRadioButton); //add 4?
+		System.out.println("comparing " + visibleFields + " and " + selectedIndex );
+		System.out.println();
 		
 		for (int i = 0; i < visibleFields; i++)
 		{

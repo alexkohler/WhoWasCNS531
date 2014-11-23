@@ -148,5 +148,7 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_opening_dashboard">OpeningDashboardActivity</string>
     <string name="opening_dash_placeholder">Dashboard placeholder</string>
-
+    
+        <string name="Pounds">Pounds</string>
+		<string name="Kilograms">Kilograms</string>
 </resources>

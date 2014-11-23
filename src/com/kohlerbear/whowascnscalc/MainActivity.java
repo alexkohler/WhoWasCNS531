@@ -1,8 +1,6 @@
 package com.kohlerbear.whowascnscalc;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,10 +8,12 @@ import java.util.HashMap;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -117,6 +117,21 @@ public class MainActivity extends BaseActivity {
 				goToSecond();
 			}
 		});
+		
+		
+        // Gesture detection
+	    final GestureDetector gestureDetector;
+//	    View.OnTouchListener gestureListener;
+        gestureDetector = new GestureDetector(this, new MyGestureDetector());
+        View.OnTouchListener gestureListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+        
+        //these collide with navdrawer listener
+      // relativeLayout = (RelativeLayout) findViewById(R.id.activity_main_relativelayout);
+     //  relativeLayout.setOnTouchListener(gestureListener);
 
 
 
@@ -133,6 +148,34 @@ public class MainActivity extends BaseActivity {
 	    super.onStop();
 	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
 	  }
+	  
+		class MyGestureDetector extends SimpleOnGestureListener {
+			
+		    private static final int SWIPE_MIN_DISTANCE = 170;
+		    private static final int SWIPE_THRESHOLD_VELOCITY = 100;
+		
+	        @Override
+	        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+	            try {
+	               // if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+	                //    return false;
+	                // right to left swipe
+	                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+	                	Toast.makeText(MainActivity.this, "Right", Toast.LENGTH_SHORT).show();
+	                }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+	                	Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
+	                }
+	                
+	                
+	                
+	                
+	                
+	            } catch (Exception e) {
+	                // nothing
+	            }
+	            return false;
+	        }
+		}
 
 
 
