@@ -445,8 +445,8 @@ public class ThirdScreenActivity extends BaseActivity {
 					String[] TMS = getTrainingMaxesInDefaultOrder();
 					String benchTM = TMS[0];
 					String squatTM = TMS[1];
-					String deadTM = TMS[2];
-					String ohpTM = TMS[3];
+					String ohpTM = TMS[2];
+					String deadTM = TMS[3];
 					setQuery(null);
 					ret = new StringBuilder("Start TMs [Bench: " + benchTM + "]");
 					ret.append(" [Squat: " + squatTM + "]");

@@ -297,15 +297,50 @@
             android:gravity="center_vertical"
             android:text="@string/pattern_size" />
 
-        <Spinner
-            android:id="@+id/patternSizeSpinnerNew"
+
+        
+                <info.hoang8f.android.segmented.SegmentedGroup
+            android:id="@+id/patternSegmentGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+			android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"	
             android:layout_marginTop="65dp"
-            android:layout_toRightOf="@+id/textView1"
-            android:entries="@array/Pattern_Size_Array" />
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/patternButtonFourDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:text="4" />
+
+            <RadioButton
+                android:id="@+id/patternButtonFiveDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:text="5" />
+            
+               <RadioButton
+                android:id="@+id/patternButtonSixDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="6" />
+                        
+              <RadioButton
+                android:id="@+id/patternButtonSevenDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:text="7" />
+              
+                
+        </info.hoang8f.android.segmented.SegmentedGroup>
+        
+        
         
             <Spinner
         android:id="@+id/numberCyclesSpinnerNew"
@@ -344,6 +379,7 @@
                 style="@style/RadioButton"
                 android:layout_width="178dp"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/Pounds" />
 
         </info.hoang8f.android.segmented.SegmentedGroup>
@@ -357,44 +393,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/componentLayout" >
         
-        <info.hoang8f.android.segmented.SegmentedGroup
-            android:id="@+id/patternSegmentGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-				
-            android:layout_marginTop="35dp"
-            android:orientation="horizontal" >
 
-            <RadioButton
-                android:id="@+id/patternButtonFourDays"
-                style="@style/RadioButton"
-                android:layout_width="89.5dp"
-                android:layout_height="wrap_content"
-                android:text="4" />
-
-            <RadioButton
-                android:id="@+id/patternButtonFiveDays"
-                style="@style/RadioButton"
-                android:layout_width="89.5dp"
-                android:layout_height="wrap_content"
-                android:text="5" />
-            
-               <RadioButton
-                android:id="@+id/patternButtonSixDays"
-                style="@style/RadioButton"
-                android:layout_width="89.5dp"
-                android:layout_height="wrap_content"
-                android:text="6" />
-                        
-              <RadioButton
-                android:id="@+id/patternButtonSevenDays"
-                style="@style/RadioButton"
-                android:layout_width="89.5dp"
-                android:layout_height="wrap_content"
-                android:text="7" />
-              
-                
-        </info.hoang8f.android.segmented.SegmentedGroup>
 
     </FrameLayout>
 

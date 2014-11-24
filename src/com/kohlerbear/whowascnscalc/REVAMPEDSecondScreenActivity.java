@@ -51,7 +51,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	String [] liftPattern = new String[7]; //max size of 7 
 	String [] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
 	String[] emptyPattern = { "First", "Second", "Third", "Fourth", "Fifth", "Sixth"};
-	Spinner patternSizeSpinner;
+//	Spinner patternSizeSpinner;
 	
 	EditText benchEditText;
 	EditText squatEditText;
@@ -123,12 +123,12 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		
 		
 		
-		patternSizeSpinner = (Spinner) findViewById (R.id.patternSizeSpinnerNew);
+//		patternSizeSpinner = (Spinner) findViewById (R.id.patternSizeSpinnerNew);
 		
 		RadioGroup unitModeGroup = (RadioGroup) findViewById(R.id.poundKilogramSegmentedButtonGroup);
 		lbRadioButton = (RadioButton) findViewById(R.id.lbSegmentedButton);
 		kgRadioButton = (RadioButton) findViewById(R.id.kgSegmentedButton);
-		//unitModeGroup.setOnCheckedChangeListener(poundKilogramSegmentListener);
+		unitModeGroup.setOnCheckedChangeListener(poundKilogramSegmentListener);
 		
 		
 		patternSegmentGroup = (RadioGroup) findViewById(R.id.patternSegmentGroup);
@@ -223,7 +223,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    choice7.setOnDragListener(new ChoiceDragListener());
 	    
 	    //add spinner listener
-	    patternSizeSpinner.setOnItemSelectedListener(spinnerListener);
+	//    patternSizeSpinner.setOnItemSelectedListener(spinnerListener);
 	    
 	    inflatePatternButtons(origin);
 	    
@@ -244,7 +244,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    //2 - 5 days
 	    //3 - 6 days
 	    //4 - 7 days
-	    patternSizeSpinner.setSelection(liftPattern.length - 3);
+//	    patternSizeSpinner.setSelection(liftPattern.length - 3);
 	    
 	    int radioButtonToCheck = liftPattern.length;//lift pattern can be a max size of 7 and a minimum size of four
 	    int radioButtonIDToCheck = 0;
@@ -263,15 +263,24 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    	radioButtonIDToCheck = patternSevenDaysRadioButton.getId();
 	    	break;
 	    }
-
+/*	    patternSegmentGroup.setOnCheckedChangeListener(null);
 	    patternSegmentGroup.check(radioButtonIDToCheck);
-	    
+	    patternSegmentGroup.setOnCheckedChangeListener(patternSizeSegmentListener);*/
 	    
 	    while (patternIndex < liftPattern.length)
 	    {
 	    	choices[patternIndex].setText(liftPattern[patternIndex]);
-	    	if (!origin.equals("custom")) //if we are coming from a custom, don't bold the numerics
-	    	choices[patternIndex].setTypeface(Typeface.DEFAULT_BOLD);
+	    	if (!origin.equals("custom")) //if we aren't coming from a custom, bold the pattern and hide the fields for rest
+	    	{	
+	    		choices[patternIndex].setTypeface(Typeface.DEFAULT_BOLD);
+	    		if (choices[patternIndex].getText().toString().intern().equals("Rest"))
+	    			choiceFields[patternIndex].setVisibility(View.INVISIBLE);
+	    	}
+	    	else //otherwise if we are, just hide all the fields! (Because they are numerics)
+	    			choiceFields[patternIndex].setVisibility(View.INVISIBLE);
+	    		
+	    		
+	    		
 	    	patternIndex++;
 	    }	    
 	    if (patternIndex < choices.length)
@@ -331,7 +340,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 				//TODO do this with loops good christ are you stupid?
 				case R.id.patternButtonFourDays: //pattern size is 4
 					//choices
-//					liftPattern = new String[4];
+					liftPattern = new String[4];
 					choice1.setVisibility(View.VISIBLE);
 					choice2.setVisibility(View.VISIBLE);
 					choice3.setVisibility(View.VISIBLE);
@@ -369,7 +378,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 					choice7F.setVisibility(View.INVISIBLE);
 					break;
 				case R.id.patternButtonFiveDays: //pattern size is 5
-//					liftPattern = new String[5];
+					liftPattern = new String[5];
 					//choices
 					choice1.setVisibility(View.VISIBLE);
 					choice2.setVisibility(View.VISIBLE);
@@ -415,7 +424,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 					choice7F.setVisibility(View.INVISIBLE);
 					break;
 				case R.id.patternButtonSixDays://patterm size is 6
-//					liftPattern = new String[6];
+					liftPattern = new String[6];
 					//choices
 					choice1.setVisibility(View.VISIBLE);
 					choice2.setVisibility(View.VISIBLE);
@@ -464,7 +473,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 					choice7F.setVisibility(View.INVISIBLE);
 					break;
 				case R.id.patternButtonSevenDays:// pattern size is 7
-//					liftPattern = new String[7];
+					liftPattern = new String[7];
 					//choices
 					choice1.setVisibility(View.VISIBLE);
 					choice2.setVisibility(View.VISIBLE);
@@ -988,16 +997,16 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		//we need to identify our edit texts, this will make it easiest to integrate in. 
 		
 		//first, grab spinner selection so we know what fields have the possibility of being visible
-		Integer visibleFields = Integer.valueOf(patternSizeSpinner.getSelectedItem().toString().substring(0, 1));
+//		Integer visibleFields = Integer.valueOf(patternSizeSpinner.getSelectedItem().toString().substring(0, 1));
 		//pwd
 		//		Integer visibleFieldsFromSegmentGroup -
 		int buttonID = patternSegmentGroup.getCheckedRadioButtonId();
 		View selectedRadioButton = patternSegmentGroup.findViewById(buttonID);
-		int selectedIndex = patternSegmentGroup.indexOfChild(selectedRadioButton); //add 4?
-		System.out.println("comparing " + visibleFields + " and " + selectedIndex );
+		int visibleFieldsNew = patternSegmentGroup.indexOfChild(selectedRadioButton) + 4; //add 4?
+//		System.out.println("comparing " + visibleFields + " and " + selectedIndex );
 		System.out.println();
 		
-		for (int i = 0; i < visibleFields; i++)
+		for (int i = 0; i < visibleFieldsNew; i++)
 		{
 			String liftName = choices[i].getText().toString();
 			switch (liftName)

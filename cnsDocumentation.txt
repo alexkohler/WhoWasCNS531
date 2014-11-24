@@ -105,6 +105,18 @@ added placeholder for about page
     :::Commit 2
      Adding segmented button instead of spinner
    
+    ::Commit 3
+    I don't really remember. Working fixing segmented button. 
+11-24-14:
+  :::Commit 1:
+  After a good night's sleep got segmented button working properly, fixed a bug with training max stream. Set default selection on both segmented buttons. Just need to adjust logic to move pattern size and rounding flag to third screen in configure menu instead of second screen. Will look into intent dependencies. 
+
+Also, some second page considerations:
+	1) When you press custom you may not want to create a refreshed intent, this, for one, refreshes ALL components of the page (meaning user will lose pattern size, unit mode, and rounding flag if they are not set to the default when the activity refreshes. Instead of playing intent volleyball, look into just adjusting what needs adjusted. (The fields and training maxes) Furthermore, with this intent volleyball you will also have to override onBackPressed, otherwise when user presses his (Android) back button it will take him to the actiity before freshing.  Granted, you will need to find a way to refresh the UI but I'm not sure if creating a new intent to the same idea is it.
+
+
+When you press custom all fields come up. fix that.
+	Second -turqoise background, green
 	back button on refreshing activies needs redone
 	Swipe nav for first page
 	Remove unneccessary components first page (all buttons)
@@ -113,8 +125,6 @@ added placeholder for about page
 	Fix analytics logging
 	Remove useless buttons from first screen
 	Second background -tan(peachy tan)
-
-	Second -turqoise background, green
 	Second page - swipe navigation
 	Second page - "not quite" segemented buttons  - definitely want the not quite segmented button	 (See pats snooki fb message)
 	Remove the checkbox and put onto third screeen
