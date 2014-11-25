@@ -10,6 +10,7 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
@@ -18,7 +19,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,10 +35,11 @@ public class MainActivity extends BaseActivity {
 	//private EasyTracker easyTracker = null;
 	
 	//to be used in activity 3 - may not be most efficient but for testing purposes 
+	DatePicker dp;
 	static int startingDateDay;
 	static int startingDateMonth;
 	static int startingDateYear;
-	RelativeLayout relativeLayout;  //declare this globally
+	DrawerLayout drawerLayout;  //declare this globally
 	String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"  };
 	String[] liftPattern = new String[7];
 	TextView liftTicker;
@@ -67,7 +68,7 @@ public class MainActivity extends BaseActivity {
 		set(navMenuTitles, navMenuIcons);
 
  
-        getActionBar().setDisplayHomeAsUpEnabled(true); 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); 
  
         // just styling option add shadow the right edge of the drawer
    //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -83,7 +84,7 @@ public class MainActivity extends BaseActivity {
 
 		tracker.send(hitParameters);
 
-		final DatePicker dp = (DatePicker) findViewById(R.id.dp);
+		dp = (DatePicker) findViewById(R.id.dp);
 		dp.setCalendarViewShown(false);
 		final Button setBtn = (Button) findViewById(R.id.set);
 		liftTicker = (TextView) findViewById(R.id.liftTicker);
@@ -105,15 +106,10 @@ public class MainActivity extends BaseActivity {
 		liftTicker.setText(liftTickerBuffer);
 		
 
-		setBtn.setOnClickListener(new OnClickListener() {
+		setBtn.setOnClickListener(new OnClickListener() {//TODO move this out of inline declaration, you're cluttering up onCreate
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(MainActivity.this, "Date Selected: " + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + "-" + dp.getYear(),  Toast.LENGTH_SHORT).show();
-				startingDateDay = dp.getDayOfMonth();
-				startingDateMonth = dp.getMonth();
-				startingDateYear = dp.getYear();
-
 				goToSecond();
 			}
 		});
@@ -130,8 +126,8 @@ public class MainActivity extends BaseActivity {
         };
         
         //these collide with navdrawer listener
-      // relativeLayout = (RelativeLayout) findViewById(R.id.activity_main_relativelayout);
-     //  relativeLayout.setOnTouchListener(gestureListener);
+       drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+       drawerLayout.setOnTouchListener(gestureListener);
 
 
 
@@ -161,10 +157,13 @@ public class MainActivity extends BaseActivity {
 	                //    return false;
 	                // right to left swipe
 	                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-	                	Toast.makeText(MainActivity.this, "Right", Toast.LENGTH_SHORT).show();
-	                }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-	                	Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
-	                }
+	                	goToSecond();
+	                }  
+	                
+	                //no need to support left swipe
+	                //else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+//	                	Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
+	                //}
 	                
 	                
 	                
@@ -181,7 +180,11 @@ public class MainActivity extends BaseActivity {
 
 		private void goToSecond()
 		{
-
+			Toast.makeText(MainActivity.this, "Date Selected: " + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + "-" + dp.getYear(),  Toast.LENGTH_SHORT).show();
+			startingDateDay = dp.getDayOfMonth();
+			startingDateMonth = dp.getMonth();
+			startingDateYear = dp.getYear();
+			
 			Calendar cal = Calendar.getInstance();
 			cal.setTimeInMillis(0);
 			cal.set(startingDateYear, startingDateMonth, startingDateDay);
@@ -203,6 +206,8 @@ public class MainActivity extends BaseActivity {
 			
 			db.close();
 			startActivity(intent);
+			overridePendingTransition(R.anim.exit_slide_right,R.anim.exit_slide_right);
+
 
 		}
 

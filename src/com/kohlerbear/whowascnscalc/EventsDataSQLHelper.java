@@ -87,7 +87,6 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		values.put(EventsDataSQLHelper.SECOND, thirdScreen.Processor.getSecondLift());
 		values.put(EventsDataSQLHelper.THIRD, thirdScreen.Processor.getThirdLift());
 		values.put(EventsDataSQLHelper.PATTERN, thirdScreen.Processor.getPatternAcronym());
-		int roundFlagString = thirdScreen.Processor.getRoundingFlag() ? 1 : 0; //make sure this proper then remove, needs tested
 		values.put(EventsDataSQLHelper.ROUNDFLAG, thirdScreen.Processor.getRoundingFlag() ? 1 : 0);
 		
 		

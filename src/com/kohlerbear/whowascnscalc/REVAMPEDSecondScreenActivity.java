@@ -154,12 +154,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		
 		else if (origin.equals("first"))
 		{
-			liftPattern = previousIntent.getStringArrayExtra("liftPattern");
-			startingDate = previousIntent.getStringExtra("key");
-		}
-		
-		else if (origin.equals("custom"))
-		{
+//			liftPattern = previousIntent.getStringArrayExtra("liftPattern"); I don't think this is needed because lift pattern is no longer coming from first page.
 			startingDate = previousIntent.getStringExtra("key");
 		}
 		
@@ -225,8 +220,8 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    //add spinner listener
 	//    patternSizeSpinner.setOnItemSelectedListener(spinnerListener);
 	    
-	    inflatePatternButtons(origin);
-	    
+//	    inflatePatternButtons(origin);
+		inflatePatternButtons(defaultPattern, false);//not custom, in oncreate the choices wil be 	    
 	}
 	
 	
@@ -246,26 +241,6 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    //4 - 7 days
 //	    patternSizeSpinner.setSelection(liftPattern.length - 3);
 	    
-	    int radioButtonToCheck = liftPattern.length;//lift pattern can be a max size of 7 and a minimum size of four
-	    int radioButtonIDToCheck = 0;
-	    switch (radioButtonToCheck)
-	    {
-	    case 4:
-	    	radioButtonIDToCheck = patternFourDaysRadioButton.getId();
-	    	break;
-	    case 5:
-	    	radioButtonIDToCheck = patternFiveDaysRadioButton.getId();
-	    	break;
-	    case 6:
-	    	radioButtonIDToCheck = patternSixDaysRadioButton.getId();
-	    	break;
-	    case 7:
-	    	radioButtonIDToCheck = patternSevenDaysRadioButton.getId();
-	    	break;
-	    }
-/*	    patternSegmentGroup.setOnCheckedChangeListener(null);
-	    patternSegmentGroup.check(radioButtonIDToCheck);
-	    patternSegmentGroup.setOnCheckedChangeListener(patternSizeSegmentListener);*/
 	    
 	    while (patternIndex < liftPattern.length)
 	    {
@@ -278,6 +253,50 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    	}
 	    	else //otherwise if we are, just hide all the fields! (Because they are numerics)
 	    			choiceFields[patternIndex].setVisibility(View.INVISIBLE);
+	    		
+	    		
+	    		
+	    	patternIndex++;
+	    }	    
+	    if (patternIndex < choices.length)
+	    {
+		    while (patternIndex < choices.length)
+		    {
+		    	TextView choice = choices[patternIndex];
+		    	choice.setVisibility(View.INVISIBLE);
+		    	choiceFields[patternIndex].setVisibility(View.INVISIBLE);
+		    	patternIndex++;
+		    }
+		    	
+	    }
+	}
+	
+	private void inflatePatternButtons(String[] pattern, boolean custom)
+	{
+	    liftPattern = pattern;
+	    int patternIndex = 0;
+	    //0 - adjust pattern
+	    //1 - 4 days
+	    //2 - 5 days
+	    //3 - 6 days
+	    //4 - 7 days
+//	    patternSizeSpinner.setSelection(liftPattern.length - 3);
+	    
+
+	    while (patternIndex < liftPattern.length)
+	    {
+	    	choices[patternIndex].setText(liftPattern[patternIndex]);
+	    	if (!custom) //if we aren't coming from a custom, bold the pattern and hide the fields for rest
+	    	{	
+	    		choices[patternIndex].setTypeface(Typeface.DEFAULT_BOLD);
+	    		if (choices[patternIndex].getText().toString().intern().equals("Rest"))
+	    			choiceFields[patternIndex].setVisibility(View.INVISIBLE);
+	    	}
+	    	else //otherwise if we are, hide all the fields and make sure we have no bold! (Because they are numerics)
+	    	{
+	    		choices[patternIndex].setTypeface(Typeface.DEFAULT);
+	    		choiceFields[patternIndex].setVisibility(View.INVISIBLE);
+	    	}
 	    		
 	    		
 	    		
@@ -640,13 +659,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View v) {
-				Intent customPatternIntent = new Intent(REVAMPEDSecondScreenActivity.this, REVAMPEDSecondScreenActivity.class);
-				//pass date or whatever here I think... (you'll be geting it from first screen (mainActivity) 
-				customPatternIntent.putExtra("pattern", emptyPattern);
-				customPatternIntent.putExtra("origin", "custom");
-				customPatternIntent.putExtra("key", startingDate);
-				startActivity(customPatternIntent);
-				overridePendingTransition(0, 0); //no animation on reset
+			inflatePatternButtons(emptyPattern, true);
 			}};
 
 	//ununsed and may not even be needed but keeping as a placeholder

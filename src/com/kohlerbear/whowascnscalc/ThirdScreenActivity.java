@@ -184,7 +184,7 @@ public class ThirdScreenActivity extends BaseActivity {
 		@Override
 		public void onClick(View v) {
 			//Options menu -- wrap up in a checkbox Listener 
-			CharSequence colors[] = new CharSequence[] {/*"Plate Config",*/ "Adjust Lifts", /*"Export.."*/ "Reset", "View By...", "Cancel"};
+			CharSequence colors[] = new CharSequence[] {"Adjust Lifts",  "Reset", "View By...", "Cancel"};
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 			builder.setTitle("Options menu");

@@ -92,6 +92,7 @@ public class BaseActivity extends ActionBarActivity {
 				getSupportActionBar().setTitle(mDrawerTitle);
 				// calling onPrepareOptionsMenu() to hide action bar icons
 				supportInvalidateOptionsMenu();
+				mDrawerList.bringToFront();
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
