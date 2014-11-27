@@ -46,7 +46,7 @@ public class DateAndLiftProcessor {
 	Boolean UNIT_MODE_LBS; //If true, then lbs are unit, otheriwse, kgs are unit. 
 	Boolean ROUND_FLAG; //determine whether or not to round
 	Double UNIT_CONVERSION_FACTOR = 2.20462;
-
+	
 
 	//for sake of output on title
 	String STARTINGBENCH;
@@ -148,13 +148,13 @@ public class DateAndLiftProcessor {
 	//need to implement a calculate5 function, calculate3 function, and calculate1 function 
 	double getFirstLift()
 	{
-		if (ROUND_FLAG)//if there is rounding wanted
-		{
-			if (UNIT_MODE_LBS)//lbs
-				CURRENT_FIRST =  round(CURRENT_FIRST, 5);//return first lift rounded to nearest 5lb
-			if (!UNIT_MODE_LBS)
-				CURRENT_FIRST = roundkg(CURRENT_FIRST, 2.5);//return first lift rounded to nearest 1kg
-		}	
+//		if (ROUND_FLAG)//if there is rounding wanted
+//		{
+//			if (UNIT_MODE_LBS)//lbs
+//				CURRENT_FIRST =  round(CURRENT_FIRST, 5);//return first lift rounded to nearest 5lb
+//			if (!UNIT_MODE_LBS)
+//				CURRENT_FIRST = roundkg(CURRENT_FIRST, 2.5);//return first lift rounded to nearest 1kg
+//		}	
 
 
 		return CURRENT_FIRST;
@@ -162,13 +162,13 @@ public class DateAndLiftProcessor {
 
 	double getSecondLift()
 	{
-		if (ROUND_FLAG)//if there is rounding wanted
-		{
-			if (UNIT_MODE_LBS)//lbs
-				CURRENT_SECOND =  round(CURRENT_SECOND, 5);//return first lift rounded to nearest 5lb
-			if (!UNIT_MODE_LBS)
-				CURRENT_SECOND = roundkg(CURRENT_SECOND, 2.5);//return first lift rounded to nearest 1kg
-		}	
+//		if (ROUND_FLAG)//if there is rounding wanted
+//		{
+//			if (UNIT_MODE_LBS)//lbs
+//				CURRENT_SECOND =  round(CURRENT_SECOND, 5);//return first lift rounded to nearest 5lb
+//			if (!UNIT_MODE_LBS)
+//				CURRENT_SECOND = roundkg(CURRENT_SECOND, 2.5);//return first lift rounded to nearest 1kg
+//		}	
 
 
 		return CURRENT_SECOND;
@@ -176,13 +176,13 @@ public class DateAndLiftProcessor {
 
 	double getThirdLift()
 	{
-		if (ROUND_FLAG)//if there is rounding wanted
-		{
-			if (UNIT_MODE_LBS)//lbs
-				CURRENT_THIRD =  round(CURRENT_THIRD, 5);//return first lift rounded to nearest 5lb
-			if (!UNIT_MODE_LBS)
-				CURRENT_THIRD = roundkg(CURRENT_THIRD, 2.5);//return first lift rounded to nearest 1kg
-		}	
+//		if (ROUND_FLAG)//if there is rounding wanted
+//		{
+//			if (UNIT_MODE_LBS)//lbs
+//				CURRENT_THIRD =  round(CURRENT_THIRD, 5);//return first lift rounded to nearest 5lb
+//			if (!UNIT_MODE_LBS)
+//				CURRENT_THIRD = roundkg(CURRENT_THIRD, 2.5);//return first lift rounded to nearest 1kg
+//		}	
 
 
 		return CURRENT_THIRD;
@@ -502,3 +502,4 @@ public class DateAndLiftProcessor {
 		}
 
 }
+

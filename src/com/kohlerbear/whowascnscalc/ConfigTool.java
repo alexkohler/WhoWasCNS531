@@ -340,7 +340,19 @@ public String getLbModeFromDatabase()//TODO change me from a stub to a real boy 
 	if (cursor.moveToNext())
 		unitMode = cursor.getString(0); 
 	
-	return unitMode;
+	String modeString = "";
+	if (unitMode.equals("1"))
+		modeString = "Lbs";
+	else
+		modeString = "Kgs";
+	
+	
+	if (modeString.equals(""))
+	{
+		//TODO send analytics tracking here
+	}
+	
+	return modeString;
 }
 	
 	

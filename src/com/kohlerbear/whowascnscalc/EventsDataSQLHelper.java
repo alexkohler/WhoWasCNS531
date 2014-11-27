@@ -114,7 +114,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		db.insert(EventsDataSQLHelper.TABLE, null, values);
 	}
 
-	void createColumns(ThirdScreenActivity thirdScreen, TableRow tr, String liftDate, String cycle, String lift, String freq, String first, String second, String third) {
+	void createRow(ThirdScreenActivity thirdScreen, TableRow tr, String liftDate, String cycle, String lift, String freq, String first, String second, String third) {
 		//date column creation 
 		
 		
@@ -192,12 +192,14 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		db.delete("Lifts", null, null);
 		thirdScreen.setQuery(null);
 		//determine whether to round or not
-		String areWeGoingToRound = intent.getStringExtra("round");
-		if (areWeGoingToRound.equals("true"))	
-			thirdScreen.Processor.setRoundingFlag(true);
 		
-		else //revert to the default of no round
-			thirdScreen.Processor.setRoundingFlag(false);
+//TODO delete this if your checkbox feature is stable
+//		String areWeGoingToRound = intent.getStringExtra("round");
+//		if (areWeGoingToRound.equals("true"))	
+//			thirdScreen.Processor.setRoundingFlag(true);
+		
+//		else //revert to the default of no round
+//			thirdScreen.Processor.setRoundingFlag(false);
 		
 	
 		//get unit mode

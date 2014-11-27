@@ -68,7 +68,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	
 	RadioButton lbRadioButton;
 	RadioButton kgRadioButton;
-	CheckBox roundingCheckBox;
+//	CheckBox roundingCheckBox;
 	
 	
 	//TM vars
@@ -119,7 +119,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		numberCyclesSpinner.setOnItemSelectedListener(numberCyclesSpinnerListener);   //TODO check if listener is even needed
 		
 		
-		roundingCheckBox = (CheckBox) findViewById(R.id.roundingCheckBox);	
+//		roundingCheckBox = (CheckBox) findViewById(R.id.roundingCheckBox);	
 		
 		
 		
@@ -1312,11 +1312,14 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 				intent.putExtra("mode", unit_mode);
 			}
 
-			if (roundingCheckBox.isChecked())
+			//no longer using roundingCheckBox
+/*			if (roundingCheckBox.isChecked())
 				intent.putExtra("round", "true");
 			else
-				intent.putExtra("round", "false");
+				intent.putExtra("round", "false");*/
 
+			intent.putExtra("round", true);//TODO clean up these intents if they aren't needed.. I don't think they are
+			
 			//tell third activity we are coming from second screen (creating a new query)
 			intent.putExtra("origin", "second");
 

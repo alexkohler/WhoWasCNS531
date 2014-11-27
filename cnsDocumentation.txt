@@ -114,7 +114,17 @@ added placeholder for about page
 Also, some second page considerations:
 	1) When you press custom you may not want to create a refreshed intent, this, for one, refreshes ALL components of the page (meaning user will lose pattern size, unit mode, and rounding flag if they are not set to the default when the activity refreshes. Instead of playing intent volleyball, look into just adjusting what needs adjusted. (The fields and training maxes) Furthermore, with this intent volleyball you will also have to override onBackPressed, otherwise when user presses his (Android) back button it will take him to the actiity before freshing.  Granted, you will need to find a way to refresh the UI but I'm not sure if creating a new intent to the same idea is it.
 
+   :::commit 2: (techinically this morning but work was done yesterday. Fixed pattern refresh to no longer depend on an intent as stated above so back button didn't need overridden and overall a much cleaner solution. Also added an ugly (complete with wrong direction animation placeholder) swipe nav to first page.
 
+11-25-14:
+    Working on a fix to make rounding mode available at runtime. Ran into a snag where Processor is null when I'm using that to get the rouning mode, and I'm not sure what other problems I'd run into inside the conditional (I was using lbMode field which may be null but would be possible to get from database.) I should have pushed in my other commit but I did manually undid those changes and put that commit in and the current change I'm talking about right now is available in holdme directory in root of repo 
+
+11-26-14:
+	Added toggle rounding button on third screen, still need to remove from second and do some more testing. 
+
+Just seemed to test, seems to work proper, just need to get title to show back up. You might want to commit your current toggle rounding work 
+
+g
 When you press custom all fields come up. fix that.
 	Second -turqoise background, green
 	back button on refreshing activies needs redone

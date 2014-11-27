@@ -199,11 +199,6 @@
             android:ems="10"
             android:inputType="numberDecimal" />
         
-        <CheckBox
-            android:id="@+id/roundingCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rounding_checkbox_text" />
 
     </RelativeLayout>
 

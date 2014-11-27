@@ -178,12 +178,8 @@ public class BaseActivity extends ActionBarActivity {
 																													sqlLitelbMode = 1;
 																													if (thirdScreen.getModeFormat().contains("Kgs")) 
 																													sqlLitelbMode = 0;*/
-				String modeInt = ct.getLbModeFromDatabase().intern();
-				String modeString = "";
-				if (modeInt.equals("1"))
-					modeString = "Lbs";
-				else
-					modeString = "Kgs";
+				String modeString = ct.getLbModeFromDatabase().intern();
+
 				viewExistingProjectionIntent.putExtra("mode", modeString); 
 				//YOU ALSO NEED TO PASS  a "round" intent - schema change needs done here
 															/*				String areWeGoingToRound = intent.getStringExtra("round");

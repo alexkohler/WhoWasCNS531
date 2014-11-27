@@ -51,6 +51,8 @@ public class ThirdScreenActivity extends BaseActivity {
 	static boolean[] kgBooleans = new boolean[]{true, true, true, true, true, true, true};
 	static boolean[] lbBooleans = new boolean[]{true, true, true, true, true, true, true}; //defaults until plateconfig is changed
 	
+	boolean toggleButtonCalled = false;
+	
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
 	
@@ -104,7 +106,7 @@ public class ThirdScreenActivity extends BaseActivity {
 	.obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
 	
 	set(navMenuTitles, navMenuIcons);
-		
+	navMenuIcons.recycle();
 		
 
 		Button configureButton = (Button) findViewById(R.id.configureButton);
@@ -133,24 +135,44 @@ public class ThirdScreenActivity extends BaseActivity {
 		String origin = intent.getStringExtra("origin");
 		if (origin.equals("individualViews"))
 		{
+			Processor.setRoundingFlag(true);
+			ConfigTool configtool = new ConfigTool(ThirdScreenActivity.this);
+			Processor.setUnitMode(configtool.getLbModeFromDatabase());
 			eventsData.reinflateTable(this, intent);
+
 		}
 		
 		
 		else if (origin.equals("second"))
 		{
-
+			Processor.setRoundingFlag(true);//rounding on by default
+			
+			String mode = intent.getStringExtra("mode");
+			Processor.setUnitMode(mode);
 			eventsData.inflateTable(this, intent, startingDate, db); 
 			new AsyncCaller(liftPattern).execute();
 		}
-
-
-
-		else//this should only be used for refreshes?
+		else//this should only be used for refreshes? or view existing
 		{
+			Processor.setRoundingFlag(true);//rounding on by default
+			ConfigTool configtool = new ConfigTool(ThirdScreenActivity.this);
+			Processor.setUnitMode(configtool.getLbModeFromDatabase());
+			
 			Cursor cursor = getEvents();//TODO you have a bug with an intent here i think, I think you need to call the asynccaller no matter what because the pattern needs passed.  
 			showDefaultEvents(cursor);
+			
+			
 		}
+		
+		if (toggleButtonCalled)
+		{
+			if (Processor.getRoundingFlag())
+				Processor.setRoundingFlag(false);
+			else
+				Processor.setRoundingFlag(true);
+		}
+		
+		
 	}//end method oncreate 
 
 	public void setNumberCycles(int numberCycles)
@@ -184,7 +206,7 @@ public class ThirdScreenActivity extends BaseActivity {
 		@Override
 		public void onClick(View v) {
 			//Options menu -- wrap up in a checkbox Listener 
-			CharSequence colors[] = new CharSequence[] {"Adjust Lifts",  "Reset", "View By...", "Cancel"};
+			CharSequence colors[] = new CharSequence[] {/*"Adjust Lifts"*/"Toggle rounding",  "Reset", "View By...", "Cancel"};
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 			builder.setTitle("Options menu");
@@ -195,19 +217,20 @@ public class ThirdScreenActivity extends BaseActivity {
 					
 					
 					if (which == 0){//adjust lifts
-						SQLiteDatabase db = eventsData.getWritableDatabase();
-						Intent myIntent = new Intent(ThirdScreenActivity.this, SecondScreenActivity.class);
-						myIntent.putExtra("origin", "third");
-						String[] trainingMaxes = new String[6];
-						trainingMaxes = getTrainingMaxesInDefaultOrder();
-						myIntent.putExtra("key", Processor.getStartingDate()); //key is for get starting date  //TODO change 
-						myIntent.putExtra("bench", trainingMaxes[0]);
-						myIntent.putExtra("squat", trainingMaxes[1]);
-						myIntent.putExtra("ohp", trainingMaxes[2]);
-						myIntent.putExtra("dead", trainingMaxes[3]);
-						myIntent.putExtra("liftPattern", liftPattern);
-						db.delete("Lifts", null, null);
-						startActivity(myIntent);
+						if (Processor.getRoundingFlag())
+							Processor.setRoundingFlag(false);
+						else 
+							Processor.setRoundingFlag(true);
+						
+						Cursor cursor = getEvents();//TODO watch aliasing
+						TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1); //TODO watch aliasing
+//						curView = CURRENT_VIEW.DEFAULT;
+//						Toast.makeText(ThirdScreenActivity.this, "View Selected: Show All", Toast.LENGTH_SHORT).show();
+//						setQuery(null);
+						tableRowPrincipal.removeAllViews();
+						cursor = getEvents();
+						changedView = true;
+						showDefaultEvents(cursor);
 					}
 					if (which == 1) 
 					{// arrays are zero indexed
@@ -291,7 +314,6 @@ public class ThirdScreenActivity extends BaseActivity {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Cursor cursor = getEvents();
-					Cursor subcursor = getEvents();
 					TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
 					switch (which){
 					case 0:
@@ -367,7 +389,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						showDefaultEvents(cursor);
 						break;				
 					case 8:
-						CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", /*"Export...",*/ "View By...", "Back"};
+						CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", /*"Export...",*/ "View By...", "Back"}; //TODO this is completely incorrect
 
 						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 						builder.setTitle("Options menu");
@@ -484,7 +506,7 @@ public class ThirdScreenActivity extends BaseActivity {
 
 								LayoutParams.WRAP_CONTENT));
 					//	tableRowPrincipal.addView(title);
-					//	TableRow titleRow = (TableRow) findViewById(R.id.insertValues);
+//						TableRow titleRow = (TableRow) findViewById(R.id.insertValues);
 						
 						//createColumns("Date", "Cycle", "Lift", "Freq", "1st", "2nd", "3rd");
 						changedView = false;
@@ -495,10 +517,31 @@ public class ThirdScreenActivity extends BaseActivity {
 				String freq = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.FREQUENCY));
 				try
 				{
-				String first = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST))));
-				Double second = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND)));
-				Double third = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD)));
-
+				String first; 
+				Double second;
+				Double third;
+				if (Processor.getRoundingFlag())//getUnitMode = true -> using lbs, otherwise, using kgs
+				{
+					if (Processor.getUnitMode())//using lbs
+					{
+					first = String.valueOf(round(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST)), 5));
+					second = round(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND)), 5);
+					third = round(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD)), 5);
+					}
+					else //using kgs
+					{
+						first = String.valueOf(roundkg(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST)), 2.5));
+						second = roundkg(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND)), 2.5);
+						third = roundkg(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD)), 2.5);	
+					}
+					
+				}
+				else
+				{
+				first = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST))));
+				second = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND)));
+				third = roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD)));
+				}
 				
 				final String entryString = liftDate + "|" + cycle + "|" + lift + "|" + freq + "|" + first + "|" + second + "|" + third + "|\n";
 				TableRow tr = new TableRow(this);
@@ -507,7 +550,7 @@ public class ThirdScreenActivity extends BaseActivity {
 				tr.setGravity(Gravity.CENTER_HORIZONTAL);
 				//parse date (remove 20..., I don't think any cycles will be running for a millenium)
 				String insertDate = liftDate.substring(0, 6) + liftDate.substring(8, 10);
-				eventsData.createColumns(this, tr, insertDate, cycle, lift, freq, first, String.valueOf(second), String.valueOf(third));
+				eventsData.createRow(this, tr, insertDate, cycle, lift, freq, first, String.valueOf(second), String.valueOf(third));
 				
 				TextView entry = new TextView(this);
 				entry.setText(entryString); 
@@ -586,6 +629,16 @@ public class ThirdScreenActivity extends BaseActivity {
 				//then parse by date (regex) and then either parse first second and third (along with any other additional info you may want to add for featues), and you should be good to go my nigga ;)
 			}
 
+		}
+		
+		double roundkg(double i, double v) //first argument is rounded, 
+		{
+			return (double) (Math.round(i/v) * v);
+		}
+
+		double round(double i, int v) //first argument is rounded, 
+		{
+			return (double) (Math.round(i/v) * v);
 		}
 
 
