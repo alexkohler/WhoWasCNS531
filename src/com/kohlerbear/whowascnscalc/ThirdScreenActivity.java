@@ -30,26 +30,20 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
 
 
-//small victories :) 
 
 
 public class ThirdScreenActivity extends BaseActivity {
 
 	EventsDataSQLHelper eventsData;
-	TextView OUTPUT;
 	String MODE_FORMAT;
-	DecimalFormat twoDForm = new DecimalFormat("#.##");
 	Integer NUMBER_CYCLES;
 	static String CURRENT_SELECT_QUERY;
 	static int lbMode;
 	boolean insertStatus = false;
 	boolean changedView = false;
-	static boolean tableColorToggle = true;
 	String retStringSaver; //for sake of changing views
 	Cursor cursor;
 	String lbmode;
-	static boolean[] kgBooleans = new boolean[]{true, true, true, true, true, true, true};
-	static boolean[] lbBooleans = new boolean[]{true, true, true, true, true, true, true}; //defaults until plateconfig is changed
 	
 	boolean toggleButtonCalled = false;
 	
@@ -102,11 +96,11 @@ public class ThirdScreenActivity extends BaseActivity {
 		//set up navigation drawer
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
 
-	navMenuIcons = getResources()
-	.obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
-	
-	set(navMenuTitles, navMenuIcons);
-	navMenuIcons.recycle();
+		navMenuIcons = getResources()
+		.obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
+		
+		set(navMenuTitles, navMenuIcons);
+		navMenuIcons.recycle();
 		
 
 		Button configureButton = (Button) findViewById(R.id.configureButton);
@@ -129,7 +123,7 @@ public class ThirdScreenActivity extends BaseActivity {
 		tracker.send(hitParameters);
 		
 		eventsData = new EventsDataSQLHelper(this);
-		SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
+		SQLiteDatabase db = eventsData.getWritableDatabase(); 
 
 		//if we are coming from second screen
 		String origin = intent.getStringExtra("origin");
@@ -139,10 +133,7 @@ public class ThirdScreenActivity extends BaseActivity {
 			ConfigTool configtool = new ConfigTool(ThirdScreenActivity.this);
 			Processor.setUnitMode(configtool.getLbModeFromDatabase());
 			eventsData.reinflateTable(this, intent);
-
 		}
-		
-		
 		else if (origin.equals("second"))
 		{
 			Processor.setRoundingFlag(true);//rounding on by default
@@ -152,13 +143,13 @@ public class ThirdScreenActivity extends BaseActivity {
 			eventsData.inflateTable(this, intent, startingDate, db); 
 			new AsyncCaller(liftPattern).execute();
 		}
-		else//this should only be used for refreshes? or view existing
+		else//this is called during refreshes/view existing
 		{
 			Processor.setRoundingFlag(true);//rounding on by default
 			ConfigTool configtool = new ConfigTool(ThirdScreenActivity.this);
 			Processor.setUnitMode(configtool.getLbModeFromDatabase());
 			
-			Cursor cursor = getEvents();//TODO you have a bug with an intent here i think, I think you need to call the asynccaller no matter what because the pattern needs passed.  
+			Cursor cursor = getEvents();
 			showDefaultEvents(cursor);
 			
 			
@@ -173,16 +164,6 @@ public class ThirdScreenActivity extends BaseActivity {
 		}
 		
 		
-	}//end method oncreate 
-
-	public void setNumberCycles(int numberCycles)
-	{
-		NUMBER_CYCLES = numberCycles;
-	}
-
-	public int getNumberCycles()
-	{
-		return NUMBER_CYCLES;
 	}
 
 	@Override
@@ -205,41 +186,34 @@ public class ThirdScreenActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View v) {
-			//Options menu -- wrap up in a checkbox Listener 
 			CharSequence colors[] = new CharSequence[] {/*"Adjust Lifts"*/"Toggle rounding",  "Reset", "View By...", "Cancel"};
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 			builder.setTitle("Options menu");
-			//final LinearLayout myLL = (LinearLayout)findViewById(R.id.linearLayout1);
 			builder.setItems(colors, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					
 					
-					if (which == 0){//adjust lifts
+					if (which == 0){
 						if (Processor.getRoundingFlag())
 							Processor.setRoundingFlag(false);
 						else 
 							Processor.setRoundingFlag(true);
-						
 						Cursor cursor = getEvents();//TODO watch aliasing
-						TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1); //TODO watch aliasing
-//						curView = CURRENT_VIEW.DEFAULT;
-//						Toast.makeText(ThirdScreenActivity.this, "View Selected: Show All", Toast.LENGTH_SHORT).show();
-//						setQuery(null);
+						TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1); 
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
 					}
 					if (which == 1) 
-					{// arrays are zero indexed
+					{
 						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 						builder.setMessage("Are you sure you want to reset?").setPositiveButton("Yes", dialogClickListener)
 					    .setNegativeButton("No", dialogClickListener).show();
 
 					}
-					//nothing for export yet
 					if (which == 2)
 					{
 						createViewBuilder();
@@ -250,26 +224,25 @@ public class ThirdScreenActivity extends BaseActivity {
 					}
 				}
 
-
 			});
 			builder.show();
 
 		}};
 
 		private String[] getTrainingMaxesInDefaultOrder() {
-			setQuery("Lift = 'Bench' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
-			Cursor myCursor = getEvents(); //vladdy
+			setQuery("Lift = 'Bench' AND Cycle = '1'"); 
+			Cursor myCursor = getEvents(); 
 			myCursor.moveToNext();
 			String benchTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
-			setQuery("Lift = 'Squat' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+			setQuery("Lift = 'Squat' AND Cycle = '1'"); 
 			myCursor = getEvents(); //vladdy
 			myCursor.moveToNext();
 			String squatTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
-			setQuery("Lift = 'OHP' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+			setQuery("Lift = 'OHP' AND Cycle = '1'"); 
 			myCursor = getEvents(); //vladdy
 			myCursor.moveToNext();
 			String ohpTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
-			setQuery("Lift = 'Deadlift' AND Cycle = '1'"); //more specific query to leave room for customization down the road (order of lifts may not always be the same) 
+			setQuery("Lift = 'Deadlift' AND Cycle = '1'");  
 			myCursor = getEvents(); //vladdy
 			myCursor.moveToNext();
 			String deadTM  = myCursor.getString(myCursor.getColumnIndex(EventsDataSQLHelper.TRAINING_MAX));
@@ -288,7 +261,6 @@ public class ThirdScreenActivity extends BaseActivity {
 		    public void onClick(DialogInterface dialog, int which) {
 		        switch (which){
 		        case DialogInterface.BUTTON_POSITIVE:
-					//if yes 
 					SQLiteDatabase db = eventsData.getWritableDatabase();
 					curView = CURRENT_VIEW.DEFAULT;
 					db.delete("Lifts", null, null);
@@ -302,7 +274,6 @@ public class ThirdScreenActivity extends BaseActivity {
 		    }
 		};
 
-		//ugly but will clean up later..
 		public void createViewBuilder()
 		{
 			CharSequence colors[] = new CharSequence[] {"Show all", "Bench Only", "Squat Only", "OHP Only", "Deadlift only", "5-5-5 Days only", "3-3-3 Days only", "5-3-1 days only", "Back"};
@@ -329,7 +300,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						curView = CURRENT_VIEW.BENCH;
 						Toast.makeText(ThirdScreenActivity.this, "View Selected: Bench Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Bench'");
-						tableRowPrincipal.removeAllViews(); //try something like this 
+						tableRowPrincipal.removeAllViews(); 
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
@@ -399,7 +370,7 @@ public class ThirdScreenActivity extends BaseActivity {
 								if (which == 0){
 									onBackPressed();
 								}
-								if (which == 1) // arrays are zero indexed
+								if (which == 1) 
 								backToFirst();
 
 								if (which == 2)
@@ -411,7 +382,7 @@ public class ThirdScreenActivity extends BaseActivity {
 							}//end inner onClick 
 						});//end inner which listener
 						builder.show();	
-						break;//break 8
+						break;
 
 
 					}//end switch statement
@@ -421,30 +392,6 @@ public class ThirdScreenActivity extends BaseActivity {
 			builder2.show();
 
 		}//end createViewBuilder
-
-		
-
-
-		public void setMode (String myMode )
-		{
-			MODE_FORMAT = myMode;
-		}
-
-		String getModeFormat ()
-		{
-			return MODE_FORMAT; 
-		}
-
-
-		public void setQuery(String myQuery)
-		{
-			CURRENT_SELECT_QUERY = myQuery;
-		}
-
-		public String getQuery ()
-		{
-			return CURRENT_SELECT_QUERY;
-		}
 
 		@SuppressWarnings("deprecation") Cursor getEvents() {
 			SQLiteDatabase db = eventsData.getReadableDatabase();
@@ -486,13 +433,9 @@ public class ThirdScreenActivity extends BaseActivity {
 					retStringSaver = ret.toString();
 					setQuery(temp); //change query back to what it was
 					
-					TextView title = (TextView) findViewById(R.id.trainingMaxesTV);
-					title.setText(retStringSaver.toString());
-					//title.setTextSize(12);
-					//title.setGravity(Gravity.CENTER);
-					title.setTextColor(Color.WHITE);
-					//title.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.WRAP_CONTENT));
-					//tableRowPrincipal.addView(title);
+					TextView trainingMaxesStream = (TextView) findViewById(R.id.trainingMaxesTV);
+					trainingMaxesStream.setText(retStringSaver.toString());
+					trainingMaxesStream.setTextColor(Color.WHITE);
 				}
 				else
 					if (changedView){//if the title hasn't been inserted, has there been a change in the view?
@@ -558,16 +501,6 @@ public class ThirdScreenActivity extends BaseActivity {
 				entry.setGravity(Gravity.CENTER);
 				LinearLayout.LayoutParams PO = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1f);
 				entry.setLayoutParams(PO); 
-				if(tableColorToggle)
-				{
-				entry.setBackgroundColor(Color.WHITE);
-				tableColorToggle = false;
-				}
-				else if (!tableColorToggle)
-				{
-				entry.setBackgroundColor(Color.LTGRAY);
-				tableColorToggle = true;
-				}
 				
 				tr.setOnClickListener(new TableRowClickListener(entryString){
 
@@ -626,44 +559,16 @@ public class ThirdScreenActivity extends BaseActivity {
 				{
 					Toast.makeText(ThirdScreenActivity.this, "There was an error processing your lift numbers, please double check them!", Toast.LENGTH_LONG).show();
 				}
-				//then parse by date (regex) and then either parse first second and third (along with any other additional info you may want to add for featues), and you should be good to go my nigga ;)
 			}
 
 		}
 		
-		double roundkg(double i, double v) //first argument is rounded, 
-		{
-			return (double) (Math.round(i/v) * v);
-		}
-
-		double round(double i, int v) //first argument is rounded, 
-		{
-			return (double) (Math.round(i/v) * v);
-		}
-
-
-/*		public TableRowClickListener individualViewListener = new  TableRowClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				String entryText =  ((TextView) v).getText().toString(); 
-				
-			}};  */
-
 			private void backToFirst()
 			{
 				SQLiteDatabase db = eventsData.getWritableDatabase();
 				db.delete("Lifts", null, null);
 				startActivity(new Intent(this, MainActivity.class));
 			}		
-
-
-			double roundtoTwoDecimals(double d) 
-			{
-				return Double.valueOf(twoDForm.format(d));
-			}
-			
-
 
 			//Async caller for threading
 			class AsyncCaller extends AsyncTask<Void, Void, Void>
@@ -708,10 +613,60 @@ public class ThirdScreenActivity extends BaseActivity {
 			}
 
 
+			
+
+			//setters/getters
+			public void setMode (String myMode )
+			{
+				MODE_FORMAT = myMode;
+			}
+
+			String getModeFormat ()
+			{
+				return MODE_FORMAT; 
+			}
 
 
+			public void setQuery(String myQuery)
+			{
+				CURRENT_SELECT_QUERY = myQuery;
+			}
 
-}//end thirdscreen activiy 
+			public String getQuery ()
+			{
+				return CURRENT_SELECT_QUERY;
+			}
+			
+			public void setNumberCycles(int numberCycles)
+			{
+				NUMBER_CYCLES = numberCycles;
+			}
+
+			public int getNumberCycles()
+			{
+				return NUMBER_CYCLES;
+			}
+			
+			
+			//rounding methods
+			double roundkg(double valueToBeRounded, double roundVal) //first argument is rounded, 
+			{
+				return (double) (Math.round(valueToBeRounded/roundVal) * roundVal);
+			}
+
+			double round(double valueToBeRounded, int roundVal)  
+			{
+				return (double) (Math.round(valueToBeRounded/roundVal) * roundVal);
+			}
+			
+			double roundtoTwoDecimals(double d) 
+			{
+				DecimalFormat twoDForm = new DecimalFormat("#.##");
+				return Double.valueOf(twoDForm.format(d));
+			}
+
+
+} 
 
 
 
