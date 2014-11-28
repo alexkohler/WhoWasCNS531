@@ -49,6 +49,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+				android:textSize="18sp"                
                 android:background="#000000"
                 android:gravity="center"
                 android:text="@string/date_column" />
@@ -58,6 +59,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+				android:textSize="18sp"   
                 android:background="#000000"
                 android:gravity="center"
                 android:text="@string/cycle_column" />
@@ -67,6 +69,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+				android:textSize="18sp"                   
                 android:background="#000000"
                 android:gravity="center"
                 android:text="@string/lift_column" />
@@ -76,6 +79,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+				android:textSize="18sp"                   
                 android:background="#000000"
                 android:gravity="center"
                 android:text="@string/freq_column" />
@@ -85,6 +89,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+				android:textSize="18sp"                   
                 android:background="#000000"
                 android:gravity="center"
                 android:text="@string/first_lift_column" />
@@ -94,6 +99,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+				android:textSize="18sp"                   
                 android:background="#000000"
                 android:gravity="center"
                 android:text="@string/second_lift_column" />
@@ -103,6 +109,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+				android:textSize="18sp"                   
                 android:background="#000000"
                 android:gravity="center"
                 android:text="@string/third_lift_column" />

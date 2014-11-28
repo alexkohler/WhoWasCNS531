@@ -45,6 +45,8 @@ public class ThirdScreenActivity extends BaseActivity {
 	Cursor cursor;
 	String lbmode;
 	
+	TableRow titleTableRow; 
+	
 	boolean toggleButtonCalled = false;
 	
 	private String[] navMenuTitles;
@@ -124,7 +126,10 @@ public class ThirdScreenActivity extends BaseActivity {
 		
 		eventsData = new EventsDataSQLHelper(this);
 		SQLiteDatabase db = eventsData.getWritableDatabase(); 
-
+		
+		titleTableRow = (TableRow) findViewById(R.id.insertValues);
+		
+		
 		//if we are coming from second screen
 		String origin = intent.getStringExtra("origin");
 		if (origin.equals("individualViews"))
@@ -186,7 +191,7 @@ public class ThirdScreenActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View v) {
-			CharSequence colors[] = new CharSequence[] {/*"Adjust Lifts"*/"Toggle rounding",  "Reset", "View By...", "Cancel"};
+			CharSequence colors[] = new CharSequence[] {"Toggle rounding",  /*"Adjust Lifts"*/ "Reset", "View By...", "Cancel"};
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 			builder.setTitle("Options menu");
@@ -195,7 +200,7 @@ public class ThirdScreenActivity extends BaseActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					
 					
-					if (which == 0){
+					if (which == 0){//Toggle Rounding
 						if (Processor.getRoundingFlag())
 							Processor.setRoundingFlag(false);
 						else 
@@ -207,18 +212,35 @@ public class ThirdScreenActivity extends BaseActivity {
 						changedView = true;
 						showDefaultEvents(cursor);
 					}
-					if (which == 1) 
+/*					if (which == 1)//Adjust lifts 
+					{
+						SQLiteDatabase db = eventsData.getWritableDatabase();
+						Intent myIntent = new Intent(ThirdScreenActivity.this, REVAMPEDSecondScreenActivity.class);
+						myIntent.putExtra("origin", "third");
+						String[] intentDataArray = new String[6];
+						intentDataArray = getTrainingMaxesInDefaultOrder();
+						myIntent.putExtra("key", Processor.getStartingDate()); //key is for get starting date  //TODO change 
+						myIntent.putExtra("bench", intentDataArray[0]);
+						myIntent.putExtra("squat", intentDataArray[1]);
+						myIntent.putExtra("ohp", intentDataArray[2]);
+						myIntent.putExtra("dead", intentDataArray[3]);
+						myIntent.putExtra("liftPattern", liftPattern);
+						db.delete("Lifts", null, null);//TODO necessary?
+						startActivity(myIntent);
+						//decide if you want to support, big problem is determining where the 
+					}*/
+					if (which == 1) //reset
 					{
 						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
 						builder.setMessage("Are you sure you want to reset?").setPositiveButton("Yes", dialogClickListener)
 					    .setNegativeButton("No", dialogClickListener).show();
 
 					}
-					if (which == 2)
+					if (which == 2)//view by
 					{
 						createViewBuilder();
 					}
-					if (which== 3) 
+					if (which == 3) //cancel 
 					{
 						dialog.cancel();
 					}
@@ -254,6 +276,7 @@ public class ThirdScreenActivity extends BaseActivity {
 			
 			return trainingMaxes;
 		}
+		
 		
 		//"Are you sure?" builder template (Used in reset)
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -406,7 +429,7 @@ public class ThirdScreenActivity extends BaseActivity {
 
 		@SuppressWarnings("deprecation") void showDefaultEvents(Cursor cursor) {
 			StringBuilder ret = new StringBuilder("");
-			TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
+			TableLayout tableLayout = (TableLayout)findViewById(R.id.tableLayout1);
 			while (cursor.moveToNext()) {
 				if (!this.insertStatus){//has title been inserted?
 					String temp = getQuery(); //temporarily hold query
@@ -416,7 +439,7 @@ public class ThirdScreenActivity extends BaseActivity {
 					String squatTM = TMS[1];
 					String ohpTM = TMS[2];
 					String deadTM = TMS[3];
-					setQuery(null);
+					setQuery(null);//TODO is this query stuff dead code now?
 					ret = new StringBuilder("Start TMs [Bench: " + benchTM + "]");
 					ret.append(" [Squat: " + squatTM + "]");
 					ret.append(" [OHP: " + ohpTM + "]" );
@@ -440,7 +463,7 @@ public class ThirdScreenActivity extends BaseActivity {
 				else
 					if (changedView){//if the title hasn't been inserted, has there been a change in the view?
 
-						TextView title = new TextView(this);
+/*						TextView title = new TextView(this);
 						title.setText(retStringSaver.toString());
 						title.setTextSize(12);
 						title.setGravity(Gravity.CENTER);
@@ -448,10 +471,19 @@ public class ThirdScreenActivity extends BaseActivity {
 						title.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,          
 
 								LayoutParams.WRAP_CONTENT));
-					//	tableRowPrincipal.addView(title);
-//						TableRow titleRow = (TableRow) findViewById(R.id.insertValues);
+						tableRowPrincipal.addView(title);
+						TableRow titleRow = (TableRow) findViewById(R.id.insertValues);*/
 						
-						//createColumns("Date", "Cycle", "Lift", "Freq", "1st", "2nd", "3rd");
+						//add title row here?
+						TableRow tr = new TableRow(this);
+						LayoutParams trParams = tableLayout.getLayoutParams();
+						tr.setLayoutParams(trParams);
+						tr.setGravity(Gravity.CENTER_HORIZONTAL);
+/*			            android:layout_width="match_parent"
+			                    android:layout_height="wrap_content"
+			                    android:gravity="center_horizontal"*/
+//						eventsData.createRow(this, tr, "Date", "Cycle", "Lift", "Freq", "1st", "2nd", "3rd");
+						tableLayout.addView(titleTableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 						changedView = false;
 					}
 				String liftDate = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
@@ -488,7 +520,7 @@ public class ThirdScreenActivity extends BaseActivity {
 				
 				final String entryString = liftDate + "|" + cycle + "|" + lift + "|" + freq + "|" + first + "|" + second + "|" + third + "|\n";
 				TableRow tr = new TableRow(this);
-				LayoutParams trParams = tableRowPrincipal.getLayoutParams();
+				LayoutParams trParams = tableLayout.getLayoutParams();
 				tr.setLayoutParams(trParams);
 				tr.setGravity(Gravity.CENTER_HORIZONTAL);
 				//parse date (remove 20..., I don't think any cycles will be running for a millenium)
@@ -553,7 +585,7 @@ public class ThirdScreenActivity extends BaseActivity {
 						startActivity(intent);
 					}});   
 				//tableRowPrincipal.addView(entry);
-				tableRowPrincipal.addView(tr);
+				tableLayout.addView(tr);
 				} // end numberformatexception block
 				catch (NumberFormatException e)
 				{

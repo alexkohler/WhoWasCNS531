@@ -1,4 +1,5 @@
-package info.hoang8f.android.segmented;
+package com.kohlerbear.whowascnscalc.hoang8f.segmented;
+
 
 import com.kohlerbear.whowascnscalc.R;
 

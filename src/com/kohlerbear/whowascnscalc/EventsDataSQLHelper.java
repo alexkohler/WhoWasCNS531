@@ -193,7 +193,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		thirdScreen.setQuery(null);
 		//determine whether to round or not
 		
-//TODO delete this if your checkbox feature is stable
+//TODO delete this if your che
 //		String areWeGoingToRound = intent.getStringExtra("round");
 //		if (areWeGoingToRound.equals("true"))	
 //			thirdScreen.Processor.setRoundingFlag(true);

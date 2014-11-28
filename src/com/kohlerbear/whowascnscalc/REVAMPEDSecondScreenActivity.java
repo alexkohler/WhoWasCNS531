@@ -143,7 +143,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		//set up intent stuff
 		Intent previousIntent = getIntent();
 		String origin = previousIntent.getStringExtra("origin");
-		if (origin.equals("third"))
+		if (origin.equals("third"))//TODO might be deprecated
 		{
 			benchEditText.setText(previousIntent.getStringExtra("bench"));
 			squatEditText.setText(previousIntent.getStringExtra("squat"));

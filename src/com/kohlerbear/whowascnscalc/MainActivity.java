@@ -26,6 +26,9 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
+import com.hannesdorfmann.swipeback.Position;
+import com.hannesdorfmann.swipeback.SwipeBack;
+import com.kohlerbear.whowascns.hannesorfmann.swipeback.SwipeForwardTransformer;
 
 
 
@@ -35,17 +38,18 @@ public class MainActivity extends BaseActivity {
 	//private EasyTracker easyTracker = null;
 	
 	//to be used in activity 3 - may not be most efficient but for testing purposes 
-	DatePicker dp;
+	public static DatePicker dp;
 	static int startingDateDay;
 	static int startingDateMonth;
 	static int startingDateYear;
 	DrawerLayout drawerLayout;  //declare this globally
-	String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"  };
+	String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
 	String[] liftPattern = new String[7];
 	TextView liftTicker;
 	Tracker tracker = null;
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
+	SwipeBack swipebackInst;
 	
 	
 	@Override
@@ -53,6 +57,11 @@ public class MainActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		//setTheme(R.style.AppBaseTheme);
 		setContentView(R.layout.activity_main);
+		// Init the swipe back mechanism
+		swipebackInst = SwipeBack.attach(this, Position.RIGHT)
+		.setContentView(R.layout.activity_main)
+		.setSwipeBackView(R.layout.swipeback_forward)
+		.setSwipeBackTransformer(new SwipeForwardTransformer(this));
 		
 		
 		//Set up our navigation drawer
@@ -111,6 +120,7 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				goToSecond();
+//				finish();
 			}
 		});
 		
@@ -128,6 +138,9 @@ public class MainActivity extends BaseActivity {
         //these collide with navdrawer listener
        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
        drawerLayout.setOnTouchListener(gestureListener);
+       //set up our modified swipeback implementation
+       
+       
 
 
 
@@ -143,6 +156,12 @@ public class MainActivity extends BaseActivity {
 	  public void onStop() {
 	    super.onStop();
 	    EasyTracker.getInstance(this).activityStop(this);  // Add this method.
+	  }
+	  @Override
+	  public void onResume(){//onresume will NEVER be called before oncreate
+		  super.onResume();
+		  swipebackInst.close(false);
+		  swipebackInst.close();
 	  }
 	  
 		class MyGestureDetector extends SimpleOnGestureListener {
@@ -206,7 +225,7 @@ public class MainActivity extends BaseActivity {
 			
 			db.close();
 			startActivity(intent);
-			overridePendingTransition(R.anim.exit_slide_right,R.anim.exit_slide_right);
+//			overridePendingTransition(R.anim.exit_slide_right,R.anim.exit_slide_right);
 
 
 		}
