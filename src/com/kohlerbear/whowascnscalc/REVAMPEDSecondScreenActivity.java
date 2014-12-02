@@ -300,6 +300,8 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	private void inflatePatternButtons(String[] pattern, boolean custom)
 	{
 	    liftPattern = pattern;
+	    if (custom)
+	    	liftPattern = new String[]{ "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"};
 	    int patternIndex = 0;
 	    //0 - adjust pattern
 	    //1 - 4 days
@@ -321,6 +323,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    	else //otherwise if we are, hide all the fields and make sure we have no bold! (Because they are numerics)
 	    	{
 	    		choices[patternIndex].setTypeface(Typeface.DEFAULT);
+	    		choices[patternIndex].setError(null);
 	    		choiceFields[patternIndex].setVisibility(View.INVISIBLE);
 	    	}
 	    		
@@ -621,12 +624,15 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		    		choiceFields[viewSuffix - 1].setVisibility(View.INVISIBLE);//arays are zero indexed
 		    	else //make sure field is visible 
 		    		choiceFields[viewSuffix - 1].setVisibility(View.VISIBLE);
+		    	//regardless, clear the error on the field.
+		    		choiceFields[viewSuffix - 1].setError(null);
 		    	String dropArea = (String) dropTarget.getText();
 		    	//update the text in the target view to reflect the data being dropped
 		    	dropTarget.setText(dropped.getText());
 		    	updateLiftArray(dropArea.toLowerCase(Locale.getDefault()), (String) dropped.getText());
 		    	//make it bold to highlight the fact that an item has been dropped
 		    	dropTarget.setTypeface(Typeface.DEFAULT_BOLD);
+		    	dropTarget.setError(null);
 		    	//if an item has already been dropped here, there will be a tag
 		    	Object tag = dropTarget.getTag();
 		    	//if there is already an item here, set it back visible in its original place
@@ -954,7 +960,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 			//experimental error handling
 			choices[i].requestFocus();
 			choices[i].setError("You left this spot empty!");
-//			toastThrown = true;
+			toastThrown = true;
 			}
 			else
 			{
