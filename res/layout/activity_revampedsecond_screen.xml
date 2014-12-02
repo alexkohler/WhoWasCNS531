@@ -18,21 +18,9 @@
 
     
 
-    <Button
-        android:id="@+id/adjustActivitySaveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="@string/AdjustActivity_Save" />
+    
 
-    <Button
-        android:id="@+id/adjustActivityResetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="@string/AdjustActivity_Custom" />
+    
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -43,6 +31,44 @@
         android:orientation="vertical"
         android:paddingLeft="0dp"
         android:paddingRight="0dp" >
+
+        <com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup
+            android:id="@+id/patternSegmentGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/patternButtonFourDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:text="4" />
+
+            <RadioButton
+                android:id="@+id/patternButtonFiveDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:text="5" />
+
+            <RadioButton
+                android:id="@+id/patternButtonSixDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="6" />
+
+            <RadioButton
+                android:id="@+id/patternButtonSevenDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:text="7" />
+        </com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup>
+
     </LinearLayout>
 
     <RelativeLayout
@@ -119,11 +145,13 @@
 
         <TextView
             android:id="@+id/choice_1"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="114dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/choice"
             android:gravity="center"
             android:text="@string/choice_1" />
@@ -203,74 +231,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/liftLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true" >
-
-        <TextView
-            android:id="@+id/option5"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/option4"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/option"
-            android:gravity="center"
-            android:text="@string/option_5"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/option4"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/option3"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/option"
-            android:gravity="center"
-            android:text="@string/option_4"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/option2"
-            android:layout_width="112dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/option1"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/option"
-            android:gravity="center"
-            android:text="@string/option_2"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/option3"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/option2"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/option"
-            android:gravity="center"
-            android:text="@string/option_3"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/option1"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_margin="0dp"
-            android:background="@drawable/option"
-            android:gravity="center"
-            android:text="@string/option_1"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/componentLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -291,49 +251,6 @@
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
             android:text="@string/pattern_size" />
-
-
-        
-           <com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup
-            android:id="@+id/patternSegmentGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"	
-            android:layout_marginTop="65dp"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/patternButtonFourDays"
-                style="@style/RadioButton"
-                android:layout_width="89.5dp"
-                android:layout_height="wrap_content"
-                android:text="4" />
-
-            <RadioButton
-                android:id="@+id/patternButtonFiveDays"
-                style="@style/RadioButton"
-                android:layout_width="89.5dp"
-                android:layout_height="wrap_content"
-                android:text="5" />
-            
-               <RadioButton
-                android:id="@+id/patternButtonSixDays"
-                style="@style/RadioButton"
-                android:layout_width="89.5dp"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="6" />
-                        
-              <RadioButton
-                android:id="@+id/patternButtonSevenDays"
-                style="@style/RadioButton"
-                android:layout_width="89.5dp"
-                android:layout_height="wrap_content"
-                android:text="7" />
-              
-                
-        </com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup>
         
         
         
@@ -342,55 +259,138 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/cycles_array" />
-            
-            
+
+            <RelativeLayout
+                android:id="@+id/liftLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/numberCyclesSpinnerNew" >
+
+                <TextView
+                    android:id="@+id/option5"
+                    android:layout_width="114dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/option4"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/option"
+                    android:gravity="center"
+                    android:text="@string/option_5"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/option4"
+                    android:layout_width="114dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/option3"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/option"
+                    android:gravity="center"
+                    android:text="@string/option_4"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/option2"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/option1"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/option"
+                    android:gravity="center"
+                    android:text="@string/option_2"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/option3"
+                    android:layout_width="114dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/option2"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/option"
+                    android:gravity="center"
+                    android:text="@string/option_3"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/option1"
+                    android:layout_width="114dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="0dp"
+                    android:background="@drawable/option"
+                    android:gravity="center"
+                    android:text="@string/option_1"
+                    android:textStyle="bold" />
+            </RelativeLayout>
             
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/adjustActivityBackButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/choiceLayout" >
+    
 
-        <com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup
-            android:id="@+id/poundKilogramSegmentedButtonGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/kgSegmentedButton"
-                style="@style/RadioButton"
-                android:layout_width="178dp"
-                android:layout_height="wrap_content"
-                android:text="@string/Kilograms" />
-
-            <RadioButton
-                android:id="@+id/lbSegmentedButton"
-                style="@style/RadioButton"
-                android:layout_width="178dp"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/Pounds" />
-
-        </com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup>
-    </LinearLayout>
-
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/componentLayout" >
-        
 
+            <Button
+                android:id="@+id/adjustActivitySaveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/AdjustActivity_Save" />
+            
+            
+            <Button
+        android:id="@+id/adjustActivityResetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/AdjustActivity_Custom" />
 
-    </FrameLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/adjustActivitySaveButton"
+                android:layout_alignParentLeft="true" >
+            </LinearLayout>
+
+            <com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup
+                android:id="@+id/poundKilogramSegmentedButtonGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/kgSegmentedButton"
+                    style="@style/RadioButton"
+                    android:layout_width="178dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Kilograms" />
+
+                <RadioButton
+                    android:id="@+id/lbSegmentedButton"
+                    style="@style/RadioButton"
+                    android:layout_width="178dp"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/Pounds" />
+            </com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup>
+
+    </RelativeLayout>
 
 </RelativeLayout>
 

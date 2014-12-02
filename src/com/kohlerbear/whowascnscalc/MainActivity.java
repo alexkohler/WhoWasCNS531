@@ -214,10 +214,10 @@ public class MainActivity extends BaseActivity {
 			//if this db does not have a database....
 			EventsDataSQLHelper eventsData = new EventsDataSQLHelper(this);
 			SQLiteDatabase db = eventsData.getWritableDatabase();
-			//TODO check repercussions of tis...
-	//		db.execSQL("drop table Lifts");
-			//db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_LbFlag integer, RoundFlag integer, pattern text not null)"); //TODO why is there here?
-			Intent intent = new Intent(MainActivity.this, REVAMPEDSecondScreenActivity.class); //TODO just change this back to second if things go awry
+			//TODO Look into a better way of upgrading tables, you might want to do this on secm
+			db.execSQL("drop table Lifts");
+			db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_LbFlag integer, RoundFlag integer, pattern text not null)"); 
+			Intent intent = new Intent(MainActivity.this, REVAMPEDSecondScreenActivity.class); 
 			intent.putExtra("key", formattedDate );
 			intent.putExtra("origin", "first");
 			intent.putExtra("liftPattern", liftPattern);

@@ -54,7 +54,7 @@
                 android:gravity="center"
                 android:text="@string/date_column" />
 
-            <TextView
+        <!--      <TextView
                 android:id="@+id/cycleColumn"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 				android:textSize="18sp"   
                 android:background="#000000"
                 android:gravity="center"
-                android:text="@string/cycle_column" />
+                android:text="@string/cycle_column" /> -->
 
             <TextView
                 android:id="@+id/liftColumn"

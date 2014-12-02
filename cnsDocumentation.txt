@@ -124,20 +124,27 @@ Also, some second page considerations:
 
 Just seemed to test, seems to work proper, just need to get title to show back up. You might want to commit your current toggle rounding work 
 
-g
-When you press custom all fields come up. fix that.
+
+12-1-14:
+	Made error handling on the textview instead of having toast (after palmey exposed the fact that it was thrown every time the button was pressed.
+Just need to fix the other toast problem with lacking a lift, as it will also be thrown every time save is pressed. It's the little things but users are not supposed to be smart. 
+
+TODO:
+	Fix toast problem - "You are missing the following lifts" gets thrown every time save is pressed.
+	Consider repercussions of moving pattern size to third screen
+		Positive - would be more organized, easier to click.
+		Negative - removes swipe navigation
+	Figure out a way to make your individual views prettier, to include warmups,  and have the ability to log work and assistance.	
+	Keep an eye on that touch listener you have for clearing focus
+
+
 	Second -turqoise background, green
-	back button on refreshing activies needs redone
 	Swipe nav for first page
-	Remove unneccessary components first page (all buttons)
 	Dial in second screen components placement
-	Steal whatever you can from dashboard fragment
 	Fix analytics logging
-	Remove useless buttons from first screen
 	Second background -tan(peachy tan)
-	Second page - swipe navigation
+	Second page - swipe navigation?
 	Second page - "not quite" segemented buttons  - definitely want the not quite segmented button	 (See pats snooki fb message)
-	Remove the checkbox and put onto third screeen
 	Keep configure (but remove reset and adjust lifts and have it go straight to the view by builder menu
 
 	Patrick - activity titles?

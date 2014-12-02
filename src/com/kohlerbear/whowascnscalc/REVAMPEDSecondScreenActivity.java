@@ -5,10 +5,11 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Locale;
 
-import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -18,14 +19,15 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -222,6 +224,30 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    
 //	    inflatePatternButtons(origin);
 		inflatePatternButtons(defaultPattern, false);//not custom, in oncreate the choices wil be 	    
+		
+		
+		//touch interceptor to clear errors if user presses outside the error bubble
+		FrameLayout touchInterceptor = (FrameLayout)findViewById(R.id.content_frame);
+		touchInterceptor.setOnTouchListener(new OnTouchListener() {
+		    @Override
+		    public boolean onTouch(View v, MotionEvent event) {
+		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+		        	for (TextView choice : choices)
+		        	{
+		            if (choice.isFocused()) {
+		                Rect outRect = new Rect();
+		                choice.getGlobalVisibleRect(outRect);
+		                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+		                    choice.clearFocus();
+		                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE); 
+		                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+		                }
+		            }
+		        	}
+		        }
+		        return false;
+		    }
+		});
 	}
 	
 	
@@ -922,10 +948,17 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 				return false;
 			}
 			if ((currentLift.equals("First") || currentLift.equals("Second") || currentLift.equals("Third") || currentLift.equals("Fourth")
-				|| currentLift.equals("Fifth") || currentLift.equals("Sixth") || currentLift.equals("Seventh")) && !toastThrown)
+				|| currentLift.equals("Fifth") || currentLift.equals("Sixth") || currentLift.equals("Seventh"))/* && !toastThrown*/)
 			{
-			Toast.makeText(REVAMPEDSecondScreenActivity.this, "You left a spot open! Please use all spots or choose a smaller pattern size.", Toast.LENGTH_LONG).show();	
-			toastThrown = true;
+//			Toast.makeText(REVAMPEDSecondScreenActivity.this, "You left a spot open! Please use all spots or choose a smaller pattern size.", Toast.LENGTH_LONG).show();	
+			//experimental error handling
+			choices[i].requestFocus();
+			choices[i].setError("You left this spot empty!");
+//			toastThrown = true;
+			}
+			else
+			{
+				choices[i].setError(null);
 			}
 			switch (currentLift)
 			{
