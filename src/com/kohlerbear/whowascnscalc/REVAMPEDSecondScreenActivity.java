@@ -61,7 +61,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	EditText deadEditText;
 	
 	//TM widgets
-	Spinner numberCyclesSpinner;
+//	Spinner numberCyclesSpinner;
 	RadioGroup patternSegmentGroup; //to replace numberOfDays in patterns pi
 	RadioButton patternFourDaysRadioButton;
 	RadioButton patternFiveDaysRadioButton;
@@ -117,8 +117,8 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		
 
 		//TM COMPONENTS
-		numberCyclesSpinner = (Spinner) findViewById(R.id.numberCyclesSpinnerNew);
-		numberCyclesSpinner.setOnItemSelectedListener(numberCyclesSpinnerListener);   //TODO check if listener is even needed
+//		numberCyclesSpinner = (Spinner) findViewById(R.id.numberCyclesSpinnerNew);
+//		numberCyclesSpinner.setOnItemSelectedListener(numberCyclesSpinnerListener);   //TODO check if listener is even needed
 		
 		
 //		roundingCheckBox = (CheckBox) findViewById(R.id.roundingCheckBox);	
@@ -1132,7 +1132,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		Boolean squatErrorFlag = false;
 		Boolean ohpErrorFlag   = false;
 		Boolean  deadErrorFlag = false;
-		Boolean spinnerErrorFlag = false;
+//		Boolean spinnerErrorFlag = false; //possibly deprecated if number of cycles gets removed from projection
 		//first, get data from previous screen (starting date passed to second from first)
 		Intent intent = getIntent();
 
@@ -1140,7 +1140,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		if (startingDate == null && !ct.dbEmpty())
 			startingDate = ct.getStartingDateFromDatabase();
 
-		intent = new Intent(REVAMPEDSecondScreenActivity.this, ThirdScreenActivity.class);
+		intent = new Intent(REVAMPEDSecondScreenActivity.this, ThirdScreenPrototype.class);
 		intent.putExtra("key2", startingDate);
 		intent.putExtra("liftPattern", liftPattern);
 
@@ -1323,19 +1323,19 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 			intent.putExtra("dead", dead);
 
 		//Spinner error handling
-		if (numberCyclesSpinner.getSelectedItem().toString().equals("0")) 
-		{
-			errorStream = errorStream + "\n" + zeroCycleString;
+//		if (numberCyclesSpinner.getSelectedItem().toString().equals("0")) 
+//		{
+//			errorStream = errorStream + "\n" + zeroCycleString;
 //			errorTextView.setText(errorStream);
-			spinnerErrorFlag = true;
-		}
+//			spinnerErrorFlag = true;
+//		}
 
-		else
-		{
-			intent.putExtra("numberCycles", numberCyclesSpinner.getSelectedItem().toString());
-		}
+//		else
+//		{
+			intent.putExtra("numberCycles", "5"/*numberCyclesSpinner.getSelectedItem().toString()*/); //TODO changing this to five so we can just query without selection
+//		}
 
-		if (!benchErrorFlag && !squatErrorFlag && !ohpErrorFlag && !deadErrorFlag && !spinnerErrorFlag)
+		if (!benchErrorFlag && !squatErrorFlag && !ohpErrorFlag && !deadErrorFlag /*&& !spinnerErrorFlag*/)
 		{
 
 

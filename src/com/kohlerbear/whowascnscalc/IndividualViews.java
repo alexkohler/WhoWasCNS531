@@ -488,7 +488,7 @@ Drawable getPlateImageFor(int plateIndex)
         
 
 public boolean onOptionsItemSelected(MenuItem item){
-    Intent myIntent = new Intent(getApplicationContext(), ThirdScreenActivity.class);
+    Intent myIntent = new Intent(getApplicationContext(), ThirdScreenPrototype.class);
 	myIntent.putExtra("origin", "individualViews");
 	myIntent.putExtra("viewMode", viewMode);	
 	myIntent.putExtra("liftPattern", liftPattern);	

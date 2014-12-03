@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
@@ -65,7 +66,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 			db.execSQL(sql);
 	}
 
-	public void addEvent(ThirdScreenActivity thirdScreen) {
+	public void addEvent(ThirdScreenPrototype thirdScreen) {
 		SQLiteDatabase db = getWritableDatabase();
 		ContentValues values = new ContentValues();
 		//db.execSQL("ALTER TABLE Lifts ADD COLUMN column_lbFlag integer");
@@ -114,7 +115,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		db.insert(EventsDataSQLHelper.TABLE, null, values);
 	}
 
-	void createRow(ThirdScreenActivity thirdScreen, TableRow tr, String liftDate, String cycle, String lift, String freq, String first, String second, String third) {
+	void createRow(ThirdScreenPrototype thirdScreen, TableRow tr, String liftDate, String cycle, String lift, String freq, String first, String second, String third) {
 		//date column creation 
 		
 		
@@ -194,9 +195,10 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		tr.addView(thirdLiftColumn);
 	}
 
-	void inflateTable(ThirdScreenActivity thirdScreen, Intent intent, String startingDate, SQLiteDatabase db) {
+	void inflateTable(ThirdScreenPrototype thirdScreen, Intent intent, String startingDate, SQLiteDatabase db) {
 		db.delete("Lifts", null, null);
-		thirdScreen.setQuery(null);
+		Toast.makeText(thirdScreen, "DEBUG: displaying cycle 1 from inflateTable", Toast.LENGTH_SHORT).show();
+		thirdScreen.setQuery("CYCLE = '1'");//see if assuming this cycle is one actually works, this is only called when coming from second so I think you're good to go
 		//determine whether to round or not
 		
 //TODO delete this if your che
@@ -238,66 +240,64 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		thirdScreen.setNumberCycles(numberCycles);
 
 	}
-
-	void reinflateTable(ThirdScreenActivity thirdScreen, Intent intent) {
+	//TODO if trouble arises just checkout the sql helper, not everything
+	void reinflateTable(ThirdScreenPrototype thirdScreen, Intent intent) {
 		String view = intent.getStringExtra("viewMode");
-		TableLayout tableRowPrincipal = (TableLayout)thirdScreen.findViewById(R.id.tableLayout1);
-		thirdScreen.setQuery("Frequency = '5-5-5'");
+		TableLayout tableRowPrincipal = (TableLayout)thirdScreen.findViewById(R.id.tableLayout1Prototype);//TODO change me
+		thirdScreen.setQuery("Frequency = '5-5-5' AND CYCLE = '" + thirdScreen.currentCycleSelected + "'");//TODO why is this here?
 		Cursor subcursor = thirdScreen.getEvents();
 		switch(view)
 		{//		DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), DEAD('D'), FIVES('5'), THREES('3'), ONES('1');
 			case "DEFAULT":
-				thirdScreen.setQuery(null);
+				thirdScreen.setQuery("CYCLE = '" + thirdScreen.currentCycleSelected + "'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;
 			case "BENCH":
-				thirdScreen.setQuery("Lift = 'Bench'");
+				thirdScreen.setQuery("Lift = 'Bench' AND CYCLE = '" + thirdScreen.currentCycleSelected + "'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
-//				System.out.println(DatabaseUtils.dumpCursorToString(thirdScreen.cursor));
-//				System.out.println( DatabaseUtils.dumpCursorToString(subcursor));
 				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;
 			case "SQUAT":
-				thirdScreen.setQuery("Lift = 'Squat'");
+				thirdScreen.setQuery("Lift = 'Squat' AND CYCLE = '" + thirdScreen.currentCycleSelected + "'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
 				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;
 			case "OHP":
-				thirdScreen.setQuery("Lift = 'OHP'");
+				thirdScreen.setQuery("Lift = 'OHP' AND CYCLE = '" + thirdScreen.currentCycleSelected + "'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
 				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;
 			case "DEAD":
-				thirdScreen.setQuery("Lift = 'Deadlift'");
+				thirdScreen.setQuery("Lift = 'Deadlift' AND CYCLE = '" + thirdScreen.currentCycleSelected + "'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
 				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;	
 			case "FIVES":
-				thirdScreen.setQuery("Frequency = '5-5-5'");
+				thirdScreen.setQuery("Frequency = '5-5-5' AND CYCLE = '" + thirdScreen.currentCycleSelected + "'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
 				thirdScreen.showDefaultEvents(thirdScreen.cursor);
 				break;	
 			case "THREES":
-				thirdScreen.setQuery("Frequency = '3-3-3'");
+				thirdScreen.setQuery("Frequency = '3-3-3' AND CYCLE = '" + thirdScreen.currentCycleSelected + "'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;
 				thirdScreen.showDefaultEvents(thirdScreen.cursor);;
 				break;
 			case "ONES":
-				thirdScreen.setQuery("Frequency = '5-3-1'");
+				thirdScreen.setQuery("Frequency = '5-3-1' AND CYCLE = '" + thirdScreen.currentCycleSelected + "'");
 				tableRowPrincipal.removeAllViews();
 				thirdScreen.cursor = thirdScreen.getEvents();
 				thirdScreen.insertStatus = false;

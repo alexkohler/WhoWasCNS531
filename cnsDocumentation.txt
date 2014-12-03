@@ -129,27 +129,32 @@ Just seemed to test, seems to work proper, just need to get title to show back u
 	Made error handling on the textview instead of having toast (after palmey exposed the fact that it was thrown every time the button was pressed.
 Just need to fix the other toast problem with lacking a lift, as it will also be thrown every time save is pressed. It's the little things but users are not supposed to be smart. 
 
-TODO:
-	Fix toast problem - "You are missing the following lifts" gets thrown every time save is pressed.
-	Consider repercussions of moving pattern size to third screen
-		Positive - would be more organized, easier to click.
-		Negative - removes swipe navigation
-	Figure out a way to make your individual views prettier, to include warmups,  and have the ability to log work and assistance.	
-	Keep an eye on that touch listener you have for clearing focus
+12-2-14: Got placeholder for viewpager, intent for activity is at the bottom of your nav drawer.  may have to convert to fragments. see
+ http://stackoverflow.com/questions/9849138/android-pagerview-between-activities
 
+12-3-14: Had to immediately throw ThirdScreenPrototype into limelight, however, I think she's working great. Cycles get separated very nicely, you just need to think of a clean way to display cycle 1. (You can't use onTabSelected because it is called before the database is populated. You may be able to create a field and assign the cycle value in onTab and then use the cycle value in all the queries in your view switch statement (which really needs refactored while you're at it ;) ). I think this will be the right way to go, then it will be uniform cycle handling as opposed to hacking something for the first cycle. It shouldn't be a big deal, but make sure you use your call hierarchy to intercept each and every call to setQuery. This will mean you will have no more null queries (everything will have at least the cycle), and all of your other not null queries will have at least one and clause to accomodate what cycle you are trying to display. No commits until you get a little more testing in. Make your rows bigger.
+
+Added support for cycle 1 in view selection
+
+TODO:
+	Using a collection (See MainActivity - effectivenavigation project) might be just what you are looking for.
+	However, I think getting a prettier table display should be first on your plate
+	Figure out a way to make your individual views prettier, to include warmups,  and have the ability to log work and assistance.	
+	Toss the current cycle back to thirdScreenPrototype when the back button is pressed in individualviews, then have it on that tab when thirdScreenPrototype is loaded again 
+
+
+	Keep an eye on that touch listener you have for clearing focus
+	Fix toast problem - "You are missing the following lifts" gets thrown every time save is pressed.
 
 	Second -turqoise background, green
 	Swipe nav for first page
-	Dial in second screen components placement
 	Fix analytics logging
 	Second background -tan(peachy tan)
 	Second page - swipe navigation?
 	Second page - "not quite" segemented buttons  - definitely want the not quite segmented button	 (See pats snooki fb message)
-	Keep configure (but remove reset and adjust lifts and have it go straight to the view by builder menu
 
 	Patrick - activity titles?
 
-Roboelectric for unit tests?
 
 Regular TODO:
   Ability to reset weight tracking
@@ -164,8 +169,6 @@ Table to track weight
     Graph with a table
     
 Table to track training maxes 
-
-Schema change for rounding 
 
 Option to switch between black and white themes?
 

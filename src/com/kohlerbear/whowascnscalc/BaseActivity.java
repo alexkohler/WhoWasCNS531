@@ -167,7 +167,7 @@ public class BaseActivity extends ActionBarActivity {
 		 case 2://view existing
 			if (!ct.dbEmpty())
 			{
-				Intent viewExistingProjectionIntent = new Intent(this, ThirdScreenActivity.class);
+				Intent viewExistingProjectionIntent = new Intent(this, ThirdScreenPrototype.class);
 				viewExistingProjectionIntent.putExtra("origin", "dashboard");
 				viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());//TODO change this to new method
 				String startingDate = ct.getStartingDateFromDatabase();
@@ -206,21 +206,57 @@ public class BaseActivity extends ActionBarActivity {
 			else
 				Toast.makeText(this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
 			break;
-		 case 3:
+		 case 3://about
 			 Intent intent3 = new Intent(this, About531.class);
 			 startActivity(intent3);
 			 finish();
-			 break; //finish current activity
-		 case 4:
+			 break;
+		 case 4://settings
 			 Intent intent4 = new Intent(this, SettingsActivity.class);
 			 startActivity(intent4);
-			 finish(); //finish current activity
+			 finish();
 		 break;
 		 case 5:
-			Intent wintent = new Intent(this, REVAMPEDSecondScreenActivity.class);
-			String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest" }; 
-			wintent.putExtra("pattern", defaultPattern); //I don't think you will need the pattern dependency any more
-			startActivity(wintent);
+				if (!ct.dbEmpty())
+				{
+					Intent viewExistingProjectionIntent = new Intent(this, ThirdScreenPrototype.class);
+					viewExistingProjectionIntent.putExtra("origin", "dashboard");
+					viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());//TODO change this to new method
+					String startingDate = ct.getStartingDateFromDatabase();
+					viewExistingProjectionIntent.putExtra("key2", startingDate);
+					
+					//THIS INTENT ALSO NEEDS TO PASS A "mode" intent
+																									/*				if (thirdScreen.getModeFormat().contains("Lbs"))
+																														sqlLitelbMode = 1;
+																														if (thirdScreen.getModeFormat().contains("Kgs")) 
+																														sqlLitelbMode = 0;*/
+					String modeString = ct.getLbModeFromDatabase().intern();
+
+					viewExistingProjectionIntent.putExtra("mode", modeString); 
+					//YOU ALSO NEED TO PASS  a "round" intent - schema change needs done here
+																/*				String areWeGoingToRound = intent.getStringExtra("round");
+																if (areWeGoingToRound.equals("true"))	
+																	thirdScreen.Processor.setRoundingFlag(true);
+																
+																else //revert to the default of no round
+																	thirdScreen.Processor.setRoundingFlag(false);*/
+					int roundingFlag = Integer.valueOf(ct.getRoundingFlagFromDatabase());
+					String intentRoundingStringBool = "true";
+					if (roundingFlag == 1)
+						intentRoundingStringBool = "true";
+					else
+						intentRoundingStringBool = "false";
+					
+					viewExistingProjectionIntent.putExtra("round", intentRoundingStringBool); 
+
+					
+					
+					//populate both method bodies in configtool and call 
+					
+					startActivity(viewExistingProjectionIntent);
+				}
+				else
+					Toast.makeText(this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
 			break;
 		default:
 			break;

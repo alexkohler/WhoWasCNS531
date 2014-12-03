@@ -46,8 +46,8 @@ public final class R {
 		public static final int swipeback_arrow_left = 0x7f02008c;
 	}
 	public static final class id {
-		public static final int arrowBottom = 0x7f0500dc;
-		public static final int arrowTop = 0x7f0500da;
+		public static final int arrowBottom = 0x7f0500e1;
+		public static final int arrowTop = 0x7f0500df;
 		public static final int bottom = 0x7f050003;
 		public static final int end = 0x7f050005;
 		public static final int left = 0x7f050000;
@@ -61,7 +61,7 @@ public final class R {
 		public static final int sb__translationX = 0x7f05000c;
 		public static final int sb__translationY = 0x7f05000d;
 		public static final int start = 0x7f050004;
-		public static final int text = 0x7f0500db;
+		public static final int text = 0x7f0500e0;
 		public static final int top = 0x7f050001;
 	}
 	public static final class integer {
@@ -72,7 +72,7 @@ public final class R {
 		public static final int stack_duration = 0x7f080004;
 	}
 	public static final class layout {
-		public static final int swipeback_default = 0x7f030029;
+		public static final int swipeback_default = 0x7f03002b;
 	}
 	public static final class string {
 		public static final int swipeback_back = 0x7f090000;

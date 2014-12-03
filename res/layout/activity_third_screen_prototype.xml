@@ -1,18 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
    <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<!--  NOTE: tools not defined, was defined in viewpager -->
     <!-- The main content view -->
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+<!--  CONTENT GOES HERE -->
 
-<!-- content goes here? -->
-<LinearLayout 
+<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+ />
+	<LinearLayout 
     android:id="@+id/thirdScreenLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
@@ -29,7 +34,7 @@
          >
 
     <TableLayout
-        android:id="@+id/tableLayout1"
+        android:id="@+id/tableLayout1Prototype"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -39,7 +44,7 @@
         android:stretchColumns="*" >
 
         <TableRow
-            android:id="@+id/insertValues"
+            android:id="@+id/insertValuesPrototype"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal" >
@@ -120,14 +125,14 @@
         </ScrollView>
 
     <TextView
-        android:id="@+id/trainingMaxesTV"
+        android:id="@+id/trainingMaxesTVPrototype"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/training_maxes_text_test" />
 
     <Button
-        android:id="@+id/configureButton"
+        android:id="@+id/configureButtonPrototype"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -135,6 +140,7 @@
         android:text="@string/options_checkbox_test" />
 
 </LinearLayout>
+ 
 
     </FrameLayout>
 

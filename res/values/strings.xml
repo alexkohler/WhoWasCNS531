@@ -28,7 +28,7 @@
 
     <string-array name="cycles_array">
         <item>1</item>
--                                                                                <item>2</item>
+-                                                                                        <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -117,27 +117,25 @@
     <string name="title_activity_test_nav_drawer_activity_two">TestNavDrawerActivityTwo</string>
     <string name="title_activity_test">TestActivity</string>
 
-    
-    
-    <!--  Arrays for navdrawer -->
+    <!-- Arrays for navdrawer -->
     <string-array name="nav_drawer_items">
         <item>Dashboard</item>
         <item>Create New Projection</item>
         <item>View Exisiting Projection</item>
         <item>About</item>
         <item>Settings</item>
- 	    <item>TestSecond</item> 
-<!--  <item>Sixth</item> -->
+        <item>TestSecond</item>
+        <!-- <item>Sixth</item> -->
     </string-array>
-<!-- Nav drawer icons that correspond to each navdrawer array entry -->
+    <!-- Nav drawer icons that correspond to each navdrawer array entry -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
-	    <item>@drawable/ic_launcher</item> 
-<!--   -<item>@drawable/ic_launcher</item> -->
+        <item>@drawable/ic_launcher</item>
+        <!-- -<item>@drawable/ic_launcher</item> -->
 
     </array>
 
@@ -148,7 +146,16 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_opening_dashboard">OpeningDashboardActivity</string>
     <string name="opening_dash_placeholder">Dashboard placeholder</string>
+    <string name="Pounds">Pounds</string>
+    <string name="Kilograms">Kilograms</string>
+    <string name="title_activity_third_screen_prototype">ThirdScreenPrototype</string>
+    <string name="hello_world">Hello world!</string>
     
-        <string name="Pounds">Pounds</string>
-		<string name="Kilograms">Kilograms</string>
+    <!--  Strings for third screen prototype -->
+        <string name="cycle1">1</string>
+        <string name="cycle2">2</string>
+        <string name="cycle3">3</string>
+        <string name="cycle4">4</string>
+        <string name="cycle5">5</string>
+
 </resources>

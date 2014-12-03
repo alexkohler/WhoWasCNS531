@@ -446,7 +446,7 @@ public class DateAndLiftProcessor {
 		
 	}
 
-	void calculateCycle(ThirdScreenActivity thirdScreen, String[] myPattern)
+	void calculateCycle(ThirdScreenPrototype thirdScreen, String[] myPattern)
 	{
 		//(max pattern of 7 days), 
 		//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  }; //be sure to use default naming patterns (like you've used in rest of program) 

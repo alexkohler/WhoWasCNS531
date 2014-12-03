@@ -2,9 +2,18 @@ package com.kohlerbear.whowascnscalc;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.google.analytics.tracking.android.Fields;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
+import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,9 +23,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -25,15 +38,29 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.analytics.tracking.android.Fields;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.Tracker;
 
+public class ThirdScreenPrototype extends BaseActivity implements
+		ActionBar.TabListener {
 
+	/**
+	 * The {@link android.support.v4.view.PagerAdapter} that will provide
+	 * fragments for each of the sections. We use a {@link FragmentPagerAdapter}
+	 * derivative, which will keep every loaded fragment in memory. If this
+	 * becomes too memory intensive, it may be best to switch to a
+	 * {@link android.support.v13.app.FragmentStatePagerAdapter}.
+	 */
+	SectionsPagerAdapter mSectionsPagerAdapter;
 
-
-public class ThirdScreenActivity extends BaseActivity {/*
-
+	/**
+	 * The {@link ViewPager} that will host the section contents.
+	 */
+	
+	ViewPager mViewPager;
+	
+	//for nav drawer
+	private String[] navMenuTitles;
+	private TypedArray navMenuIcons;
+	
 	EventsDataSQLHelper eventsData;
 	String MODE_FORMAT;
 	Integer NUMBER_CYCLES;
@@ -48,10 +75,6 @@ public class ThirdScreenActivity extends BaseActivity {/*
 	TableRow titleTableRow; 
 	
 	boolean toggleButtonCalled = false;
-	
-	private String[] navMenuTitles;
-	private TypedArray navMenuIcons;
-	
 	
 	Tracker tracker = null;
 
@@ -79,6 +102,8 @@ public class ThirdScreenActivity extends BaseActivity {/*
 			this.value = value;
 		}
 	}
+	
+	int currentCycleSelected;
 
 	static CURRENT_VIEW curView = CURRENT_VIEW.DEFAULT;//start with default (show all) view (for overview)
 
@@ -91,21 +116,59 @@ public class ThirdScreenActivity extends BaseActivity {/*
 	DateAndLiftProcessor Processor = new DateAndLiftProcessor();
 
 	@Override
-	public void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_third);
-		
-		//set up navigation drawer
-		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
+		setContentView(R.layout.activity_third_screen_prototype);
 
+		//Set up our navigation drawer
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
 		navMenuIcons = getResources()
-		.obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
-		
+				.obtainTypedArray(R.array.nav_drawer_icons);// load icons from
+															// strings.xml
+
 		set(navMenuTitles, navMenuIcons);
 		navMenuIcons.recycle();
+ 
+        getActionBar().setDisplayHomeAsUpEnabled(true); 
 		
+		// Set up the action bar.
+		final ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		Button configureButton = (Button) findViewById(R.id.configureButton);
+		// Create the adapter that will return a fragment for each of the three
+		// primary sections of the activity.
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+
+		// Set up the ViewPager with the sections adapter.
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+
+		// When swiping between different sections, select the corresponding
+		// tab. We can also use ActionBar.Tab#select() to do this if we have
+		// a reference to the Tab.
+		mViewPager
+				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+					@Override
+					public void onPageSelected(int position) {
+						actionBar.setSelectedNavigationItem(position);
+//						Toast.makeText(getApplicationContext(), "Nav position " + position, Toast.LENGTH_SHORT).show(); //does not get called until explicit page is selected (meaning not called upon opening)
+					}
+				});
+
+		// For each of the sections in the app, add a tab to the action bar.
+		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+			// Create a tab with text corresponding to the page title defined by
+			// the adapter. Also specify this Activity object, which implements
+			// the TabListener interface, as the callback (listener) for when
+			// this tab is selected.
+			actionBar.addTab(actionBar.newTab()
+					.setText(mSectionsPagerAdapter.getPageTitle(i))
+					.setTabListener(this));
+		}
+		
+		
+		//Take care of actual third screen festivities
+		Button configureButton = (Button) findViewById(R.id.configureButtonPrototype);//TODO watchme
 		
 		configureButton.setBackgroundColor(Color.GRAY);
 		configureButton.setTextColor(Color.WHITE);
@@ -127,7 +190,7 @@ public class ThirdScreenActivity extends BaseActivity {/*
 		eventsData = new EventsDataSQLHelper(this);
 		SQLiteDatabase db = eventsData.getWritableDatabase(); 
 		
-		titleTableRow = (TableRow) findViewById(R.id.insertValues);
+		titleTableRow = (TableRow) findViewById(R.id.insertValuesPrototype);//TODO fixme
 		
 		
 		//if we are coming from second screen
@@ -135,7 +198,7 @@ public class ThirdScreenActivity extends BaseActivity {/*
 		if (origin.equals("individualViews"))
 		{
 			Processor.setRoundingFlag(true);
-			ConfigTool configtool = new ConfigTool(ThirdScreenActivity.this);
+			ConfigTool configtool = new ConfigTool(ThirdScreenPrototype.this);
 			Processor.setUnitMode(configtool.getLbModeFromDatabase());
 			eventsData.reinflateTable(this, intent);
 		}
@@ -151,7 +214,7 @@ public class ThirdScreenActivity extends BaseActivity {/*
 		else//this is called during refreshes/view existing
 		{
 			Processor.setRoundingFlag(true);//rounding on by default
-			ConfigTool configtool = new ConfigTool(ThirdScreenActivity.this);
+			ConfigTool configtool = new ConfigTool(ThirdScreenPrototype.this);
 			Processor.setUnitMode(configtool.getLbModeFromDatabase());
 			
 			Cursor cursor = getEvents();
@@ -167,10 +230,8 @@ public class ThirdScreenActivity extends BaseActivity {/*
 			else
 				Processor.setRoundingFlag(true);
 		}
-		
-		
 	}
-
+	
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -191,9 +252,9 @@ public class ThirdScreenActivity extends BaseActivity {/*
 
 		@Override
 		public void onClick(View v) {
-			CharSequence colors[] = new CharSequence[] {"Toggle rounding",  "Adjust Lifts" "Reset", "View By...", "Cancel"};
+			CharSequence colors[] = new CharSequence[] {"Toggle rounding",  /*"Adjust Lifts"*/ "Reset", "View By...", "Cancel"};
 
-			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
+			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenPrototype.this);
 			builder.setTitle("Options menu");
 			builder.setItems(colors, new DialogInterface.OnClickListener() {
 				@Override
@@ -206,16 +267,16 @@ public class ThirdScreenActivity extends BaseActivity {/*
 						else 
 							Processor.setRoundingFlag(true);
 						Cursor cursor = getEvents();//TODO watch aliasing
-						TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1); 
+						TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1Prototype); 
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
 					}
-					if (which == 1)//Adjust lifts 
+/*					if (which == 1)//Adjust lifts 
 					{
 						SQLiteDatabase db = eventsData.getWritableDatabase();
-						Intent myIntent = new Intent(ThirdScreenActivity.this, REVAMPEDSecondScreenActivity.class);
+						Intent myIntent = new Intent(ThirdScreenPrototype.this, REVAMPEDSecondScreenActivity.class);
 						myIntent.putExtra("origin", "third");
 						String[] intentDataArray = new String[6];
 						intentDataArray = getTrainingMaxesInDefaultOrder();
@@ -228,10 +289,10 @@ public class ThirdScreenActivity extends BaseActivity {/*
 						db.delete("Lifts", null, null);//TODO necessary?
 						startActivity(myIntent);
 						//decide if you want to support, big problem is determining where the 
-					}
+					}*/
 					if (which == 1) //reset
 					{
-						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
+						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenPrototype.this);
 						builder.setMessage("Are you sure you want to reset?").setPositiveButton("Yes", dialogClickListener)
 					    .setNegativeButton("No", dialogClickListener).show();
 
@@ -301,19 +362,19 @@ public class ThirdScreenActivity extends BaseActivity {/*
 		{
 			CharSequence colors[] = new CharSequence[] {"Show all", "Bench Only", "Squat Only", "OHP Only", "Deadlift only", "5-5-5 Days only", "3-3-3 Days only", "5-3-1 days only", "Back"};
 
-			AlertDialog.Builder builder2 = new AlertDialog.Builder(ThirdScreenActivity.this);
+			AlertDialog.Builder builder2 = new AlertDialog.Builder(ThirdScreenPrototype.this);
 			builder2.setTitle("Show by:");
 
 			builder2.setItems(colors, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Cursor cursor = getEvents();
-					TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1);
+					TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1Prototype);
 					switch (which){
 					case 0:
 						curView = CURRENT_VIEW.DEFAULT;
-						Toast.makeText(ThirdScreenActivity.this, "View Selected: Show All", Toast.LENGTH_SHORT).show();
-						setQuery(null);
+						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Show All", Toast.LENGTH_SHORT).show();
+						setQuery("CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
@@ -321,8 +382,8 @@ public class ThirdScreenActivity extends BaseActivity {/*
 						break;
 					case 1:
 						curView = CURRENT_VIEW.BENCH;
-						Toast.makeText(ThirdScreenActivity.this, "View Selected: Bench Only", Toast.LENGTH_SHORT).show();
-						setQuery("Lift = 'Bench'");
+						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Bench Only", Toast.LENGTH_SHORT).show();
+						setQuery("Lift = 'Bench' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews(); 
 						cursor = getEvents();
 						changedView = true;
@@ -330,8 +391,8 @@ public class ThirdScreenActivity extends BaseActivity {/*
 						break;	
 					case 2:
 						curView = CURRENT_VIEW.SQUAT;
-						Toast.makeText(ThirdScreenActivity.this, "View Selected: Squat Only", Toast.LENGTH_SHORT).show();
-						setQuery("Lift = 'Squat'");
+						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Squat Only", Toast.LENGTH_SHORT).show();
+						setQuery("Lift = 'Squat' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true; 
@@ -339,8 +400,8 @@ public class ThirdScreenActivity extends BaseActivity {/*
 						break;	
 					case 3:
 						curView = CURRENT_VIEW.OHP;
-						Toast.makeText(ThirdScreenActivity.this, "View Selected: OHP Only", Toast.LENGTH_SHORT).show();
-						setQuery("Lift = 'OHP'");
+						Toast.makeText(ThirdScreenPrototype.this, "View Selected: OHP Only", Toast.LENGTH_SHORT).show();
+						setQuery("Lift = 'OHP' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
@@ -348,8 +409,8 @@ public class ThirdScreenActivity extends BaseActivity {/*
 						break;		
 					case 4:
 						curView = CURRENT_VIEW.DEAD;
-						Toast.makeText(ThirdScreenActivity.this, "View Selected: Deadlift Only", Toast.LENGTH_SHORT).show();
-						setQuery("Lift = 'Deadlift'");
+						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Deadlift Only", Toast.LENGTH_SHORT).show();
+						setQuery("Lift = 'Deadlift' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
@@ -357,8 +418,8 @@ public class ThirdScreenActivity extends BaseActivity {/*
 						break;
 					case 5:
 						curView = CURRENT_VIEW.FIVES;
-						Toast.makeText(ThirdScreenActivity.this, "View Selected: Fives Days Only", Toast.LENGTH_SHORT).show();
-						setQuery("Frequency = '5-5-5'");
+						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Fives Days Only", Toast.LENGTH_SHORT).show();
+						setQuery("Frequency = '5-5-5' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
@@ -366,8 +427,8 @@ public class ThirdScreenActivity extends BaseActivity {/*
 						break;
 					case 6:
 						curView = CURRENT_VIEW.THREES;
-						Toast.makeText(ThirdScreenActivity.this, "View Selected: Triples Days Only", Toast.LENGTH_SHORT).show();
-						setQuery("Frequency = '3-3-3'");
+						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Triples Days Only", Toast.LENGTH_SHORT).show();
+						setQuery("Frequency = '3-3-3' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
@@ -375,17 +436,17 @@ public class ThirdScreenActivity extends BaseActivity {/*
 						break;
 					case 7:
 						curView = CURRENT_VIEW.ONES;
-						Toast.makeText(ThirdScreenActivity.this, "View Selected: 5-3-1 Days Only", Toast.LENGTH_SHORT).show();
-						setQuery("Frequency = '5-3-1'");
+						Toast.makeText(ThirdScreenPrototype.this, "View Selected: 5-3-1 Days Only", Toast.LENGTH_SHORT).show();
+						setQuery("Frequency = '5-3-1' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
 						break;				
 					case 8:
-						CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", "Export...", "View By...", "Back"}; //TODO this is completely incorrect
+						CharSequence colors[] = new CharSequence[] {"Adjust Lifts", "Reset", /*"Export...",*/ "View By...", "Back"}; //TODO this is completely incorrect
 
-						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenActivity.this);
+						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenPrototype.this);
 						builder.setTitle("Options menu");
 						builder.setItems(colors, new DialogInterface.OnClickListener() {
 							@Override
@@ -417,6 +478,14 @@ public class ThirdScreenActivity extends BaseActivity {/*
 		}//end createViewBuilder
 
 		@SuppressWarnings("deprecation") Cursor getEvents() {
+			//null check for eventsData, since onTabSelected gets called eventsData is initialized
+			//TODO remove me if not needed
+/*			
+			if (eventsData == null)
+			{
+				eventsData = new EventsDataSQLHelper(this);
+			}
+			*/
 			SQLiteDatabase db = eventsData.getReadableDatabase();
 			Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, getQuery(), null, null,
 					null, null);
@@ -429,7 +498,7 @@ public class ThirdScreenActivity extends BaseActivity {/*
 
 		@SuppressWarnings("deprecation") void showDefaultEvents(Cursor cursor) {
 			StringBuilder ret = new StringBuilder("");
-			TableLayout tableLayout = (TableLayout)findViewById(R.id.tableLayout1);
+			TableLayout tableLayout = (TableLayout)findViewById(R.id.tableLayout1Prototype);//TODO watchme
 			while (cursor.moveToNext()) {
 				if (!this.insertStatus){//has title been inserted?
 					String temp = getQuery(); //temporarily hold query
@@ -439,7 +508,7 @@ public class ThirdScreenActivity extends BaseActivity {/*
 					String squatTM = TMS[1];
 					String ohpTM = TMS[2];
 					String deadTM = TMS[3];
-					setQuery(null);//TODO is this query stuff dead code now?
+					setQuery("CYCLE = '" + currentCycleSelected + "'");//TODO is this query stuff dead code now?
 					ret = new StringBuilder("Start TMs [Bench: " + benchTM + "]");
 					ret.append(" [Squat: " + squatTM + "]");
 					ret.append(" [OHP: " + ohpTM + "]" );
@@ -456,14 +525,14 @@ public class ThirdScreenActivity extends BaseActivity {/*
 					retStringSaver = ret.toString();
 					setQuery(temp); //change query back to what it was
 					
-					TextView trainingMaxesStream = (TextView) findViewById(R.id.trainingMaxesTV);
+					TextView trainingMaxesStream = (TextView) findViewById(R.id.trainingMaxesTVPrototype);//TODO watchme
 					trainingMaxesStream.setText(retStringSaver.toString());
 					trainingMaxesStream.setTextColor(Color.WHITE);
 				}
 				else
 					if (changedView){//if the title hasn't been inserted, has there been a change in the view?
 
-						TextView title = new TextView(this);
+/*						TextView title = new TextView(this);
 						title.setText(retStringSaver.toString());
 						title.setTextSize(12);
 						title.setGravity(Gravity.CENTER);
@@ -472,16 +541,16 @@ public class ThirdScreenActivity extends BaseActivity {/*
 
 								LayoutParams.WRAP_CONTENT));
 						tableRowPrincipal.addView(title);
-						TableRow titleRow = (TableRow) findViewById(R.id.insertValues);
+						TableRow titleRow = (TableRow) findViewById(R.id.insertValues);*/
 						
 						//add title row here?
 						TableRow tr = new TableRow(this);
 						LayoutParams trParams = tableLayout.getLayoutParams();
 						tr.setLayoutParams(trParams);
 						tr.setGravity(Gravity.CENTER_HORIZONTAL);
-			            android:layout_width="match_parent"
+/*			            android:layout_width="match_parent"
 			                    android:layout_height="wrap_content"
-			                    android:gravity="center_horizontal"
+			                    android:gravity="center_horizontal"*/
 //						eventsData.createRow(this, tr, "Date", "Cycle", "Lift", "Freq", "1st", "2nd", "3rd");
 						tableLayout.addView(titleTableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 						changedView = false;
@@ -552,10 +621,10 @@ public class ThirdScreenActivity extends BaseActivity {/*
 							iterator++;
 						}	
 
-						Toast.makeText(ThirdScreenActivity.this, myEntries[2], Toast.LENGTH_SHORT).show();
+						Toast.makeText(ThirdScreenPrototype.this, myEntries[2], Toast.LENGTH_SHORT).show();
 
 
-						Intent intent = new Intent(ThirdScreenActivity.this, IndividualViews.class);
+						Intent intent = new Intent(ThirdScreenPrototype.this, IndividualViews.class);
 
 						String myFrequency = myEntries[2];	
 						String myLiftType = myEntries[1];
@@ -589,7 +658,7 @@ public class ThirdScreenActivity extends BaseActivity {/*
 				} // end numberformatexception block
 				catch (NumberFormatException e)
 				{
-					Toast.makeText(ThirdScreenActivity.this, "There was an error processing your lift numbers, please double check them!", Toast.LENGTH_LONG).show();
+					Toast.makeText(ThirdScreenPrototype.this, "There was an error processing your lift numbers, please double check them!", Toast.LENGTH_LONG).show();
 				}
 			}
 
@@ -611,7 +680,7 @@ public class ThirdScreenActivity extends BaseActivity {/*
 					LiftPattern = liftPattern;
 				}
 				
-				ProgressDialog pdLoading = new ProgressDialog(ThirdScreenActivity.this);
+				ProgressDialog pdLoading = new ProgressDialog(ThirdScreenPrototype.this);
 				@Override
 				protected void onPreExecute() {
 					super.onPreExecute();
@@ -624,7 +693,7 @@ public class ThirdScreenActivity extends BaseActivity {/*
 				@Override
 				protected Void doInBackground(Void... params) {
 					Processor.setPatternAcronym(LiftPattern);
-					Processor.calculateCycle(ThirdScreenActivity.this, LiftPattern);
+					Processor.calculateCycle(ThirdScreenPrototype.this, LiftPattern);
 					cursor = getEvents();
 
 					//this method will be running on background thread so don't update UI frome here
@@ -697,9 +766,116 @@ public class ThirdScreenActivity extends BaseActivity {/*
 				return Double.valueOf(twoDForm.format(d));
 			}
 
+	
+	
+			boolean init = false;
+	//Fragment stuff
+	@Override
+	public void onTabSelected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
+		// When the given tab is selected, switch to the corresponding page in
+		// the ViewPager.
+		mViewPager.setCurrentItem(tab.getPosition());
+		currentCycleSelected = tab.getPosition() + 1;//ASSERT: this will be assigned before any database method (and hopefully called whenever this activity shows up
+		if (init)
+		{
+		TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1Prototype);
+		curView = CURRENT_VIEW.DEFAULT;
+//		Toast.makeText(ThirdScreenPrototype.this, "DEBUG: Showing cycle" + currentCycleSelected, Toast.LENGTH_SHORT).show();
+		setQuery("CYCLE = '" + currentCycleSelected + "'");
+		tableRowPrincipal.removeAllViews();
+		Cursor cursor = getEvents();
+		changedView = true;
+		showDefaultEvents(cursor);
+		}
+		else
+			init = true;
+	}
 
-*/} 
+	@Override
+	public void onTabUnselected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
+	}
 
+	@Override
+	public void onTabReselected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
+	}
 
+	/**
+	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+	 * one of the sections/tabs/pages.
+	 */
+	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+		public SectionsPagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
 
+		@Override
+		public Fragment getItem(int position) {
+			// getItem is called to instantiate the fragment for the given page.
+			// Return a PlaceholderFragment (defined as a static inner class
+			// below).
+			return PlaceholderFragment.newInstance(position + 1);
+		}
+
+		@Override
+		public int getCount() {
+			// Show 5 cycles
+			return 5;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			Locale l = Locale.getDefault();
+			switch (position) {
+			case 0:
+				return getString(R.string.cycle1).toUpperCase(l);
+			case 1:
+				return getString(R.string.cycle2).toUpperCase(l);
+			case 2:
+				return getString(R.string.cycle3).toUpperCase(l);
+			case 3:
+				return getString(R.string.cycle4).toUpperCase(l);
+			case 4:
+				return getString(R.string.cycle5).toUpperCase(l);
+			}
+			return null;
+		}
+	}
+
+	/**
+	 * A placeholder fragment containing a simple view.
+	 */
+	public static class PlaceholderFragment extends Fragment {
+		/**
+		 * The fragment argument representing the section number for this
+		 * fragment.
+		 */
+		private static final String ARG_SECTION_NUMBER = "section_number";
+
+		/**
+		 * Returns a new instance of this fragment for the given section number.
+		 */
+		public static PlaceholderFragment newInstance(int sectionNumber) {
+			PlaceholderFragment fragment = new PlaceholderFragment();
+			Bundle args = new Bundle();
+			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+			fragment.setArguments(args);
+			return fragment;
+		}
+
+		public PlaceholderFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(
+					R.layout.fragment_third_screen_prototype, container, false);
+			return rootView;
+		}
+	}
+
+}
