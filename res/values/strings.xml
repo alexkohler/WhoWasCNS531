@@ -28,7 +28,7 @@
 
     <string-array name="cycles_array">
         <item>1</item>
--                                                                                        <item>2</item>
+-                                                                                                        <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -124,7 +124,7 @@
         <item>View Exisiting Projection</item>
         <item>About</item>
         <item>Settings</item>
-        <item>TestSecond</item>
+        <item>Testing arena</item>
         <!-- <item>Sixth</item> -->
     </string-array>
     <!-- Nav drawer icons that correspond to each navdrawer array entry -->
@@ -150,12 +150,14 @@
     <string name="Kilograms">Kilograms</string>
     <string name="title_activity_third_screen_prototype">ThirdScreenPrototype</string>
     <string name="hello_world">Hello world!</string>
-    
-    <!--  Strings for third screen prototype -->
-        <string name="cycle1">1</string>
-        <string name="cycle2">2</string>
-        <string name="cycle3">3</string>
-        <string name="cycle4">4</string>
-        <string name="cycle5">5</string>
+
+    <!-- Strings for third screen prototype -->
+    <string name="cycle1">1</string>
+    <string name="cycle2">2</string>
+    <string name="cycle3">3</string>
+    <string name="cycle4">4</string>
+    <string name="cycle5">5</string>
+    <string name="title_activity_individual_views_prototype">IndividualViewsPrototype</string>
+    <string name="title_activity_collection_demo">CollectionDemoActivity</string>
 
 </resources>

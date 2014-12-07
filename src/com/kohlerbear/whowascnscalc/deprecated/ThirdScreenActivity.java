@@ -1,4 +1,4 @@
-package com.kohlerbear.whowascnscalc;
+package com.kohlerbear.whowascnscalc.deprecated;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -28,10 +28,11 @@ import android.widget.Toast;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
+import com.kohlerbear.whowascnscalc.BaseActivity;
 
 
 
-
+@Deprecated
 public class ThirdScreenActivity extends BaseActivity {/*
 
 	EventsDataSQLHelper eventsData;

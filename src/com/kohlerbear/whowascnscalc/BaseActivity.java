@@ -216,48 +216,27 @@ public class BaseActivity extends ActionBarActivity {
 			 startActivity(intent4);
 			 finish();
 		 break;
-		 case 5:
-				if (!ct.dbEmpty())
-				{
-					Intent viewExistingProjectionIntent = new Intent(this, ThirdScreenPrototype.class);
-					viewExistingProjectionIntent.putExtra("origin", "dashboard");
-					viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());//TODO change this to new method
-					String startingDate = ct.getStartingDateFromDatabase();
-					viewExistingProjectionIntent.putExtra("key2", startingDate);
-					
-					//THIS INTENT ALSO NEEDS TO PASS A "mode" intent
-																									/*				if (thirdScreen.getModeFormat().contains("Lbs"))
-																														sqlLitelbMode = 1;
-																														if (thirdScreen.getModeFormat().contains("Kgs")) 
-																														sqlLitelbMode = 0;*/
-					String modeString = ct.getLbModeFromDatabase().intern();
+		 case 5://testing arena
+				Intent intent5 = new Intent(this, IndividualViewsPrototype.class/*IndividualViews.class*/);
+				
+				
+//				Mock Individual View data to flesh out prototype
+				String [] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
+				intent5.putExtra("cycle", "1");
+				intent5.putExtra("frequency", "5-5-5");
+				intent5.putExtra("liftType", "Squat");
+				intent5.putExtra("firstLift", "130.0");
+				intent5.putExtra("secondLift", "150.0");
+				intent5.putExtra("thirdLift", "170.0");
+				intent5.putExtra("date", "12-06-14");
+				intent5.putExtra("mode", "1");
+				intent5.putExtra("viewMode", "DEFAULT");
+				intent5.putExtra("liftPattern", defaultPattern);
+				
 
-					viewExistingProjectionIntent.putExtra("mode", modeString); 
-					//YOU ALSO NEED TO PASS  a "round" intent - schema change needs done here
-																/*				String areWeGoingToRound = intent.getStringExtra("round");
-																if (areWeGoingToRound.equals("true"))	
-																	thirdScreen.Processor.setRoundingFlag(true);
-																
-																else //revert to the default of no round
-																	thirdScreen.Processor.setRoundingFlag(false);*/
-					int roundingFlag = Integer.valueOf(ct.getRoundingFlagFromDatabase());
-					String intentRoundingStringBool = "true";
-					if (roundingFlag == 1)
-						intentRoundingStringBool = "true";
-					else
-						intentRoundingStringBool = "false";
-					
-					viewExistingProjectionIntent.putExtra("round", intentRoundingStringBool); 
 
-					
-					
-					//populate both method bodies in configtool and call 
-					
-					startActivity(viewExistingProjectionIntent);
-				}
-				else
-					Toast.makeText(this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
-			break;
+				startActivity(intent5);
+			 break;
 		default:
 			break;
 		}

@@ -1,4 +1,4 @@
-package com.kohlerbear.whowascnscalc;
+package com.kohlerbear.whowascnscalc.deprecated;
 
 
 import java.text.NumberFormat;
@@ -26,6 +26,12 @@ import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
+import com.kohlerbear.whowascnscalc.BaseActivity;
+import com.kohlerbear.whowascnscalc.MainActivity;
+import com.kohlerbear.whowascnscalc.R;
+import com.kohlerbear.whowascnscalc.R.array;
+import com.kohlerbear.whowascnscalc.R.id;
+import com.kohlerbear.whowascnscalc.R.layout;
 
 public class SecondScreenActivity extends BaseActivity {
 

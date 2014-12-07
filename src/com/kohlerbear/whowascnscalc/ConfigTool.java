@@ -54,7 +54,7 @@ public class ConfigTool {
 		if (!cursor.moveToNext())
 			{
 			topCornerCaseFlag = true; 
-			Toast.makeText(mContext, "Can't go back any further. This is the beginning of your projection!", Toast.LENGTH_SHORT).show(); 
+//			Toast.makeText(mContext, "Can't go back any further. This is the beginning of your projection!", Toast.LENGTH_SHORT).show(); 
 			}
 		else
 			cursor.moveToPrevious();
@@ -109,8 +109,6 @@ public class ConfigTool {
 		if (!cursor.moveToNext())
 		{
 			bottomCornerCaseFlag = true;
-			Toast.makeText(mContext, "Can't continue any further. This is the end of your projection!", Toast.LENGTH_SHORT).show();
-			//hide bottom arrow here 
 		}
 		else
 			cursor.moveToPrevious();

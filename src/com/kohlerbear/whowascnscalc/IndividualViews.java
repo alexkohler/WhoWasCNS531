@@ -506,7 +506,7 @@ public boolean onOptionsItemSelected(MenuItem item){
   	public void moveToNextLift() throws ParseException
 	{
 		Intent myIntent = getIntent();
-		String DATE_FORMAT = "MM-dd-yyyy";
+		String DATE_FORMAT = "MM-dd-yy";//TODO watch over repercussions of this
 	    String date_string = myIntent.getStringExtra("date"); 
 	    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(DATE_FORMAT, java.util.Locale.getDefault());
 	    Date date = null;
@@ -550,7 +550,7 @@ public boolean onOptionsItemSelected(MenuItem item){
 	{
 		Intent myIntent = getIntent();
 		
-		String DATE_FORMAT = "MM-dd-yyyy";
+		String DATE_FORMAT = "MM-dd-yy";//TODO watch over repercussions of this
 	    String date_string = myIntent.getStringExtra("date"); 
 	    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(DATE_FORMAT, java.util.Locale.getDefault());
 	    Date date = null;

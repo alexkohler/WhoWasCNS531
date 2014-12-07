@@ -40,7 +40,7 @@ public class SwipeForwardTransformer implements SwipeBackTransformer {
 	{
 		int startingDateDay = MainActivity.dp.getDayOfMonth();
 		int startingDateMonth = MainActivity.dp.getMonth();
-		int startingDateYear = MainActivity.dp.getDayOfMonth();
+		int startingDateYear = MainActivity.dp.getYear();
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(0);
 		cal.set(startingDateYear, startingDateMonth, startingDateDay);

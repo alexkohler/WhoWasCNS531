@@ -49,11 +49,11 @@
             android:theme="@style/AppBaseTheme" >
         </activity>
         <activity
-            android:name=".SecondScreenActivity"
+            android:name=".deprecated.SecondScreenActivity"
             android:theme="@style/AppBaseTheme" >
         </activity>
         <activity
-            android:name=".ThirdScreenActivity"
+            android:name=".deprecated.ThirdScreenActivity"
             android:theme="@style/AppBaseTheme" >
             <intent-filter>
                 <action android:name="com.kohlerbear.whowascnscalc.Second" />
@@ -85,8 +85,13 @@
         </activity>
         <activity
             android:name=".ThirdScreenPrototype"
-            android:label="@string/title_activity_third_screen_prototype" 
+            android:label="@string/title_activity_third_screen_prototype"
             android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name=".IndividualViewsPrototype"
+            android:label="@string/title_activity_individual_views_prototype"
+            android:theme="@style/AppBaseLightThemeNoTitleBar" >
         </activity>
     </application>
 

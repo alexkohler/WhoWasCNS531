@@ -103,7 +103,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 		}
 	}
 	
-	int currentCycleSelected;
+	int currentCycleSelected = 1;//On creation, user will always be on cycle 1.
 
 	static CURRENT_VIEW curView = CURRENT_VIEW.DEFAULT;//start with default (show all) view (for overview)
 
@@ -216,7 +216,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 			Processor.setRoundingFlag(true);//rounding on by default
 			ConfigTool configtool = new ConfigTool(ThirdScreenPrototype.this);
 			Processor.setUnitMode(configtool.getLbModeFromDatabase());
-			
+			setQuery("Cycle = '1'");
 			Cursor cursor = getEvents();
 			showDefaultEvents(cursor);
 			
@@ -624,7 +624,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						Toast.makeText(ThirdScreenPrototype.this, myEntries[2], Toast.LENGTH_SHORT).show();
 
 
-						Intent intent = new Intent(ThirdScreenPrototype.this, IndividualViews.class);
+						Intent intent = new Intent(ThirdScreenPrototype.this, IndividualViewsPrototype.class);
 
 						String myFrequency = myEntries[2];	
 						String myLiftType = myEntries[1];
@@ -642,7 +642,6 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						intent.putExtra("liftType", myLiftType);
 						intent.putExtra("firstLift", myFirstLift);
 						intent.putExtra("secondLift", mySecondLift);
-						intent.putExtra("thirdLift", myThirdLift);
 						intent.putExtra("thirdLift", myThirdLift);
 						intent.putExtra("date", myDate);
 						intent.putExtra("mode", mode);
