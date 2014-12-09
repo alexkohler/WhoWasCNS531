@@ -7,13 +7,11 @@ import java.util.HashMap;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,18 +29,19 @@ import com.hannesdorfmann.swipeback.SwipeBack;
 import com.kohlerbear.whowascns.hannesorfmann.swipeback.SwipeForwardTransformer;
 
 
-
+/**
+ *MainActivity - contains DatePicker for user's beinning cycle 
+ *
+ */
 
 public class MainActivity extends BaseActivity {
 
-	//private EasyTracker easyTracker = null;
 	
-	//to be used in activity 3 - may not be most efficient but for testing purposes 
 	public static DatePicker dp;
 	static int startingDateDay;
 	static int startingDateMonth;
 	static int startingDateYear;
-	DrawerLayout drawerLayout;  //declare this globally
+	DrawerLayout drawerLayout;  
 	String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
 	String[] liftPattern = new String[7];
 	TextView liftTicker;
@@ -65,26 +64,20 @@ public class MainActivity extends BaseActivity {
 		
 		
 		//Set up our navigation drawer
-		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load
-																					// titles
-																					// from
-																					// strings.xml
-
-		navMenuIcons = getResources()
-				.obtainTypedArray(R.array.nav_drawer_icons);// load icons from
-															// strings.xml
+		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
+		navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
 
 		set(navMenuTitles, navMenuIcons);
+		
+		navMenuIcons.recycle();
 
  
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); 
  
         // just styling option add shadow the right edge of the drawer
-   //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         
 		//Initialize tracker
-        
-		// Sending the same screen view hit using MapBuilder.createAppView()
 		GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
 		tracker = GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
 		HashMap<String, String> hitParameters = new HashMap<String, String>();
@@ -115,34 +108,26 @@ public class MainActivity extends BaseActivity {
 		liftTicker.setText(liftTickerBuffer);
 		
 
-		setBtn.setOnClickListener(new OnClickListener() {//TODO move this out of inline declaration, you're cluttering up onCreate
-
+		setBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				goToSecond();
-//				finish();
 			}
 		});
 		
 		
         // Gesture detection
 	    final GestureDetector gestureDetector;
-//	    View.OnTouchListener gestureListener;
         gestureDetector = new GestureDetector(this, new MyGestureDetector());
         View.OnTouchListener gestureListener = new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
+            	v.performClick();//to stop complaints from compiler
                 return gestureDetector.onTouchEvent(event);
             }
         };
         
-        //these collide with navdrawer listener
        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
        drawerLayout.setOnTouchListener(gestureListener);
-       //set up our modified swipeback implementation
-       
-       
-
-
 
 
 	}//end method onCreate 
@@ -181,15 +166,10 @@ public class MainActivity extends BaseActivity {
 	                
 	                //no need to support left swipe
 	                //else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-//	                	Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
 	                //}
 	                
-	                
-	                
-	                
-	                
 	            } catch (Exception e) {
-	                // nothing
+
 	            }
 	            return false;
 	        }
@@ -211,13 +191,12 @@ public class MainActivity extends BaseActivity {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault());
 			Date myDate = cal.getTime();
 			String formattedDate = dateFormat.format(myDate);
-			//if this db does not have a database....
 			EventsDataSQLHelper eventsData = new EventsDataSQLHelper(this);
 			SQLiteDatabase db = eventsData.getWritableDatabase();
 			//TODO Look into a better way of upgrading tables, you might want to do this on secm
 			db.execSQL("drop table Lifts");
 			db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_LbFlag integer, RoundFlag integer, pattern text not null)"); 
-			Intent intent = new Intent(MainActivity.this, REVAMPEDSecondScreenActivity.class); 
+			Intent intent = new Intent(MainActivity.this, SecondScreenPrototype.class); 
 			intent.putExtra("key", formattedDate );
 			intent.putExtra("origin", "first");
 			intent.putExtra("liftPattern", liftPattern);
@@ -225,42 +204,6 @@ public class MainActivity extends BaseActivity {
 			
 			db.close();
 			startActivity(intent);
-//			overridePendingTransition(R.anim.exit_slide_right,R.anim.exit_slide_right);
-
 
 		}
-
-		@Override
-		public boolean onCreateOptionsMenu(Menu menu) {
-
-			// Inflate the menu; this adds items to the action bar if it is present.
-			getMenuInflater().inflate(R.menu.main, menu);
-			return true;
-		}
-
-
-
-		public boolean dbEmpty()
-		{
-			EventsDataSQLHelper eventsData = new EventsDataSQLHelper(this);
-			SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
-			Cursor mCursor = db.rawQuery("SELECT * FROM " + EventsDataSQLHelper.TABLE, null);
-			Boolean rowExists;
-
-			if (mCursor.moveToFirst())
-			{
-				// DO SOMETHING WITH CURSOR
-				rowExists = false;
-
-			} else
-			{
-				// I AM EMPTY
-				rowExists = true;
-			}
-
-			db.close();
-			return rowExists;
-
-		}
-
 }

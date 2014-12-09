@@ -1,4 +1,11 @@
-package com.kohlerbear.whowascnscalc;
+package com.kohlerbear.whowascnscalc.deprecated;
+
+import com.kohlerbear.whowascnscalc.R;
+import com.kohlerbear.whowascnscalc.R.drawable;
+import com.kohlerbear.whowascnscalc.R.id;
+import com.kohlerbear.whowascnscalc.R.layout;
+import com.kohlerbear.whowascnscalc.R.menu;
+import com.kohlerbear.whowascnscalc.R.string;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -28,7 +35,7 @@ import android.widget.Toast;
  * > design guidelines</a> for a complete explanation of the behaviors
  * implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class StealUsefulNavDrawerStuff extends Fragment {
 
 	/**
 	 * Remember the position of the selected item.
@@ -59,7 +66,7 @@ public class NavigationDrawerFragment extends Fragment {
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
 
-	public NavigationDrawerFragment() {
+	public StealUsefulNavDrawerStuff() {
 	}
 
 	@Override
@@ -259,7 +266,7 @@ public class NavigationDrawerFragment extends Fragment {
 		// showGlobalContextActionBar, which controls the top-left area of the
 		// action bar.
 		if (mDrawerLayout != null && isDrawerOpen()) {
-			inflater.inflate(R.menu.global, menu);
+//			inflater.inflate(R.menu.global, menu);
 			showGlobalContextActionBar();
 		}
 		super.onCreateOptionsMenu(menu, inflater);
@@ -271,11 +278,11 @@ public class NavigationDrawerFragment extends Fragment {
 			return true;
 		}
 
-		if (item.getItemId() == R.id.action_example) {
+/*		if (item.getItemId() == R.id.action_example) {
 			Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT)
 					.show();
 			return true;
-		}
+		}*/
 
 		return super.onOptionsItemSelected(item);
 	}

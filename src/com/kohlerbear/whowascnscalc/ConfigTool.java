@@ -6,13 +6,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
+import com.google.analytics.tracking.android.Tracker;
+import com.kohlerbear.whowascnscalc.deprecated.IndividualViews;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
-
+/**
+ *Commonly used configuration methods
+ */
 
 public class ConfigTool {
 
@@ -21,10 +28,12 @@ public class ConfigTool {
 	Boolean topCornerCaseFlag = false;
 	Boolean bottomCornerCaseFlag = false;
 	EventsDataSQLHelper eventsData;
+	Tracker tracker = null;
 	
     public ConfigTool(Context context){
         mContext = context;
 		eventsData = new EventsDataSQLHelper(mContext);
+		tracker = GoogleAnalytics.getInstance(context).getTracker("UA-55018534-1");
     }
 	
     public Boolean topCase()
@@ -37,119 +46,8 @@ public class ConfigTool {
     	return bottomCornerCaseFlag;
     }
     
-    
-	public Intent configurePreviousSet(String myDate, String myPrevLift,  String viewMode, String mode, String[] liftPattern)
-	{
-		String prevLft = myPrevLift;
-		//Boolean topCornerCaseFlag = false;
-		String liftDate = null;
-		String cycle = null;
-		String lift = null;
-		String freq = null;
-		String first = null;
-		String second = null;
-		String third = null;
-		SQLiteDatabase db = eventsData.getReadableDatabase();
-		Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, "liftDate = '" + myDate + "' AND Lift = '" + prevLft + "'", null, null, null, null);
-		if (!cursor.moveToNext())
-			{
-			topCornerCaseFlag = true; 
-//			Toast.makeText(mContext, "Can't go back any further. This is the beginning of your projection!", Toast.LENGTH_SHORT).show(); 
-			}
-		else
-			cursor.moveToPrevious();
-		while (cursor.moveToNext()) {
-		liftDate = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
-		cycle = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.CYCLE));
-		lift = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
-		freq = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.FREQUENCY));
-		first = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST))));
-		second = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND))));
-		third = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD))));
-		}
-		
-		Intent intent  = new Intent(mContext, IndividualViews.class);
-		intent.putExtra("cycle", cycle);
-		intent.putExtra("frequency", freq);
-		intent.putExtra("liftType", lift);
-		intent.putExtra("firstLift", first);
-		intent.putExtra("secondLift", second);
-		intent.putExtra("thirdLift", third);
-		intent.putExtra("date", liftDate);
-		intent.putExtra("viewMode", viewMode);
-		intent.putExtra("mode", mode);
-		intent.putExtra("liftPattern", liftPattern);
-		//forwardIntent.putExtra("mode", lbmodeString);
-		//TODO take care of mode
-		db.close();
-		
-		
-		return intent;
-		//startActivity(intent);
-		//overridePendingTransition(0,R.anim.exit_slide_down);
-		
-		//other direction
-		//overridePendingTransition(R.anim.push_down_out,R.anim.push_down_in);
-	}
-	
-	
-	public Intent configureNextSet(String myDate, String myNextLift, String viewMode, String lbMode, String[] pattern)
-	{
-		String nextLift = myNextLift;
-		String liftDate = null;
-		String cycle = null;
-		String lift = null;
-		String freq = null;
-		String first = null;
-		String second = null;
-		String third = null;
-		SQLiteDatabase db = eventsData.getReadableDatabase();
-		Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, "liftDate = '" + myDate + "' AND Lift = '" + nextLift + "'", null, null,
-				null, null);
-		if (!cursor.moveToNext())
-		{
-			bottomCornerCaseFlag = true;
-		}
-		else
-			cursor.moveToPrevious();
-		while (cursor.moveToNext()) {
-		liftDate = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
-		cycle = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.CYCLE));
-		lift = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
-		freq = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.FREQUENCY));
-		first = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST))));
-		second = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND))));
-		third = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD))));
-		}
-		
-		Intent intent  = new Intent(mContext, IndividualViews.class);
-		intent.putExtra("cycle", cycle);
-		intent.putExtra("frequency", freq);
-		intent.putExtra("liftType", lift);
-		intent.putExtra("firstLift", first);
-		intent.putExtra("secondLift", second);
-		intent.putExtra("thirdLift", third);
-		intent.putExtra("date", liftDate);
-		intent.putExtra("viewMode", viewMode);
-		intent.putExtra("mode", lbMode);
-		intent.putExtra("liftPattern", pattern);
-		//forwardIntent.putExtra("mode", lbmodeString);
-		//TODO take care of mode
-		db.close();
-/*		if (!bottomCornerCaseFlag)
-		{
-		startActivity(intent);
-		overridePendingTransition(0,R.anim.exit_slide_up);
-		//hide bottom arrow here maybe?
-		}*/
-		return intent;
-		//other direction
-		//overridePendingTransition(R.anim.push_down_out,R.anim.push_down_in);
-	}
-	
 	
 	String[] getPrevLift(Calendar c1, String[] myPattern, String currentLift, String viewMode) {
-		//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
 		//each case: getnextliftfunctiondefault that finds the lift we are at case of, gets the column index, increments (or decrements) that column indexes WHILE incrementing or decrementing the day until it runs into a day that isn't rest.
 		//returns a 2 dimensioned array, with the first value being nextLift and the second value being incremented string
 		String[] resultsBackward = new String[2];
@@ -161,7 +59,6 @@ public class ConfigTool {
 			resultsBackward[1] = decrementedString;
 			return resultsBackward;
 		}
-		
 		
 		
 		int i = 0;
@@ -203,7 +100,6 @@ public class ConfigTool {
 	}
 	
 	String[] getNextLift(Calendar c1, String[] myPattern, String currentLift, String viewMode) {
-		//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  };
 		//each case: getnextliftfunctiondefault that finds the lift we are at case of, gets the column index,
 		//increments (or decrements) that column indexes WHILE incrementing or decrementing the day until it runs into a day that isn't rest.
 		//returns a 2 dimensioned array, with the first value being nextLift and the second value being incremented string
@@ -216,8 +112,6 @@ public class ConfigTool {
 			resultsForward[1] = incrementedString;
 			return resultsForward;
 		}
-		
-		
 		
 		int i = 0;
 		//find our column index of our current lift...
@@ -276,8 +170,6 @@ public class ConfigTool {
 	}
 	
 	
-	
-	
 	double roundtoTwoDecimals(double d) 
 	{
 		DecimalFormat twoDForm = new DecimalFormat("#.##");
@@ -292,7 +184,10 @@ public class ConfigTool {
 		if (cursor.moveToNext())
 			liftBuffer = cursor.getString(0);
 		else
+		{
 			Toast.makeText(mContext, "A database error occured", Toast.LENGTH_LONG).show();//TODO add better analytics logging here (if it's even possible to get the tracker in here) 
+			sendTrackerException("ConfigTool-populateArrayBasedOnDataBase", "Database status:" + db.isOpen() + "Cursor" + DatabaseUtils.dumpCursorToString(cursor));
+		}
 		for (int i=0; i < liftBuffer.length(); i++)
 		{
 			switch (liftBuffer.charAt(i))
@@ -319,73 +214,181 @@ public class ConfigTool {
 	}
 	
 
-public String getRoundingFlagFromDatabase()//TODO change me from a stub to a real boy (method) 
-{
-	SQLiteDatabase db = eventsData.getWritableDatabase();
-	Cursor cursor = db.rawQuery("Select RoundFlag from Lifts limit 1", null);
-	String roundingFlag = "1"; //true by default
-	if (cursor.moveToNext())
-		roundingFlag = cursor.getString(0);
-	
-	return roundingFlag;
-}
-
-public String getLbModeFromDatabase()//TODO change me from a stub to a real boy (method) 
-{
-	SQLiteDatabase db = eventsData.getWritableDatabase();
-	Cursor cursor = db.rawQuery("Select column_lbFlag from Lifts limit 1", null);
-	String unitMode = "error";
-	if (cursor.moveToNext())
-		unitMode = cursor.getString(0); 
-	
-	String modeString = "";
-	if (unitMode.equals("1"))
-		modeString = "Lbs";
-	else
-		modeString = "Kgs";
-	
-	
-	if (modeString.equals(""))
+	public String getRoundingFlagFromDatabase()
 	{
-		//TODO send analytics tracking here
-	}
-	
-	return modeString;
-}
-	
-	
-public String getStartingDateFromDatabase()
-{
-	SQLiteDatabase db = eventsData.getWritableDatabase();
-	Cursor cursor = db.rawQuery("Select liftDate from Lifts limit 1", null);
-	String startingDate = "11-11-11";//TODO think of better way to error handle this
-	if (cursor.moveToNext())
-		startingDate = cursor.getString(0);
-	
-	return startingDate;
-
-}
-
-public boolean dbEmpty()
-{
-	SQLiteDatabase db = eventsData.getWritableDatabase(); // helper is object extends SQLiteOpenHelper
-	Cursor mCursor = db.rawQuery("SELECT * FROM " + EventsDataSQLHelper.TABLE, null);
-	Boolean rowExists;
-
-	if (mCursor.moveToFirst())
-	{
-		// DO SOMETHING WITH CURSOR
-		rowExists = false;
-
-	} else
-	{
-		// I AM EMPTY
-		rowExists = true;
+		SQLiteDatabase db = eventsData.getWritableDatabase();
+		Cursor cursor = db.rawQuery("Select RoundFlag from Lifts limit 1", null);
+		String roundingFlag = "1"; //true by default
+		if (cursor.moveToNext())
+			roundingFlag = cursor.getString(0);
+		
+		return roundingFlag;
 	}
 
-	db.close();
-	return rowExists;
-}
+	public String getLbModeFromDatabase() 
+	{
+		SQLiteDatabase db = eventsData.getWritableDatabase();
+		Cursor cursor = db.rawQuery("Select column_lbFlag from Lifts limit 1", null);
+		String unitMode = "error";
+		if (cursor.moveToNext())
+			unitMode = cursor.getString(0); 
+		
+		String modeString = "";
+		if (unitMode.equals("1"))
+			modeString = "Lbs";
+		else
+			modeString = "Kgs";
+		
+		
+		if (modeString.equals(""))
+		{
+			Toast.makeText(mContext, "A mode error occured. Error report sent.", Toast.LENGTH_LONG).show();
+			sendTrackerException("ConfigTool-modeStringEception", "Database status:" + db.isOpen() + "Cursor" + DatabaseUtils.dumpCursorToString(cursor));
+		}
+		
+		return modeString;
+	}
+	
+	
+	public String getStartingDateFromDatabase()
+	{
+		SQLiteDatabase db = eventsData.getWritableDatabase();
+		Cursor cursor = db.rawQuery("Select liftDate from Lifts limit 1", null);
+		String startingDate = "";
+		if (cursor.moveToNext())
+			startingDate = cursor.getString(0);
+		
+		if (startingDate.equals(""))
+		{
+			Toast.makeText(mContext, "A database error occured. Error report sent.", Toast.LENGTH_LONG).show();
+			sendTrackerException("ConfigTool-getStartingDateFromDatabaseException", "Database status:" + db.isOpen() + "Cursor" + DatabaseUtils.dumpCursorToString(cursor));
+		}
+		
+		return startingDate;
+	
+	}
+
+	public boolean dbEmpty()
+	{
+		SQLiteDatabase db = eventsData.getWritableDatabase();
+		Cursor mCursor = db.rawQuery("SELECT * FROM " + EventsDataSQLHelper.TABLE, null);
+		Boolean rowExists;
+	
+		if (mCursor.moveToFirst())
+		{
+			rowExists = false;
+	
+		} else
+		{
+			// I AM EMPTY
+			rowExists = true;
+		}
+	
+		db.close();
+		return rowExists;
+	}
+	
+	   @Deprecated
+		public Intent configurePreviousSet(String myDate, String myPrevLift,  String viewMode, String mode, String[] liftPattern)
+		{
+			String prevLft = myPrevLift;
+			String liftDate = null;
+			String cycle = null;
+			String lift = null;
+			String freq = null;
+			String first = null;
+			String second = null;
+			String third = null;
+			
+			SQLiteDatabase db = eventsData.getReadableDatabase();
+			Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, "liftDate = '" + myDate + "' AND Lift = '" + prevLft + "'", null, null, null, null);
+		
+			if (!cursor.moveToNext())
+				topCornerCaseFlag = true; 
+			else
+				cursor.moveToPrevious();
+			
+			while (cursor.moveToNext()) {
+			liftDate = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
+			cycle = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.CYCLE));
+			lift = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
+			freq = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.FREQUENCY));
+			first = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST))));
+			second = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND))));
+			third = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD))));
+			}
+			
+			Intent intent  = new Intent(mContext, IndividualViews.class);
+			intent.putExtra("cycle", cycle);
+			intent.putExtra("frequency", freq);
+			intent.putExtra("liftType", lift);
+			intent.putExtra("firstLift", first);
+			intent.putExtra("secondLift", second);
+			intent.putExtra("thirdLift", third);
+			intent.putExtra("date", liftDate);
+			intent.putExtra("viewMode", viewMode);
+			intent.putExtra("mode", mode);
+			intent.putExtra("liftPattern", liftPattern);
+			db.close();
+			
+			return intent;
+		}
+	   
+	   @Deprecated
+		public Intent configureNextSet(String myDate, String myNextLift, String viewMode, String lbMode, String[] pattern)
+		{
+			String nextLift = myNextLift;
+			String liftDate = null;
+			String cycle = null;
+			String lift = null;
+			String freq = null;
+			String first = null;
+			String second = null;
+			String third = null;
+			SQLiteDatabase db = eventsData.getReadableDatabase();
+			Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, "liftDate = '" + myDate + "' AND Lift = '" + nextLift + "'", null, null,
+					null, null);
+			if (!cursor.moveToNext())
+			{
+				bottomCornerCaseFlag = true;
+			}
+			else
+				cursor.moveToPrevious();
+			while (cursor.moveToNext()) {
+			liftDate = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
+			cycle = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.CYCLE));
+			lift = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
+			freq = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.FREQUENCY));
+			first = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST))));
+			second = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND))));
+			third = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD))));
+			}
+			
+			Intent intent  = new Intent(mContext, IndividualViews.class);
+			intent.putExtra("cycle", cycle);
+			intent.putExtra("frequency", freq);
+			intent.putExtra("liftType", lift);
+			intent.putExtra("firstLift", first);
+			intent.putExtra("secondLift", second);
+			intent.putExtra("thirdLift", third);
+			intent.putExtra("date", liftDate);
+			intent.putExtra("viewMode", viewMode);
+			intent.putExtra("mode", lbMode);
+			intent.putExtra("liftPattern", pattern);
+			db.close();
+			return intent;
+		}
+	   
+		protected void sendTrackerException(String exceptionType, String value) {
+			Tracker tracker = GoogleAnalytics.getInstance(mContext).getTracker("UA-55018534-1");
+			  tracker.send(MapBuilder
+				      .createEvent("Exception",     // Event category (required)
+				                   exceptionType,  // Event action (required)
+				                   value,   // Event label
+				                   null)            // Event value
+				      .build());
+			
+		}
 
 }
 	

@@ -2,15 +2,16 @@ package com.kohlerbear.whowascnscalc;
 
 import android.annotation.SuppressLint;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-//DateProcessor.java- processes dates passed to it in ThirdScreen-the main algorithm of this program
+/**
+ *Processes dates and calulates cycles. 
+ *
+ */
 public class DateAndLiftProcessor {
-	//day classification definition (Proper call syntax- String myString = Lift.Bench.name())
 	enum Lift {Bench, Squat, OHP, Deadlift, REST};  
 	
 
@@ -44,7 +45,7 @@ public class DateAndLiftProcessor {
 	Double OHP_TRAINING_MAX;
 	Double DEAD_TRAINING_MAX;
 	Boolean UNIT_MODE_LBS; //If true, then lbs are unit, otheriwse, kgs are unit. 
-	Boolean ROUND_FLAG; //determine whether or not to round
+	Boolean ROUND_FLAG; 
 	Double UNIT_CONVERSION_FACTOR = 2.20462;
 	
 
@@ -69,8 +70,7 @@ public class DateAndLiftProcessor {
 	SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault()); // date format only needs to be declared once. Is not and won't be changing (Unless users really want a changable date format...)
 
 
-	static int patternSize; //size of user specified pattern
-	//logic is funky but will stay for now
+	static int patternSize; 
 	
 	String PATTERN_ACRONYM;
 	
@@ -102,15 +102,10 @@ public class DateAndLiftProcessor {
 		DEAD_TRAINING_MAX = Double.valueOf(startingDead);;
 
 		//for sake of getStartingXXX method (title output on ThirdScreen)
-
 		STARTINGBENCH = startingBench;
 		STARTINGSQUAT = startingSquat;
 		STARTINGOHP = startingOHP;
 		STARTINGDEAD = startingDead;
-
-
-
-
 	}
 
 
@@ -145,9 +140,10 @@ public class DateAndLiftProcessor {
 		return CURRENT_FREQUENCY;
 	}
 
-	//need to implement a calculate5 function, calculate3 function, and calculate1 function 
+
 	double getFirstLift()
 	{
+//		Rounding no longer handled in getter
 //		if (ROUND_FLAG)//if there is rounding wanted
 //		{
 //			if (UNIT_MODE_LBS)//lbs
@@ -162,6 +158,7 @@ public class DateAndLiftProcessor {
 
 	double getSecondLift()
 	{
+//		Rounding no longer handled in getter
 //		if (ROUND_FLAG)//if there is rounding wanted
 //		{
 //			if (UNIT_MODE_LBS)//lbs
@@ -176,6 +173,7 @@ public class DateAndLiftProcessor {
 
 	double getThirdLift()
 	{
+//		Rounding no longer handled in getter
 //		if (ROUND_FLAG)//if there is rounding wanted
 //		{
 //			if (UNIT_MODE_LBS)//lbs
@@ -255,21 +253,24 @@ public class DateAndLiftProcessor {
 	{
 		return ROUND_FLAG;
 	}
-
-	//calculation/misc definitions
-
-	//turns our STARTING_DATE_STRING into a more workable calendar object that we can do date arithmetic om
-	public void parseDateString() 
+	
+	public void setPatternAcronym(String[] pattern)
 	{
-		try {
-			CURRENT_DATE_CAL.setTime(df.parse(STARTING_DATE_STRING));
-		} catch (ParseException e) {
-			e.printStackTrace();
+		PATTERN_ACRONYM = "";
+		for (String day : pattern)
+		{
+			PATTERN_ACRONYM = PATTERN_ACRONYM + day.substring(0, 1).toUpperCase(Locale.US); //For internal use on a switch statement, no need to use user's locale
 		}
+		
+	}
+	
+	public String getPatternAcronym()
+	{
+		return PATTERN_ACRONYM;
 	}
 
-	//day incrementing function
-	public void incrementDay()
+	//calculation/misc definitions
+	private void incrementDay()
 	{
 		CURRENT_DATE_CAL.add(Calendar.DAY_OF_MONTH, 1);  // number of days to add
 
@@ -279,18 +280,10 @@ public class DateAndLiftProcessor {
 		setDate(formattedDate);
 	}
 
-
-
 	//Lift (and cycle if needed) incrementing function
 	//PERCENTAGE definitions
-	public void incrementLift(String[] myPattern, String currentLift)
+	private void incrementLift(String[] myPattern, String currentLift)
 	{
-		//NAMES ASSIGNED ARE BASED ON ENUM::
-		
-		//#####****
-		//enum Lift {Bench, Squat, OHP, Deadlift, REST};  
-		//liftTrack will have to be
-		//need separate variable (static? like lifttrack that holds patternSize
 		if (liftTrack + 1 < patternSize)
 		{
 		liftTrack++;
@@ -306,8 +299,7 @@ public class DateAndLiftProcessor {
 		
 	}//end method incrementLift
 
-	//Method to increment frequency-(only called within incrementLift)
-	public void incrementFreq()
+	private void incrementFreq()
 	{
 		switch (freqTrack)
 		{
@@ -330,9 +322,9 @@ public class DateAndLiftProcessor {
 			CURRENT_FREQUENCY = "incrementFreq ERROR:<";					
 
 		}
-	}//end method incrementfreq
+	}
 
-	public void incrementCycleAndUpdateTMs()
+	private void incrementCycleAndUpdateTMs()
 	{
 		CURRENT_CYCLE = CURRENT_CYCLE + 1;
 		if (getUnitMode())
@@ -352,13 +344,8 @@ public class DateAndLiftProcessor {
 
 	}
 
-
-	//to be called after a regular increment (just go to next day)
-
-
 	//Calculation methods
-
-	public void calculateFivesDay(Double myLift)
+	private void calculateFivesDay(Double myLift)
 	{
 		CURRENT_FIRST  = myLift * FIVE_1;
 		CURRENT_SECOND = myLift * FIVE_2;
@@ -367,7 +354,7 @@ public class DateAndLiftProcessor {
 	}
 
 
-	public void calculateTriplesDay(Double myLift)
+	private void calculateTriplesDay(Double myLift)
 	{
 		CURRENT_FIRST  = myLift * TRIPLE_1;
 		CURRENT_SECOND = myLift * TRIPLE_2;
@@ -375,58 +362,30 @@ public class DateAndLiftProcessor {
 
 	}
 
-	public void calculateSingleDay(Double myLift)
+	private void calculateSingleDay(Double myLift)
 	{
 		CURRENT_FIRST  = myLift * SINGLE_1;
 		CURRENT_SECOND = myLift * SINGLE_2;
 		CURRENT_THIRD  = myLift * SINGLE_3;
 	}
 	
-	public void setPatternAcronym(String[] pattern)
-	{
-		PATTERN_ACRONYM = "";
-		for (String day : pattern)
-		{
-			PATTERN_ACRONYM = PATTERN_ACRONYM + day.substring(0, 1).toUpperCase(Locale.US); //For internal use on a switch statement, no need to use user's locale
-		}
-		
-	}
-	
-	
-	public String getPatternAcronym()
-	{
-		return PATTERN_ACRONYM;
-	}
 
-
-
-	double roundkg(double i, double v) //first argument is rounded, 
-	{
-		return (double) (Math.round(i/v) * v);
-	}
-
-	double round(double i, int v) //first argument is rounded, 
-	{
-		return (double) (Math.round(i/v) * v);
-	}
-	
-	public void initializePatternSize(int length) {
+	private void initializePatternSize(int length) {
 		patternSize = length;
 		
 	}
 
-	
-	
-	//enum Lift {Bench, Squat, OHP, Deadlift, REST};  
-	public void setCurrentLift(String lift) {
+	private void setCurrentLift(String lift) {
 		if (lift.equals("Bench") || lift.equals("Squat") || lift.equals("OHP") || lift.equals("Deadlift") || lift.equals("Rest"))
 		CURRENT_LIFT = lift;
 		else
+		{
 			CURRENT_LIFT = "ERROR";
-		
+			//TODO analytics
+		}
 	}
 
-	public double getCurrentTM() {
+	private double getCurrentTM() {
 	
 		switch (CURRENT_LIFT)	
 		{
@@ -440,7 +399,8 @@ public class DateAndLiftProcessor {
 			return getDeadTM();
 		case "Rest":
 			return 0;
-		default://if something falls to here something is screwy, so let's return something screwy because I am a young coder who doesn't know how to be robust
+		default:
+			//TODO analytics
 			return 999;	
 		}
 		
@@ -449,13 +409,10 @@ public class DateAndLiftProcessor {
 	void calculateCycle(ThirdScreenPrototype thirdScreen, String[] myPattern)
 	{
 		//(max pattern of 7 days), 
-		//String[] myPattern = {"Squat", "Rest", "Bench", "Deadlift", "Rest", "OHP"  }; //be sure to use default naming patterns (like you've used in rest of program) 
-		//lets give the patern it's been dealing with since the start, however, now it's hopefully in a generalized algorithm
-		//String[] myPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
-		//String[] myPattern = {"Squat", "Bench", "Rest", "Deadlift", "OHP", "Rest" };
 		
 		initializePatternSize(myPattern.length);//separate variable from liftTrack
 		setCycle(1);
+		//Fives
 		for (int i=0; i < thirdScreen.getNumberCycles(); i++) 
 		{
 			for (int j=0; j < myPattern.length; j++){
@@ -470,32 +427,29 @@ public class DateAndLiftProcessor {
 			incrementLift(myPattern, myPattern[j]);//no matter what the day, we still need to incrementCycleAndUpdateTMs
 			}
 			
-			
+			//Threes
 			for (int j=0; j < myPattern.length; j++){
-			//create setCurrentLift function that sets current lift based on an enum
-			setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
-			//calculate fives day will have to be revamped - 
-				if (getCurrentTM()> 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
+			setCurrentLift(myPattern[j]);
+				if (getCurrentTM()> 0 ){
 					calculateTriplesDay(getCurrentTM());
 					thirdScreen.eventsData.addEvent(thirdScreen);
 				}
-			incrementDay();//no matter what the day, we still need to incrementCycleAndUpdateTMs
+			incrementDay();
 			incrementLift(myPattern, myPattern[j]);
 			}
 			
+			//5/3/1
 			for (int j=0; j < myPattern.length; j++){
-			//create setCurrentLift function that sets current lift based on an enum
-			setCurrentLift(myPattern[j]);//fixed names so that we can use an enum based on a switch statement
-			//calculate fives day will have to be revamped - 
-				if (getCurrentTM()> 0 ){//set getCurrentTM will access the variable that setCurrentLift uses. (will be set to zero for rest day{
+			setCurrentLift(myPattern[j]);
+				if (getCurrentTM()> 0 ){
 					calculateSingleDay(getCurrentTM());
 					thirdScreen.eventsData.addEvent(thirdScreen);
 				}
-				incrementDay();//no matter what the day, we still need to incrementCycleAndUpdateTMs
+				incrementDay();
 				incrementLift(myPattern, myPattern[j]);
 			}
 			
-			incrementCycleAndUpdateTMs();//still needs to be within loop
+			incrementCycleAndUpdateTMs();
 			}
 	
 			

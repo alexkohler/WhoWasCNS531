@@ -79,7 +79,8 @@ public class SegmentedGroup extends RadioGroup {
         }
     }
 
-    private void updateBackground(View view, int checked, int unchecked) {
+    @SuppressWarnings("deprecation")
+	private void updateBackground(View view, int checked, int unchecked) {
         //Set text color
         ColorStateList colorStateList = new ColorStateList(new int[][]{
                 {android.R.attr.state_pressed},

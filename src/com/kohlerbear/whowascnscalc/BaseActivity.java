@@ -2,11 +2,16 @@ package com.kohlerbear.whowascnscalc;
 
 import java.util.ArrayList;
 
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
+import com.google.analytics.tracking.android.Tracker;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.ActionBarDrawerToggle; 
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -17,6 +22,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+
+/**
+ *The backbone of our navigation drawer - any class that uses this must extend, have an appBaseTheme flavor in manifest, and follow a couple setup steps in the respective oncreate method (see almost any activity in this project for an example 
+ *
+ */
+@SuppressLint("Registered")//Will also be exteneded from activities but will never be a standalone activity
+@SuppressWarnings("deprecation")//TODO add in v7 toggle
 public class BaseActivity extends ActionBarActivity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -156,7 +168,7 @@ public class BaseActivity extends ActionBarActivity {
 			Intent newProjectionIntent = new Intent(this, MainActivity.class);
 			newProjectionIntent.putExtra("origin", "dashboard");
 			if (!ct.dbEmpty())
-				newProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());//TODO change this to new method
+				newProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
 			else
 			{
 				String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"  };			
@@ -168,26 +180,16 @@ public class BaseActivity extends ActionBarActivity {
 			if (!ct.dbEmpty())
 			{
 				Intent viewExistingProjectionIntent = new Intent(this, ThirdScreenPrototype.class);
+
 				viewExistingProjectionIntent.putExtra("origin", "dashboard");
-				viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());//TODO change this to new method
+				viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
+				
 				String startingDate = ct.getStartingDateFromDatabase();
 				viewExistingProjectionIntent.putExtra("key2", startingDate);
 				
-				//THIS INTENT ALSO NEEDS TO PASS A "mode" intent
-																								/*				if (thirdScreen.getModeFormat().contains("Lbs"))
-																													sqlLitelbMode = 1;
-																													if (thirdScreen.getModeFormat().contains("Kgs")) 
-																													sqlLitelbMode = 0;*/
 				String modeString = ct.getLbModeFromDatabase().intern();
-
 				viewExistingProjectionIntent.putExtra("mode", modeString); 
-				//YOU ALSO NEED TO PASS  a "round" intent - schema change needs done here
-															/*				String areWeGoingToRound = intent.getStringExtra("round");
-															if (areWeGoingToRound.equals("true"))	
-																thirdScreen.Processor.setRoundingFlag(true);
-															
-															else //revert to the default of no round
-																thirdScreen.Processor.setRoundingFlag(false);*/
+				
 				int roundingFlag = Integer.valueOf(ct.getRoundingFlagFromDatabase());
 				String intentRoundingStringBool = "true";
 				if (roundingFlag == 1)
@@ -197,10 +199,6 @@ public class BaseActivity extends ActionBarActivity {
 				
 				viewExistingProjectionIntent.putExtra("round", intentRoundingStringBool); 
 
-				
-				
-				//populate both method bodies in configtool and call 
-				
 				startActivity(viewExistingProjectionIntent);
 			}
 			else
@@ -217,9 +215,7 @@ public class BaseActivity extends ActionBarActivity {
 			 finish();
 		 break;
 		 case 5://testing arena
-				Intent intent5 = new Intent(this, IndividualViewsPrototype.class/*IndividualViews.class*/);
-				
-				
+				Intent intent5 = new Intent(this, IndividualViewsPrototype.class);
 //				Mock Individual View data to flesh out prototype
 				String [] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
 				intent5.putExtra("cycle", "1");
@@ -270,5 +266,16 @@ public class BaseActivity extends ActionBarActivity {
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	
+	protected void sendTrackerException(String exceptionType, String value) {
+		Tracker tracker = GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");
+		  tracker.send(MapBuilder
+			      .createEvent("Exception",     // Event category (required)
+			                   exceptionType,  // Event action (required)
+			                   value,   // Event label
+			                   null)            // Event value
+			      .build());
+		
 	}
 }

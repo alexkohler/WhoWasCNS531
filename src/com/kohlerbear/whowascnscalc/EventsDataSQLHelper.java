@@ -5,8 +5,6 @@ package com.kohlerbear.whowascnscalc;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
@@ -27,15 +25,15 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	public static final String TABLE = "Lifts";
 
 	// Columns
-	public static final String LIFTDATE = "liftDate"; //PREVIOUSLY TIME
-	public static final String CYCLE = "Cycle"; //PREVIOUSLY TITLE 
+	public static final String LIFTDATE = "liftDate";
+	public static final String CYCLE = "Cycle"; 
 	public static final String LIFT = "Lift";
 	public static final String FREQUENCY = "Frequency";
 	public static final String FIRST = "First_Lift";
 	public static final String SECOND = "Second_Lift";
 	public static final String THIRD = "Third_Lift";
 	public static final String TRAINING_MAX = "Training_Max";
-	public static final String LBFLAG = "column_LbFlag";//TODO get rid of column_lbFlag
+	public static final String LBFLAG = "column_LbFlag";
 	public static final String ROUNDFLAG = "RoundFlag";
 	public static final String PATTERN = "Pattern";
 	public EventsDataSQLHelper(Context context) {
@@ -69,9 +67,8 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	public void addEvent(ThirdScreenPrototype thirdScreen) {
 		SQLiteDatabase db = getWritableDatabase();
 		ContentValues values = new ContentValues();
-		//db.execSQL("ALTER TABLE Lifts ADD COLUMN column_lbFlag integer");
 		int sqlLitelbMode = 3; //booleans in sqllite are represented by 1 and 0
-		if (thirdScreen.getModeFormat().contains("Lbs"))//TODO add this into round mode \
+		if (thirdScreen.getModeFormat().contains("Lbs"))
 		sqlLitelbMode = 1;
 		if (thirdScreen.getModeFormat().contains("Kgs")) 
 		sqlLitelbMode = 0;
@@ -116,15 +113,11 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	}
 
 	void createRow(ThirdScreenPrototype thirdScreen, TableRow tr, String liftDate, String cycle, String lift, String freq, String first, String second, String third) {
-		//date column creation 
-		
-		
-		
 		LayoutParams tvParams = new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
 		tvParams.setMargins(1, 1, 1, 1);
 		final int minHeight = 30;
 		TextView dateColumn = new TextView(thirdScreen);
-		dateColumn.setText(liftDate.substring(0, 5));//xx-xx, 
+		dateColumn.setText(liftDate.substring(0, 5));//xx-xx
 		dateColumn.setTextSize(17);
 		dateColumn.setLayoutParams(tvParams);
 		dateColumn.setBackgroundColor(Color.BLACK);
@@ -198,10 +191,8 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 	void inflateTable(ThirdScreenPrototype thirdScreen, Intent intent, String startingDate, SQLiteDatabase db) {
 		db.delete("Lifts", null, null);
 		Toast.makeText(thirdScreen, "DEBUG: displaying cycle 1 from inflateTable", Toast.LENGTH_SHORT).show();
-		thirdScreen.setQuery("CYCLE = '1'");//see if assuming this cycle is one actually works, this is only called when coming from second so I think you're good to go
-		//determine whether to round or not
+		thirdScreen.setQuery("CYCLE = '1'");
 		
-//TODO delete this if your che
 //		String areWeGoingToRound = intent.getStringExtra("round");
 //		if (areWeGoingToRound.equals("true"))	
 //			thirdScreen.Processor.setRoundingFlag(true);
@@ -240,14 +231,12 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 		thirdScreen.setNumberCycles(numberCycles);
 
 	}
-	//TODO if trouble arises just checkout the sql helper, not everything
 	void reinflateTable(ThirdScreenPrototype thirdScreen, Intent intent) {
 		String view = intent.getStringExtra("viewMode");
 		TableLayout tableRowPrincipal = (TableLayout)thirdScreen.findViewById(R.id.tableLayout1Prototype);//TODO change me
 		thirdScreen.setQuery("Frequency = '5-5-5' AND CYCLE = '" + thirdScreen.currentCycleSelected + "'");//TODO why is this here?
-		Cursor subcursor = thirdScreen.getEvents();
 		switch(view)
-		{//		DEFAULT('D'), BENCH('B'), SQUAT('S'), OHP('O'), DEAD('D'), FIVES('5'), THREES('3'), ONES('1');
+		{
 			case "DEFAULT":
 				thirdScreen.setQuery("CYCLE = '" + thirdScreen.currentCycleSelected + "'");
 				tableRowPrincipal.removeAllViews();

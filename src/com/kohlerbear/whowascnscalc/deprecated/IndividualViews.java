@@ -1,4 +1,4 @@
-package com.kohlerbear.whowascnscalc;
+package com.kohlerbear.whowascnscalc.deprecated;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -21,9 +21,16 @@ import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
-
+import com.kohlerbear.whowascnscalc.ConfigTool;
+import com.kohlerbear.whowascnscalc.R;
+import com.kohlerbear.whowascnscalc.ThirdScreenPrototype;
+import com.kohlerbear.whowascnscalc.R.anim;
+import com.kohlerbear.whowascnscalc.R.drawable;
+import com.kohlerbear.whowascnscalc.R.id;
+import com.kohlerbear.whowascnscalc.R.layout;
+import com.kohlerbear.whowascnscalc.R.style;
 public class IndividualViews extends ActionBarActivity {
-	
+/*	
 	TextView firstLiftTV;
 	TextView firstLiftErrTV;
 	TextView secondLiftTV;
@@ -204,19 +211,7 @@ public class IndividualViews extends ActionBarActivity {
 
 	    
 		Intent prevScreen = getIntent();
-	/*	intent.putExtra("cycle", myCycle);
-		intent.putExtra("frequency", myFrequency);
-		intent.putExtra("liftType", myLiftType);
-		intent.putExtra("firstLift", myFirstLift);
-		intent.putExtra("secondLift", mySecondLift);
-		intent.putExtra("thirdLift", myThirdLift);
-		intent.putExtra("thirdLift", myThirdLift);
-		intent.putExtra("date", myDate);
-		intent.putExtra("mode", mode);
-		intent.putExtra("viewMode", viewMode);
-		intent.putExtra("liftPattern", liftPattern);
 		
-	 */
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setDisplayShowHomeEnabled(false);
@@ -323,9 +318,9 @@ void generateWeights(double weight, int liftOneTwoOrThree)
 	catch (Exception e)
 	{
 		
-/*		Toast.makeText(getApplicationContext(), 
+		Toast.makeText(getApplicationContext(), 
 				"An error occured. An error report has been sent:)",
-				Toast.LENGTH_SHORT).show();*/
+				Toast.LENGTH_SHORT).show();
 			sendTrackerException("GenerateWeightsException", e.getLocalizedMessage());
 	}
     }
@@ -597,7 +592,7 @@ public boolean onOptionsItemSelected(MenuItem item){
 			                   null)            // Event value
 			      .build());
 		
-	}
+	}*/
     
 
 

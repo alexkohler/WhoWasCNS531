@@ -484,17 +484,6 @@ public class SecondScreenActivity extends BaseActivity {
 
 
 
-				private void sendTrackerException(String exceptionType, String value) {
-					Toast.makeText(SecondScreenActivity.this, "Sorry! :( Something went wrong, crash report sent.", Toast.LENGTH_LONG).show();
-					  tracker.send(MapBuilder
-						      .createEvent("Exception",     // Event category (required)
-						                   exceptionType,  // Event action (required)
-						                   value,   // Event label
-						                   null)            // Event value
-						      .build());
-					
-				}
-
 }
 
 

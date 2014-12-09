@@ -2,6 +2,7 @@ package com.kohlerbear.whowascnscalc;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -36,7 +37,8 @@ public class NavDrawerListAdapter extends BaseAdapter {
         return position;
     }
 
-    @Override
+    @SuppressLint("InflateParams")
+	@Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater)

@@ -9,34 +9,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
-
+/**
+ * Prototype class for base of individualViews 
+ * 
+ */
 public class IndividualViewsPrototype extends FragmentActivity {
 
     /**
@@ -68,7 +59,6 @@ public class IndividualViewsPrototype extends FragmentActivity {
 		hitParameters.put(Fields.SCREEN_NAME, "IndV Prototype");
 
 		tracker.send(hitParameters);
-	    //mode, viewmode, and lift pattern will be for if we support swipe navigation, however, I think that making cells bigger is probably better off.
         
 
         // Create an adapter that when requested, will return a fragment representing an object in
@@ -77,16 +67,10 @@ public class IndividualViewsPrototype extends FragmentActivity {
         // ViewPager and its adapters use support library fragments, so we must use
         // getSupportFragmentManager.
 
-        // Set up action bar.
-//        final ActionBar actionBar = getActionBar();
 
-        // Specify that the Home button should show an "Up" caret, indicating that touching the
-        // button will take the user one step up in the application's hierarchy.
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        // Set up the ViewPager, attaching the adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        List<Fragment> fragments = new Vector<Fragment>();
+      // Set up the ViewPager, attaching the adapter.
+	  mViewPager = (ViewPager) findViewById(R.id.pager);
+      List<Fragment> fragments = new Vector<Fragment>();
 
       //for each fragment you want to add to the pager
       Bundle initialArgs = new Bundle();
@@ -119,17 +103,13 @@ public class IndividualViewsPrototype extends FragmentActivity {
       {
     	  if (prevLiftArgs.getString("date") != null)
     	  {
-    	  fragments.add(Fragment.instantiate(this,IndividualViewFragment.class.getName(), prevLiftArgs));
-    	  selectedItem++;
+    		  fragments.add(Fragment.instantiate(this,IndividualViewFragment.class.getName(), prevLiftArgs));
+    		  selectedItem++;
     	  }
-    	  else
-    		  System.out.println("weeblo");
     	  prevLiftArgs = getLiftBasedOn(prevLiftArgs, liftRetrievalDirection.PREV, cycle);
       }
       
-      
-
-      //our clicked fragment
+      //our originally clicked fragment
       fragments.add(Fragment.instantiate(this,IndividualViewFragment.class.getName(),initialArgs));//add our inital fragment
       
       //Add all fragments after our clicked fragment
@@ -137,9 +117,8 @@ public class IndividualViewsPrototype extends FragmentActivity {
       while (!nextLiftArgs.getString("status").equals("invalid"))
       {
     	  if (nextLiftArgs.getString("date") != null)
-    	  fragments.add(Fragment.instantiate(this,IndividualViewFragment.class.getName(), nextLiftArgs));
-    	  else
-    		  System.out.println("weeblo");
+    		  fragments.add(Fragment.instantiate(this,IndividualViewFragment.class.getName(), nextLiftArgs));
+
     	  nextLiftArgs = getLiftBasedOn(nextLiftArgs, liftRetrievalDirection.NEXT, cycle);
       }
       
@@ -151,8 +130,7 @@ public class IndividualViewsPrototype extends FragmentActivity {
     }
     public Bundle getLiftBasedOn(Bundle prevArgs, liftRetrievalDirection direction, int currentCycleSection) throws ParseException
 	{
-//		Intent myIntent = getIntent()
-		String DATE_FORMAT = "MM-dd-yy";//TODO watch over repercussions of this
+		String DATE_FORMAT = "MM-dd-yy";
 	    String date_string = prevArgs.getString("date"); 
 	    Bundle nextLiftArgs = new Bundle();
 	    if (date_string != null)
@@ -162,24 +140,23 @@ public class IndividualViewsPrototype extends FragmentActivity {
 			try {
 				date = (Date)sdf.parse(date_string);
 			} catch (java.text.ParseException e) {
-				//TODO fix analytics
-	//			sendTrackerException("DateException", date_string);
-	//			Toast.makeText(getApplicationContext(), "Error parsing date. An error report has been sent.", Toast.LENGTH_SHORT).show();
+				sendTrackerException("DateException", date_string);
+				Toast.makeText(getApplicationContext(), "Error parsing date. An error report has been sent.", Toast.LENGTH_SHORT).show();
 			}
 		    Calendar c1 = Calendar.getInstance();
 			c1.setTimeInMillis(0);
 		    c1.setTime(date);
 	
 		    
-		    String liftType = prevArgs.getString("liftType"); //these are prev args
+		    String liftType = prevArgs.getString("liftType"); 
 			String viewMode = prevArgs.getString("viewMode");
 			String mode = prevArgs.getString("mode");
-			String [] liftPattern = prevArgs.getStringArray("liftPattern"); //TODO can we aactually do this?
+			String [] liftPattern = prevArgs.getStringArray("liftPattern"); 
 			//set lift pattern?
 			String nextLift = null;
 		    String incrementedString = null;
 		    String[] result = new String[2];
-		    ConfigToolPrototype helper = new ConfigToolPrototype(getApplicationContext());
+		    FragmentConfigTool helper = new FragmentConfigTool(getApplicationContext());
 		    if (direction == liftRetrievalDirection.NEXT)
 		    {
 		    	result = helper.getNextLift(c1, liftPattern, liftType, viewMode);//getNextLiftDefault returns a result array which has nextLift and incrementedString
@@ -254,5 +231,17 @@ public class IndividualViewsPrototype extends FragmentActivity {
     	 }
     	}
     
-}//end fragment class
+    
+	protected void sendTrackerException(String exceptionType, String value) {
+		Tracker tracker = GoogleAnalytics.getInstance(getApplicationContext()).getTracker("UA-55018534-1");
+		  tracker.send(MapBuilder
+			      .createEvent("Exception",     // Event category (required)
+			                   exceptionType,  // Event action (required)
+			                   value,   // Event label
+			                   null)            // Event value
+			      .build());
+		
+	}
+    
+}
 

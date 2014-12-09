@@ -44,14 +44,14 @@
                 style="@style/RadioButton"
                 android:layout_width="89.5dp"
                 android:layout_height="wrap_content"
-                android:text="4" />
+                android:text="@+string/pattern4" />
 
             <RadioButton
                 android:id="@+id/patternButtonFiveDays"
                 style="@style/RadioButton"
                 android:layout_width="89.5dp"
                 android:layout_height="wrap_content"
-                android:text="5" />
+                android:text="@+string/pattern5" />
 
             <RadioButton
                 android:id="@+id/patternButtonSixDays"
@@ -59,14 +59,14 @@
                 android:layout_width="89.5dp"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="6" />
+                android:text="@+string/pattern6" />
 
             <RadioButton
                 android:id="@+id/patternButtonSevenDays"
                 style="@style/RadioButton"
                 android:layout_width="89.5dp"
                 android:layout_height="wrap_content"
-                android:text="7" />
+                android:text="@+string/pattern7" />
         </com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup>
 
     </LinearLayout>
@@ -245,9 +245,7 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/patternSizeSpinner"
             android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/patternSizeSpinner"
             android:layout_marginLeft="5dp"
             android:gravity="center_vertical"
             android:text="@string/pattern_size" />
@@ -265,7 +263,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/numberCyclesSpinnerNew" >
+                 >
 
                 <TextView
                     android:id="@+id/option5"

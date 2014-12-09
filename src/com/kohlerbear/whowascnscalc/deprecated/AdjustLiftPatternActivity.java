@@ -1,4 +1,4 @@
-package com.kohlerbear.whowascnscalc;
+package com.kohlerbear.whowascnscalc.deprecated;
 
 
 import java.util.HashMap;
@@ -6,7 +6,13 @@ import java.util.HashMap;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
+import com.kohlerbear.whowascnscalc.MainActivity;
+import com.kohlerbear.whowascnscalc.R;
+import com.kohlerbear.whowascnscalc.R.id;
+import com.kohlerbear.whowascnscalc.R.layout;
+import com.kohlerbear.whowascnscalc.R.style;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -28,6 +34,7 @@ import android.widget.Toast;
 
 
 
+@SuppressLint("DefaultLocale")//Only available in english
 public class AdjustLiftPatternActivity extends ActionBarActivity {
 	TextView option1, option2, option3, option4, option5, choice1, choice2, choice3, choice4, choice5, choice6, choice7;
 	Button backButton, resetButton, saveButton;
@@ -35,11 +42,9 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 	Spinner patternSizeSpinner;
 	Tracker tracker = null;
 
-	//http://code.tutsplus.com/tutorials/android-sdk-implementing-drag-and-drop-functionality--mobile-14402
-	//NEED TO RESIZE ARRAYS
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.AppBaseLightThemeNoTitleBar);//PEOFIJOWEIRJOQEIRJFIEQJROIQJERPOIJQEPORGPDOFVJADKFMVLKDMFNGOPKEJROPFI change me if you want theme to actually change 
+		setTheme(R.style.AppBaseLightThemeNoTitleBar);
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.adjustliftpattern);
 	    
@@ -63,7 +68,7 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 		patternSizeSpinner = (Spinner) findViewById (R.id.patternSizeSpinner);
 		
 	    
-	  //views to drag
+	    //views to drag
 	    option1 = (TextView) findViewById(R.id.option1);
 	    option2 = (TextView)findViewById(R.id.option2);
 	    option3 = (TextView)findViewById(R.id.option3);
@@ -128,6 +133,7 @@ public class AdjustLiftPatternActivity extends ActionBarActivity {
 
 	private final class ChoiceTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
+			view.performClick();//To stop pesky warnings
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 			    //setup drag
 				ClipData data = ClipData.newPlainText("", "");

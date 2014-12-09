@@ -1,5 +1,15 @@
-package com.kohlerbear.whowascnscalc;
+package com.kohlerbear.whowascnscalc.deprecated;
 
+import com.kohlerbear.whowascnscalc.ConfigTool;
+import com.kohlerbear.whowascnscalc.MainActivity;
+import com.kohlerbear.whowascnscalc.R;
+import com.kohlerbear.whowascnscalc.SecondScreenPrototype;
+import com.kohlerbear.whowascnscalc.R.id;
+import com.kohlerbear.whowascnscalc.R.layout;
+import com.kohlerbear.whowascnscalc.R.string;
+import com.kohlerbear.whowascnscalc.deprecated.StealUsefulNavDrawerStuff.NavigationDrawerCallbacks;
+
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -7,16 +17,17 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.Toast;
 
+@SuppressLint("Registered")
+@Deprecated
 public class Dashboard extends Activity implements
-		NavigationDrawerFragment.NavigationDrawerCallbacks {
+		StealUsefulNavDrawerStuff.NavigationDrawerCallbacks {
 
 	/**
 	 * Fragment managing the behaviors, interactions and presentation of the
 	 * navigation drawer.
 	 */
-	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private StealUsefulNavDrawerStuff mNavigationDrawerFragment;
 
 	/**
 	 * Used to store the last screen title. For use in
@@ -29,7 +40,7 @@ public class Dashboard extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard);
 
-		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
+		mNavigationDrawerFragment = (StealUsefulNavDrawerStuff) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
 
@@ -74,13 +85,13 @@ public class Dashboard extends Activity implements
 			}
 			else
 				Toast.makeText(Dashboard.this, "No previous projection exists!", Toast.LENGTH_SHORT).show();*/
-			Intent wintent = new Intent(Dashboard.this, REVAMPEDSecondScreenActivity.class);
+			Intent wintent = new Intent(Dashboard.this, SecondScreenPrototype.class);
 			String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest" }; 
 			wintent.putExtra("pattern", defaultPattern); //I don't think you will need the pattern dependency any more
 			startActivity(wintent);
 			break;
 		case 3:
-			Intent sintent = new Intent(Dashboard.this, REVAMPEDSecondScreenActivity.class);
+			Intent sintent = new Intent(Dashboard.this, SecondScreenPrototype.class);
 			String[] pat = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest" };
 			sintent.putExtra("pattern", pat); 
 			startActivity(sintent);

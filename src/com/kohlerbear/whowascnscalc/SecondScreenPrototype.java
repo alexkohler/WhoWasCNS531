@@ -20,24 +20,20 @@ import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
 
-public class REVAMPEDSecondScreenActivity extends BaseActivity {
+public class SecondScreenPrototype extends BaseActivity {
 
 
 	TextView option1, option2, option3, option4, option5;
@@ -53,7 +49,6 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	String [] liftPattern = new String[7]; //max size of 7 
 	String [] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
 	String[] emptyPattern = { "First", "Second", "Third", "Fourth", "Fifth", "Sixth"};
-//	Spinner patternSizeSpinner;
 	
 	EditText benchEditText;
 	EditText squatEditText;
@@ -61,8 +56,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	EditText deadEditText;
 	
 	//TM widgets
-//	Spinner numberCyclesSpinner;
-	RadioGroup patternSegmentGroup; //to replace numberOfDays in patterns pi
+	RadioGroup patternSegmentGroup; 
 	RadioButton patternFourDaysRadioButton;
 	RadioButton patternFiveDaysRadioButton;
 	RadioButton patternSixDaysRadioButton;
@@ -70,7 +64,6 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	
 	RadioButton lbRadioButton;
 	RadioButton kgRadioButton;
-//	CheckBox roundingCheckBox;
 	
 	
 	//TM vars
@@ -86,19 +79,15 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	private TypedArray navMenuIcons;
 	
 	
-	//http://code.tutsplus.com/tutorials/android-sdk-implementing-drag-and-drop-functionality--mobile-14402
-	//NEED TO RESIZE ARRAYS
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTheme(R.style.AppBaseLight);//PEOFIJOWEIRJOQEIRJFIEQJROIQJERPOIJQEPORGPDOFVJADKFMVLKDMFNGOPKEJROPFI change me if you want theme to actually change 
+		setTheme(R.style.AppBaseLight);
 	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.activity_revampedsecond_screen);
+	    setContentView(R.layout.activity_second_screen_prototype);
 	    
 		//Set up our navigation drawer
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
-		navMenuIcons = getResources()
-				.obtainTypedArray(R.array.nav_drawer_icons);// load icons from
-															// strings.xml
+		navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
 
 		set(navMenuTitles, navMenuIcons);
 		navMenuIcons.recycle();
@@ -114,18 +103,6 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		
 		customButton.setOnClickListener(customListener);
 		saveButton.setOnClickListener(saveListener);
-		
-
-		//TM COMPONENTS
-//		numberCyclesSpinner = (Spinner) findViewById(R.id.numberCyclesSpinnerNew);
-//		numberCyclesSpinner.setOnItemSelectedListener(numberCyclesSpinnerListener);   //TODO check if listener is even needed
-		
-		
-//		roundingCheckBox = (CheckBox) findViewById(R.id.roundingCheckBox);	
-		
-		
-		
-//		patternSizeSpinner = (Spinner) findViewById (R.id.patternSizeSpinnerNew);
 		
 		RadioGroup unitModeGroup = (RadioGroup) findViewById(R.id.poundKilogramSegmentedButtonGroup);
 		lbRadioButton = (RadioButton) findViewById(R.id.lbSegmentedButton);
@@ -145,18 +122,9 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		//set up intent stuff
 		Intent previousIntent = getIntent();
 		String origin = previousIntent.getStringExtra("origin");
-		if (origin.equals("third"))//TODO might be deprecated
-		{
-			benchEditText.setText(previousIntent.getStringExtra("bench"));
-			squatEditText.setText(previousIntent.getStringExtra("squat"));
-			ohpEditText.setText(previousIntent.getStringExtra("ohp"));
-			deadEditText.setText(previousIntent.getStringExtra("dead"));
-			liftPattern = previousIntent.getStringArrayExtra("liftPattern");
-		}
 		
-		else if (origin.equals("first"))
+		if (origin.equals("first"))
 		{
-//			liftPattern = previousIntent.getStringArrayExtra("liftPattern"); I don't think this is needed because lift pattern is no longer coming from first page.
 			startingDate = previousIntent.getStringExtra("key");
 		}
 		
@@ -231,6 +199,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		touchInterceptor.setOnTouchListener(new OnTouchListener() {
 		    @Override
 		    public boolean onTouch(View v, MotionEvent event) {
+		    	v.performClick();//to stop warnings
 		        if (event.getAction() == MotionEvent.ACTION_DOWN) {
 		        	for (TextView choice : choices)
 		        	{
@@ -251,66 +220,12 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	}
 	
 	
-	private void inflatePatternButtons(String origin)
-	{
-	    Intent intent = getIntent();
-	    String[] pattern = intent.getStringArrayExtra("pattern");
-	    if (pattern != null)
-	    	liftPattern = pattern;
-	    else
-	    	liftPattern = defaultPattern;
-	    int patternIndex = 0;
-	    //0 - adjust pattern
-	    //1 - 4 days
-	    //2 - 5 days
-	    //3 - 6 days
-	    //4 - 7 days
-//	    patternSizeSpinner.setSelection(liftPattern.length - 3);
-	    
-	    
-	    while (patternIndex < liftPattern.length)
-	    {
-	    	choices[patternIndex].setText(liftPattern[patternIndex]);
-	    	if (!origin.equals("custom")) //if we aren't coming from a custom, bold the pattern and hide the fields for rest
-	    	{	
-	    		choices[patternIndex].setTypeface(Typeface.DEFAULT_BOLD);
-	    		if (choices[patternIndex].getText().toString().intern().equals("Rest"))
-	    			choiceFields[patternIndex].setVisibility(View.INVISIBLE);
-	    	}
-	    	else //otherwise if we are, just hide all the fields! (Because they are numerics)
-	    			choiceFields[patternIndex].setVisibility(View.INVISIBLE);
-	    		
-	    		
-	    		
-	    	patternIndex++;
-	    }	    
-	    if (patternIndex < choices.length)
-	    {
-		    while (patternIndex < choices.length)
-		    {
-		    	TextView choice = choices[patternIndex];
-		    	choice.setVisibility(View.INVISIBLE);
-		    	choiceFields[patternIndex].setVisibility(View.INVISIBLE);
-		    	patternIndex++;
-		    }
-		    	
-	    }
-	}
-	
 	private void inflatePatternButtons(String[] pattern, boolean custom)
 	{
 	    liftPattern = pattern;
 	    if (custom)
 	    	liftPattern = new String[]{ "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"};
 	    int patternIndex = 0;
-	    //0 - adjust pattern
-	    //1 - 4 days
-	    //2 - 5 days
-	    //3 - 6 days
-	    //4 - 7 days
-//	    patternSizeSpinner.setSelection(liftPattern.length - 3);
-	    
-
 	    while (patternIndex < liftPattern.length)
 	    {
 	    	choices[patternIndex].setText(liftPattern[patternIndex]);
@@ -344,24 +259,6 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	    }
 	}
 	
-	
-	//spinner listener //TODO check if this is even needed
-	private OnItemSelectedListener numberCyclesSpinnerListener = new OnItemSelectedListener(){
-
-		@Override
-		public void onItemSelected(AdapterView<?> parent, View view,
-				int position, long id) {
-			return;
-
-		}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> parent) {
-			return;
-
-		}};	
-		
-		//radiogroup listener
 		private OnCheckedChangeListener poundKilogramSegmentListener = new OnCheckedChangeListener(){
 
 			@Override
@@ -580,6 +477,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 
 	private final class ChoiceTouchListener implements OnTouchListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
+			view.performClick();
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 			    //setup drag
 				ClipData data = ClipData.newPlainText("", "");
@@ -592,7 +490,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 			    return false;
 			}
 		}
-	}//end clas choicetouchlistener
+	}
 
 	private class ChoiceDragListener implements OnDragListener {
 		@Override
@@ -694,15 +592,6 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 			inflatePatternButtons(emptyPattern, true);
 			}};
 
-	//ununsed and may not even be needed but keeping as a placeholder
-	private OnClickListener backListener = new OnClickListener(){
-
-		@Override
-		public void onClick(View v) {
-			Intent backToFirst = new Intent (REVAMPEDSecondScreenActivity.this, MainActivity.class);
-			startActivity(backToFirst);
-			
-		}};	
 
 	private OnClickListener saveListener = new OnClickListener(){
 
@@ -710,223 +599,9 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		public void onClick(View v) {
 			if (validatePattern())
 			{
-/*			Intent patternToFirst = new Intent(REVAMPEDSecondScreenActivity.this, MainActivity.class);//TODO change this intent to ThirdScreen, no longer need to go back to MainActivity
-			//pass useful shit here (i.e. the date and the pattern
-			patternToFirst.putExtra("origin", "patternAdjust");
-			patternToFirst.putExtra("liftPattern", liftPattern);
-			startActivity(patternToFirst);*/
 			forwardToThird();	
-				
-				
 			}
 		}};
-		
-	@Deprecated	
-	private OnItemSelectedListener spinnerListener = new OnItemSelectedListener(){//TODO need to redo this to use your button group instead of spinner
-
-		@Override
-		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			switch (position)
-			{
-			//TODO do this with loops good christ are you stupid?
-			case 1: //pattern size is 4
-				//choices
-				liftPattern = new String[4];
-				choice1.setVisibility(View.VISIBLE);
-				choice2.setVisibility(View.VISIBLE);
-				choice3.setVisibility(View.VISIBLE);
-				choice4.setVisibility(View.VISIBLE);
-				choice5.setVisibility(View.INVISIBLE);
-				choice6.setVisibility(View.INVISIBLE);
-				choice7.setVisibility(View.INVISIBLE);
-				//fields
-				//choice 1 field 
-				if (!choice1.getText().toString().equals("Rest") && !choice1.getText().toString().equals("First"))
-					choice1F.setVisibility(View.VISIBLE);
-				else
-					choice1F.setVisibility(View.INVISIBLE);
-				
-				//choice 2 field 
-				if (!choice2.getText().toString().equals("Rest") && !choice2.getText().toString().equals("Second"))
-					choice2F.setVisibility(View.VISIBLE);
-				else
-					choice2F.setVisibility(View.INVISIBLE);
-				
-				//choice 3 field 
-				if (!choice3.getText().toString().equals("Rest") && !choice3.getText().toString().equals("Third"))
-					choice3F.setVisibility(View.VISIBLE);
-				else
-					choice3F.setVisibility(View.INVISIBLE);
-				
-				//choice 4 field
-				if (!choice4.getText().toString().equals("Rest") && !choice4.getText().toString().equals("Fourth"))
-					choice4F.setVisibility(View.VISIBLE);
-				else
-					choice4F.setVisibility(View.INVISIBLE);
-				
-				choice5F.setVisibility(View.INVISIBLE);
-				choice6F.setVisibility(View.INVISIBLE);
-				choice7F.setVisibility(View.INVISIBLE);
-				break;
-			case 2: //pattern size is 5
-				liftPattern = new String[5];
-				//choices
-				choice1.setVisibility(View.VISIBLE);
-				choice2.setVisibility(View.VISIBLE);
-				choice3.setVisibility(View.VISIBLE);
-				choice4.setVisibility(View.VISIBLE);
-				choice5.setVisibility(View.VISIBLE);
-				choice6.setVisibility(View.INVISIBLE);
-				choice7.setVisibility(View.INVISIBLE);
-				//fields
-				
-				//choice 1 field 
-				if (!choice1.getText().toString().equals("Rest") && !choice1.getText().toString().equals("First"))
-					choice1F.setVisibility(View.VISIBLE);
-				else
-					choice1F.setVisibility(View.INVISIBLE);
-				
-				//choice 2 field 
-				if (!choice2.getText().toString().equals("Rest") && !choice2.getText().toString().equals("Second"))
-					choice2F.setVisibility(View.VISIBLE);
-				else
-					choice2F.setVisibility(View.INVISIBLE);
-				
-				//choice 3 field 
-				if (!choice3.getText().toString().equals("Rest") && !choice3.getText().toString().equals("Third"))
-					choice3F.setVisibility(View.VISIBLE);
-				else
-					choice3F.setVisibility(View.INVISIBLE);
-				
-				//choice 4 field
-				if (!choice4.getText().toString().equals("Rest") && !choice4.getText().toString().equals("Fourth"))
-					choice4F.setVisibility(View.VISIBLE);
-				else
-					choice4F.setVisibility(View.INVISIBLE);
-				
-				//choice 5 field 
-				if (!choice5.getText().toString().equals("Rest") && !choice5.getText().toString().equals("Fifth"))
-					choice5F.setVisibility(View.VISIBLE);
-				else
-					choice5F.setVisibility(View.INVISIBLE);
-				
-				
-				choice6F.setVisibility(View.INVISIBLE);
-				choice7F.setVisibility(View.INVISIBLE);
-				break;
-			case 3://patterm size is 6
-				liftPattern = new String[6];
-				//choices
-				choice1.setVisibility(View.VISIBLE);
-				choice2.setVisibility(View.VISIBLE);
-				choice3.setVisibility(View.VISIBLE);
-				choice4.setVisibility(View.VISIBLE);
-				choice5.setVisibility(View.VISIBLE);
-				choice6.setVisibility(View.VISIBLE);
-				choice7.setVisibility(View.INVISIBLE);
-				//fields
-				//choice 1 field 
-				if (!choice1.getText().toString().equals("Rest") && !choice1.getText().toString().equals("First"))
-					choice1F.setVisibility(View.VISIBLE);
-				else
-					choice1F.setVisibility(View.INVISIBLE);
-				
-				//choice 2 field 
-				if (!choice2.getText().toString().equals("Rest") && !choice2.getText().toString().equals("Second"))
-					choice2F.setVisibility(View.VISIBLE);
-				else
-					choice2F.setVisibility(View.INVISIBLE);
-				
-				//choice 3 field 
-				if (!choice3.getText().toString().equals("Rest") && !choice3.getText().toString().equals("Third"))
-					choice3F.setVisibility(View.VISIBLE);
-				else
-					choice3F.setVisibility(View.INVISIBLE);
-				
-				//choice 4 field
-				if (!choice4.getText().toString().equals("Rest") && !choice4.getText().toString().equals("Fourth"))
-					choice4F.setVisibility(View.VISIBLE);
-				else
-					choice4F.setVisibility(View.INVISIBLE);
-				
-				//choice 5 field 
-				if (!choice5.getText().toString().equals("Rest") && !choice5.getText().toString().equals("Fifth"))
-					choice5F.setVisibility(View.VISIBLE);
-				else
-					choice5F.setVisibility(View.INVISIBLE);
-				
-				//choice 6 field 
-				if (!choice6.getText().toString().equals("Rest") && !choice6.getText().toString().equals("Sixth"))
-					choice6F.setVisibility(View.VISIBLE);
-				else
-					choice6F.setVisibility(View.INVISIBLE);
-				
-				choice7F.setVisibility(View.INVISIBLE);
-				break;
-			case 4:// pattern size is 7
-				liftPattern = new String[7];
-				//choices
-				choice1.setVisibility(View.VISIBLE);
-				choice2.setVisibility(View.VISIBLE);
-				choice3.setVisibility(View.VISIBLE);
-				choice4.setVisibility(View.VISIBLE);
-				choice5.setVisibility(View.VISIBLE);
-				choice6.setVisibility(View.VISIBLE);
-				choice7.setVisibility(View.VISIBLE);
-				//fields
-				//choice 1 field 
-				if (!choice1.getText().toString().equals("Rest") && !choice1.getText().toString().equals("First"))
-					choice1F.setVisibility(View.VISIBLE);
-				else
-					choice1F.setVisibility(View.INVISIBLE);
-				
-				//choice 2 field 
-				if (!choice2.getText().toString().equals("Rest") && !choice2.getText().toString().equals("Second"))
-					choice2F.setVisibility(View.VISIBLE);
-				else
-					choice2F.setVisibility(View.INVISIBLE);
-				
-				//choice 3 field 
-				if (!choice3.getText().toString().equals("Rest") && !choice3.getText().toString().equals("Third"))
-					choice3F.setVisibility(View.VISIBLE);
-				else
-					choice3F.setVisibility(View.INVISIBLE);
-				
-				//choice 4 field
-				if (!choice4.getText().toString().equals("Rest") && !choice4.getText().toString().equals("Fourth"))
-					choice4F.setVisibility(View.VISIBLE);
-				else
-					choice4F.setVisibility(View.INVISIBLE);
-				
-				//choice 5 field 
-				if (!choice5.getText().toString().equals("Rest") && !choice5.getText().toString().equals("Fifth"))
-					choice5F.setVisibility(View.VISIBLE);
-				else
-					choice5F.setVisibility(View.INVISIBLE);
-				
-				//choice 6 field 
-				if (!choice6.getText().toString().equals("Rest") && !choice6.getText().toString().equals("Sixth"))
-					choice6F.setVisibility(View.VISIBLE);
-				else
-					choice6F.setVisibility(View.INVISIBLE);
-				
-				//choice 7 field 
-				if (!choice7.getText().toString().equals("Rest") && !choice7.getText().toString().equals("Seventh"))
-					choice7F.setVisibility(View.VISIBLE);
-				else
-					choice7F.setVisibility(View.INVISIBLE);
-			}
-			
-		}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> arg0) {
-			
-		}};	
-		
-
-		
-		
 		
 		
 	private boolean validatePattern()
@@ -950,12 +625,13 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 			//check if null and break if so..
 			if (currentLift.equals(null))
 			{
-				Toast.makeText(REVAMPEDSecondScreenActivity.this, "You left spot " + (i + 1) + " open! Please use all spots or choose a smaller pattern size.", Toast.LENGTH_SHORT).show();	
+				Toast.makeText(SecondScreenPrototype.this, "You left spot " + (i + 1) + " open! Please use all spots or choose a smaller pattern size.", Toast.LENGTH_SHORT).show();	
 				return false;
 			}
 			if ((currentLift.equals("First") || currentLift.equals("Second") || currentLift.equals("Third") || currentLift.equals("Fourth")
 				|| currentLift.equals("Fifth") || currentLift.equals("Sixth") || currentLift.equals("Seventh"))/* && !toastThrown*/)
 			{
+				//TODO there is a bug somewhere around here... showing an error on a hidden textview
 //			Toast.makeText(REVAMPEDSecondScreenActivity.this, "You left a spot open! Please use all spots or choose a smaller pattern size.", Toast.LENGTH_LONG).show();	
 			//experimental error handling
 			choices[i].requestFocus();
@@ -981,7 +657,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 				ohpCount++;
 				break;
 			}
-		}//end loop
+		}
 		
 		liftValidity = (benchCount == 1) && (squatCount == 1) && (deadCount == 1) && (ohpCount  == 1) && !toastThrown;
 		if (liftValidity)
@@ -1033,10 +709,10 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 				multipleBuffer = multipleBuffer + "OHP";
 			}
 			if (zeroLifts)
-			Toast.makeText(REVAMPEDSecondScreenActivity.this, addBuffer, Toast.LENGTH_SHORT).show();
+			Toast.makeText(SecondScreenPrototype.this, addBuffer, Toast.LENGTH_SHORT).show();
 
 			if (multipleLifts)
-				Toast.makeText(REVAMPEDSecondScreenActivity.this, multipleBuffer, Toast.LENGTH_SHORT).show();
+				Toast.makeText(SecondScreenPrototype.this, multipleBuffer, Toast.LENGTH_SHORT).show();
 			
 			return false;
 		
@@ -1046,17 +722,9 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 	
 	private void forwardToThird()//back end to SAVE button, where ever that may end up laying. Still need to bring in 'lbs' boolean, 'unit_mode' boolean, make sure you grab all depenendencies
 	{
-		//we need to identify our edit texts, this will make it easiest to integrate in. 
-		
-		//first, grab spinner selection so we know what fields have the possibility of being visible
-//		Integer visibleFields = Integer.valueOf(patternSizeSpinner.getSelectedItem().toString().substring(0, 1));
-		//pwd
-		//		Integer visibleFieldsFromSegmentGroup -
 		int buttonID = patternSegmentGroup.getCheckedRadioButtonId();
 		View selectedRadioButton = patternSegmentGroup.findViewById(buttonID);
 		int visibleFieldsNew = patternSegmentGroup.indexOfChild(selectedRadioButton) + 4; //add 4?
-//		System.out.println("comparing " + visibleFields + " and " + selectedIndex );
-		System.out.println();
 		
 		for (int i = 0; i < visibleFieldsNew; i++)
 		{
@@ -1123,10 +791,6 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		String thousandDeadliftStringKgs = errorDead + " kgs? Let's be real here. Enter your actual deadlift.";
 		String zeroDeadliftString = "Please enter a deadlift greater than 0lbs!";
 
-		String zeroCycleString = "Please choose how many cycles you wish to project!";
-
-
-
 		//all error flags initially false...
 		Boolean benchErrorFlag = false;
 		Boolean squatErrorFlag = false;
@@ -1136,11 +800,11 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		//first, get data from previous screen (starting date passed to second from first)
 		Intent intent = getIntent();
 
-		ConfigTool ct = new ConfigTool(REVAMPEDSecondScreenActivity.this);
+		ConfigTool ct = new ConfigTool(SecondScreenPrototype.this);
 		if (startingDate == null && !ct.dbEmpty())
 			startingDate = ct.getStartingDateFromDatabase();
 
-		intent = new Intent(REVAMPEDSecondScreenActivity.this, ThirdScreenPrototype.class);
+		intent = new Intent(SecondScreenPrototype.this, ThirdScreenPrototype.class);
 		intent.putExtra("key2", startingDate);
 		intent.putExtra("liftPattern", liftPattern);
 
@@ -1148,8 +812,6 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		
 		//second, get our starting lifts
 		String bench = benchEditText.getText().toString();
-
-	//	Number myNumber = nf.parse(myString);
 
 		double benchDouble = 0;
 		    try {
@@ -1167,9 +829,7 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 
 		//null error handling
 		if (bench.equals("")){	
-			//technically don't need endline char first time...
 			benchEditText.setError(emptyBenchString);
-//			errorTextView.setText(errorStream); //don;t think errortextview is used anymore
 			benchErrorFlag = true;
 		}
 
@@ -1322,62 +982,31 @@ public class REVAMPEDSecondScreenActivity extends BaseActivity {
 		if (deadErrorFlag.equals(false))
 			intent.putExtra("dead", dead);
 
-		//Spinner error handling
-//		if (numberCyclesSpinner.getSelectedItem().toString().equals("0")) 
-//		{
-//			errorStream = errorStream + "\n" + zeroCycleString;
-//			errorTextView.setText(errorStream);
-//			spinnerErrorFlag = true;
-//		}
+		//to accomodate new 5 cycle projection
+		intent.putExtra("numberCycles", "5"); 
 
-//		else
-//		{
-			intent.putExtra("numberCycles", "5"/*numberCyclesSpinner.getSelectedItem().toString()*/); //TODO changing this to five so we can just query without selection
-//		}
-
-		if (!benchErrorFlag && !squatErrorFlag && !ohpErrorFlag && !deadErrorFlag /*&& !spinnerErrorFlag*/)
+		if (!benchErrorFlag && !squatErrorFlag && !ohpErrorFlag && !deadErrorFlag )
 		{
 
 
 			if (lbs.equals(true)){
 				unit_mode = "Lbs";	  
-				Toast.makeText(REVAMPEDSecondScreenActivity.this, "Displaying in lbs", Toast.LENGTH_SHORT).show();
+				Toast.makeText(SecondScreenPrototype.this, "Displaying in lbs", Toast.LENGTH_SHORT).show();
 				intent.putExtra("mode", unit_mode);
 			}
 			if (lbs.equals(false))
 			{
 				unit_mode = "Kgs";
-				Toast.makeText(REVAMPEDSecondScreenActivity.this, "Displaying in kgs", Toast.LENGTH_SHORT).show();
+				Toast.makeText(SecondScreenPrototype.this, "Displaying in kgs", Toast.LENGTH_SHORT).show();
 				intent.putExtra("mode", unit_mode);
 			}
 
-			//no longer using roundingCheckBox
-/*			if (roundingCheckBox.isChecked())
-				intent.putExtra("round", "true");
-			else
-				intent.putExtra("round", "false");*/
-
-			intent.putExtra("round", true);//TODO clean up these intents if they aren't needed.. I don't think they are
 			
-			//tell third activity we are coming from second screen (creating a new query)
 			intent.putExtra("origin", "second");
 
 			startActivity(intent);
 
 		}
 	}
-	
-	
-	//analytics error handling
-	private void sendTrackerException(String exceptionType, String value) {
-		Toast.makeText(REVAMPEDSecondScreenActivity.this, "Sorry! :( Something went wrong, crash report sent.", Toast.LENGTH_LONG).show();
-		  tracker.send(MapBuilder
-			      .createEvent("Exception",     // Event category (required)
-			                   exceptionType,  // Event action (required)
-			                   value,   // Event label
-			                   null)            // Event value
-			      .build());
-		
-	}	
 
 }

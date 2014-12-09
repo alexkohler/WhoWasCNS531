@@ -149,10 +149,13 @@ Got viewpager set up for individualView prototype, first time actually working w
 
 
 12-8-14: Back to drawing board.. try using a fragmentpageradapter instead of this state bullshit. 
-Went back to drawing board, used a regular fragment adapter and just populated the list and it works perfectly with my mock setup. Need to change titles (currently doesn't display date) and then I'll try to integrate this page into actual page layout and get a commit together. 
+Went back to drawing board, used a regular fragment adapter and just populated the list and it works perfectly with my mock setup. Need to change titles (currently doesn't display date) and then I'll try to integrate this page into actual page layout and get a commit together. Fixed view existing projection bug on viewing. Lots and lots of cleanup and adding tracker sends. Lint stuff still needs fixed too.
 
-Fixed view existing projection bug on viewing 
+Another third screen bug with current view, see if it's static or something, was able to get it to display bench only on individualviews when I had all records showing. I think it'll just be a matter of updating the enum
 
+Creating custom patterns is still buggy. Showing errors on patterns that should be hidden. 
+
+error doesn't disappear in onpress
 
 
 TODO:

@@ -1,4 +1,4 @@
-package com.kohlerbear.whowascnscalc;
+package com.kohlerbear.whowascnscalc.deprecated;
 
 public class PoundPlateComputer {
 

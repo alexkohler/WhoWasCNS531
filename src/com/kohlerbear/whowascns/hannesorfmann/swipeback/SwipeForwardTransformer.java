@@ -19,7 +19,7 @@ import com.hannesdorfmann.swipeback.transformer.SwipeBackTransformer;
 import com.hannesdorfmann.swipeback.util.MathUtils;
 import com.kohlerbear.whowascnscalc.EventsDataSQLHelper;
 import com.kohlerbear.whowascnscalc.MainActivity;
-import com.kohlerbear.whowascnscalc.REVAMPEDSecondScreenActivity;
+import com.kohlerbear.whowascnscalc.SecondScreenPrototype;
 
 public class SwipeForwardTransformer implements SwipeBackTransformer {
 
@@ -51,7 +51,7 @@ public class SwipeForwardTransformer implements SwipeBackTransformer {
 		//if this db does not have a database....
 		EventsDataSQLHelper eventsData = new EventsDataSQLHelper(m_context);
 		SQLiteDatabase db = eventsData.getWritableDatabase();
-		Intent intent = new Intent(m_context, REVAMPEDSecondScreenActivity.class); //TODO just change this back to second if things go awry
+		Intent intent = new Intent(m_context, SecondScreenPrototype.class); //TODO just change this back to second if things go awry
 		intent.putExtra("key", formattedDate );
 		intent.putExtra("origin", "first");
 		intent.putExtra("liftPattern", new String[]{"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"});

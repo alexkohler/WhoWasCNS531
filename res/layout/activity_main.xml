@@ -70,7 +70,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/set"
-            android:text="TextView" />
+            android:text="@+id/textView1" />
 
     </RelativeLayout>
 

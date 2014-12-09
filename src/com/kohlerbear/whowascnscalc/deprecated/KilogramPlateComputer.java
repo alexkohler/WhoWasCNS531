@@ -1,4 +1,4 @@
-package com.kohlerbear.whowascnscalc;
+package com.kohlerbear.whowascnscalc.deprecated;
 
 public class KilogramPlateComputer {
 
@@ -12,7 +12,6 @@ public class KilogramPlateComputer {
 
 
 	//weight remaining (for sanity checks and more readable calculation
-
 	int twentyFivesNeeded;
 	int twentysNeeded;
 	int fifteensNeeded;
@@ -26,10 +25,8 @@ public class KilogramPlateComputer {
 
 	public void computeKgPlates (double myWeight, double barbellUsed, boolean[] kgFlags)
 	{
-		//should unpack booleans....
 		weight = myWeight - barbellUsed;
 		plateWeight = round (weight, 2.5); //this will have to be dynamic depending on the plates they have 
-		//plateWeight = weight;
 		Boolean haveTwentyFive = kgFlags[0];
 		Boolean haveTwenty = kgFlags[1];
 		Boolean haveFifteen = kgFlags[2];
@@ -39,7 +36,6 @@ public class KilogramPlateComputer {
 		Boolean haveOnePointTwoFive = kgFlags[6];
 
 		double currentPlate = 0;
-		//boolean thirtyfive_flag = true;
 		for (int i=0; i<7; i++)
 		{
 			currentPlate_needed = 0;
