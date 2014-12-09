@@ -72,7 +72,7 @@ public final class R {
 		public static final int stack_duration = 0x7f080004;
 	}
 	public static final class layout {
-		public static final int swipeback_default = 0x7f03002e;
+		public static final int swipeback_default = 0x7f03002a;
 	}
 	public static final class string {
 		public static final int swipeback_back = 0x7f090000;

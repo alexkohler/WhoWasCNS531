@@ -1317,7 +1317,6 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050023;
         public static final int action_menu_presenter=0x7f050024;
         public static final int action_mode_close_button=0x7f050031;
-        public static final int action_settings=0x7f0500e2;
         public static final int activity_chooser_view_content=0x7f050032;
         public static final int activity_main_relativelayout=0x7f050092;
         public static final int adjustActivityBackButton=0x7f0500db;
@@ -1353,7 +1352,7 @@ containing a value of this type.
         public static final int configureButtonPrototype=0x7f0500da;
         public static final int container=0x7f05004c;
         public static final int content_frame=0x7f05004a;
-        public static final int dataMarquee=0x7f0500de;
+        public static final int dataMarquee=0x7f0500dd;
         public static final int dateColumn=0x7f0500cf;
         public static final int deadEditText=0x7f0500a1;
         public static final int deadTextView=0x7f0500a2;
@@ -1514,7 +1513,7 @@ containing a value of this type.
         public static final int secondLiftColumn=0x7f0500d3;
         public static final int secondScreenNextButton=0x7f05009d;
         public static final int secondToFirstButton=0x7f050098;
-        public static final int section_label=0x7f0500dd;
+        public static final int section_label=0x7f0500de;
         public static final int set=0x7f050095;
         public static final int shortcut=0x7f05003b;
         public static final int showCustom=0x7f050015;
@@ -1603,29 +1602,22 @@ containing a value of this type.
         public static final int activity_dashboard=0x7f030019;
         public static final int activity_individual_view_proto=0x7f03001a;
         public static final int activity_individual_views=0x7f03001b;
-        public static final int activity_individual_views_prototype=0x7f03001c;
-        public static final int activity_main=0x7f03001d;
-        public static final int activity_opening_dashboard=0x7f03001e;
-        public static final int activity_second=0x7f03001f;
-        public static final int activity_second_screen_prototype=0x7f030020;
-        public static final int activity_settings=0x7f030021;
-        public static final int activity_test_nav_drawer_activity_two=0x7f030022;
-        public static final int activity_third=0x7f030023;
-        public static final int activity_third_screen_prototype=0x7f030024;
-        public static final int adjustliftpattern=0x7f030025;
-        public static final int drawer=0x7f030026;
-        public static final int drawer_list_item=0x7f030027;
-        public static final int fragment_dashboard=0x7f030028;
-        public static final int fragment_individual_view=0x7f030029;
-        public static final int fragment_main=0x7f03002a;
-        public static final int fragment_navigation_drawer=0x7f03002b;
-        public static final int fragment_third_screen_prototype=0x7f03002c;
-        public static final int support_simple_spinner_dropdown_item=0x7f03002d;
-        public static final int swipeback_default=0x7f03002e;
-        public static final int swipeback_forward=0x7f03002f;
-    }
-    public static final class menu {
-        public static final int adjust_lift_pattern=0x7f0d0000;
+        public static final int activity_main=0x7f03001c;
+        public static final int activity_opening_dashboard=0x7f03001d;
+        public static final int activity_second=0x7f03001e;
+        public static final int activity_second_screen_prototype=0x7f03001f;
+        public static final int activity_settings=0x7f030020;
+        public static final int activity_third=0x7f030021;
+        public static final int activity_third_screen_prototype=0x7f030022;
+        public static final int adjustliftpattern=0x7f030023;
+        public static final int drawer=0x7f030024;
+        public static final int drawer_list_item=0x7f030025;
+        public static final int fragment_individual_view=0x7f030026;
+        public static final int fragment_navigation_drawer=0x7f030027;
+        public static final int fragment_third_screen_prototype=0x7f030028;
+        public static final int support_simple_spinner_dropdown_item=0x7f030029;
+        public static final int swipeback_default=0x7f03002a;
+        public static final int swipeback_forward=0x7f03002b;
     }
     public static final class string {
         /**  Button title definitoins 
