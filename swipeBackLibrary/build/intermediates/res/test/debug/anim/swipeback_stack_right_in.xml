@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<set xmlns:android="http://schemas.android.com/apk/res/android">
-    
-     <translate android:fromXDelta="100%"
-               android:toXDelta="0%"
-               android:duration="@integer/stack_duration" />
-     
-</set>
-<!-- From: file:/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/anim/swipeback_stack_right_in.xml --><!-- From: file:/home/alex/workspace/531Calc/swipeBackLibrary/build/intermediates/bundles/debug/res/anim/swipeback_stack_right_in.xml -->

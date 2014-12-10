@@ -1,7 +1,0 @@
-<set xmlns:android="http://schemas.android.com/apk/res/android" 
-     android:zAdjustment="top">  
-
-    <translate android:fromXDelta="0" 
-               android:toXDelta="100%p" 
-               android:duration="150" />
-</set><!-- From: file:/home/alex/workspace/531Calc/whoWasCNS/src/main/res/anim/exit_slide_right.xml -->
