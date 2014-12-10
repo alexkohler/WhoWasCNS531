@@ -191,7 +191,7 @@ Regular TODO:
   Ability to reset weight tracking
   Ability to change theme?
   
-populate About page
+ populate About page
 
 Figure out UI colors
 
