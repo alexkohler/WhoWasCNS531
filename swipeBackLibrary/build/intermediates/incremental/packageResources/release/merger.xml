@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res"><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values-fr/strings.xml" qualifiers="fr"><string name="swipeback_back">RETOUR</string></file><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values-en/strings.xml" qualifiers="en"><string name="swipeback_back">BACK</string></file><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values-it/strings.xml" qualifiers="it"><string name="swipeback_back">INDIETRO</string></file><file name="swipeback_arrow_left" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/drawable-xhdpi/swipeback_arrow_left.9.png" qualifiers="xhdpi-v4" type="drawable"/><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values/attrs.xml" qualifiers=""><attr format="reference" name="swipeBackStyle"/><declare-styleable name="SwipeBack">
+
+        <!-- Drawable to use for the background of the content. -->
+        <attr format="reference" name="sbContentBackground"/>
+
+        <!-- Drawable to use for the background of the swipe back view. -->
+        <attr format="reference" name="sbSwipeBackBackground"/>
+
+        <!-- The size of the swipe back view. -->
+        <attr format="dimension" name="sbSwipeBackSize"/>
+
+        <!-- Defines whether there will be a divider drawn between content and the swipe back view. Default is true. -->
+        <attr format="boolean" name="sbDividerEnabled"/>
+
+        <!-- The size of the divider. Default is 6dp -->
+        <attr format="dimension" name="sbDividerSize"/>
+
+        <!-- The color of the divider as per default a shadow (gradient) drawable will be created. Default is #FF000000. -->
+        <attr format="color" name="sbDividerAsShadowColor"/>
+
+        <!-- Drawable used as divider. -->
+        <attr format="reference" name="sbDivider"/>
+
+        <!-- The touch bezel size. -->
+        <attr format="dimension" name="sbBezelSize"/>
+
+
+        <!-- The maximum animation duration -->
+        <attr format="integer" name="sbMaxAnimationDuration"/>
+
+
+        <!-- Whether an overlay should be drawn as the swipe back view  is opened and closed -->
+        <attr format="boolean" name="sbDrawOverlay"/>
+        
+        <!-- The transformer that should be -->
+        <attr format="string" name="sbTransformer"/>
+
+        <!-- The position of the drawer -->
+        <attr format="enum" name="sbSwipeBackPosition">
+            <enum name="left" value="0"/>
+            <enum name="top" value="1"/>
+            <enum name="right" value="2"/>
+            <enum name="bottom" value="3"/>
+            <enum name="start" value="4"/>
+            <enum name="end" value="5"/>
+        </attr>
+    </declare-styleable></file><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values/colors.xml" qualifiers=""><color name="sb__defaultBackground">#ff2c2c2c</color><color name="sb__defaultDivider">#f7f7f7</color><color name="sb__defaultText">#f7f7f7</color></file><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values/integers.xml" qualifiers=""><integer name="slide_in_duration">200</integer><integer name="back_slide_in_duration">200</integer><integer name="slide_out_duration">400</integer><integer name="stack_duration">300</integer><integer name="back_slide_out_duration">400</integer></file><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values/dimens.xml" qualifiers=""><dimen name="arrow_height">27dp</dimen><dimen name="arrow_to_text_space">32dp</dimen><dimen name="arrow_width">34dp</dimen></file><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values/styles.xml" qualifiers=""><style name="swipeBackText" parent="android:Widget.TextView">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/sb__defaultText</item>
+        <item name="android:textStyle">bold</item>
+    </style><style name="Widget"/><style name="Widget.SwipeBack">
+        <item name="sbSwipeBackBackground">@color/sb__defaultBackground</item>
+        <item name="sbContentBackground">?android:attr/windowBackground</item>
+    </style></file><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values/ids.xml" qualifiers=""><item name="sbContent" type="id"/><item name="sb__swipeBackContainer" type="id"/><item name="sb__content" type="id"/><item name="sb__translationY" type="id"/><item name="sb__swipeBack" type="id"/><item name="sb__translationX" type="id"/><item name="sbSwipeBackView" type="id"/><item name="sbActiveViewPosition" type="id"/></file><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values/strings.xml" qualifiers=""><string name="swipeback_back">BACK</string></file><file name="swipeback_default" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/layout/swipeback_default.xml" qualifiers="" type="layout"/><file name="swipeback_arrow_left" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/drawable-hdpi/swipeback_arrow_left.9.png" qualifiers="hdpi-v4" type="drawable"/><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values-es/strings.xml" qualifiers="es"><string name="swipeback_back">ATRÀS</string></file><file name="swipeback_arrow_left" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/drawable-xxhdpi/swipeback_arrow_left.9.png" qualifiers="xxhdpi-v4" type="drawable"/><file name="swipeback_arrow_left" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/drawable-mdpi/swipeback_arrow_left.9.png" qualifiers="mdpi-v4" type="drawable"/><file name="swipeback_slide_left_out" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/anim/swipeback_slide_left_out.xml" qualifiers="" type="anim"/><file name="swipeback_slide_left_in" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/anim/swipeback_slide_left_in.xml" qualifiers="" type="anim"/><file name="swipeback_stack_to_back" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/anim/swipeback_stack_to_back.xml" qualifiers="" type="anim"/><file name="swipeback_slide_right_out" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/anim/swipeback_slide_right_out.xml" qualifiers="" type="anim"/><file name="swipeback_slide_right_in" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/anim/swipeback_slide_right_in.xml" qualifiers="" type="anim"/><file name="swipeback_stack_right_out" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/anim/swipeback_stack_right_out.xml" qualifiers="" type="anim"/><file name="swipeback_stack_right_in" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/anim/swipeback_stack_right_in.xml" qualifiers="" type="anim"/><file name="swipeback_stack_to_front" path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/anim/swipeback_stack_to_front.xml" qualifiers="" type="anim"/><file path="/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/values-de/strings.xml" qualifiers="de"><string name="swipeback_back">ZURÜCK</string></file></source><source path="/home/alex/workspace/531Calc/swipeBackLibrary/build/generated/res/rs/release"/><source path="/home/alex/workspace/531Calc/swipeBackLibrary/build/generated/res/generated/release"/></dataSet><dataSet config="release"><source path="/home/alex/workspace/531Calc/swipeBackLibrary/src/release/res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="SwipeBack"><attr format="reference" name="sbContentBackground"/><attr format="reference" name="sbSwipeBackBackground"/><attr format="dimension" name="sbSwipeBackSize"/><attr format="boolean" name="sbDividerEnabled"/><attr format="dimension" name="sbDividerSize"/><attr format="color" name="sbDividerAsShadowColor"/><attr format="reference" name="sbDivider"/><attr format="dimension" name="sbBezelSize"/><attr format="integer" name="sbMaxAnimationDuration"/><attr format="boolean" name="sbDrawOverlay"/><attr format="string" name="sbTransformer"/><attr format="enum" name="sbSwipeBackPosition"><enum name="left" value="0"/><enum name="top" value="1"/><enum name="right" value="2"/><enum name="bottom" value="3"/><enum name="start" value="4"/><enum name="end" value="5"/></attr></declare-styleable></configuration></mergedItems></merger>

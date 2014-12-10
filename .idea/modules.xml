@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/531Calc.iml" filepath="$PROJECT_DIR$/531Calc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/swipeBackLibrary/swipeBackLibrary.iml" filepath="$PROJECT_DIR$/swipeBackLibrary/swipeBackLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/whoWasCNS/whoWasCNS.iml" filepath="$PROJECT_DIR$/whoWasCNS/whoWasCNS.iml" />
+    </modules>
+  </component>
+</project>
+

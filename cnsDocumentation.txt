@@ -151,6 +151,15 @@ Got viewpager set up for individualView prototype, first time actually working w
 12-8-14: Back to drawing board.. try using a fragmentpageradapter instead of this state bullshit. 
 Went back to drawing board, used a regular fragment adapter and just populated the list and it works perfectly with my mock setup. Need to change titles (currently doesn't display date) and then I'll try to integrate this page into actual page layout and get a commit together. Fixed view existing projection bug on viewing. Lots and lots of cleanup and adding tracker sends. Lint stuff still needs fixed too.
 
+
+12-9-14: Switching over to AS as the Android for Eclipse will no longer be maintained with AS 1.0 coming out. Was
+ mild nightmare, sorted a lot out, actually able to build now, just need to sort out issue with AVD. I think it h
+as to do with installing as root (that's where your avd definitions go - /root/.android/avd instead of base user.
+ So see how the hell to fix that. First see if you can reconfigure your .android directory otherwise you may have
+ to run through another install (Which won't be a big deal because you can build and that's where a bulk of your
+time went - just reimport the workspace/531Calc project. Gradle and everything is already good to go. 
+
+
 Another third screen bug with current view, see if it's static or something, was able to get it to display bench only on individualviews when I had all records showing. I think it'll just be a matter of updating the enum
 
 Creating custom patterns is still buggy. Showing errors on patterns that should be hidden. 
@@ -202,5 +211,4 @@ Actually test your getPatternFromDB method
 Feature: allow logging to be added, do a check if it's one of the projected days, if so, say what day it was otherwise still allow work to be logged. Perhaps a template manager or something... Your UI will need to be fixed before this I think. You want a prettier menu. Look for layouts tomorrow morning too.
 Consideration: How will logging work? Will there be another entry in the database? Should it be a separate database?
 p
-
 

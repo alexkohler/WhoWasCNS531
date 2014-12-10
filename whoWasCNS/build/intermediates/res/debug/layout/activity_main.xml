@@ -1,0 +1,83 @@
+   <android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- The main content view -->
+        <!-- Add content here -->
+        
+
+    <!-- The navigation drawer -->
+
+    <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#d6d6d6"
+        android:choiceMode="singleChoice"
+        android:divider="#e5e5e5"
+        android:dividerHeight="1dp" />
+
+    <RelativeLayout
+        android:id="@+id/activity_main_relativelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <DatePicker
+            android:id="@+id/dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:scaleY="1.35" 
+			android:scaleX="1.35"
+            android:layout_below="@+id/dialogTextView"
+            android:layout_gravity="center"
+            android:calendarViewShown="false" />
+
+        <TextView
+            android:id="@+id/dialogTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:textSize = "15sp"  
+            android:text="@string/dialog_text_view" />
+
+        <Button
+            android:id="@+id/set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/set_button_text_view" />
+
+        <TextView
+            android:id="@+id/liftTicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/set"
+            android:text="@+id/textView1" />
+
+    </RelativeLayout>
+
+
+</android.support.v4.widget.DrawerLayout>
+
+
+
+
+<!-- From: file:/home/alex/workspace/531Calc/whoWasCNS/src/main/res/layout/activity_main.xml -->

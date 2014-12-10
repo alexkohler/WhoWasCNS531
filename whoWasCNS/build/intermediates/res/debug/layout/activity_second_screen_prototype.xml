@@ -1,0 +1,407 @@
+   <android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- The main content view -->
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+<!--  CONTENT GOES HERE -->
+
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    
+
+    
+
+    
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp" >
+
+        <com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup
+            android:id="@+id/patternSegmentGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/patternButtonFourDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:text="@+string/pattern4" />
+
+            <RadioButton
+                android:id="@+id/patternButtonFiveDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:text="@+string/pattern5" />
+
+            <RadioButton
+                android:id="@+id/patternButtonSixDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@+string/pattern6" />
+
+            <RadioButton
+                android:id="@+id/patternButtonSevenDays"
+                style="@style/RadioButton"
+                android:layout_width="89.5dp"
+                android:layout_height="wrap_content"
+                android:text="@+string/pattern7" />
+        </com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/choiceLayout"
+        android:layout_width="207dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" >
+
+        <TextView
+            android:id="@+id/choice_7"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/choice_6"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_7" />
+
+        <TextView
+            android:id="@+id/choice_6"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/choice_5"
+            android:layout_marginTop="21dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_6" />
+
+        <TextView
+            android:id="@+id/choice_5"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/choice_4"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_5" />
+
+        <TextView
+            android:id="@+id/choice_4"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/choice_3"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_4" />
+
+        <TextView
+            android:id="@+id/choice_3"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/choice_2"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_3" />
+
+        <TextView
+            android:id="@+id/choice_2"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/choice_1"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_2" />
+
+        <TextView
+            android:id="@+id/choice_1"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="114dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/choice"
+            android:gravity="center"
+            android:text="@string/choice_1" />
+
+        <EditText
+            android:id="@+id/choice1Field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/choice_1"
+            android:layout_alignLeft="@+id/choice2Field"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/choice2Field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/choice1Field"
+            android:layout_toRightOf="@+id/choice_2"
+            android:ems="10"
+            android:inputType="numberDecimal" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/choice3Field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/choice_4"
+            android:layout_alignLeft="@+id/choice2Field"
+            android:layout_alignParentRight="true"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/choice4Field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/choice_3"
+            android:layout_toRightOf="@+id/choice_4"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/choice5Field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/choice_5"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/choice_5"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/choice6Field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/choice_6"
+            android:layout_alignBottom="@+id/choice_6"
+            android:layout_alignLeft="@+id/choice5Field"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/choice7Field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/choice_7"
+            android:layout_alignLeft="@+id/choice6Field"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+        
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/componentLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/choiceLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearLayout1" >
+        
+        
+        
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:text="@string/pattern_size" />
+        
+        
+        
+          <!--   <Spinner
+        android:id="@+id/numberCyclesSpinnerNew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/cycles_array" /> -->
+
+            <RelativeLayout
+                android:id="@+id/liftLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                 >
+
+                <TextView
+                    android:id="@+id/option5"
+                    android:layout_width="114dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/option4"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/option"
+                    android:gravity="center"
+                    android:text="@string/option_5"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/option4"
+                    android:layout_width="114dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/option3"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/option"
+                    android:gravity="center"
+                    android:text="@string/option_4"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/option2"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/option1"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/option"
+                    android:gravity="center"
+                    android:text="@string/option_2"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/option3"
+                    android:layout_width="114dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/option2"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/option"
+                    android:gravity="center"
+                    android:text="@string/option_3"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/option1"
+                    android:layout_width="114dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="0dp"
+                    android:background="@drawable/option"
+                    android:gravity="center"
+                    android:text="@string/option_1"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            
+    </RelativeLayout>
+
+    
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/componentLayout" >
+
+            <Button
+                android:id="@+id/adjustActivitySaveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/AdjustActivity_Save" />
+            
+            
+            <Button
+        android:id="@+id/adjustActivityResetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/AdjustActivity_Custom" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/adjustActivitySaveButton"
+                android:layout_alignParentLeft="true" >
+            </LinearLayout>
+
+            <com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup
+                android:id="@+id/poundKilogramSegmentedButtonGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/kgSegmentedButton"
+                    style="@style/RadioButton"
+                    android:layout_width="178dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Kilograms" />
+
+                <RadioButton
+                    android:id="@+id/lbSegmentedButton"
+                    style="@style/RadioButton"
+                    android:layout_width="178dp"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/Pounds" />
+            </com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+    </FrameLayout>
+
+    <!-- The navigation drawer -->
+    <ListView android:id="@+id/left_drawer"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="#e5e5e5"
+        android:dividerHeight="1dp"
+        android:background="#d6d6d6"/>
+</android.support.v4.widget.DrawerLayout><!-- From: file:/home/alex/workspace/531Calc/whoWasCNS/src/main/res/layout/activity_second_screen_prototype.xml -->

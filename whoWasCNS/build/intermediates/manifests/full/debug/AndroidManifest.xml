@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kohlerbear.whowascnscalc"
+    android:versionCode="12"
+    android:versionName="1.9" >
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true" >
+
+        <!--
+            <activity
+            android:name=".Dashboard"
+            android:label="@string/title_activity_dashboard" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        -->
+
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.OpeningDashboardActivity"
+            android:label="@string/title_activity_dashboard"
+            android:theme="@style/AppBaseTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.MainActivity"
+            android:label="@string/title_activity_second"
+            android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.Second"
+            android:label="@string/title_activity_second"
+            android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.deprecated.SecondScreenActivity"
+            android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.deprecated.ThirdScreenActivity"
+            android:theme="@style/AppBaseTheme" >
+            <intent-filter>
+                <action android:name="com.kohlerbear.whowascnscalc.Second" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.deprecated.AdjustLiftPatternActivity"
+            android:label="@string/title_activity_adjust_lift_pattern" >
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.deprecated.IndividualViews"
+            android:label="@string/title_activity_individual_views" >
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.SecondScreenPrototype"
+            android:label="@string/title_activity_revampedsecond_screen" >
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.About531"
+            android:label="@string/title_activity_about531"
+            android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.SettingsActivity"
+            android:label="@string/title_activity_setting"
+            android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.ThirdScreenPrototype"
+            android:label="@string/title_activity_third_screen_prototype"
+            android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name="com.kohlerbear.whowascnscalc.IndividualViewsPrototype"
+            android:label="@string/title_activity_individual_views_prototype"
+            android:theme="@style/AppBaseLightThemeNoTitleBar" >
+        </activity>
+    </application>
+
+</manifest>

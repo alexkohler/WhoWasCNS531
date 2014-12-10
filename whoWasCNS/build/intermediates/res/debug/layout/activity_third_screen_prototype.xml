@@ -1,0 +1,157 @@
+   <android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<!--  NOTE: tools not defined, was defined in viewpager -->
+    <!-- The main content view -->
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+<!--  CONTENT GOES HERE -->
+
+<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+ />
+	<LinearLayout 
+    android:id="@+id/thirdScreenLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:background="#000000"
+     android:orientation="vertical"
+    android:layout_weight="2"
+    >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip" 
+        android:layout_weight="2"
+         >
+
+    <TableLayout
+        android:id="@+id/tableLayout1Prototype"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#000000"
+        android:orientation="vertical"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+        <TableRow
+            android:id="@+id/insertValuesPrototype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/dateColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+				android:textSize="18sp"                
+                android:background="#000000"
+                android:gravity="center"
+                android:text="@string/date_column" />
+
+        <!--      <TextView
+                android:id="@+id/cycleColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+				android:textSize="18sp"   
+                android:background="#000000"
+                android:gravity="center"
+                android:text="@string/cycle_column" /> -->
+
+            <TextView
+                android:id="@+id/liftColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+				android:textSize="18sp"                   
+                android:background="#000000"
+                android:gravity="center"
+                android:text="@string/lift_column" />
+
+            <TextView
+                android:id="@+id/freqColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+				android:textSize="18sp"                   
+                android:background="#000000"
+                android:gravity="center"
+                android:text="@string/freq_column" />
+
+            <TextView
+                android:id="@+id/firstLiftColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+				android:textSize="18sp"                   
+                android:background="#000000"
+                android:gravity="center"
+                android:text="@string/first_lift_column" />
+
+            <TextView
+                android:id="@+id/secondLiftColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+				android:textSize="18sp"                   
+                android:background="#000000"
+                android:gravity="center"
+                android:text="@string/second_lift_column" />
+
+            <TextView
+                android:id="@+id/thirdLiftColumn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+				android:textSize="18sp"                   
+                android:background="#000000"
+                android:gravity="center"
+                android:text="@string/third_lift_column" />
+
+        </TableRow>
+    </TableLayout>
+
+        </ScrollView>
+
+    <TextView
+        android:id="@+id/trainingMaxesTVPrototype"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/training_maxes_text_test" />
+
+    <Button
+        android:id="@+id/configureButtonPrototype"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/options_checkbox_test" />
+
+</LinearLayout>
+ 
+
+    </FrameLayout>
+
+    <!-- The navigation drawer -->
+    <ListView android:id="@+id/left_drawer"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="#e5e5e5"
+        android:dividerHeight="1dp"
+        android:background="#d6d6d6"/>
+</android.support.v4.widget.DrawerLayout>
+<!-- From: file:/home/alex/workspace/531Calc/whoWasCNS/src/main/res/layout/activity_third_screen_prototype.xml -->

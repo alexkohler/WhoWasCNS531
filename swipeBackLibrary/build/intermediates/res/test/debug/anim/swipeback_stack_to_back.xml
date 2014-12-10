@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+   
+    <scale android:fromXScale="100%p"
+          android:toXScale="90%p"
+          android:fromYScale="100%p"
+          android:toYScale="90%p"
+          android:pivotX="50%p"
+          android:pivotY="50%p"
+          android:duration="@integer/stack_duration" />
+
+    <alpha android:fromAlpha="1"
+          android:toAlpha="0.5"
+          android:duration="@integer/stack_duration"/>
+
+</set>
+<!-- From: file:/home/alex/workspace/531Calc/swipeBackLibrary/src/main/res/anim/swipeback_stack_to_back.xml --><!-- From: file:/home/alex/workspace/531Calc/swipeBackLibrary/build/intermediates/bundles/debug/res/anim/swipeback_stack_to_back.xml -->
