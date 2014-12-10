@@ -159,13 +159,12 @@ as to do with installing as root (that's where your avd definitions go - /root/.
  to run through another install (Which won't be a big deal because you can build and that's where a bulk of your
 time went - just reimport the workspace/531Calc project. Gradle and everything is already good to go. 
 
+12-10-14: avd is up and running, got a lot of my eclipse shortcuts into intellij, transition wasn't so bad:) Still running into that odd hidden day error field bug, not very easily reproducable, keep eyes open..
+
 
 Another third screen bug with current view, see if it's static or something, was able to get it to display bench only on individualviews when I had all records showing. I think it'll just be a matter of updating the enum
 
-Creating custom patterns is still buggy. Showing errors on patterns that should be hidden. 
-
-error doesn't disappear in onpress
-
+Creating custom patterns is still buggy, shows errors on choices that shouldn't exist as far as error handling is concerned (If it's invisible on the UI, don't count it while computing pattern) 
 
 TODO:
 	Using a collection (See MainActivity - effectivenavigation project) might be just what you are looking for.

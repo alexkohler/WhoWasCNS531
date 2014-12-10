@@ -190,7 +190,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
 
 	void inflateTable(ThirdScreenPrototype thirdScreen, Intent intent, String startingDate, SQLiteDatabase db) {
 		db.delete("Lifts", null, null);
-		Toast.makeText(thirdScreen, "DEBUG: displaying cycle 1 from inflateTable", Toast.LENGTH_SHORT).show();
+//		Toast.makeText(thirdScreen, "DEBUG: displaying cycle 1 from inflateTable", Toast.LENGTH_SHORT).show();
 		thirdScreen.setQuery("CYCLE = '1'");
 		
 //		String areWeGoingToRound = intent.getStringExtra("round");
