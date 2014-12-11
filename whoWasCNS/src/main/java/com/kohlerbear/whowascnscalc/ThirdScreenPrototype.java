@@ -217,7 +217,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 			Processor.setRoundingFlag(true);//rounding on by default
 			ConfigTool configtool = new ConfigTool(ThirdScreenPrototype.this);
 			Processor.setUnitMode(configtool.getLbModeFromDatabase());
-			setQuery("Cycle = '1'");
+			setQuery("Cycle = '1'");//TODO check what view is here (if it's not null just drop it right in)
 			Cursor cursor = getEvents();
 			showDefaultEvents(cursor);
 			

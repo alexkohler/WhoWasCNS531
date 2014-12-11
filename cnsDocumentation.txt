@@ -159,55 +159,7 @@ as to do with installing as root (that's where your avd definitions go - /root/.
  to run through another install (Which won't be a big deal because you can build and that's where a bulk of your
 time went - just reimport the workspace/531Calc project. Gradle and everything is already good to go. 
 
-12-10-14: avd is up and running, got a lot of my eclipse shortcuts into intellij, transition wasn't so bad:) Still running into that odd hidden day error field bug, not very easily reproducable, keep eyes open..
+12-10-14: avd is up and running, got a lot of my eclipse shortcuts into intellij, transition wasn't so bad:) Still running into that odd hidden day error field bug, not very easily reproducable, keep eyes open.. Got pat's suggestion to show pattern size when custom is pressed in, it's ugly but UI will come when you can actually work with patrick.
 
-
-Another third screen bug with current view, see if it's static or something, was able to get it to display bench only on individualviews when I had all records showing. I think it'll just be a matter of updating the enum
-
-Creating custom patterns is still buggy, shows errors on choices that shouldn't exist as far as error handling is concerned (If it's invisible on the UI, don't count it while computing pattern) 
-
-TODO:
-	Using a collection (See MainActivity - effectivenavigation project) might be just what you are looking for.
-	However, I think getting a prettier table display should be first on your plate
-	Figure out a way to make your individual views prettier, to include warmups,  and have the ability to log work and assistance.	
-	Toss the current cycle back to thirdScreenPrototype when the back button is pressed in individualviews, then have it on that tab when thirdScreenPrototype is loaded again 
-
-
-	Keep an eye on that touch listener you have for clearing focus
-	Fix toast problem - "You are missing the following lifts" gets thrown every time save is pressed.
-
-	Second -turqoise background, green
-	Swipe nav for first page
-	Fix analytics logging
-	Second background -tan(peachy tan)
-	Second page - swipe navigation?
-	Second page - "not quite" segemented buttons  - definitely want the not quite segmented button	 (See pats snooki fb message)
-
-	Patrick - activity titles?
-
-
-Regular TODO:
-  Ability to reset weight tracking
-  Ability to change theme?
-  
- populate About page
-
-Figure out UI colors
-
-Table to track weight 
-    Options to remove entries
-    Graph with a table
-    
-Table to track training maxes 
-
-Option to switch between black and white themes?
-
-Toast colors need changed (UI colors need to be decided on first
-
-Actually test your getPatternFromDB method 
-
-
-Feature: allow logging to be added, do a check if it's one of the projected days, if so, say what day it was otherwise still allow work to be logged. Perhaps a template manager or something... Your UI will need to be fixed before this I think. You want a prettier menu. Look for layouts tomorrow morning too.
-Consideration: How will logging work? Will there be another entry in the database? Should it be a separate database?
-p
+12-11-14: Got errors behaving as they should be on textviews, added focusable attributes to xml and a click listener that will show the error message if they erraneous textview is clicked. Need to do something slicker when playing with currentView enum because it has the possiblity to query two different columns (and most likely none at all for default, unless you can slip in a wildcard). Shouldn't be bad just don't want to rush it
 

@@ -41,7 +41,7 @@ public class SecondScreenPrototype extends BaseActivity {
 	TextView choice1, choice2, choice3, choice4, choice5, choice6, choice7;
     TextView[] choices = {choice1, choice2, choice3, choice4, choice5, choice6, choice7};
     
-    
+    TextView patternSizeTV;
 	EditText choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F;
 	EditText[] choiceFields = {choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F};
 	
@@ -117,7 +117,9 @@ public class SecondScreenPrototype extends BaseActivity {
 		patternSixDaysRadioButton  = (RadioButton) findViewById(R.id.patternButtonSixDays);
 		patternSevenDaysRadioButton = (RadioButton) findViewById(R.id.patternButtonSevenDays);
 		patternSegmentGroup.setOnCheckedChangeListener(patternSizeSegmentListener);
-		
+
+        patternSizeTV  = (TextView) findViewById(R.id.PatternSizeTV);
+        patternSizeTV.setVisibility(View.INVISIBLE);
 		
 		//set up intent stuff
 		Intent previousIntent = getIntent();
@@ -157,6 +159,20 @@ public class SecondScreenPrototype extends BaseActivity {
 	    choice7 = (TextView)findViewById(R.id.choice_7);
 	    
 	    choices = new TextView[]{choice1, choice2, choice3, choice4, choice5, choice6, choice7};
+
+        //If there is an error on the choice, make sure the user is able to touch the choice and show the error.
+        for (TextView choice : choices)
+        {
+            choice.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TextView choiceClicked = (TextView) findViewById(view.getId());
+                    if (choiceClicked.getError() != null)
+                        choiceClicked.requestFocus();
+                }
+            });
+
+        }
 	    
 	    //fields views are attributed with 
 	    choice1F = (EditText)findViewById(R.id.choice1Field);
@@ -187,9 +203,7 @@ public class SecondScreenPrototype extends BaseActivity {
 	    choice6.setOnDragListener(new ChoiceDragListener());
 	    choice7.setOnDragListener(new ChoiceDragListener());
 	    
-	    //add spinner listener
-	//    patternSizeSpinner.setOnItemSelectedListener(spinnerListener);
-	    
+
 //	    inflatePatternButtons(origin);
 		inflatePatternButtons(defaultPattern, false);//not custom, in oncreate the choices wil be 	    
 		
@@ -223,14 +237,17 @@ public class SecondScreenPrototype extends BaseActivity {
 	private void inflatePatternButtons(String[] pattern, boolean custom)
 	{
 	    liftPattern = pattern;
-	    if (custom)
-	    	liftPattern = new String[]{ "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"};
+	    if (custom) {
+            liftPattern = new String[]{"First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"};
+            patternSizeTV.setVisibility(View.VISIBLE);
+        }
 	    int patternIndex = 0;
 	    while (patternIndex < liftPattern.length)
 	    {
 	    	choices[patternIndex].setText(liftPattern[patternIndex]);
 	    	if (!custom) //if we aren't coming from a custom, bold the pattern and hide the fields for rest
-	    	{	
+	    	{
+                patternSizeTV.setVisibility(View.INVISIBLE);//hide pattern size text view
 	    		choices[patternIndex].setTypeface(Typeface.DEFAULT_BOLD);
 	    		if (choices[patternIndex].getText().toString().intern().equals("Rest"))
 	    			choiceFields[patternIndex].setVisibility(View.INVISIBLE);
