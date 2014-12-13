@@ -14,7 +14,12 @@ iOS version is also in development - see my WhoWasCNS531-iOS repo
 
 
 Libraries used:
+
 Hannesorfmann's SwipeBack
+
 Hoang8f's segmented buttons
+
 <a href="http://stackoverflow.com/a/16099959/2864464">Richard Le Meusier's Toast wrapper</a>
+
+
 Google Analytics
