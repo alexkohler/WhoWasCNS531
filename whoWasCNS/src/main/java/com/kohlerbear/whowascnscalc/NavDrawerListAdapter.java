@@ -50,7 +50,7 @@ public class NavDrawerListAdapter extends BaseAdapter {
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
         
           
-        imgIcon.setImageResource(navDrawerItems.get(position).getIcon());        
+        imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
         txtTitle.setText(navDrawerItems.get(position).getTitle());
          
        

@@ -75,7 +75,7 @@ public class SecondScreenActivity extends BaseActivity {
 		.obtainTypedArray(R.array.nav_drawer_icons);// load icons from
 		// strings.xml
 		
-		set(navMenuTitles, navMenuIcons);
+		set(navMenuTitles, null);
 		navMenuIcons.recycle();
 		
 		

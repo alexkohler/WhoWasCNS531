@@ -38,25 +38,25 @@ public class Dashboard extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_dashboard);
+//		setContentView(R.layout.activity_dashboard);
 
-		mNavigationDrawerFragment = (StealUsefulNavDrawerStuff) getFragmentManager()
-				.findFragmentById(R.id.navigation_drawer);
+//		mNavigationDrawerFragment = (StealUsefulNavDrawerStuff) getFragmentManager()
+//				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
 
 		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout));
+//		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+//				(DrawerLayout) findViewById(R.id.drawer_layout));
 	}
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,
-						PlaceholderFragment.newInstance(position + 1)).commit();
+//		fragmentManager
+//				.beginTransaction()
+//				.replace(R.id.container,
+//						PlaceholderFragment.newInstance(position + 1)).commit();
 		ConfigTool ct = new ConfigTool(this);
 	switch (position)
 	{

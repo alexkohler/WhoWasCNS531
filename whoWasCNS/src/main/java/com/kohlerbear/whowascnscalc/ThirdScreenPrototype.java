@@ -63,7 +63,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 	//for nav drawer
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
-	
+
 	EventsDataSQLHelper eventsData;
 	String MODE_FORMAT;
 	Integer NUMBER_CYCLES;
@@ -127,9 +127,9 @@ public class ThirdScreenPrototype extends BaseActivity implements
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
 		navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
 
-		set(navMenuTitles, navMenuIcons);
+		set(navMenuTitles, null);
 		navMenuIcons.recycle();
- 
+
         getActionBar().setDisplayHomeAsUpEnabled(true); 
 		
 		// Set up the action bar.
@@ -348,7 +348,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 					switch (which){
 					case 0:
 						curView = CURRENT_VIEW.DEFAULT;
-						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Show All", Toast.LENGTH_SHORT).show();
+//						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Show All", Toast.LENGTH_SHORT).show();
 						setQuery("CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -357,7 +357,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						break;
 					case 1:
 						curView = CURRENT_VIEW.BENCH;
-						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Bench Only", Toast.LENGTH_SHORT).show();
+//						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Bench Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Bench' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews(); 
 						cursor = getEvents();
@@ -366,7 +366,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						break;	
 					case 2:
 						curView = CURRENT_VIEW.SQUAT;
-						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Squat Only", Toast.LENGTH_SHORT).show();
+//						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Squat Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Squat' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -375,7 +375,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						break;	
 					case 3:
 						curView = CURRENT_VIEW.OHP;
-						Toast.makeText(ThirdScreenPrototype.this, "View Selected: OHP Only", Toast.LENGTH_SHORT).show();
+//						Toast.makeText(ThirdScreenPrototype.this, "View Selected: OHP Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'OHP' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -384,7 +384,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						break;		
 					case 4:
 						curView = CURRENT_VIEW.DEAD;
-						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Deadlift Only", Toast.LENGTH_SHORT).show();
+//						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Deadlift Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Deadlift' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -393,7 +393,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						break;
 					case 5:
 						curView = CURRENT_VIEW.FIVES;
-						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Fives Days Only", Toast.LENGTH_SHORT).show();
+//						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Fives Days Only", Toast.LENGTH_SHORT).show();
 						setQuery("Frequency = '5-5-5' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -402,7 +402,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						break;
 					case 6:
 						curView = CURRENT_VIEW.THREES;
-						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Triples Days Only", Toast.LENGTH_SHORT).show();
+//						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Triples Days Only", Toast.LENGTH_SHORT).show();
 						setQuery("Frequency = '3-3-3' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -411,7 +411,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						break;
 					case 7:
 						curView = CURRENT_VIEW.ONES;
-						Toast.makeText(ThirdScreenPrototype.this, "View Selected: 5-3-1 Days Only", Toast.LENGTH_SHORT).show();
+//						Toast.makeText(ThirdScreenPrototype.this, "View Selected: 5-3-1 Days Only", Toast.LENGTH_SHORT).show();
 						setQuery("Frequency = '5-3-1' AND CYCLE = '" + currentCycleSelected + "'");
 						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
@@ -726,8 +726,9 @@ public class ThirdScreenPrototype extends BaseActivity implements
 		if (init)
 		{
 		TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1Prototype);
-		curView = CURRENT_VIEW.DEFAULT;
-		setQuery("CYCLE = '" + currentCycleSelected + "'");
+	//	curView = CURRENT_VIEW.DEFAULT;
+        String testQuery = "Cycle = '" + currentCycleSelected + "'" + getQueryAppendBasedOnCurrentView();
+		setQuery("Cycle = '" + currentCycleSelected + "'" + getQueryAppendBasedOnCurrentView());
 		tableRowPrincipal.removeAllViews();
 		Cursor cursor = getEvents();
 		changedView = true;
@@ -736,6 +737,33 @@ public class ThirdScreenPrototype extends BaseActivity implements
 		else
 			init = true;
 	}
+
+    private String getQueryAppendBasedOnCurrentView()
+    {
+        switch (curView)
+        {
+            case DEFAULT:
+                return "";
+            case BENCH:
+                return " AND Lift = 'Bench'";
+            case SQUAT:
+                return " AND Lift = 'Squat'";
+            case OHP:
+                return " AND Lift= 'OHP'";
+            case DEAD:
+                return " AND Lift = 'Deadlift'";
+            case FIVES:
+                return " AND Frequency = '5-5-5'";
+            case THREES:
+                return " AND Frequency = '3-3-3'";
+            case ONES:
+                return " AND Frequency = '5-3-1'";
+            default:
+                return "";
+        }
+
+    }
+
 
 	@Override
 	public void onTabUnselected(ActionBar.Tab tab,

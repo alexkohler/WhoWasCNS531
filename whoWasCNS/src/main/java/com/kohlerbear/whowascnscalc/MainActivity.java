@@ -26,7 +26,7 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
 import com.hannesdorfmann.swipeback.Position;
 import com.hannesdorfmann.swipeback.SwipeBack;
-import com.kohlerbear.whowascns.hannesorfmann.swipeback.SwipeForwardTransformer;
+import com.kohlerbear.whowascnscalc.hannesorfmann.swipeback.SwipeForwardTransformer;
 
 
 /**
@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity {
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
 		navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
 
-		set(navMenuTitles, navMenuIcons);
+		set(navMenuTitles, null);
 		
 		navMenuIcons.recycle();
 

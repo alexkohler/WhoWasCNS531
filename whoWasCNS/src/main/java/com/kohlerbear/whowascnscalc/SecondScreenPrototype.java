@@ -32,18 +32,20 @@ import android.widget.Toast;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
+import com.kohlerbear.whowascnscalc.ToastWrapper.Boast;
 
 public class SecondScreenPrototype extends BaseActivity {
 
 
 	TextView option1, option2, option3, option4, option5;
+    TextView[] options = {option1, option2, option3, option4, option5};
 	
 	TextView choice1, choice2, choice3, choice4, choice5, choice6, choice7;
-    TextView[] choices = {choice1, choice2, choice3, choice4, choice5, choice6, choice7};
+    TextView[] choices = {choice1, choice2, choice3, choice4, choice5, choice6, choice7};//TODO is this initialization even needed?
     
     TextView patternSizeTV;
 	EditText choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F;
-	EditText[] choiceFields = {choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F};
+	EditText[] choiceFields = {choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F};//TODO is this initialization even needed?
 	
     Button customButton, saveButton;
 	String [] liftPattern = new String[7]; //max size of 7 
@@ -89,7 +91,7 @@ public class SecondScreenPrototype extends BaseActivity {
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
 		navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
 
-		set(navMenuTitles, navMenuIcons);
+		set(navMenuTitles, null);
 		navMenuIcons.recycle();
  
         getActionBar().setDisplayHomeAsUpEnabled(true); 
@@ -149,6 +151,8 @@ public class SecondScreenPrototype extends BaseActivity {
 	    option3 = (TextView)findViewById(R.id.option3);
 	    option4 = (TextView)findViewById(R.id.option4);
 	    option5 = (TextView)findViewById(R.id.option5);
+
+        options = new TextView[]{option1, option2, option3, option4, option5};
 	    //views to drop onto
 	    choice1 = (TextView)findViewById(R.id.choice_1);
 	    choice2 = (TextView)findViewById(R.id.choice_2);
@@ -532,6 +536,7 @@ public class SecondScreenPrototype extends BaseActivity {
 		    	TextView dropTarget = (TextView) v;
 		    	//view being dragged and dropped
 		    	TextView dropped = (TextView) view;
+
 		    	String droppedLiftName = dropped.getText().toString();
 		    	String viewName = getResources().getResourceEntryName(dropTarget.getId());
 		    	Integer viewSuffix = Integer.valueOf(viewName.substring(viewName.length() - 1));//eg _1, _2, etc..
@@ -725,18 +730,20 @@ public class SecondScreenPrototype extends BaseActivity {
 				multipleLifts = true;
 				multipleBuffer = multipleBuffer + "OHP";
 			}
-			if (zeroLifts)
-			Toast.makeText(SecondScreenPrototype.this, addBuffer, Toast.LENGTH_SHORT).show();
+			if (zeroLifts) {
+                Boast.makeText(SecondScreenPrototype.this, addBuffer, Toast.LENGTH_LONG).show();
+            }
 
 			if (multipleLifts)
-				Toast.makeText(SecondScreenPrototype.this, multipleBuffer, Toast.LENGTH_SHORT).show();
-			
+                Boast.makeText(SecondScreenPrototype.this, multipleBuffer, Toast.LENGTH_LONG).show();
+
+
 			return false;
 		
 			}
 	
 	}
-	
+
 	private void forwardToThird()//back end to SAVE button, where ever that may end up laying. Still need to bring in 'lbs' boolean, 'unit_mode' boolean, make sure you grab all depenendencies
 	{
 		int buttonID = patternSegmentGroup.getCheckedRadioButtonId();

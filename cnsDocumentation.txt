@@ -163,3 +163,6 @@ time went - just reimport the workspace/531Calc project. Gradle and everything i
 
 12-11-14: Got errors behaving as they should be on textviews, added focusable attributes to xml and a click listener that will show the error message if they erraneous textview is clicked. Need to do something slicker when playing with currentView enum because it has the possiblity to query two different columns (and most likely none at all for default, unless you can slip in a wildcard). Shouldn't be bad just don't want to rush it
 
+12-12-14: Fixed view by across different tabs. Grabbed an old facebook dashbaord presentation to base my dashboard off of. Removed all button pressed state stuff, however, can always add it back in (just uncomment the state stuff in the dashboard button.xml). Also cleaned out some additional layout files, gotta admit AAS has some nicer featues
+
+12-13-14: Fixed queueing toast by using a toast wrapper called Boast that will only allow one Toast to queue at a time (during its span of being shown). 

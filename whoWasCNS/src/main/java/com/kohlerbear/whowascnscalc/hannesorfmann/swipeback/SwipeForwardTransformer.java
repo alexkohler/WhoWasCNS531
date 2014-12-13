@@ -1,4 +1,4 @@
-package com.kohlerbear.whowascns.hannesorfmann.swipeback;
+package com.kohlerbear.whowascnscalc.hannesorfmann.swipeback;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

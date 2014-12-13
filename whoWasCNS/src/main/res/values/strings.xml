@@ -130,7 +130,6 @@
         <item>Testing arena</item>
         <!-- <item>Sixth</item> -->
     </string-array>
-    <!-- Nav drawer icons that correspond to each navdrawer array entry -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
@@ -138,8 +137,6 @@
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
-        <!-- -<item>@drawable/ic_launcher</item> -->
-
     </array>
 
     <string name="title_activity_revampedsecond_screen">REVAMPEDSecondScreenActivity</string>
