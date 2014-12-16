@@ -71,8 +71,8 @@ public class MainActivity extends BaseActivity {
 		
 		navMenuIcons.recycle();
 
- 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); 
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
  
         // just styling option add shadow the right edge of the drawer
         //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);

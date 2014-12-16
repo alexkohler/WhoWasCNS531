@@ -203,9 +203,9 @@ public class IndividualViewFragment extends Fragment {
 	   getActivity().setTitle(date);
 	   TextView dataMarquee = (TextView) rootView.findViewById(R.id.dataMarquee);
 	   dataMarquee.setText(liftType + " " + frequency  + " Cycle " + cycle);
-		firstLiftTV.setText(String.valueOf("Lift 1: " + firstLift + "x" + frequency.charAt(0)));
-		secondLiftTV.setText(String.valueOf("Lift 2: " + secondLift+ "x" + frequency.charAt(2)));
-		thirdLiftTV.setText(String.valueOf("Lift 3: "  + thirdLift)+ "x" + frequency.charAt(4));
+		firstLiftTV.setText(String.valueOf("Set 1: " + firstLift + "x" + frequency.charAt(0)));
+		secondLiftTV.setText(String.valueOf("Set 2: " + secondLift+ "x" + frequency.charAt(2)));
+		thirdLiftTV.setText(String.valueOf("Set 3: "  + thirdLift)+ "x" + frequency.charAt(4));
 	    
 	    return rootView;
 	}

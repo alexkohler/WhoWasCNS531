@@ -94,8 +94,8 @@ public class SecondScreenPrototype extends BaseActivity {
 		set(navMenuTitles, null);
 		navMenuIcons.recycle();
  
-        getActionBar().setDisplayHomeAsUpEnabled(true); 
-	    
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
 	    
 	    
 	    //button declarations

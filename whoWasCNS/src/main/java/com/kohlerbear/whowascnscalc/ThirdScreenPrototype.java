@@ -130,8 +130,8 @@ public class ThirdScreenPrototype extends BaseActivity implements
 		set(navMenuTitles, null);
 		navMenuIcons.recycle();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true); 
-		
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -244,11 +244,11 @@ public class ThirdScreenPrototype extends BaseActivity implements
 
 		@Override
 		public void onClick(View v) {
-			CharSequence colors[] = new CharSequence[] {"Toggle rounding", "Reset", "View By...", "Cancel"};
+			CharSequence optionsArray[] = new CharSequence[] {"Toggle rounding", "Shift date", "Reset", "View By...", "Cancel"};
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenPrototype.this);
 			builder.setTitle("Options menu");
-			builder.setItems(colors, new DialogInterface.OnClickListener() {
+			builder.setItems(optionsArray, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					
@@ -265,18 +265,22 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						changedView = true;
 						showDefaultEvents(optionsListenerCursor);
 					}
-					if (which == 1) 
+                    if (which == 1) //shift date
+                    {
+                        createShiftDateBuilder();
+                    }
+					if (which == 2) //reset
 					{
 						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenPrototype.this);
 						builder.setMessage("Are you sure you want to reset?").setPositiveButton("Yes", dialogClickListener)
 					    .setNegativeButton("No", dialogClickListener).show();
 
 					}
-					if (which == 2)//view by
+					if (which == 3)//view by
 					{
 						createViewBuilder();
 					}
-					if (which == 3) //cancel 
+					if (which == 4) //cancel
 					{
 						dialog.cancel();
 					}
@@ -335,12 +339,12 @@ public class ThirdScreenPrototype extends BaseActivity implements
 
 		public void createViewBuilder()
 		{
-			CharSequence colors[] = new CharSequence[] {"Show all", "Bench Only", "Squat Only", "OHP Only", "Deadlift only", "5-5-5 Days only", "3-3-3 Days only", "5-3-1 days only", "Back"};
+			CharSequence optionsArray[] = new CharSequence[] {"Show all", "Bench Only", "Squat Only", "OHP Only", "Deadlift only", "5-5-5 Days only", "3-3-3 Days only", "5-3-1 days only", "Back"};
 
 			AlertDialog.Builder builder2 = new AlertDialog.Builder(ThirdScreenPrototype.this);
 			builder2.setTitle("Show by:");
 
-			builder2.setItems(colors, new DialogInterface.OnClickListener() {
+			builder2.setItems(optionsArray, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Cursor cursor = getEvents();
@@ -430,7 +434,35 @@ public class ThirdScreenPrototype extends BaseActivity implements
 			builder2.show();
 
 		}//end createViewBuilder
+    public void createShiftDateBuilder()
+    {
+        CharSequence optionsArray[] = new CharSequence[] {"Shift dates forward", "Shift dates backward", "Cancel"};
 
+        AlertDialog.Builder builder2 = new AlertDialog.Builder(ThirdScreenPrototype.this);
+        builder2.setTitle("Shift date...");
+
+        builder2.setItems(optionsArray, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Cursor cursor = getEvents();
+                TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1Prototype);
+                switch (which){
+                    case 0:
+                        Toast.makeText(getApplicationContext(), "Shifting dates forward", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        Toast.makeText(getApplicationContext(), "Shifting dates backward", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        dialog.cancel();
+                        break;
+                }//end switch statement
+            }//end outter onclick
+        });//end outter which listener
+
+        builder2.show();
+
+    }//end createViewBuilder
 		@SuppressWarnings("deprecation") Cursor getEvents() {
 			SQLiteDatabase db = eventsData.getReadableDatabase();
 			Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, getQuery(), null, null,

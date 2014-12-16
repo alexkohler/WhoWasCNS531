@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="#000000"
+        android:background="#00FFFF"
         android:orientation="vertical"
         android:shrinkColumns="*"
         android:stretchColumns="*" >

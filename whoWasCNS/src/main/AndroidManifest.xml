@@ -42,12 +42,12 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_second"
-            android:theme="@style/AppBaseTheme" >
+            android:theme="@style/AppBaseLight" >
         </activity>
         <activity
             android:name=".Second"
             android:label="@string/title_activity_second"
-            android:theme="@style/AppBaseTheme" >
+            android:theme="@style/AppBaseLight" >
         </activity>
         <activity
             android:name=".deprecated.SecondScreenActivity"
