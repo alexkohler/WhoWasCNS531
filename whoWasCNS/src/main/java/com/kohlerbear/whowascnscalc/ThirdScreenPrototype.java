@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -39,6 +40,7 @@ import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
 /**
+ *
  * Table display of cycle projection, on click listener on every table row to go to individualviews
  *
  */
@@ -105,6 +107,8 @@ public class ThirdScreenPrototype extends BaseActivity implements
 			this.value = value;
 		}
 	}
+
+    public enum ROW_LISTENER {NORMAL, SHIFTFORWARD, SHIFTBACKWARD};
 	
 	int currentCycleSelected = 1;//On creation, user will always be on cycle 1.
 
@@ -112,8 +116,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 
 	static String[] liftPattern;
 
-	CURRENT_VIEW individualCV; //for individual view
-	CURRENT_FREQ individualFreq; //^^
+    static ROW_LISTENER rowListenerStatus = ROW_LISTENER.NORMAL;
 
 	//initialize processor to process all lifts, dates, etc...
 	DateAndLiftProcessor Processor = new DateAndLiftProcessor();
@@ -217,7 +220,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 			Processor.setRoundingFlag(true);//rounding on by default
 			ConfigTool configtool = new ConfigTool(ThirdScreenPrototype.this);
 			Processor.setUnitMode(configtool.getLbModeFromDatabase());
-			setQuery("Cycle = '1'");//TODO check what view is here (if it's not null just drop it right in)
+			setQuery("Cycle = '1'");
 			Cursor cursor = getEvents();
 			showDefaultEvents(cursor);
 			
@@ -272,8 +275,8 @@ public class ThirdScreenPrototype extends BaseActivity implements
 					if (which == 2) //reset
 					{
 						AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenPrototype.this);
-						builder.setMessage("Are you sure you want to reset?").setPositiveButton("Yes", dialogClickListener)
-					    .setNegativeButton("No", dialogClickListener).show();
+						builder.setMessage("Are you sure you want to reset?").setPositiveButton("Yes", resetListener)
+					    .setNegativeButton("No", resetListener).show();
 
 					}
 					if (which == 3)//view by
@@ -319,7 +322,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 		
 		
 		//"Are you sure?" builder template (Used in reset)
-		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+		DialogInterface.OnClickListener resetListener = new DialogInterface.OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface dialog, int which) {
 		        switch (which){
@@ -336,6 +339,67 @@ public class ThirdScreenPrototype extends BaseActivity implements
 		        }
 		    }
 		};
+
+
+    public class DateShiftListener implements DialogInterface.OnClickListener
+    {
+
+        String StartingShiftDate;
+        public DateShiftListener (String startingDate) {
+            this.StartingShiftDate = startingDate;
+        }
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    if (rowListenerStatus == ROW_LISTENER.SHIFTFORWARD) {
+                        //Toast.makeText(getApplicationContext(), "Shifting forward from date " + StartingShiftDate, Toast.LENGTH_SHORT).show();
+                        String startingShiftDateWithFormat = StartingShiftDate.substring(6, 10) + "-" + StartingShiftDate.substring(0, 2) + "-" + StartingShiftDate.substring(3,5);
+                        setQuery("date(substr(liftDate, 7, 7) || '-' || substr(liftDate, 1, 2) || '-' || substr(liftDate, 4, 2)) >= date('" + startingShiftDateWithFormat +"')");
+                        TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1Prototype);
+                        cursor = getEvents();
+                        String s = DatabaseUtils.dumpCursorToString(cursor);
+                        System.out.println(s);
+                        changedView = true;
+                        ConfigTool configtool = new ConfigTool(ThirdScreenPrototype.this);
+                        configtool.shiftDates(cursor, rowListenerStatus, 1);//TODO don't hardcode 1, allow user to input with spinner or some shit
+                        String viewAppendature = getQueryAppendBasedOnCurrentView();
+                        setQuery("CYCLE = '" + currentCycleSelected + "'" + viewAppendature);
+                        cursor = getEvents();
+                        tableRowPrincipal.removeAllViews();
+                        showDefaultEvents(cursor);
+
+                    } else if (rowListenerStatus == ROW_LISTENER.SHIFTBACKWARD) {
+                        Toast.makeText(getApplicationContext(), "Shifting backward from date " + StartingShiftDate, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Shifting forward from date " + StartingShiftDate, Toast.LENGTH_SHORT).show();
+                        String startingShiftDateWithFormat = StartingShiftDate.substring(6, 10) + "-" + StartingShiftDate.substring(0, 2) + "-" + StartingShiftDate.substring(3,5);
+                        setQuery("date(substr(liftDate, 7, 7) || '-' || substr(liftDate, 1, 2) || '-' || substr(liftDate, 4, 2)) <= date('" + startingShiftDateWithFormat +"')");
+                        TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1Prototype);
+                        cursor = getEvents();
+                        String s = DatabaseUtils.dumpCursorToString(cursor);
+                        System.out.println(s);
+                        changedView = true;
+                        ConfigTool configtool = new ConfigTool(ThirdScreenPrototype.this);
+                        configtool.shiftDates(cursor, rowListenerStatus, 1);//TODO don't hardcode 1, allow user to input with spinner or some shit
+                        String viewAppendature = getQueryAppendBasedOnCurrentView();
+                        setQuery("CYCLE = '" + currentCycleSelected + "'" + viewAppendature);
+                        cursor = getEvents();
+                        tableRowPrincipal.removeAllViews();
+                        showDefaultEvents(cursor);
+                    }
+
+                    rowListenerStatus = ROW_LISTENER.NORMAL;
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    dialog.cancel();
+                    break;
+
+            }
+        }
+
+
+    };
 
 		public void createViewBuilder()
 		{
@@ -363,11 +427,11 @@ public class ThirdScreenPrototype extends BaseActivity implements
 						curView = CURRENT_VIEW.BENCH;
 //						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Bench Only", Toast.LENGTH_SHORT).show();
 						setQuery("Lift = 'Bench' AND CYCLE = '" + currentCycleSelected + "'");
-						tableRowPrincipal.removeAllViews(); 
+						tableRowPrincipal.removeAllViews();
 						cursor = getEvents();
 						changedView = true;
 						showDefaultEvents(cursor);
-						break;	
+						break;
 					case 2:
 						curView = CURRENT_VIEW.SQUAT;
 //						Toast.makeText(ThirdScreenPrototype.this, "View Selected: Squat Only", Toast.LENGTH_SHORT).show();
@@ -449,9 +513,11 @@ public class ThirdScreenPrototype extends BaseActivity implements
                 switch (which){
                     case 0:
                         Toast.makeText(getApplicationContext(), "Shifting dates forward", Toast.LENGTH_SHORT).show();
+                        rowListenerStatus = ROW_LISTENER.SHIFTFORWARD;
                         break;
                     case 1:
                         Toast.makeText(getApplicationContext(), "Shifting dates backward", Toast.LENGTH_SHORT).show();
+                        rowListenerStatus = ROW_LISTENER.SHIFTBACKWARD;
                         break;
                     case 2:
                         dialog.cancel();
@@ -462,7 +528,8 @@ public class ThirdScreenPrototype extends BaseActivity implements
 
         builder2.show();
 
-    }//end createViewBuilder
+    }//end createShiftDateBui;der
+
 		@SuppressWarnings("deprecation") Cursor getEvents() {
 			SQLiteDatabase db = eventsData.getReadableDatabase();
 			Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, getQuery(), null, null,
@@ -584,52 +651,57 @@ public class ThirdScreenPrototype extends BaseActivity implements
 
 					@Override
 					public void onClick(View v) {
-						String myDate = entryString.substring(0, 10);//parse our date
-						//parsing cycle: account for cycles greater than 9
+                        String myDate = entryString.substring(0, 10);//parse our date
+                        //parsing cycle: account for cycles greater than 9
 
-						String dividerRegex = "(?<=\\|)[^|]++(?=\\|)";//regex to grab data between pipes (|)
-						Pattern pattern = Pattern.compile(dividerRegex);
-						Matcher matcher = pattern.matcher(entryString);
+                        String dividerRegex = "(?<=\\|)[^|]++(?=\\|)";//regex to grab data between pipes (|)
+                        Pattern pattern = Pattern.compile(dividerRegex);
+                        Matcher matcher = pattern.matcher(entryString);
 
-						String myEntries[] = new String[6]; //for reference: 0 = date, 1 = cycle, 2 = liftType, 3 = frequency, 4 = firstLift, 5 = secondLift, 6 = secondLift
-						int iterator = 0 ;
-						while (matcher.find()) {
-							myEntries[iterator] = matcher.group(0);
-							iterator++;
-						}	
+                        String myEntries[] = new String[6]; //for reference: 0 = date, 1 = cycle, 2 = liftType, 3 = frequency, 4 = firstLift, 5 = secondLift, 6 = secondLift
+                        int iterator = 0;
+                        while (matcher.find()) {
+                            myEntries[iterator] = matcher.group(0);
+                            iterator++;
+                        }
 
-						Toast.makeText(ThirdScreenPrototype.this, myEntries[2], Toast.LENGTH_SHORT).show();
+                        TableLayout tableRowPrincipal = (TableLayout)findViewById(R.id.tableLayout1Prototype);
 
+                        if (rowListenerStatus == ROW_LISTENER.NORMAL) {
+                            Intent intent = new Intent(ThirdScreenPrototype.this, IndividualViewsPrototype.class);
 
-						Intent intent = new Intent(ThirdScreenPrototype.this, IndividualViewsPrototype.class);
-
-						String myFrequency = myEntries[2];	
-						String myLiftType = myEntries[1];
-						String myCycle = myEntries[0];
-						String myFirstLift = myEntries[3];
-						String mySecondLift =  myEntries[4];
-						String myThirdLift = myEntries[5];
-						String viewMode = curView.name().toString(); 
-						String mode = String.valueOf(lbMode);//1 or 0 
-						
-						
-
-						intent.putExtra("cycle", myCycle);
-						intent.putExtra("frequency", myFrequency);
-						intent.putExtra("liftType", myLiftType);
-						intent.putExtra("firstLift", myFirstLift);
-						intent.putExtra("secondLift", mySecondLift);
-						intent.putExtra("thirdLift", myThirdLift);
-						intent.putExtra("date", myDate);
-						intent.putExtra("mode", mode);
-						intent.putExtra("viewMode", viewMode);
-						intent.putExtra("liftPattern", liftPattern);
-						
+                            String myFrequency = myEntries[2];
+                            String myLiftType = myEntries[1];
+                            String myCycle = myEntries[0];
+                            String myFirstLift = myEntries[3];
+                            String mySecondLift = myEntries[4];
+                            String myThirdLift = myEntries[5];
+                            String viewMode = curView.name().toString();
+                            String mode = String.valueOf(lbMode);//1 or 0
 
 
-						startActivity(intent);
-					}});   
-				//tableRowPrincipal.addView(entry);
+                            intent.putExtra("cycle", myCycle);
+                            intent.putExtra("frequency", myFrequency);
+                            intent.putExtra("liftType", myLiftType);
+                            intent.putExtra("firstLift", myFirstLift);
+                            intent.putExtra("secondLift", mySecondLift);
+                            intent.putExtra("thirdLift", myThirdLift);
+                            intent.putExtra("date", myDate);
+                            intent.putExtra("mode", mode);
+                            intent.putExtra("viewMode", viewMode);
+                            intent.putExtra("liftPattern", liftPattern);
+
+
+                            startActivity(intent);
+                        }
+                        else if (rowListenerStatus == ROW_LISTENER.SHIFTFORWARD || rowListenerStatus == ROW_LISTENER.SHIFTBACKWARD) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ThirdScreenPrototype.this);
+                            String direction = rowListenerStatus == ROW_LISTENER.SHIFTFORWARD ? "forward" : "backward";
+                            DateShiftListener shiftListener = new DateShiftListener(myDate);
+                            builder.setMessage("Are you sure you want to shift all dates from " + myDate + " " + direction + "?").setPositiveButton("Yes", shiftListener)
+                                    .setNegativeButton("No", shiftListener).show();
+                        }
+					}});
 				tableLayout.addView(tr);
 				} 
 				catch (NumberFormatException e)

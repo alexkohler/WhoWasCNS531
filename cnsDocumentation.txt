@@ -169,4 +169,8 @@ time went - just reimport the workspace/531Calc project. Gradle and everything i
 
 12-15-14: Moving out, not much progress lately. Got a good backlog of stuff and some brainstorming done in the car today, we'll see what I can get done tonight. 
 
-12-16-14: Working on shift date functionality
+12-16-14: Working on shift date functionality. Got builder and an enum state together that plays nicely with the current table row click listener. Need to find some sort of way to display what mode you're currently in but will push that off until I can talk to Pat about UI. Will be working through update logic tomorrow morning. 
+
+12-17-14: Got logic framework laid out, really wanted to try to do it in SQL but both a stackoverflow question and research didn't seem to yield much, so doing it in Java. Running into something funky with incrementing, getting a lot of colliding dates, going to take a break and attack it after gymming. Found problem. '12-12-14' evaluates as greater than '01-01-15'. I guess an option is a schema change to have a non display date column that will have the proper format, look in the overflow answer and see if you can work something out tomorrow
+
+12-18-14: Got shift forward/backward working without a schema change, just some substring gymnastics

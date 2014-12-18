@@ -1,6 +1,7 @@
-TODO:
-	Bodyweight tracking widget
+Google material design navigation drawers
 
+iheartraio/iphone's scrolling research
+TODO:
 	Drop/create table on second screen of projection creation, not first
 
 	Include warmup in your individualView bs
@@ -11,24 +12,23 @@ TODO:
 
 	Look into multiple tables for sqlite, refactor if needed to use the damn sql helper like it should instead of yo	your horrible hardcoded table creation in first/second screen
 
-	Lift recording
-
-
 	Individual views need better format to support entries for each lift
-
-	Track accessory work (Dashboard or drawer entry for managing templates)
 
 	Figure out a way to get a formatted about page with your giant string  i
 
 	Figure out UI colors
 
-	Figure out activity titles
 
-	Dashboard icons
-
+	NEXT RELEASE
 	Support bodyweight tracking
     		Options to remove entries
     		Graph with a table
  		Ability to reset with a single (are you sured) button press  		 
   
+	Dashboard icons
 
+	Figure out activity titles
+
+	Track accessory work (Dashboard or drawer entry for managing templates)
+
+	Base lift recording

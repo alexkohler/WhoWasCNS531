@@ -1,10 +1,12 @@
 package com.kohlerbear.whowascnscalc;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.MapBuilder;
@@ -287,6 +289,52 @@ public class ConfigTool {
 		db.close();
 		return rowExists;
 	}
+    Calendar stringToCal(String dateString)
+    {
+        String DATE_FORMAT = "MM-dd-yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+            Date date = null;
+            try {
+                date = (Date) sdf.parse(dateString);
+            } catch (ParseException e) {
+                sendTrackerException("DateException", dateString);
+            }
+            Calendar c1 = Calendar.getInstance();
+            c1.setTimeInMillis(0);
+            c1.setTime(date);
+            return c1;
+    }
+    void shiftDates(Cursor cursor, ThirdScreenPrototype.ROW_LISTENER direction, int days) {
+        if (direction == ThirdScreenPrototype.ROW_LISTENER.SHIFTFORWARD) {
+            while (cursor.moveToNext()) {
+                String dateString = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
+                String liftType = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
+                Calendar cal = stringToCal(dateString);
+                String incrementedDateString = incrementDay(cal, days);
+                SQLiteDatabase db = eventsData.getReadableDatabase();
+                db.execSQL("UPDATE " + EventsDataSQLHelper.TABLE + " " +
+                        "SET " + EventsDataSQLHelper.LIFTDATE + " = '" + incrementedDateString +
+                        "' WHERE " + EventsDataSQLHelper.LIFTDATE + " = '" + dateString + "' AND " + EventsDataSQLHelper.LIFT + " = '" + liftType + "'");
+            }
+
+        } else if (direction == ThirdScreenPrototype.ROW_LISTENER.SHIFTBACKWARD) {
+            while (cursor.moveToNext()) {
+                String dateString = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
+                String liftType = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
+                Calendar cal = stringToCal(dateString);
+                String decrementedDateString = decrementDay(cal, days);
+                SQLiteDatabase db = eventsData.getReadableDatabase();
+                db.execSQL("UPDATE " + EventsDataSQLHelper.TABLE + " " +
+                        "SET " + EventsDataSQLHelper.LIFTDATE + " = '" + decrementedDateString +
+                        "' WHERE " + EventsDataSQLHelper.LIFTDATE + " = '" + dateString + "' AND " + EventsDataSQLHelper.LIFT + " = '" + liftType + "'");
+            }
+
+
+        }
+
+
+    }
+
 	
 	   @Deprecated
 		public Intent configurePreviousSet(String myDate, String myPrevLift,  String viewMode, String mode, String[] liftPattern)
