@@ -2,7 +2,9 @@
 
 import java.util.Locale;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentActivity;
@@ -100,36 +102,58 @@ public class TabPrototype extends BaseActivity {
             public void onPageSelected(int position) {
                 if (mViewPager.getAdapter().getPageTitle(lastPage).toString().toUpperCase().equals("SET TMS")
                         && mViewPager.getAdapter().getPageTitle(position).toString().toUpperCase().equals("PROJECT")) {
-                    SecondScreenFragment fragment = (SecondScreenFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + lastPage);
-                    ThirdScreenFragment fragment2 = (ThirdScreenFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + position);
+                    final SecondScreenFragment fragment = (SecondScreenFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + lastPage);
+                    final ThirdScreenFragment fragment2 = (ThirdScreenFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + position);
+                    final EventsDataSQLHelper eventsData = new EventsDataSQLHelper(TabPrototype.this);
+                    final ConfigTool ct = new ConfigTool(getApplicationContext());
+                    final int finalPos = position;
                     if (fragment.validatePattern() == false || fragment.canMoveToThird() == false) {
                         mViewPager.setCurrentItem(lastPage);//stay on second screen
 //                        actionBar.setSelectedNavigationItem(lastPage);
                     } else {
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .detach(fragment2)
-                                .attach(fragment2)
-                                .commit();//recreate view
-                        fragment2.setInsertStatus(false);
-                        mViewPager.setCurrentItem(position);//go to third screen
-                        EventsDataSQLHelper eventsData = new EventsDataSQLHelper(TabPrototype.this);
+                        DialogInterface.OnClickListener resetListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .detach(fragment2)
+                                                .attach(fragment2)
+                                                .commit();//recreate view
+                                        fragment2.setInsertStatus(false);
+                                        mViewPager.setCurrentItem(finalPos);//go to third screen
+                                        dialog.cancel();
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        dialog.cancel();
+                                        break;
+                                }
+                            }
+                        };
                         SQLiteDatabase db = eventsData.getWritableDatabase();
-                        if (db.isOpen()) {
-                            db.beginTransaction();
-                            db.execSQL("drop table Lifts");
-                            db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_LbFlag integer, RoundFlag integer, pattern text not null)");
-                            db.endTransaction();
-                            db.close();
+                        AlertDialog builder = new AlertDialog.Builder(TabPrototype.this).create();
+                        builder.setMessage("Are you sure you want to overrwrite your existing projection?");
+                        builder.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", resetListener);
+                        builder.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", resetListener);
+                        if (!ct.dbEmpty()) {
+                            mViewPager.setCurrentItem(lastPage);
+                            builder.show();
                         }
+                        else
+                            builder.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
                     }
                 } else {
                     lastPage = position;
 //                    actionBar.setSelectedNavigationItem(position);
                     mViewPager.setCurrentItem(position);
                 }
+
             }
+
         });
+
     }
     class CustomPagerAdapter extends FragmentPagerAdapter {
 

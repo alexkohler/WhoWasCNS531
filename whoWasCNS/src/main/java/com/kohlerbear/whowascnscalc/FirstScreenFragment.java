@@ -76,7 +76,7 @@ public class FirstScreenFragment extends Fragment {
 
             @Override
             public void onDateChanged(DatePicker datePicker, int i, int i2, int i3) {
-                Toast.makeText(getActivity(), "Date Selected: " + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + "-" + dp.getYear(),  Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Date Selected: " + (dp.getMonth() + 1) + "-" + dp.getDayOfMonth() + "-" + dp.getYear(),  Toast.LENGTH_SHORT).show();
                 startingDateDay = dp.getDayOfMonth();
                 startingDateMonth = dp.getMonth();
                 startingDateYear = dp.getYear();

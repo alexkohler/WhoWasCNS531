@@ -245,7 +245,7 @@ public class ThirdScreenFragment extends Fragment
 
         @Override
         public void onClick(View v) {
-            CharSequence optionsArray[] = new CharSequence[] {"Toggle rounding", "Shift date", "Reset", "View By...", "Cancel"};
+            CharSequence optionsArray[] = new CharSequence[] {"Toggle rounding", "Shift date", /*"Reset",*/ "View By...", "Cancel"};
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Options menu");
@@ -276,18 +276,18 @@ public class ThirdScreenFragment extends Fragment
                     {
                         createShiftDateBuilder();
                     }
-                    if (which == 2) //reset
+/*                    if (which == 2) //reset
                     {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage("Are you sure you want to reset?").setPositiveButton("Yes", resetListener)
                                 .setNegativeButton("No", resetListener).show();
 
-                    }
-                    if (which == 3)//view by
+                    }*/
+                    if (which == 2)//view by
                     {
                         createViewBuilder();
                     }
-                    if (which == 4) //cancel
+                    if (which == 3) //cancel
                     {
                         dialog.cancel();
                     }

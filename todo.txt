@@ -1,11 +1,8 @@
 Google material design navigation drawers
 
 TODO:
-	Some funkiness with toggle rounding. View by should be broke in a similar fashion (Has to do with removeAllViews being called). Nothing radical but you may want to recreate fragment. Also some funkiness when debugging, regardless, step in the right direction 
+	There is some funkiness when you reproject a date in create new projection screen	
 
-	Resupport rest of configure buttons
-
-	Back button is broken, fix it
 	Do some cleanup of deprecated classes
 
 	Individual views need better format to support entries for each lift

@@ -117,6 +117,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
         TextView stickyHeader = new TextView(thirdScreen);
         stickyHeader.setText("Cycle " + cycle);
         stickyHeader.setTextSize(17);
+        stickyHeader.setTextColor(Color.WHITE);
         stickyHeader.setLayoutParams(tvParams);
         stickyHeader.setBackgroundColor(Color.BLACK);
 //        stickyHeader.setMinHeight(minHeight);//this will create space for rest of textviews in table
@@ -133,6 +134,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
         TextView dateColumn = new TextView(thirdScreen);
         dateColumn.setText(liftDate.substring(0, 5));//xx-xx
         dateColumn.setTextSize(17);
+        dateColumn.setTextColor(Color.WHITE);
         dateColumn.setLayoutParams(tvParams);
         dateColumn.setBackgroundColor(Color.BLACK);
         dateColumn.setMinHeight(minHeight);//this will create space for rest of textviews in table
@@ -164,6 +166,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
         TextView freqColumn = new TextView(thirdScreen);
         freqColumn.setText(freq);
         freqColumn.setTextSize(17);
+        freqColumn.setTextColor(Color.WHITE);
         freqColumn.setLayoutParams(tvParams);
         freqColumn.setBackgroundColor(Color.BLACK);
         freqColumn.setMinHeight(minHeight);
@@ -175,6 +178,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
         TextView firstLiftColumn = new TextView(thirdScreen);
         firstLiftColumn.setText(first);
         firstLiftColumn.setTextSize(17);
+        firstLiftColumn.setTextColor(Color.WHITE);
         firstLiftColumn.setLayoutParams(tvParams);
         firstLiftColumn.setBackgroundColor(Color.BLACK);
         firstLiftColumn.setMinHeight(minHeight);
@@ -184,6 +188,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
         //second lift column creation
         TextView secondLiftColumn = new TextView(thirdScreen);
         secondLiftColumn.setText(second);
+        secondLiftColumn.setTextColor(Color.WHITE);
         secondLiftColumn.setTextSize(17);
         secondLiftColumn.setLayoutParams(tvParams);
         secondLiftColumn.setBackgroundColor(Color.BLACK);
@@ -195,6 +200,7 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
         TextView thirdLiftColumn = new TextView(thirdScreen);
         thirdLiftColumn.setText(third);
         thirdLiftColumn.setTextSize(17);
+        thirdLiftColumn.setTextColor(Color.WHITE);
         thirdLiftColumn.setLayoutParams(tvParams);
         thirdLiftColumn.setBackgroundColor(Color.BLACK);
         thirdLiftColumn.setMinHeight(minHeight);

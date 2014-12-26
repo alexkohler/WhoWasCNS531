@@ -234,7 +234,6 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
             if (origin.equals("first")) {
                 startingDate = TabPrototype.formattedDate;
             }
-            Toast.makeText(getActivity(), "Starting date is " + TabPrototype.formattedDate, Toast.LENGTH_SHORT).show();
             // If we are **becoming** invisible, then...
             if (!isVisibleToUser) {
                 Log.d("MyFragment", "Not visible anymore.  Stopping audio.");
