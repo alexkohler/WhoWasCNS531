@@ -1,18 +1,23 @@
 Google material design navigation drawers
 
-iheartraio/iphone's scrolling research
 TODO:
-	Drop/create table on second screen of projection creation, not first
+	Some funkiness with toggle rounding. View by should be broke in a similar fashion (Has to do with removeAllViews being called). Nothing radical but you may want to recreate fragment. Also some funkiness when debugging, regardless, step in the right direction 
+
+	Resupport rest of configure buttons
+
+	Back button is broken, fix it
+	Do some cleanup of deprecated classes
+
+	Individual views need better format to support entries for each lift
+	(Each individual view willl load three fragments)
+	Add timer to each individual view? Perhaps scrollable templates for accessory recording?
 
 	Include warmup in your individualView bs
+	Are you sure dialog in second screen if an existing projection already exists, give option to view existing projection.
 
 	UI needs fixed up
 
-	Shift date option under configure on third screen
-
-	Look into multiple tables for sqlite, refactor if needed to use the damn sql helper like it should instead of yo	your horrible hardcoded table creation in first/second screen
-
-	Individual views need better format to support entries for each lift
+	Make shift date prettier
 
 	Figure out a way to get a formatted about page with your giant string  i
 
@@ -24,11 +29,13 @@ TODO:
     		Options to remove entries
     		Graph with a table
  		Ability to reset with a single (are you sured) button press  		 
+	Look into multiple tables for sqlite, refactor if needed to use the damn sql helper like it should instead of yo	your horrible hardcoded table creation in first/second screen
   
 	Dashboard icons
 
 	Figure out activity titles
 
 	Track accessory work (Dashboard or drawer entry for managing templates)
+
 
 	Base lift recording

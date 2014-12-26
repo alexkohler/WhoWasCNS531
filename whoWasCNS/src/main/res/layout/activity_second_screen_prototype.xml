@@ -32,19 +32,19 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp" >
 
-        <TextView
+   <!--     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/patternSize"
             android:id="@+id/PatternSizeTV"
             android:layout_gravity="center_horizontal"
-            android:visibility="invisible" />
+            android:visibility="invisible" /> -->
 
         <com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup
             android:id="@+id/patternSegmentGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal" >
 
             <RadioButton
@@ -171,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="38dp"
             android:background="@drawable/choice"
             android:gravity="center"
             android:text="@string/choice_1" />
@@ -260,18 +260,6 @@
         android:layout_below="@+id/linearLayout1" >
         
         
-        
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="5dp"
-            android:gravity="center_vertical"
-            android:text="@string/pattern_size" />
-        
-        
-        
           <!--   <Spinner
         android:id="@+id/numberCyclesSpinnerNew"
         android:layout_width="wrap_content"
@@ -357,21 +345,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/componentLayout" >
-
-            <Button
-                android:id="@+id/adjustActivitySaveButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:text="@string/AdjustActivity_Save" />
             
             
             <Button
         android:id="@+id/adjustActivityResetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:text="@string/AdjustActivity_Custom" />
 
@@ -387,7 +367,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginTop="14dp"
                 android:gravity="center"
                 android:orientation="horizontal" >

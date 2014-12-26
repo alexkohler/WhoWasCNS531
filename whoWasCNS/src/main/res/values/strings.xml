@@ -28,7 +28,7 @@
 
     <string-array name="cycles_array">
         <item>1</item>
-		<item>2</item>
+        <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
@@ -91,9 +91,7 @@
         <item>7 days</item>
     </string-array>
 
-
     <string name="patternSize">Pattern size</string>
-
     <string name="title_activity_individual_views">IndividualViews</string>
     <string name="typeFreq">Bench - 5/5/5</string>
     <string name="title_activity_tabbed_individual_view">TabbedIndividualVIew</string>
@@ -130,6 +128,7 @@
         <item>Testing arena</item>
         <!-- <item>Sixth</item> -->
     </string-array>
+
     <array name="nav_drawer_icons">
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
@@ -141,7 +140,7 @@
 
     <string name="title_activity_revampedsecond_screen">REVAMPEDSecondScreenActivity</string>
     <string name="title_activity_about531">About531</string>
-   <!-- <string name="about_placeholder">About 5/3/1 will go here</string>-->
+    <!-- <string name="about_placeholder">About 5/3/1 will go here</string> -->
     <string name="settings_placeholder">Setings will go here</string>
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_opening_dashboard">OpeningDashboardActivity</string>
@@ -159,7 +158,6 @@
     <string name="cycle5">5</string>
     <string name="title_activity_individual_views_prototype">IndividualViewsPrototype</string>
     <string name="title_activity_collection_demo">CollectionDemoActivity</string>
-    
     <string name="pattern4">4</string>
     <string name="pattern5">5</string>
     <string name="pattern6">6</string>
@@ -168,9 +166,7 @@
     <!-- About 531 string requirements -->
     <string name="about_title">About this app</string>
     <string name="about_whatis531">What is 5/3/1?</string>
-
-    <string name="about_placeholder" formatted="false">
-    What is 5/3/1?
+    <string name="about_placeholder" formatted="false">    What is 5/3/1?
 
     Commonly thrown around in the Strength Training world, 5/3/1 programming
     philosophy made popular by Jim Wendler (Buy this book here) - Basically,
@@ -228,8 +224,8 @@
     What if I fail a lift?!
 
     Then it is time to reset your cycle. You can do this by taking 90% of your
-    failed training max and resetting your lift projection.
-</string>
-
+    failed training max and resetting your lift projection.</string>
+    <string name="title_activity_tab_prototype">TabPrototype</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

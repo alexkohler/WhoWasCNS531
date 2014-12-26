@@ -11,11 +11,19 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <android:uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+
     <application
         android:allowBackup="true"
-        android:supportsRtl="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:supportsRtl="true" >
 
         <!--
             <activity
@@ -63,11 +71,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.kohlerbear.whowascnscalc.deprecated.AdjustLiftPatternActivity"
+            android:name=".deprecated.AdjustLiftPatternActivity"
             android:label="@string/title_activity_adjust_lift_pattern" >
         </activity>
         <activity
-            android:name="com.kohlerbear.whowascnscalc.deprecated.IndividualViews"
+            android:name=".deprecated.IndividualViews"
             android:label="@string/title_activity_individual_views" >
         </activity>
         <activity
@@ -94,6 +102,13 @@
             android:label="@string/title_activity_individual_views_prototype"
             android:theme="@style/AppBaseLightThemeNoTitleBar" >
         </activity>
+        <activity
+            android:name=".TabPrototype"
+            android:label="@string/title_activity_tab_prototype" 
+            android:theme="@style/AppBaseLight" >
+        </activity>
+
+
     </application>
 
 </manifest>

@@ -11,7 +11,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle; 
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -164,31 +167,31 @@ public class BaseActivity extends ActionBarActivity {
 			finish();// finishes the current activity
 			break;
 		case 1://Create new projection
-
-			Intent newProjectionIntent = new Intent(this, MainActivity.class);
-			newProjectionIntent.putExtra("origin", "dashboard");
-			if (!ct.dbEmpty())
-				newProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
-			else
-			{
-				String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"  };			
-				newProjectionIntent.putExtra("liftPattern", defaultPattern);
-			}
-			startActivity(newProjectionIntent);
+            Intent intent2 = new Intent(this, TabPrototype.class);
+            TabPrototype.origin = "dashboard";
+            if (!ct.dbEmpty())
+                TabPrototype.liftPattern = ct.populateArrayBasedOnDatabase();
+            else
+                {
+                    String[] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"  };
+                    TabPrototype.liftPattern = defaultPattern;
+                }
+            startActivity(intent2);
+            finish();
 			break;
 		 case 2://view existing
 			if (!ct.dbEmpty())
 			{
-				Intent viewExistingProjectionIntent = new Intent(this, ThirdScreenPrototype.class);
+//				Intent viewExistingProjectionIntent = new Intent(this, ThirdScreenFragment.class);
 
-				viewExistingProjectionIntent.putExtra("origin", "dashboard");
-				viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
+				TabPrototype.origin = "dashboard";//viewExistingProjectionIntent.putExtra("origin", "dashboard");
+				TabPrototype.liftPattern = ct.populateArrayBasedOnDatabase();//viewExistingProjectionIntent.putExtra("liftPattern", ct.populateArrayBasedOnDatabase());
 				
 				String startingDate = ct.getStartingDateFromDatabase();
-				viewExistingProjectionIntent.putExtra("key2", startingDate);
+				TabPrototype.formattedDate = startingDate;//viewExistingProjectionIntent.putExtra("key2", startingDate);
 				
 				String modeString = ct.getLbModeFromDatabase().intern();
-				viewExistingProjectionIntent.putExtra("mode", modeString); 
+				TabPrototype.unitMode = modeString;//viewExistingProjectionIntent.putExtra("mode", modeString);
 				
 				int roundingFlag = Integer.valueOf(ct.getRoundingFlagFromDatabase());
 				String intentRoundingStringBool = "true";
@@ -197,9 +200,16 @@ public class BaseActivity extends ActionBarActivity {
 				else
 					intentRoundingStringBool = "false";
 				
-				viewExistingProjectionIntent.putExtra("round", intentRoundingStringBool); 
+				//viewExistingProjectionIntent.putExtra("round", intentRoundingStringBool); this isn't really needed anymore
 
-				startActivity(viewExistingProjectionIntent);
+				//startActivity(viewExistingProjectionIntent);
+                //finish();
+                Fragment frag = new ThirdScreenFragment();
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.content_frame, frag);
+//                ft.addToBackStack(null);
+                ft.commit();
 			}
 			else
 				Toast.makeText(this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
@@ -215,23 +225,9 @@ public class BaseActivity extends ActionBarActivity {
 			 finish();
 		 break;
 		 case 5://testing arena
-				Intent intent5 = new Intent(this, IndividualViewsPrototype.class);
-//				Mock Individual View data to flesh out prototype
-				String [] defaultPattern = {"Bench", "Squat", "Rest", "OHP", "Deadlift", "Rest"};
-				intent5.putExtra("cycle", "1");
-				intent5.putExtra("frequency", "5-5-5");
-				intent5.putExtra("liftType", "Squat");
-				intent5.putExtra("firstLift", "130.0");
-				intent5.putExtra("secondLift", "150.0");
-				intent5.putExtra("thirdLift", "170.0");
-				intent5.putExtra("date", "12-06-14");
-				intent5.putExtra("mode", "1");
-				intent5.putExtra("viewMode", "DEFAULT");
-				intent5.putExtra("liftPattern", defaultPattern);
-				
-
-
+				Intent intent5 = new Intent(this, TabPrototype.class);
 				startActivity(intent5);
+                finish();
 			 break;
 		default:
 			break;
@@ -267,6 +263,9 @@ public class BaseActivity extends ActionBarActivity {
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
+
+
+
 	
 	protected void sendTrackerException(String exceptionType, String value) {
 		Tracker tracker = GoogleAnalytics.getInstance(this).getTracker("UA-55018534-1");

@@ -406,7 +406,7 @@ public class DateAndLiftProcessor {
 		
 	}
 
-	void calculateCycle(ThirdScreenPrototype thirdScreen, String[] myPattern)
+	void calculateCycle(ThirdScreenFragment thirdScreen, String[] myPattern)
 	{
 		//(max pattern of 7 days), 
 		

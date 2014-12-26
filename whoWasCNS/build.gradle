@@ -26,5 +26,6 @@ dependencies {
     compile project(':swipeBackLibrary')
     compile 'com.android.support:appcompat-v7:19.1.0'
     compile 'com.android.support:support-v13:19.1.0'
+    compile 'se.emilsjolander:StickyScrollViewItems:1.1.0'
     compile files('libs/libGoogleAnalyticsServices.jar')
 }

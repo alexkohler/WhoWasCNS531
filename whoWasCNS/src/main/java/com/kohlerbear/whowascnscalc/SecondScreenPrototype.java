@@ -120,8 +120,8 @@ public class SecondScreenPrototype extends BaseActivity {
 		patternSevenDaysRadioButton = (RadioButton) findViewById(R.id.patternButtonSevenDays);
 		patternSegmentGroup.setOnCheckedChangeListener(patternSizeSegmentListener);
 
-        patternSizeTV  = (TextView) findViewById(R.id.PatternSizeTV);
-        patternSizeTV.setVisibility(View.INVISIBLE);
+//        patternSizeTV  = (TextView) findViewById(R.id.PatternSizeTV);
+//        patternSizeTV.setVisibility(View.INVISIBLE);
 		
 		//set up intent stuff
 		Intent previousIntent = getIntent();

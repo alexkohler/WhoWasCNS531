@@ -44,21 +44,22 @@ import com.google.analytics.tracking.android.Tracker;
  * Table display of cycle projection, on click listener on every table row to go to individualviews
  *
  */
-public class ThirdScreenPrototype extends BaseActivity implements
-		ActionBar.TabListener {
+public class ThirdScreenPrototype /*extends BaseActivity implements
+		ActionBar.TabListener */{
 
-	/**
+}
+/*	*//**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a {@link FragmentPagerAdapter}
 	 * derivative, which will keep every loaded fragment in memory. If this
 	 * becomes too memory intensive, it may be best to switch to a
 	 * {@link android.support.v13.app.FragmentStatePagerAdapter}.
-	 */
+	 *//*
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
-	/**
+	*//**
 	 * The {@link ViewPager} that will host the section contents.
-	 */
+	 *//*
 	
 	ViewPager mViewPager;
 	
@@ -204,7 +205,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 			Processor.setRoundingFlag(true);
 			ConfigTool configtool = new ConfigTool(ThirdScreenPrototype.this);
 			Processor.setUnitMode(configtool.getLbModeFromDatabase());
-			eventsData.reinflateTable(this, intent);
+			eventsData.reinflateTable(getApplicationContext());
 		}
 		else if (origin.equals("second"))
 		{
@@ -212,7 +213,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 			
 			String mode = intent.getStringExtra("mode");
 			Processor.setUnitMode(mode);
-			eventsData.inflateTable(this, intent, startingDate, db); 
+			eventsData.inflateTable(this, startingDate, db);
 			new AsyncCaller(liftPattern).execute();
 		}
 		else//this is called during refreshes/view existing
@@ -576,7 +577,7 @@ public class ThirdScreenPrototype extends BaseActivity implements
 				else
 					if (changedView){
 
-/*						TextView title = new TextView(this);
+*//*						TextView title = new TextView(this);
 						title.setText(retStringSaver.toString());
 						title.setTextSize(12);
 						title.setGravity(Gravity.CENTER);
@@ -585,16 +586,16 @@ public class ThirdScreenPrototype extends BaseActivity implements
 
 								LayoutParams.WRAP_CONTENT));
 						tableRowPrincipal.addView(title);
-						TableRow titleRow = (TableRow) findViewById(R.id.insertValues);*/
+						TableRow titleRow = (TableRow) findViewById(R.id.insertValues);*//*
 						
 						//add title row here?
 						TableRow tr = new TableRow(this);
 						LayoutParams trParams = tableLayout.getLayoutParams();
 						tr.setLayoutParams(trParams);
 						tr.setGravity(Gravity.CENTER_HORIZONTAL);
-/*			            android:layout_width="match_parent"
+*//*			            android:layout_width="match_parent"
 			                    android:layout_height="wrap_content"
-			                    android:gravity="center_horizontal"*/
+			                    android:gravity="center_horizontal"*//*
 //						eventsData.createRow(this, tr, "Date", "Cycle", "Lift", "Freq", "1st", "2nd", "3rd");
 						tableLayout.addView(titleTableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 						changedView = false;
@@ -879,10 +880,10 @@ public class ThirdScreenPrototype extends BaseActivity implements
 			FragmentTransaction fragmentTransaction) {
 	}
 
-	/**
+	*//**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
-	 */
+	 *//*
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 		public SectionsPagerAdapter(FragmentManager fm) {
@@ -922,19 +923,19 @@ public class ThirdScreenPrototype extends BaseActivity implements
 		}
 	}
 
-	/**
+	*//**
 	 * A placeholder fragment containing a simple view.
-	 */
+	 *//*
 	public static class PlaceholderFragment extends Fragment {
-		/**
+		*//**
 		 * The fragment argument representing the section number for this
 		 * fragment.
-		 */
+		 *//*
 		private static final String ARG_SECTION_NUMBER = "section_number";
 
-		/**
+		*//**
 		 * Returns a new instance of this fragment for the given section number.
-		 */
+		 *//*
 		public static PlaceholderFragment newInstance(int sectionNumber) {
 			PlaceholderFragment fragment = new PlaceholderFragment();
 			Bundle args = new Bundle();
@@ -953,6 +954,6 @@ public class ThirdScreenPrototype extends BaseActivity implements
 					R.layout.fragment_third_screen_prototype, container, false);
 			return rootView;
 		}
-	}
+	}*/
 
-}
+//}

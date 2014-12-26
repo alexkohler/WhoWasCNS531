@@ -304,10 +304,11 @@ public class ConfigTool {
             c1.setTime(date);
             return c1;
     }
-    void shiftDates(Cursor cursor, ThirdScreenPrototype.ROW_LISTENER direction, int days) {
-        if (direction == ThirdScreenPrototype.ROW_LISTENER.SHIFTFORWARD) {
+    void shiftDates(Cursor cursor, ThirdScreenFragment.ROW_LISTENER direction, int days) {
+        if (direction == ThirdScreenFragment.ROW_LISTENER.SHIFTFORWARD) {
             while (cursor.moveToNext()) {
                 String dateString = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
+
                 String liftType = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
                 Calendar cal = stringToCal(dateString);
                 String incrementedDateString = incrementDay(cal, days);
@@ -316,8 +317,7 @@ public class ConfigTool {
                         "SET " + EventsDataSQLHelper.LIFTDATE + " = '" + incrementedDateString +
                         "' WHERE " + EventsDataSQLHelper.LIFTDATE + " = '" + dateString + "' AND " + EventsDataSQLHelper.LIFT + " = '" + liftType + "'");
             }
-
-        } else if (direction == ThirdScreenPrototype.ROW_LISTENER.SHIFTBACKWARD) {
+        } else if (direction == ThirdScreenFragment.ROW_LISTENER.SHIFTBACKWARD) {
             while (cursor.moveToNext()) {
                 String dateString = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
                 String liftType = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));

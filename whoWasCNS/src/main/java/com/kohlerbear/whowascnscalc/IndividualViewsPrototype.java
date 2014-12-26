@@ -75,25 +75,25 @@ public class IndividualViewsPrototype extends FragmentActivity {
       //for each fragment you want to add to the pager
       Bundle initialArgs = new Bundle();
       Intent prevScreen = getIntent();
- 	  int cycle = Integer.valueOf(prevScreen.getStringExtra("cycle"));
+ 	  int cycle = Integer.valueOf(TabPrototype.numberOfCycles/*prevScreen.getStringExtra("cycle")*/);
  	  initialArgs.putInt("cycle",cycle);
-      String frequency = prevScreen.getStringExtra("frequency");
+      String frequency = TabPrototype.frequency;//prevScreen.getStringExtra("frequency");
       initialArgs.putString("frequency", frequency);
-      String liftType = prevScreen.getStringExtra("liftType");
+      String liftType = TabPrototype.liftType;//prevScreen.getStringExtra("liftType");
       initialArgs.putString("liftType", liftType);
-      double firstLift = Double.valueOf(prevScreen.getStringExtra("firstLift")); 
+      double firstLift = Double.valueOf(TabPrototype.firstLift/*prevScreen.getStringExtra("firstLift")*/);
       initialArgs.putDouble("firstLift", firstLift);
-      double secondLift = Double.valueOf(prevScreen.getStringExtra("secondLift"));          
+      double secondLift = Double.valueOf(TabPrototype.secondLift/*prevScreen.getStringExtra("secondLift")*/);
       initialArgs.putDouble("secondLift", secondLift);
-      double thirdLift = Double.valueOf(prevScreen.getStringExtra("thirdLift")); 
+      double thirdLift = Double.valueOf(TabPrototype.thirdLift/*prevScreen.getStringExtra("thirdLift")*/);
       initialArgs.putDouble("thirdLift", thirdLift);
-      String date = prevScreen.getStringExtra("date");
+      String date = TabPrototype.date;//prevScreen.getStringExtra("date"); //TODO watch yourself, you have two date strings..
       initialArgs.putString("date", date);
-      String mode = prevScreen.getStringExtra("mode");
+      String mode = TabPrototype.unitMode;//prevScreen.getStringExtra("mode");
       initialArgs.putString("mode", mode);
-      String viewMode = prevScreen.getStringExtra("viewMode");
+      String viewMode = TabPrototype.viewMode;//prevScreen.getStringExtra("viewMode");
       initialArgs.putString("viewMode", viewMode);
-      String[] liftPattern = prevScreen.getStringArrayExtra("liftPattern");
+      String[] liftPattern = TabPrototype.liftPattern;//prevScreen.getStringArrayExtra("liftPattern");
       initialArgs.putStringArray("liftPattern", liftPattern);
       initialArgs.putString("status", "init");
       int selectedItem = 0;//selected item is initially one, but if we have any previous lifts we need to increment out selected item
@@ -216,8 +216,8 @@ public class IndividualViewsPrototype extends FragmentActivity {
     	public CharSequence getPageTitle(int position) {
 
     	   Bundle args = myFragments.get(position).getArguments();
-    	   String truncatedDate = args.getString("date").substring(0, 5);
-    	   String lift = args.getString("liftType");
+    	   String truncatedDate = TabPrototype.date.substring(0, 5); //args.getString("date").substring(0, 5);
+    	   String lift = TabPrototype.liftType;///args.getString("liftType");
     	    String PageTitle = truncatedDate + "- " + lift;
     	    return PageTitle;
     	}
