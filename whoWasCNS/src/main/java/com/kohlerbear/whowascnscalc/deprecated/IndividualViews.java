@@ -1,34 +1,7 @@
 package com.kohlerbear.whowascnscalc.deprecated;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import android.app.ActionBar;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.net.ParseException;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.analytics.tracking.android.Fields;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.MapBuilder;
-import com.google.analytics.tracking.android.Tracker;
-import com.kohlerbear.whowascnscalc.ConfigTool;
-import com.kohlerbear.whowascnscalc.R;
-import com.kohlerbear.whowascnscalc.ThirdScreenPrototype;
-import com.kohlerbear.whowascnscalc.R.anim;
-import com.kohlerbear.whowascnscalc.R.drawable;
-import com.kohlerbear.whowascnscalc.R.id;
-import com.kohlerbear.whowascnscalc.R.layout;
-import com.kohlerbear.whowascnscalc.R.style;
 public class IndividualViews extends ActionBarActivity {
 /*	
 	TextView firstLiftTV;

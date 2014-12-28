@@ -165,16 +165,66 @@
 
     <!-- About 531 string requirements -->
     <string name="about_title">About this app</string>
+
     <string name="about_whatis531">What is 5/3/1?</string>
+    <string name="about_whatis531Answer">Commonly thrown around in the Strength Training world, 5/3/1 programming
+    philosophy made popular by Jim Wendler (Buy this book here) - Basically, your training is centered around "cycles", which consist of performing the big
+    4 (Bench, squat, deadlift, overhead press) at various frequencies and percentages based on your training maxes. </string>
+
+    <string name="about_whatisTrainingMax">Wait, what is a training max?</string>
+
+    <string name="about_whatisTrainingMaxAnswer">
+    A training max (in 5/3/1\'s context) coined by Jim Wendler. It is calculated via 90% of your true max. For example,
+    if my best max ever benching was 300 (and I haven\'t lost any significant strength since doing it), then my training max would be
+    300 * .90 = 270. This is the only math you\'ll need to do. :) At the end of each cycle, your training max gets incremented by 10lbs/5kgs for bench/squat and 5lbs/2.5kgs
+    for ohp/bench.
+   </string>
+
+    <string name="about_whatisCycle">
+    Alright... so what is a cycle?
+    </string>
+    <string name="about_whatisCycleAnswer"
+     formatted="false">
+    A cycle is determined by your lift pattern (traditionally the 6 day pattern of
+    Bench, Squat, Rest, Deadlift, Overhead Press, Rest), however,
+
+    if you are more comfortable with another
+
+    pattern, this app supports custom pattern creation. Think of it as your day to
+    day schedule.
+
+    A cycle\'s length is determined by your lift pattern\'s size times, so it is
+    traditionally 18 days. The first third of your cycle will consist of th
+
+    \'5\' part of 5/3/1. You will go through your lift pattern and perform your
+    working sets for that day at 65% of your training max for a set of 5, 75% for a
+    set of 5,
+
+    and finally 85% for a set of 5. The second third of your cycle with be with
+    sets of three instead of fives, with percentages 70%, 80%, and 90%.
+
+    Finally, the end of your cycle with be your "maxing week", now, unlike the
+    first two thirds, you will not just be doing singles, rather, you will be
+    embracing
+
+    the entire 5/3/1 name and perform a set of 5 at 75%, a set of 3 at 85%, and a
+    single at 95%.
+    </string>
+
+    <string name="about_whatiffailedlift">
+    What if I fail a lift?!
+   </string>
+
+    <string name="about_whatiffailedliftanswer">
+    Then it is time to reset your cycle. You can do this by taking 90% of your
+    failed training max and resetting your lift projection.
+    </string>
+
     <string name="about_placeholder" formatted="false">    What is 5/3/1?
 
     Commonly thrown around in the Strength Training world, 5/3/1 programming
-    philosophy made popular by Jim Wendler (Buy this book here) - Basically,
-
-    your training is centered around "cycles", which consist of performing the big
-    4 (Bench, squat, deadlift, overhead press) at various frequencies
-
-    and percentages based on your training maxes.
+    philosophy made popular by Jim Wendler (Buy this book here) - Basically, your training is centered around "cycles", which consist of performing the big
+    4 (Bench, squat, deadlift, overhead press) at various frequencies and percentages based on your training maxes.
 
 
 

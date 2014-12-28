@@ -36,7 +36,7 @@ public class TabPrototype extends BaseActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    CustomViewPager mViewPager;
+    static CustomViewPager mViewPager;
 
     //for sake of determining scroll direction
     static int lastPage;
@@ -58,6 +58,8 @@ public class TabPrototype extends BaseActivity {
     static String deadTM;
     static String numberOfCycles;
     static String unitMode;
+    static AlertDialog builder;// = new AlertDialog.Builder(TabPrototype.this).create();
+    static String nextFrag;
 
    //Third screen dependencies
     static String cycle;
@@ -69,11 +71,14 @@ public class TabPrototype extends BaseActivity {
     static String date;
     static String viewMode;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_prototype);
-
+        builder = new AlertDialog.Builder(TabPrototype.this).create();
 
         //Set up our navigation drawer
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
@@ -94,6 +99,7 @@ public class TabPrototype extends BaseActivity {
         mViewPager = (CustomViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mCustomPagerAdapter);
 
+
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
         // a reference to the Tab.
@@ -102,6 +108,7 @@ public class TabPrototype extends BaseActivity {
             public void onPageSelected(int position) {
                 if (mViewPager.getAdapter().getPageTitle(lastPage).toString().toUpperCase().equals("SET TMS")
                         && mViewPager.getAdapter().getPageTitle(position).toString().toUpperCase().equals("PROJECT")) {
+                    nextFrag = "third";
                     final SecondScreenFragment fragment = (SecondScreenFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + lastPage);
                     final ThirdScreenFragment fragment2 = (ThirdScreenFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + position);
                     final EventsDataSQLHelper eventsData = new EventsDataSQLHelper(TabPrototype.this);
@@ -110,43 +117,52 @@ public class TabPrototype extends BaseActivity {
                     if (fragment.validatePattern() == false || fragment.canMoveToThird() == false) {
                         mViewPager.setCurrentItem(lastPage);//stay on second screen
 //                        actionBar.setSelectedNavigationItem(lastPage);
-                    } else {
+                    } else { //otherwise there are no errors when moving from first to second screen
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .detach(fragment2)
+                                .attach(fragment2)
+                                .commit();//recreate view
+                        fragment2.setInsertStatus(false);
+                        mViewPager.setCurrentItem(finalPos);
                         DialogInterface.OnClickListener resetListener = new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which){
                                     case DialogInterface.BUTTON_POSITIVE:
+                                        mViewPager.setCurrentItem(finalPos);//go to third screen
+/*                                        fragment2.setInsertStatus(false);
                                         getSupportFragmentManager()
                                                 .beginTransaction()
                                                 .detach(fragment2)
                                                 .attach(fragment2)
-                                                .commit();//recreate view
-                                        fragment2.setInsertStatus(false);
-                                        mViewPager.setCurrentItem(finalPos);//go to third screen
-                                        dialog.cancel();
+                                                .commit();//recreate viEW*/
                                         break;
 
                                     case DialogInterface.BUTTON_NEGATIVE:
+//                                        mViewPager.setCurrentItem(lastPage);
                                         dialog.cancel();
                                         break;
                                 }
                             }
                         };
                         SQLiteDatabase db = eventsData.getWritableDatabase();
-                        AlertDialog builder = new AlertDialog.Builder(TabPrototype.this).create();
-                        builder.setMessage("Are you sure you want to overrwrite your existing projection?");
+                        builder.setMessage("Overwrite existing projection?");
                         builder.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", resetListener);
                         builder.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", resetListener);
-                        if (!ct.dbEmpty()) {
-                            mViewPager.setCurrentItem(lastPage);
+/*                        if (!ct.dbEmpty()) {
+//                            mViewPager.setCurrentItem(lastPage);
                             builder.show();
                         }
-                        else
+                        else {
+                            builder.show();
                             builder.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+                            }*/
                     }
                 } else {
                     lastPage = position;
 //                    actionBar.setSelectedNavigationItem(position);
+                    nextFrag = "first";
                     mViewPager.setCurrentItem(position);
                 }
 
@@ -155,6 +171,8 @@ public class TabPrototype extends BaseActivity {
         });
 
     }
+
+
     class CustomPagerAdapter extends FragmentPagerAdapter {
 
         Context mContext;

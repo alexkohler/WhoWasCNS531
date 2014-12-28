@@ -1,4 +1,4 @@
-package com.kohlerbear.whowascnscalc;
+package com.kohlerbear.whowascnscalc.deprecated;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,8 +14,6 @@ import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +24,10 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
 import com.hannesdorfmann.swipeback.Position;
 import com.hannesdorfmann.swipeback.SwipeBack;
+import com.kohlerbear.whowascnscalc.BaseActivity;
+import com.kohlerbear.whowascnscalc.EventsDataSQLHelper;
+import com.kohlerbear.whowascnscalc.R;
+import com.kohlerbear.whowascnscalc.SecondScreenPrototype;
 import com.kohlerbear.whowascnscalc.hannesorfmann.swipeback.SwipeForwardTransformer;
 
 
@@ -88,7 +90,7 @@ public class MainActivity extends BaseActivity {
 
 		dp = (DatePicker) findViewById(R.id.dp);
 		dp.setCalendarViewShown(false);
-		final Button setBtn = (Button) findViewById(R.id.set);
+//		final Button setBtn = (Button) findViewById(R.id.set);
 		liftTicker = (TextView) findViewById(R.id.liftTicker);
 		
 		Intent patternAdjusterIntent = getIntent();
@@ -108,12 +110,12 @@ public class MainActivity extends BaseActivity {
 		liftTicker.setText(liftTickerBuffer);
 		
 
-		setBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				goToSecond();
-			}
-		});
+//		setBtn.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				goToSecond();
+//			}
+//		});
 		
 		
         // Gesture detection
@@ -196,7 +198,7 @@ public class MainActivity extends BaseActivity {
 			//TODO Look into a better way of upgrading tables, you might want to do this on secm
 			db.execSQL("drop table Lifts");
 			db.execSQL("create table Lifts (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_LbFlag integer, RoundFlag integer, pattern text not null)"); 
-			Intent intent = new Intent(MainActivity.this, SecondScreenPrototype.class); 
+			Intent intent = new Intent(MainActivity.this, SecondScreenPrototype.class);
 			intent.putExtra("key", formattedDate );
 			intent.putExtra("origin", "first");
 			intent.putExtra("liftPattern", liftPattern);

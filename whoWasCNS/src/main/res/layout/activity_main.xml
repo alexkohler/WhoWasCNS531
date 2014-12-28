@@ -52,16 +52,6 @@
             android:textSize = "15sp"  
             android:text="@string/dialog_text_view" />
 
-        <Button
-            android:id="@+id/set"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/dp"
-            android:layout_marginTop="18dp"
-            android:text="@string/set_button_text_view" />
-
         <TextView
             android:id="@+id/liftTicker"
             android:layout_width="wrap_content"
@@ -69,7 +59,7 @@
             android:gravity="center"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/set"
+            android:layout_below="@+id/dp"
             android:text="@+id/textView1" />
 
     </RelativeLayout>

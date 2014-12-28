@@ -6,11 +6,7 @@ import java.util.HashMap;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
-import com.kohlerbear.whowascnscalc.MainActivity;
 import com.kohlerbear.whowascnscalc.R;
-import com.kohlerbear.whowascnscalc.R.id;
-import com.kohlerbear.whowascnscalc.R.layout;
-import com.kohlerbear.whowascnscalc.R.style;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;

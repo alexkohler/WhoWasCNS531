@@ -33,6 +33,7 @@ import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
 import com.kohlerbear.whowascnscalc.ToastWrapper.Boast;
+import com.kohlerbear.whowascnscalc.deprecated.ThirdScreenPrototype;
 
 public class SecondScreenPrototype extends BaseActivity {
 

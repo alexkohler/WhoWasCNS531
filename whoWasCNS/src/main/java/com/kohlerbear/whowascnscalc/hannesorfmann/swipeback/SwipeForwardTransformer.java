@@ -18,7 +18,7 @@ import com.hannesdorfmann.swipeback.SwipeBack;
 import com.hannesdorfmann.swipeback.transformer.SwipeBackTransformer;
 import com.hannesdorfmann.swipeback.util.MathUtils;
 import com.kohlerbear.whowascnscalc.EventsDataSQLHelper;
-import com.kohlerbear.whowascnscalc.MainActivity;
+import com.kohlerbear.whowascnscalc.deprecated.MainActivity;
 import com.kohlerbear.whowascnscalc.SecondScreenPrototype;
 
 public class SwipeForwardTransformer implements SwipeBackTransformer {

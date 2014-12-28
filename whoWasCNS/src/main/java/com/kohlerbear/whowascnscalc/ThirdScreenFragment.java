@@ -171,7 +171,7 @@ public class ThirdScreenFragment extends Fragment
                 super.setUserVisibleHint(isVisibleToUser);
                 // Make sure that we are currently visible
                 if (this.isVisible()) {
-                    String startingDate = TabPrototype.formattedDate;//intent.getStringExtra("key2");
+                    final String startingDate = TabPrototype.formattedDate;//intent.getStringExtra("key2");
                     liftPattern = TabPrototype.liftPattern;//intent.getStringArrayExtra("liftPattern");
 
                     tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-55018534-1");
@@ -182,7 +182,7 @@ public class ThirdScreenFragment extends Fragment
                     tracker.send(hitParameters);
 
                     eventsData = new EventsDataSQLHelper(getActivity());
-                    SQLiteDatabase db = eventsData.getWritableDatabase();
+                    final SQLiteDatabase db = eventsData.getWritableDatabase();
 
                     titleTableRow = (TableRow) drawerLayout.findViewById(R.id.insertValuesPrototype);
 
@@ -199,11 +199,26 @@ public class ThirdScreenFragment extends Fragment
                     }
                     else if (origin.equals("second"))
                     {
-                        Processor.setRoundingFlag(true);//rounding on by default
-                        String mode = TabPrototype.unitMode;//intent.getStringExtra("mode");
-                        Processor.setUnitMode(mode);
-                        eventsData.inflateTable(this, startingDate, db);
-                        new AsyncCaller(liftPattern).execute();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("Overwrite existing projection?")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Processor.setRoundingFlag(true);//rounding on by default
+                                        String mode = TabPrototype.unitMode;//intent.getStringExtra("mode");
+                                        Processor.setUnitMode(mode);
+                                        eventsData.inflateTable(ThirdScreenFragment.this, startingDate, db);
+                                        new AsyncCaller(liftPattern).execute();
+                                    }
+                                })
+                                .setNegativeButton("No, View existing", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        TabPrototype.mViewPager.setCurrentItem(1);
+                                        dialog.cancel();;//TODO support view existing here
+
+                                    }
+                                })
+                                .create();
+                          builder.show();
                     }
                     else//this is called during refreshes/view existing
                     {

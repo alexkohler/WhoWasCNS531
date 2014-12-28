@@ -1,13 +1,16 @@
 package com.kohlerbear.whowascnscalc;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -223,8 +226,7 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
 
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
-    {
+    public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         // Make sure that we are currently visible
         if (this.isVisible()) {
@@ -236,12 +238,46 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
             }
             // If we are **becoming** invisible, then...
             if (!isVisibleToUser) {
-                Log.d("MyFragment", "Not visible anymore.  Stopping audio.");
-                // TODO stop audio playback
+                TabPrototype.origin = "second";
+//                if (TabPrototype.nextFrag.equals("third")) {
+/*                    int currentPage = 1;
+                    TabPrototype.builder.setMessage("Overwrite existing projection?");
+                    TabPrototype.builder.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", resetListener);
+                    TabPrototype.builder.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", resetListener);
+                    if (validatePattern() == false || canMoveToThird() == false) {
+
+                    }
+                    else
+                        TabPrototype.builder.show();
+                }
+                if (TabPrototype.nextFrag.equals("first"))
+                    Toast.makeText(getActivity(), "first", Toast.LENGTH_SHORT).show();*/
+//                }
             }
         }
     }
 
+/*                        DialogInterface.OnClickListener resetListener = new DialogInterface.OnClickListener() {
+//                            final ThirdScreenFragment fragment2 = (ThirdScreenFragment) TabPrototype.getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + 2);
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+*//*                                        TabPrototype.mViewPager.setCurrentItem(2);//go to third screen
+                                        fragment2.setInsertStatus(false);
+                                        getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .detach(fragment2)
+                                                .attach(fragment2)
+                                                .commit();//recreate view*//*
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        dialog.cancel();
+                                        break;
+                                }
+                            }
+                        };*/
 
     private void inflatePatternButtons(String[] pattern, boolean custom) {
         liftPattern = pattern;
@@ -966,12 +1002,12 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
 
             if (lbs.equals(true)) {
                 unit_mode = "Lbs";
-                Toast.makeText(getActivity(), "Displaying in lbs", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Displaying in lbs", Toast.LENGTH_SHORT).show();
                 TabPrototype.unitMode = unit_mode;
             }
             if (lbs.equals(false)) {
                 unit_mode = "Kgs";
-                Toast.makeText(getActivity(), "Displaying in kgs", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Displaying in kgs", Toast.LENGTH_SHORT).show();
                 TabPrototype.unitMode = unit_mode; //TODO refactor
             }
 

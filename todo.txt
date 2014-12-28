@@ -1,9 +1,11 @@
 Google material design navigation drawers
 
 TODO:
-	There is some funkiness when you reproject a date in create new projection screen	
-
 	Do some cleanup of deprecated classes
+	
+	Turn settings, dashboardm  and about into fragments (possibly others?)
+
+	Add links to Wendler's Q/A and to buy his book 
 
 	Individual views need better format to support entries for each lift
 	(Each individual view willl load three fragments)
@@ -36,3 +38,5 @@ TODO:
 
 
 	Base lift recording
+
+halo - Ane Brun, Linnea Olsson

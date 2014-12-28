@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".deprecated.MainActivity"
             android:label="@string/title_activity_second"
             android:theme="@style/AppBaseLight" >
         </activity>
@@ -93,7 +93,7 @@
             android:theme="@style/AppBaseTheme" >
         </activity>
         <activity
-            android:name=".ThirdScreenPrototype"
+            android:name=".deprecated.ThirdScreenPrototype"
             android:label="@string/title_activity_third_screen_prototype"
             android:theme="@style/AppBaseTheme" >
         </activity>

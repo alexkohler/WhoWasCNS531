@@ -100,7 +100,6 @@ public class FirstScreenFragment extends Fragment {
             }
         });
 
-        final Button setBtn = (Button) drawerLayout.findViewById(R.id.set);
         liftTicker = (TextView) drawerLayout.findViewById(R.id.liftTicker);
 
         //TODO is stuff below needed?
@@ -120,18 +119,6 @@ public class FirstScreenFragment extends Fragment {
 
         liftTicker.setText(liftTickerBuffer);
 
-        //TODO there is probably a way for fragment to know if it's been swiped (left)
-        setBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateData();
-            }
-        });
-
-        // The FragmentActivity doesn't contain the layout directly so we must use our instance of     LinearLayout :
-//        llLayout.findViewById(R.id.someGuiElement);
-        // Instead of :
-        // findViewById(R.id.someGuiElement);
         return drawerLayout; // We must return the loaded Layout
     }
 

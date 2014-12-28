@@ -66,7 +66,7 @@ public class DateAndLiftProcessor {
 	Double CURRENT_SECOND;
 	Double CURRENT_THIRD;
 	String CURRENT_DATE_STRING;
-	Calendar CURRENT_DATE_CAL = Calendar.getInstance();; //to be parsed and worked to maintain current date (instead of modifying starting_date_string like I was before)
+	Calendar CURRENT_DATE_CAL = Calendar.getInstance(); //to be parsed and worked to maintain current date (instead of modifying starting_date_string like I was before)
 	SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy", java.util.Locale.getDefault()); // date format only needs to be declared once. Is not and won't be changing (Unless users really want a changable date format...)
 
 
@@ -76,10 +76,7 @@ public class DateAndLiftProcessor {
 	
 	public void setStartingDate (String myDate)
 	{
-
-
 		STARTING_DATE_STRING = myDate;
-
 	}
 	
 	public String getDate ()
@@ -409,7 +406,13 @@ public class DateAndLiftProcessor {
 	void calculateCycle(ThirdScreenFragment thirdScreen, String[] myPattern)
 	{
 		//(max pattern of 7 days), 
-		
+		//If we are reprojecting,we need to reset our calendar object
+        CURRENT_DATE_CAL = Calendar.getInstance();
+        String startingDate = getStartingDate();//12-27-2014
+        int year = Integer.valueOf(startingDate.substring(6, 10));
+        int month  = Integer.valueOf(startingDate.substring(0, 2));
+        int day = Integer.valueOf(startingDate.substring(3, 5));
+        CURRENT_DATE_CAL.set(year, (month - 1), day);//year month day
 		initializePatternSize(myPattern.length);//separate variable from liftTrack
 		setCycle(1);
 		//Fives

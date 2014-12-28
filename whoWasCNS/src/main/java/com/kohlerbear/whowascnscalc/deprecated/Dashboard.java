@@ -1,13 +1,8 @@
 package com.kohlerbear.whowascnscalc.deprecated;
 
 import com.kohlerbear.whowascnscalc.ConfigTool;
-import com.kohlerbear.whowascnscalc.MainActivity;
 import com.kohlerbear.whowascnscalc.R;
 import com.kohlerbear.whowascnscalc.SecondScreenPrototype;
-import com.kohlerbear.whowascnscalc.R.id;
-import com.kohlerbear.whowascnscalc.R.layout;
-import com.kohlerbear.whowascnscalc.R.string;
-import com.kohlerbear.whowascnscalc.deprecated.StealUsefulNavDrawerStuff.NavigationDrawerCallbacks;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -16,7 +11,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 
 @SuppressLint("Registered")
 @Deprecated
