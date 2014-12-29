@@ -154,7 +154,6 @@ public class BaseActivity extends ActionBarActivity {
 		// menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
-
 	/**
 	 * Diplaying fragment view for selected nav drawer list item
 	 * */
@@ -162,9 +161,9 @@ public class BaseActivity extends ActionBarActivity {
 		ConfigTool ct = new ConfigTool(this);
 		switch (position) {
 		case 0://dashboard
-			Intent intent = new Intent(this, OpeningDashboardActivity.class);
-			startActivity(intent);
-			finish();// finishes the current activity
+            Intent intent = new Intent(this, OpeningDashboardActivity.class);
+            startActivity(intent);
+            finish();// finishes the current activity
 			break;
 		case 1://Create new projection
             Intent intent2 = new Intent(this, TabPrototype.class);
@@ -204,20 +203,23 @@ public class BaseActivity extends ActionBarActivity {
 
 				//startActivity(viewExistingProjectionIntent);
                 //finish();
-                Fragment frag = new ThirdScreenFragment();
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.content_frame, frag);
+                Fragment thirdFrag = new ThirdScreenFragment();
+                FragmentManager thirdFM = getSupportFragmentManager();
+                FragmentTransaction thirdFragTransaction = thirdFM.beginTransaction();
+                thirdFragTransaction.replace(R.id.content_frame, thirdFrag);
 //                ft.addToBackStack(null);
-                ft.commit();
+                thirdFragTransaction.commit();
 			}
 			else
 				Toast.makeText(this, "No previous projection exists!", Toast.LENGTH_SHORT).show();
 			break;
 		 case 3://about
-			 Intent intent3 = new Intent(this, About531.class);
-			 startActivity(intent3);
-			 finish();
+             Fragment aboutFrag = new About531Fragment();
+             FragmentManager aboutFM = getSupportFragmentManager();
+             FragmentTransaction aboutFT = aboutFM.beginTransaction();
+             aboutFT.replace(R.id.content_frame, aboutFrag);
+//                ft.addToBackStack(null);
+             aboutFT.commit();
 			 break;
 		 case 4://settings
 			 Intent intent4 = new Intent(this, SettingsActivity.class);

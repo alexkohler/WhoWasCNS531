@@ -83,7 +83,7 @@
             android:label="@string/title_activity_revampedsecond_screen" >
         </activity>
         <activity
-            android:name=".About531"
+            android:name=".About531Fragment"
             android:label="@string/title_activity_about531"
             android:theme="@style/AppBaseTheme" >
         </activity>

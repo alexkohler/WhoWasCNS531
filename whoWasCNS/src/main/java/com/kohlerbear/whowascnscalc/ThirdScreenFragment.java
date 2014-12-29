@@ -165,6 +165,15 @@ public class ThirdScreenFragment extends Fragment
         // drawerLayout.findViewById(R.id.someGuiElement);00
         return drawerLayout; // We must return the loaded Layout
     }
+            //called twice
+            public void onPositiveButtonPressed()
+            {
+                Processor.setRoundingFlag(true);//rounding on by default
+                String mode = TabPrototype.unitMode;//intent.getStringExtra("mode");
+                Processor.setUnitMode(mode);
+                eventsData.inflateTable(ThirdScreenFragment.this, TabPrototype.formattedDate, eventsData.getWritableDatabase());
+                new AsyncCaller(liftPattern).execute();
+            }
 
             @Override
             public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -203,22 +212,29 @@ public class ThirdScreenFragment extends Fragment
                         builder.setMessage("Overwrite existing projection?")
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        Processor.setRoundingFlag(true);//rounding on by default
-                                        String mode = TabPrototype.unitMode;//intent.getStringExtra("mode");
-                                        Processor.setUnitMode(mode);
-                                        eventsData.inflateTable(ThirdScreenFragment.this, startingDate, db);
-                                        new AsyncCaller(liftPattern).execute();
+                                        onPositiveButtonPressed();
                                     }
                                 })
                                 .setNegativeButton("No, View existing", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        TabPrototype.mViewPager.setCurrentItem(1);
-                                        dialog.cancel();;//TODO support view existing here
-
+//                                        TabPrototype.mViewPager.setCurrentItem(1);
+                                        Processor.setRoundingFlag(true);//rounding on by default
+                                        ConfigTool configtool = new ConfigTool(getActivity());
+                                        Processor.setUnitMode(configtool.getLbModeFromDatabase());
+                                        setQuery(null);
+                                        Cursor cursor = getEvents();
+                                        showDefaultEvents(cursor);
                                     }
                                 })
                                 .create();
-                          builder.show();
+                          ConfigTool ct = new ConfigTool(getActivity());
+                        if (!ct.dbEmpty())
+                            builder.show();
+                        else
+                          {
+                            onPositiveButtonPressed();
+                          }
+
                     }
                     else//this is called during refreshes/view existing
                     {
@@ -245,6 +261,8 @@ public class ThirdScreenFragment extends Fragment
                     Log.d("MyFragment", "Not visible anymore.  Stopping audio.");
                     // TODO stop audio playback
                 }
+
+
             }
 
 
