@@ -21,10 +21,101 @@
     android:id="@+id/thirdScreenLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
-    android:background="#000000"
      android:orientation="vertical"
+   android:background="#607D8B"
     android:layout_weight="2"
     >
+
+        <TableLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#607D8B"
+            android:orientation="vertical"
+            android:shrinkColumns="*"
+            android:stretchColumns="*" >
+
+            <TableRow
+                android:id="@+id/headerTableRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" >
+
+                <TextView
+                    android:id="@+id/headerDateColumn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="5dp"
+                    android:background="#607D8B"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="@string/date_column" />
+
+                <!--      <TextView
+                        android:id="@+id/cycleColumn"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:textS8y="center"
+                        android:text="B@string/cycle_column" /> -->
+
+                <TextView
+                    android:id="@+id/headerLiftColumn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="18sp"
+                    android:background="#607D8B"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="@string/lift_column" />
+
+                <TextView
+                    android:id="@+id/headerFreqColumn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="18sp"
+                    android:background="#607D8B"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="@string/freq_column" />
+
+                <TextView
+                    android:id="@+id/headerFirstLiftColumn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:background="#607D8B"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="@string/first_lift_column" />
+
+                <TextView
+                    android:id="@+id/headerSecondLiftColumn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:background="#607D8B"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="@string/second_lift_column" />
+
+                <TextView
+                    android:id="@+id/headerThirdLiftColumn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:background="#607D8B"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:text="@string/third_lift_column" />
+
+            </TableRow>
+        </TableLayout>
+
 
     <com.emilsjolander.components.StickyScrollViewItems.StickyScrollView
         android:id="@+id/scrollView1"
@@ -37,13 +128,12 @@
         android:id="@+id/tableLayout1Prototype"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#000000"
+        android:background="#607D8B"
         android:orientation="vertical"
         android:shrinkColumns="*"
         android:stretchColumns="*" >
 
-        <TableRow
+<!--        <TableRow
             android:id="@+id/insertValuesPrototype"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,28 +144,28 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-				android:textSize="18sp"                
+				android:textSize="18sp"
                 android:background="#000000"
                 android:textColor="#ffffff"
                 android:gravity="center"
                 android:text="@string/date_column" />
 
-        <!--      <TextView
+        &lt;!&ndash;      <TextView
                 android:id="@+id/cycleColumn"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-				android:textSize="18sp"   
+				android:textSize="18sp"
                 android:background="#000000"
                 android:gravity="center"
-                android:text="@string/cycle_column" /> -->
+                android:text="@string/cycle_column" /> &ndash;&gt;
 
             <TextView
                 android:id="@+id/liftColumn"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-				android:textSize="18sp"                   
+				android:textSize="18sp"
                 android:background="#000000"
                 android:textColor="#ffffff"
                 android:gravity="center"
@@ -86,7 +176,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-				android:textSize="18sp"                   
+				android:textSize="18sp"
                 android:background="#000000"
                 android:textColor="#ffffff"
                 android:gravity="center"
@@ -97,7 +187,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-				android:textSize="18sp"                   
+				android:textSize="18sp"
                 android:background="#000000"
                 android:textColor="#ffffff"
                 android:gravity="center"
@@ -108,7 +198,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-				android:textSize="18sp"                   
+				android:textSize="18sp"
                 android:background="#000000"
                 android:textColor="#ffffff"
                 android:gravity="center"
@@ -119,13 +209,13 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-				android:textSize="18sp"                   
+				android:textSize="18sp"
                 android:background="#000000"
                 android:textColor="#ffffff"
                 android:gravity="center"
                 android:text="@string/third_lift_column" />
 
-        </TableRow>
+        </TableRow>-->
     </TableLayout>
 
         </com.emilsjolander.components.StickyScrollViewItems.StickyScrollView>
@@ -141,6 +231,7 @@
         android:id="@+id/configureButtonPrototype"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="fill_parent"
+        android:background="#546E7A"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/options_checkbox_test" />

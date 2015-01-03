@@ -1,5 +1,6 @@
 package com.kohlerbear.whowascnscalc;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,7 +22,7 @@ public class About531Fragment extends Fragment {
 
         // Content of previous onCreate() here
         // ...
-
+        drawerLayout.setBackgroundColor(Color.BLACK);
         // Don't use this method, it's handled by inflater.inflate() above :
         // setContentView(R.layout.activity_layout);
 

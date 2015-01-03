@@ -187,3 +187,8 @@ time went - just reimport the workspace/531Calc project. Gradle and everything i
 12-27-14: Fixed builder after an overly long struggle, settled with having it called on third screen. Seems to be working stable now
 
 12-28-14: Fixed date reprojection bug, was on the right track yesterday but got sidetracked by that builder issue. Simply had to set date on calendar object. Added view existing to reprojection builder
+
+12-30-14: Started to mess with material design theme
+
+01-01-14 --> 01-03-14: Mostly UI and UI bug fixes
+

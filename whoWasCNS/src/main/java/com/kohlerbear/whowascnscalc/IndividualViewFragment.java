@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
+import com.google.analytics.tracking.android.Tracker;
+
 /**
  * Fragment class that populates our fragment adapter
  */
@@ -210,18 +214,18 @@ public class IndividualViewFragment extends Fragment {
 	    return rootView;
 	}
 
-	static double roundkg(double valueToBeRounded) 
+	double roundkg(double valueToBeRounded)
 	{
 		return (double) (Math.round(valueToBeRounded/2.5) * 2.5);
 	}
 	
-	static double round(double valueToBeRounded) 
+	double round(double valueToBeRounded)
 	{
 		return (double) (Math.round(valueToBeRounded/5) * 5);
 	}
 
 
-	static void generateWeights(double weight, int liftOneTwoOrThree)
+	void generateWeights(double weight, int liftOneTwoOrThree)
 	{
 		try
 		{
@@ -261,16 +265,16 @@ public class IndividualViewFragment extends Fragment {
 		            plateWeight = (int) (plateWeight - (2 * currentNeeded * plateVals[plateValIterator]));
 		        	else
 		        	plateWeight = (double) (plateWeight - (2 * currentNeeded * plateVals[plateValIterator]));
-		            System.out.println(plateVals[plateValIterator] + " needed per side " + currentNeeded);
+//		            System.out.println(plateVals[plateValIterator] + " needed per side " + currentNeeded);
 		            int numberOfTimesToAddPlateToEachSide = currentNeeded;
 		            while (numberOfTimesToAddPlateToEachSide >= 1)
 		            {
-		                System.out.println("Added " + plateVals[plateValIterator] + "s to plate position " + platePosition);
+//		                System.out.println("Added " + plateVals[plateValIterator] + "s to plate position " + platePosition);
 		            	setPlateImageAtRow(platePosition, plateValIterator, liftOneTwoOrThree);
 		                platePosition++;
 		                numberOfTimesToAddPlateToEachSide--;
 		            }
-		            System.out.println(platePosition);
+//		            System.out.println(platePosition);
 		        }
 		        plateValIterator++;
 		        
@@ -279,12 +283,11 @@ public class IndividualViewFragment extends Fragment {
 		}
 		catch (Exception e)
 		{
-			//TODO fix analytics
-		//		sendTrackerException("GenerateWeightsException", e.getLocalizedMessage());
+				sendTrackerException("GenerateWeightsException", e.getLocalizedMessage());
 		}
 	}
 
-	static void setPlateImageAtRow(int row, int plateIndex, int liftNumber)
+	void setPlateImageAtRow(int row, int plateIndex, int liftNumber)
 	{
 	
 	
@@ -387,7 +390,7 @@ public class IndividualViewFragment extends Fragment {
 	}
     
     
-	static Drawable getPlateImageFor(int plateIndex)
+	Drawable getPlateImageFor(int plateIndex)
 	    {
 	
 		if (usingLbs)
@@ -406,8 +409,8 @@ public class IndividualViewFragment extends Fragment {
 	                return resources.getDrawable(R.drawable.plate_twopointfive_lbs);
 	            default:
 	            	{
-//	            	TODO analytics
 //	                Toast.makeText(IndividualViewsPrototype.this, "A plate generation error has occured", Toast.LENGTH_LONG).show();
+                    sendTrackerException("getPlateImageFor(pounds) hit default case", "plateIndex:" +  plateIndex);
 	            	return resources.getDrawable(R.drawable.plate_fourtyfive_lbs);
 	            	} 
 	        }//end switch
@@ -433,13 +436,25 @@ public class IndividualViewFragment extends Fragment {
 	            	return resources.getDrawable(R.drawable.plate_onepointfive_kg);
 	            default:
 	            	{
-//		            	TODO analytics
 	//                Toast.makeText(IndividualViewsPrototype.this, "A plate generation error has occured", Toast.LENGTH_LONG).show();
+                    sendTrackerException("getPlateImageFor(kilograms) hit default case", "plateIndex:" +  plateIndex);
 	            	return resources.getDrawable(R.drawable.plate_fourtyfive_lbs);
 	            	} 
 	        }
 		}
 	      
-	}        
+	}
+
+
+    protected void sendTrackerException(String exceptionType, String value) {
+        Tracker tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-55018534-1");
+        tracker.send(MapBuilder
+                .createEvent("Exception",     // Event category (required)
+                        exceptionType,  // Event action (required)
+                        value,   // Event label
+                        null)            // Event value
+                .build());
+
+    }
 
 }

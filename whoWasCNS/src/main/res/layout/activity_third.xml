@@ -129,6 +129,7 @@
     <Button
         android:id="@+id/configureButton"
         style="?android:attr/buttonStyleSmall"
+        android:background="#009688"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

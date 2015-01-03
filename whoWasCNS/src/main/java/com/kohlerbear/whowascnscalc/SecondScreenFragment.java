@@ -1,17 +1,14 @@
 package com.kohlerbear.whowascnscalc;
 
-import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,6 +28,7 @@ import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
 import com.kohlerbear.whowascnscalc.ToastWrapper.Boast;
+import com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -45,11 +43,11 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
     TextView[] options = {option1, option2, option3, option4, option5};
 
     TextView choice1, choice2, choice3, choice4, choice5, choice6, choice7;
-    TextView[] choices = {choice1, choice2, choice3, choice4, choice5, choice6, choice7};//TODO is this initialization even needed?
+    TextView[] choices = {choice1, choice2, choice3, choice4, choice5, choice6, choice7};
 
 //    TextView patternSizeTV;
     EditText choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F;
-    EditText[] choiceFields = {choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F};//TODO is this initialization even needed?
+    EditText[] choiceFields = {choice1F, choice2F, choice3F, choice4F, choice5F, choice6F, choice7F};
 
     Button customButton, saveButton;
     String[] liftPattern = new String[7]; //max size of 7
@@ -62,7 +60,7 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
     EditText deadEditText;
 
     //TM widgets
-    RadioGroup patternSegmentGroup;
+    SegmentedGroup patternSegmentGroup;
     RadioButton patternFourDaysRadioButton;
     RadioButton patternFiveDaysRadioButton;
     RadioButton patternSixDaysRadioButton;
@@ -95,20 +93,25 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
         // ...
 
         // Don't use this method, it's handled by inflater.inflate() above :
-        customButton = (Button) drawerLayout.findViewById(R.id.adjustActivityResetButton);
+        customButton = (Button) drawerLayout.findViewById(R.id.customButton);
         saveButton = (Button) drawerLayout.findViewById(R.id.adjustActivitySaveButton);
 
 
         customButton.setOnClickListener(customListener);
-//        saveButton.setOnClickListener(saveListener);
 
-        RadioGroup unitModeGroup = (RadioGroup) drawerLayout.findViewById(R.id.poundKilogramSegmentedButtonGroup);
+        final String buttonHexColor = "#546E7A";
+
+        SegmentedGroup unitModeGroup = (SegmentedGroup) drawerLayout.findViewById(R.id.poundKilogramSegmentedButtonGroup);
+        unitModeGroup.setTintColor(Color.parseColor(buttonHexColor));
+
+
         lbRadioButton = (RadioButton) drawerLayout.findViewById(R.id.lbSegmentedButton);
         kgRadioButton = (RadioButton) drawerLayout.findViewById(R.id.kgSegmentedButton);
         unitModeGroup.setOnCheckedChangeListener(poundKilogramSegmentListener);
 
 
-        patternSegmentGroup = (RadioGroup) drawerLayout.findViewById(R.id.patternSegmentGroup);
+        patternSegmentGroup = (SegmentedGroup) drawerLayout.findViewById(R.id.patternSegmentGroup);
+        patternSegmentGroup.setTintColor(Color.parseColor(buttonHexColor));
 
         patternFourDaysRadioButton = (RadioButton) drawerLayout.findViewById(R.id.patternButtonFourDays);
         patternFiveDaysRadioButton = (RadioButton) drawerLayout.findViewById(R.id.patternButtonFiveDays);
@@ -313,6 +316,9 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
             }
 
         }
+
+        if (custom)
+            patternSevenDaysRadioButton.setChecked(true);
     }
 
     private RadioGroup.OnCheckedChangeListener poundKilogramSegmentListener = new RadioGroup.OnCheckedChangeListener() {
@@ -994,7 +1000,6 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
         if (deadErrorFlag.equals(false))
             TabPrototype.deadTM = dead;
 
-        //TODO this may have to change depending on configuration decisions
         TabPrototype.numberOfCycles = "5";
 
         if (!benchErrorFlag && !squatErrorFlag && !ohpErrorFlag && !deadErrorFlag) {
@@ -1020,7 +1025,6 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
         return false;
     }
 
-        //TODO see if there is a way to do this universally
         protected void sendTrackerException(String exceptionType, String value) {
             Tracker tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-55018534-1");
             tracker.send(MapBuilder

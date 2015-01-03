@@ -5,17 +5,17 @@
     android:versionName="1.9" >
 
     <uses-sdk
-        android:minSdkVersion="17"
-        android:targetSdkVersion="20" />
+        android:minSdkVersion="L"
+        android:targetSdkVersion="L" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <android:uses-permission
+    <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
 
@@ -47,56 +47,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".deprecated.MainActivity"
-            android:label="@string/title_activity_second"
-            android:theme="@style/AppBaseLight" >
-        </activity>
-        <activity
+<!--        <activity
             android:name=".Second"
             android:label="@string/title_activity_second"
             android:theme="@style/AppBaseLight" >
-        </activity>
-        <activity
-            android:name=".deprecated.SecondScreenActivity"
-            android:theme="@style/AppBaseTheme" >
-        </activity>
-        <activity
-            android:name=".deprecated.ThirdScreenActivity"
-            android:theme="@style/AppBaseTheme" >
-            <intent-filter>
-                <action android:name="com.kohlerbear.whowascnscalc.Second" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".deprecated.AdjustLiftPatternActivity"
-            android:label="@string/title_activity_adjust_lift_pattern" >
-        </activity>
-        <activity
-            android:name=".deprecated.IndividualViews"
-            android:label="@string/title_activity_individual_views" >
-        </activity>
+        </activity>-->
         <activity
             android:name=".SecondScreenPrototype"
             android:label="@string/title_activity_revampedsecond_screen" >
         </activity>
-        <activity
+<!--        <activity
             android:name=".About531Fragment"
             android:label="@string/title_activity_about531"
             android:theme="@style/AppBaseTheme" >
-        </activity>
+        </activity>-->
         <activity
-            android:name=".SettingsActivity"
+            android:name=".SettingsFragment"
             android:label="@string/title_activity_setting"
             android:theme="@style/AppBaseTheme" >
         </activity>
-        <activity
+<!--        <activity
             android:name=".deprecated.ThirdScreenPrototype"
             android:label="@string/title_activity_third_screen_prototype"
             android:theme="@style/AppBaseTheme" >
-        </activity>
+        </activity>-->
         <activity
             android:name=".IndividualViewsPrototype"
             android:label="@string/title_activity_individual_views_prototype"

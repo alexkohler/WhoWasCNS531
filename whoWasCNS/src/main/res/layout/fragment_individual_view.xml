@@ -210,6 +210,25 @@
 
                </RelativeLayout>
 
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/repsHit1editText"
+                android:layout_alignParentBottom="true"
+                android:layout_alignEnd="@+id/lift1r8"
+                android:layout_alignStart="@+id/lift1r1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/lift1ActualTV"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/repsHit1editText"
+                android:text="@string/indv_actualTitle" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -393,6 +412,25 @@
 
                </RelativeLayout>
 
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/repsHit2editText"
+                android:layout_alignBottom="@+id/arrowLayout"
+                android:layout_alignStart="@+id/lift2r1"
+                android:layout_alignEnd="@+id/lift2r8" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/lift2ActualTV"
+                android:text="@string/indv_actualTitle"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/repsHit2editText" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -565,7 +603,35 @@
                android:layout_alignParentLeft="true"
                android:text="@string/sampleentry"
                android:textAppearance="?android:attr/textAppearanceMedium" />
-		
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/repsHit3editText"
+                android:layout_below="@+id/lift3r1"
+                android:layout_alignStart="@+id/lift3r1"
+                android:layout_alignEnd="@+id/lift3r8" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/lift3ActualTV"
+                android:text="@string/indv_actualTitle"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/repsHit3editText" />
+
         </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:layout_below="@+id/lift3Layout"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

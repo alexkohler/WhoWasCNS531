@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:background="#33b5e5"
+                android:background="#607D8B"
             android:textColor="#fff"
             android:paddingTop="5dp"
             android:paddingBottom="5dp" />
@@ -37,7 +37,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="#e5e5e5"
-        android:dividerHeight="1dp"
-        android:background="#d6d6d6"/>
+        android:background="#ECEFF1"/>
 </android.support.v4.widget.DrawerLayout>

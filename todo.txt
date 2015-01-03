@@ -1,26 +1,20 @@
 Google material design navigation drawers
 
 TODO:
+	Individual views functionality
+
+	dial in color
+
+	Change color of datepicker?
+
+	View by doesn't work in double press of view projection? (Works otherwise)
+	change dialog colors
+
 	Do some cleanup of deprecated classes
-	
-	Turn settings, dashboardm  and about into fragments (possibly others?)
 
 	Add links to Wendler's Q/A and to buy his book 
 
-	Individual views need better format to support entries for each lift
-	(Each individual view willl load three fragments)
 	Add timer to each individual view? Perhaps scrollable templates for accessory recording?
-
-	Include warmup in your individualView bs
-	Are you sure dialog in second screen if an existing projection already exists, give option to view existing projection.
-
-	UI needs fixed up
-
-	Make shift date prettier
-
-	Figure out a way to get a formatted about page with your giant string  i
-
-	Figure out UI colors
 
 
 	NEXT RELEASE
@@ -30,8 +24,6 @@ TODO:
  		Ability to reset with a single (are you sured) button press  		 
 	Look into multiple tables for sqlite, refactor if needed to use the damn sql helper like it should instead of yo	your horrible hardcoded table creation in first/second screen
   
-	Dashboard icons
-
 	Figure out activity titles
 
 	Track accessory work (Dashboard or drawer entry for managing templates)

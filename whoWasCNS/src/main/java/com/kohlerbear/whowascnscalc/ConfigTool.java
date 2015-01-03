@@ -11,7 +11,7 @@ import java.util.Locale;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
-import com.kohlerbear.whowascnscalc.deprecated.IndividualViews;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -187,8 +187,8 @@ public class ConfigTool {
 			liftBuffer = cursor.getString(0);
 		else
 		{
-			Toast.makeText(mContext, "A database error occured", Toast.LENGTH_LONG).show();//TODO add better analytics logging here (if it's even possible to get the tracker in here) 
-			sendTrackerException("ConfigTool-populateArrayBasedOnDataBase", "Database status:" + db.isOpen() + "Cursor" + DatabaseUtils.dumpCursorToString(cursor));
+			Toast.makeText(mContext, "A database error occured", Toast.LENGTH_LONG).show();
+			sendTrackerException("ConfigTool-populateArrayBasedOnDataBase", "Database status:" + db.isOpen() + "Cursor " + DatabaseUtils.dumpCursorToString(cursor));
 		}
 		for (int i=0; i < liftBuffer.length(); i++)
 		{
@@ -245,7 +245,7 @@ public class ConfigTool {
 		if (modeString.equals(""))
 		{
 			Toast.makeText(mContext, "A mode error occured. Error report sent.", Toast.LENGTH_LONG).show();
-			sendTrackerException("ConfigTool-modeStringEception", "Database status:" + db.isOpen() + "Cursor" + DatabaseUtils.dumpCursorToString(cursor));
+			sendTrackerException("ConfigTool-modeStringEception", "Database status: " + db.isOpen() + "Cursor " + DatabaseUtils.dumpCursorToString(cursor));
 		}
 		
 		return modeString;
@@ -263,7 +263,7 @@ public class ConfigTool {
 		if (startingDate.equals(""))
 		{
 			Toast.makeText(mContext, "A database error occured. Error report sent.", Toast.LENGTH_LONG).show();
-			sendTrackerException("ConfigTool-getStartingDateFromDatabaseException", "Database status:" + db.isOpen() + "Cursor" + DatabaseUtils.dumpCursorToString(cursor));
+			sendTrackerException("ConfigTool-getStartingDateFromDatabaseException", "Database status: " + db.isOpen() + "Cursor " + DatabaseUtils.dumpCursorToString(cursor));
 		}
 		
 		return startingDate;
@@ -335,98 +335,7 @@ public class ConfigTool {
 
     }
 
-	
-	   @Deprecated
-		public Intent configurePreviousSet(String myDate, String myPrevLift,  String viewMode, String mode, String[] liftPattern)
-		{
-			String prevLft = myPrevLift;
-			String liftDate = null;
-			String cycle = null;
-			String lift = null;
-			String freq = null;
-			String first = null;
-			String second = null;
-			String third = null;
-			
-			SQLiteDatabase db = eventsData.getReadableDatabase();
-			Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, "liftDate = '" + myDate + "' AND Lift = '" + prevLft + "'", null, null, null, null);
-		
-			if (!cursor.moveToNext())
-				topCornerCaseFlag = true; 
-			else
-				cursor.moveToPrevious();
-			
-			while (cursor.moveToNext()) {
-			liftDate = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
-			cycle = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.CYCLE));
-			lift = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
-			freq = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.FREQUENCY));
-			first = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST))));
-			second = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND))));
-			third = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD))));
-			}
-			
-			Intent intent  = new Intent(mContext, IndividualViews.class);
-			intent.putExtra("cycle", cycle);
-			intent.putExtra("frequency", freq);
-			intent.putExtra("liftType", lift);
-			intent.putExtra("firstLift", first);
-			intent.putExtra("secondLift", second);
-			intent.putExtra("thirdLift", third);
-			intent.putExtra("date", liftDate);
-			intent.putExtra("viewMode", viewMode);
-			intent.putExtra("mode", mode);
-			intent.putExtra("liftPattern", liftPattern);
-			db.close();
-			
-			return intent;
-		}
-	   
-	   @Deprecated
-		public Intent configureNextSet(String myDate, String myNextLift, String viewMode, String lbMode, String[] pattern)
-		{
-			String nextLift = myNextLift;
-			String liftDate = null;
-			String cycle = null;
-			String lift = null;
-			String freq = null;
-			String first = null;
-			String second = null;
-			String third = null;
-			SQLiteDatabase db = eventsData.getReadableDatabase();
-			Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, "liftDate = '" + myDate + "' AND Lift = '" + nextLift + "'", null, null,
-					null, null);
-			if (!cursor.moveToNext())
-			{
-				bottomCornerCaseFlag = true;
-			}
-			else
-				cursor.moveToPrevious();
-			while (cursor.moveToNext()) {
-			liftDate = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFTDATE));
-			cycle = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.CYCLE));
-			lift = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.LIFT));
-			freq = cursor.getString(cursor.getColumnIndex(EventsDataSQLHelper.FREQUENCY));
-			first = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.FIRST))));
-			second = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.SECOND))));
-			third = String.valueOf(roundtoTwoDecimals(cursor.getDouble(cursor.getColumnIndex(EventsDataSQLHelper.THIRD))));
-			}
-			
-			Intent intent  = new Intent(mContext, IndividualViews.class);
-			intent.putExtra("cycle", cycle);
-			intent.putExtra("frequency", freq);
-			intent.putExtra("liftType", lift);
-			intent.putExtra("firstLift", first);
-			intent.putExtra("secondLift", second);
-			intent.putExtra("thirdLift", third);
-			intent.putExtra("date", liftDate);
-			intent.putExtra("viewMode", viewMode);
-			intent.putExtra("mode", lbMode);
-			intent.putExtra("liftPattern", pattern);
-			db.close();
-			return intent;
-		}
-	   
+
 		protected void sendTrackerException(String exceptionType, String value) {
 			Tracker tracker = GoogleAnalytics.getInstance(mContext).getTracker("UA-55018534-1");
 			  tracker.send(MapBuilder

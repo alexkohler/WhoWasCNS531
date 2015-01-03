@@ -84,7 +84,7 @@ public class TabPrototype extends BaseActivity {
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
         navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
 
-        set(navMenuTitles, null);
+        set(navMenuTitles, navMenuIcons);
         navMenuIcons.recycle();
 
         // Set up the action bar.

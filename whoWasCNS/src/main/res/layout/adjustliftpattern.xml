@@ -143,7 +143,7 @@
         android:text="@string/AdjustActivity_Save" />
 
     <Button
-        android:id="@+id/adjustActivityResetButton"
+        android:id="@+id/customButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

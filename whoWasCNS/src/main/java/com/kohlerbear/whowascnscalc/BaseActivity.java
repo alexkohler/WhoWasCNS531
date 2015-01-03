@@ -10,7 +10,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -86,9 +89,9 @@ public class BaseActivity extends ActionBarActivity {
 		// enabling action bar app icon and behaving it as toggle button
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
-		getSupportActionBar().setDisplayShowHomeEnabled(false);//DON'T show home icon 
-		//getSupportActionBar().setDisplayShowTitleEnabled(false);
-		// getSupportActionBar().setIcon(R.drawable.ic_drawer);
+		getSupportActionBar().setDisplayShowHomeEnabled(false);//DON'T show home icon\
+        //colors
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#607D8B")));
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_drawer, // nav menu toggle icon
@@ -222,15 +225,26 @@ public class BaseActivity extends ActionBarActivity {
              aboutFT.commit();
 			 break;
 		 case 4://settings
-			 Intent intent4 = new Intent(this, SettingsActivity.class);
-			 startActivity(intent4);
-			 finish();
+             //TODO not exactly stable or anywhere near working
+             android.support.v4.preference.PreferenceFragment settingsFragment = new SettingsFragment();
+             FragmentManager settingsFM = getSupportFragmentManager();
+             FragmentTransaction settingsFT = settingsFM.beginTransaction();
+             settingsFT.replace(R.id.content_frame, settingsFragment);
+//                ft.addToBackStack(null);
+             settingsFT.commit();
 		 break;
 		 case 5://testing arena
-				Intent intent5 = new Intent(this, TabPrototype.class);
-				startActivity(intent5);
-                finish();
-			 break;
+             Intent i = new Intent(Intent.ACTION_SEND);
+             i.setType("message/rfc822");
+             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
+             i.putExtra(Intent.EXTRA_SUBJECT, "Concerning the 5/3/1 app");
+             i.putExtra(Intent.EXTRA_TEXT   , "message body");
+             try {
+                 startActivity(Intent.createChooser(i, "Send mail..."));
+             } catch (android.content.ActivityNotFoundException ex) {
+                 Toast.makeText(BaseActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+             }
+             break;
 		default:
 			break;
 		}

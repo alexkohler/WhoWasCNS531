@@ -33,8 +33,8 @@ import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
 import com.kohlerbear.whowascnscalc.ToastWrapper.Boast;
-import com.kohlerbear.whowascnscalc.deprecated.ThirdScreenPrototype;
 
+@Deprecated
 public class SecondScreenPrototype extends BaseActivity {
 
 
@@ -100,7 +100,7 @@ public class SecondScreenPrototype extends BaseActivity {
 	    
 	    
 	    //button declarations
-		customButton = (Button) findViewById(R.id.adjustActivityResetButton);
+		customButton = (Button) findViewById(R.id.customButton);
 		saveButton = (Button) findViewById(R.id.adjustActivitySaveButton);
 		
 		
@@ -829,9 +829,9 @@ public class SecondScreenPrototype extends BaseActivity {
 		if (startingDate == null && !ct.dbEmpty())
 			startingDate = ct.getStartingDateFromDatabase();
 
-		intent = new Intent(SecondScreenPrototype.this, ThirdScreenPrototype.class);
-		intent.putExtra("key2", startingDate);
-		intent.putExtra("liftPattern", liftPattern);
+//		intent = new Intent(SecondScreenPrototype.this, ThirdScreenPrototype.class);
+//		intent.putExtra("key2", startingDate);
+//		intent.putExtra("liftPattern", liftPattern);
 
 		NumberFormat nf = NumberFormat.getInstance(); //get user's locale to make sure we parse correctly
 		

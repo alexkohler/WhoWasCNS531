@@ -21,10 +21,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -35,6 +39,7 @@ import android.widget.Toast;
 
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
 
 import java.text.DecimalFormat;
@@ -76,7 +81,7 @@ public class ThirdScreenFragment extends Fragment
     String lbmode;
     DrawerLayout drawerLayout;
 
-    TableRow titleTableRow;
+//    TableRow titleTableRow;
 
     boolean toggleButtonCalled = false;
 
@@ -115,14 +120,14 @@ public class ThirdScreenFragment extends Fragment
 
     static String[] liftPattern;
 
-    static ROW_LISTENER rowListenerStatus = ROW_LISTENER.NORMAL;
+    ROW_LISTENER rowListenerStatus = ROW_LISTENER.NORMAL;
 
     //initialize processor to process all lifts, dates, etc...
     DateAndLiftProcessor Processor = new DateAndLiftProcessor();
 
 
     TableLayout tableLayout;
-
+    Button configureButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentActivity faActivity  = (FragmentActivity)    super.getActivity();
@@ -138,9 +143,9 @@ public class ThirdScreenFragment extends Fragment
 
 
         //Take care of actual third screen festivities
-        Button configureButton = (Button) drawerLayout.findViewById(R.id.configureButtonPrototype);
+        configureButton = (Button) drawerLayout.findViewById(R.id.configureButtonPrototype);
 
-        configureButton.setBackgroundColor(Color.GRAY);
+//        configureButton.setBackgroundColor(Color.GRAY);
         configureButton.setTextColor(Color.WHITE);
 
         configureButton.setOnClickListener(optionsListener);
@@ -193,7 +198,7 @@ public class ThirdScreenFragment extends Fragment
                     eventsData = new EventsDataSQLHelper(getActivity());
                     final SQLiteDatabase db = eventsData.getWritableDatabase();
 
-                    titleTableRow = (TableRow) drawerLayout.findViewById(R.id.insertValuesPrototype);
+//                    titleTableRow = (TableRow) drawerLayout.findViewById(R.id.insertValuesPrototype);
 
 
 
@@ -208,6 +213,7 @@ public class ThirdScreenFragment extends Fragment
                     }
                     else if (origin.equals("second"))
                     {
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom));
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage("Overwrite existing projection?")
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -264,14 +270,6 @@ public class ThirdScreenFragment extends Fragment
 
 
             }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (eventsData != null)
-        eventsData.close();
-    }
 
 
     private View.OnClickListener optionsListener = new View.OnClickListener() {
@@ -395,7 +393,7 @@ public class ThirdScreenFragment extends Fragment
                         String startingShiftDateWithFormat = StartingShiftDate.substring(6, 10) + "-" + StartingShiftDate.substring(0, 2) + "-" + StartingShiftDate.substring(3,5);
                         setQuery("date(substr(liftDate, 7, 7) || '-' || substr(liftDate, 1, 2) || '-' || substr(liftDate, 4, 2)) >= date('" + startingShiftDateWithFormat +"')");
                         TableLayout tableRowPrincipal = (TableLayout)drawerLayout.findViewById(R.id.tableLayout1Prototype);
-                        cursor = getEvents();
+                        Cursor cursor = getEvents();
                         String s = DatabaseUtils.dumpCursorToString(cursor);
                         System.out.println(s);
                         changedView = true;
@@ -406,14 +404,13 @@ public class ThirdScreenFragment extends Fragment
                         cursor = getEvents();
                         tableRowPrincipal.removeAllViews();
                         showDefaultEvents(cursor);
-
                     } else if (rowListenerStatus == ROW_LISTENER.SHIFTBACKWARD) {
                         Toast.makeText(getActivity(), "Shifting backward from date " + StartingShiftDate, Toast.LENGTH_SHORT).show();
                         //Toast.makeText(getActivity(), "Shifting forward from date " + StartingShiftDate, Toast.LENGTH_SHORT).show();
                         String startingShiftDateWithFormat = StartingShiftDate.substring(6, 10) + "-" + StartingShiftDate.substring(0, 2) + "-" + StartingShiftDate.substring(3,5);
                         setQuery("date(substr(liftDate, 7, 7) || '-' || substr(liftDate, 1, 2) || '-' || substr(liftDate, 4, 2)) <= date('" + startingShiftDateWithFormat +"')");
                         TableLayout tableRowPrincipal = (TableLayout)drawerLayout.findViewById(R.id.tableLayout1Prototype);
-                        cursor = getEvents();
+                        Cursor cursor = getEvents();
                         String s = DatabaseUtils.dumpCursorToString(cursor);
                         System.out.println(s);
                         changedView = true;
@@ -425,10 +422,13 @@ public class ThirdScreenFragment extends Fragment
                         tableRowPrincipal.removeAllViews();
                         showDefaultEvents(cursor);
                     }
-
                     rowListenerStatus = ROW_LISTENER.NORMAL;
+                    configureButton.setOnClickListener(optionsListener);
+                    configureButton.setText("Configure");
+                    configureButton.clearAnimation();
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
+                    rowListenerStatus = ROW_LISTENER.NORMAL;//ensure row listener status is normal
                     dialog.cancel();
                     break;
 
@@ -555,14 +555,25 @@ public class ThirdScreenFragment extends Fragment
             public void onClick(DialogInterface dialog, int which) {
                 Cursor cursor = getEvents();
                 TableLayout tableRowPrincipal = (TableLayout)drawerLayout.findViewById(R.id.tableLayout1Prototype);
+                final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
+                animation.setDuration(1000); // duration - half a second
+                animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+                animation.setRepeatCount(Animation.INFINITE); // Repeat animation infinitely
+                animation.setRepeatMode(Animation.REVERSE); // Reverse animation at the end so the button will fade back in
                 switch (which){
                     case 0:
-                        Toast.makeText(getActivity(), "Shifting dates forward", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Shifting dates forward", Toast.LENGTH_SHORT).show();
+                        configureButton.setText("Exit shift date mode");
+                        configureButton.setOnClickListener(configureButtonDateModeListener);
                         rowListenerStatus = ROW_LISTENER.SHIFTFORWARD;
+                        configureButton.startAnimation(animation);
                         break;
                     case 1:
-                        Toast.makeText(getActivity(), "Shifting dates backward", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Shifting dates backward", Toast.LENGTH_SHORT).show();
+                        configureButton.setText("Exit shift date mode");
+                        configureButton.setOnClickListener(configureButtonDateModeListener);
                         rowListenerStatus = ROW_LISTENER.SHIFTBACKWARD;
+                        configureButton.startAnimation(animation);
                         break;
                     case 2:
                         dialog.cancel();
@@ -574,6 +585,16 @@ public class ThirdScreenFragment extends Fragment
         builder2.show();
 
     }//end createShiftDateBui;der
+
+            private View.OnClickListener configureButtonDateModeListener = new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    configureButton.setOnClickListener(optionsListener);
+                    configureButton.clearAnimation();
+                    configureButton.setText("Configure");
+                    rowListenerStatus = ROW_LISTENER.NORMAL;
+                }};
 
     @SuppressWarnings("deprecation") Cursor getEvents() {
         SQLiteDatabase db = eventsData.getReadableDatabase();
@@ -597,17 +618,17 @@ public class ThirdScreenFragment extends Fragment
                 String ohpTM = TMS[2];
                 String deadTM = TMS[3];
                 setQuery(null);
-                ret = new StringBuilder("Start TMs [Bench: " + benchTM + "]");
+                ret = new StringBuilder("Starting TMs \n [Bench: " + benchTM + "]");
                 ret.append(" [Squat: " + squatTM + "]");
                 ret.append(" [OHP: " + ohpTM + "]" );
                 ret.append(" [Dead: " + deadTM + "]" );
                 lbMode = cursor.getInt((cursor.getColumnIndex(EventsDataSQLHelper.LBFLAG)));
-                if (lbMode == 1)
+/*                if (lbMode == 1)
                     ret.append("	Mode: lbs");
                 else if (lbMode == 0 )
                     ret.append("	Mode: kgs");
                 else
-                    ret.append("Mode error");
+                    ret.append("Mode error");*/
                 cursor.moveToFirst();
                 insertStatus = true;
                 retStringSaver = ret.toString();
@@ -629,12 +650,12 @@ public class ThirdScreenFragment extends Fragment
 								LayoutParams.WRAP_CONTENT));
 						tableRowPrincipal.addView(title);
 						TableRow titleRow = (TableRow) drawerLayout.findViewById(R.id.insertValues);*/
-                TableRow tr = new TableRow(getActivity());
-                ViewGroup.LayoutParams trParams = tableLayout.getLayoutParams();
-                tr.setLayoutParams(trParams);
-                tr.setGravity(Gravity.CENTER_HORIZONTAL);
-				eventsData.createRow(getActivity(), tr, "Date  ", "Cycle", "Lift", "Freq", "1st", "2nd", "3rd");
-                tableLayout.addView(tr);
+//                TableRow tr = new TableRow(getActivity());
+//                ViewGroup.LayoutParams trParams = tableLayout.getLayoutParams();
+//                tr.setLayoutParams(trParams);
+//                tr.setGravity(Gravity.CENTER_HORIZONTAL);
+//				eventsData.createRow(getActivity(), tr, "Date  ", "Cycle", "Lift", "Freq", "1st", "2nd", "3rd");
+//                tableLayout.addView(tr);
 //                ScrollView myScrollView = (ScrollView) drawerLayout.findViewById(R.id.scrollView1);
 //                myScrollView.addView(titleTableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 //                if (titleTableRow != null)
@@ -686,14 +707,17 @@ public class ThirdScreenFragment extends Fragment
                 //creation of sticky header
                 if (!stickyHeaderCycle.equals(cycle))
                 {
-                    TableRow tr = new TableRow(getActivity());
-                    ViewGroup.LayoutParams trParams = tableLayout.getLayoutParams();
+                        TableRow tr = new TableRow(getActivity());
+                    TableLayout.LayoutParams trParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT);
+                    trParams.setMargins(0, 0, 0, 0);
                     tr.setLayoutParams(trParams);
                     tr.setGravity(Gravity.CENTER);
                     tr.setTag("sticky");
-                    eventsData.createStickyRow(getActivity(), tr, cycle);
+                    tr.setPadding(0 ,0 ,0 ,0);
+//                    tr.setBackgroundColor(Color.parseColor("#00695C"));//darker green
+                    TableRow finalTR = eventsData.createStickyRow(getActivity(), tr, cycle);
                     stickyHeaderCycle = cycle;
-                    tableLayout.addView(tr);
+                    tableLayout.addView(finalTR);
                 }
 
                 //creation of regular entry
@@ -711,6 +735,7 @@ public class ThirdScreenFragment extends Fragment
                 entry.setGravity(Gravity.CENTER);
                 LinearLayout.LayoutParams PO = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT, 1f);
                 entry.setLayoutParams(PO);
+//                tr.setBackgroundColor(getResources().getColor(R.color.whi));
 
                 tr.setOnClickListener(new TableRowClickListener(entryString){
 
@@ -770,8 +795,7 @@ public class ThirdScreenFragment extends Fragment
             catch (NumberFormatException e)
             {
                 Toast.makeText(getActivity(), "There was an error processing your lift numbers, please double check them!", Toast.LENGTH_LONG).show();
-//TODO add me back in
-//                sendTrackerException("ThirdScreen: onclick with dividerRegex", e.getLocalizedMessage());
+                sendTrackerException("ThirdScreen: onclick with dividerRegex", e.getLocalizedMessage());
             }
         }
 
@@ -917,7 +941,18 @@ public class ThirdScreenFragment extends Fragment
         this.insertStatus = status;
     }
 
+            protected void sendTrackerException(String exceptionType, String value) {
+                Tracker tracker = GoogleAnalytics.getInstance(getActivity()).getTracker("UA-55018534-1");
+                tracker.send(MapBuilder
+                        .createEvent("Exception",     // Event category (required)
+                                exceptionType,  // Event action (required)
+                                value,   // Event label
+                                null)            // Event value
+                        .build());
 
+
+
+            }
 
 
         }

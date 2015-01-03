@@ -52,7 +52,7 @@ public class OpeningDashboardActivity extends BaseActivity {
                 .obtainTypedArray(R.array.nav_drawer_icons);// load icons from
         // strings.xml
 
-        set(navMenuTitles, null);
+        set(navMenuTitles, navMenuIcons);
         navMenuIcons.recycle();
 
         /**
