@@ -1,4 +1,4 @@
-package com.kohlerbear.whowascnscalc;
+package com.kohlerbear.whowascnscalc.deprecated;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -32,6 +32,9 @@ import android.widget.Toast;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.Tracker;
+import com.kohlerbear.whowascnscalc.BaseActivity;
+import com.kohlerbear.whowascnscalc.ConfigTool;
+import com.kohlerbear.whowascnscalc.R;
 import com.kohlerbear.whowascnscalc.ToastWrapper.Boast;
 
 @Deprecated

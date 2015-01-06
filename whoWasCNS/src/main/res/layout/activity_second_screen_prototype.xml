@@ -12,15 +12,18 @@
 <!--  CONTENT GOES HERE -->
 
 
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="match_parent" >
 
-    
 
-    
 
-    
+
+
+
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -46,7 +49,6 @@
             android:layout_height="wrap_content"
             android:paddingLeft="1dp"
             android:paddingRight="1dp"
-            android:paddingBottom="10dp"
             android:orientation="horizontal" >
 
             <RadioButton
@@ -89,14 +91,14 @@
         android:id="@+id/choiceLayout"
         android:layout_width="207dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true" >
+        android:layout_alignParentEnd="true">
 
         <TextView
             android:id="@+id/choice_7"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/choice_6"
             android:layout_marginTop="20dp"
@@ -108,8 +110,8 @@
             android:id="@+id/choice_6"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/choice_5"
             android:layout_marginTop="21dp"
@@ -121,8 +123,8 @@
             android:id="@+id/choice_5"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/choice_4"
             android:layout_marginTop="20dp"
@@ -134,8 +136,8 @@
             android:id="@+id/choice_4"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/choice_3"
             android:layout_marginTop="20dp"
@@ -147,8 +149,8 @@
             android:id="@+id/choice_3"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/choice_2"
             android:layout_marginTop="20dp"
@@ -160,8 +162,8 @@
             android:id="@+id/choice_2"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/choice_1"
             android:layout_marginTop="20dp"
@@ -173,14 +175,14 @@
             android:id="@+id/choice_1"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_width="114dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_width="75dp"
+            android:layout_height="25dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="38dp"
             android:background="@drawable/choice"
             android:gravity="center"
-            android:text="@string/choice_1" />
+            android:text="@string/choice_1"
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:id="@+id/choice1Field"
@@ -256,15 +258,6 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/componentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@+id/choiceLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/linearLayout1" >
-
 
           <!--   <Spinner
         android:id="@+id/numberCyclesSpinnerNew"
@@ -272,20 +265,24 @@
         android:layout_height="wrap_content"
         android:entries="@array/cycles_array" /> -->
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/liftLayout"
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                 >
+                android:layout_marginEnd="35dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/choiceLayout">
 
                 <TextView
                     android:id="@+id/option5"
-                    android:layout_width="114dp"
+                    android:layout_width="55dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/option4"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#ffffff"
                     android:background="@drawable/option"
                     android:gravity="center"
                     android:text="@string/option_5"
@@ -293,114 +290,130 @@
 
                 <TextView
                     android:id="@+id/option4"
-                    android:layout_width="114dp"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="55dp"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/option3"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="11dp"
                     android:background="@drawable/option"
                     android:gravity="center"
                     android:text="@string/option_4"
+                    android:textColor="#ffffff"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/option2"
-                    android:layout_width="112dp"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="55dp"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/option1"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="11dp"
                     android:background="@drawable/option"
                     android:gravity="center"
                     android:text="@string/option_2"
+                    android:textColor="#ffffff"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/option3"
-                    android:layout_width="114dp"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="55dp"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/option2"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="11dp"
                     android:background="@drawable/option"
                     android:gravity="center"
                     android:text="@string/option_3"
+                    android:textColor="#ffffff"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/option1"
-                    android:layout_width="114dp"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="55dp"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:layout_margin="0dp"
+                    android:layout_marginTop="11dp"
                     android:background="@drawable/option"
                     android:gravity="center"
                     android:text="@string/option_1"
+                    android:textColor="#ffffff"
                     android:textStyle="bold" />
-            </RelativeLayout>
+            </LinearLayout>
 
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="218dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/choiceLayout">
-
-        <Button
-            android:id="@+id/customButton"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="fill_parent"
-            android:layout_height="55dp"
-            android:text="@string/AdjustActivity_Custom"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_weight="1"
-            android:background="#546E7A"
-            android:textColor="#ffffff"
-            android:padding="0dp"
-            android:layout_marginLeft="-5dip"
-            android:layout_marginRight="-5dip"
-            android:layout_marginBottom="-5dip"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
-
-        <com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup
-            android:id="@+id/poundKilogramSegmentedButtonGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/customButton"
-            android:paddingBottom="8dp"
-            android:paddingLeft="1dp"
-            android:paddingRight="1dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="50dp"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/kgSegmentedButton"
-                style="@style/RadioButton"
-                android:layout_alignParentLeft="true"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Kilograms" />
-
-            <RadioButton
-                android:id="@+id/lbSegmentedButton"
-                style="@style/RadioButton"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:checked="true"
-                android:layout_weight="1"
-                android:text="@string/Pounds" />
-        </com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup>
-
-    </RelativeLayout>
 
 
 </RelativeLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/buttonLayout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_alignParentBottom="true"
+            >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            <com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup
+                android:id="@+id/poundKilogramSegmentedButtonGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/kgSegmentedButton"
+                    style="@style/RadioButton"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/Kilograms" />
+
+                <RadioButton
+                    android:id="@+id/lbSegmentedButton"
+                    style="@style/RadioButton"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:checked="true"
+                    android:layout_weight="1"
+                    android:text="@string/Pounds" />
+            </com.kohlerbear.whowascnscalc.hoang8f.segmented.SegmentedGroup>
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/customButton"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="fill_parent"
+                android:layout_height="55dp"
+                android:text="@string/AdjustActivity_Custom"
+                android:layout_weight="1"
+                android:background="#546E7A"
+                android:textColor="#ffffff"
+                android:padding="0dp"
+                android:layout_marginLeft="-5dip"
+                android:layout_marginRight="-5dip"
+                android:layout_marginBottom="-5dip"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
+
+        </LinearLayout>
 
 
 

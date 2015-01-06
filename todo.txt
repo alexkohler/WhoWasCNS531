@@ -1,7 +1,17 @@
 Google material design navigation drawers
 
 TODO:
+	Switch to ovals
+
+	Use relative sizes
+
+	Shift date functionality on custom button
+
+	views disappear on left side until custom button is pressed
+
 	Individual views functionality
+
+	Individual views color needs changed
 
 	dial in color
 

@@ -6,14 +6,20 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.widget.DrawerLayout;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -80,6 +86,10 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
 
     DrawerLayout drawerLayout;
 
+    public enum CUSTOM_BUTTON_STATE {NORMAL, CUSTOM};
+
+    CUSTOM_BUTTON_STATE customButtonState;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,13 +106,13 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
         customButton = (Button) drawerLayout.findViewById(R.id.customButton);
         saveButton = (Button) drawerLayout.findViewById(R.id.adjustActivitySaveButton);
 
-
+        customButtonState = CUSTOM_BUTTON_STATE.NORMAL;
         customButton.setOnClickListener(customListener);
 
-        final String buttonHexColor = "#546E7A";
+
 
         SegmentedGroup unitModeGroup = (SegmentedGroup) drawerLayout.findViewById(R.id.poundKilogramSegmentedButtonGroup);
-        unitModeGroup.setTintColor(Color.parseColor(buttonHexColor));
+
 
 
         lbRadioButton = (RadioButton) drawerLayout.findViewById(R.id.lbSegmentedButton);
@@ -111,7 +121,12 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
 
 
         patternSegmentGroup = (SegmentedGroup) drawerLayout.findViewById(R.id.patternSegmentGroup);
-        patternSegmentGroup.setTintColor(Color.parseColor(buttonHexColor));
+
+
+
+
+
+
 
         patternFourDaysRadioButton = (RadioButton) drawerLayout.findViewById(R.id.patternButtonFourDays);
         patternFiveDaysRadioButton = (RadioButton) drawerLayout.findViewById(R.id.patternButtonFiveDays);
@@ -221,6 +236,21 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
         });
 
 
+        //Manage colors
+        //COLORS
+        int primaryColor = ColorManager.getInstance(getActivity()).getPrimaryColor();
+        ColorManager.clear();
+
+        unitModeGroup.setTintColor(primaryColor);
+        patternSegmentGroup.setTintColor(primaryColor);
+        customButton.setBackgroundColor(primaryColor);
+
+        for (TextView option : options) {
+            GradientDrawable backgroundGradient = (GradientDrawable) option.getBackground();
+            backgroundGradient.setColor(primaryColor);
+        }
+
+
         // The FragmentActivity doesn't contain the layout directly so we must use our instance of     LinearLayout :
         // Instead of :
         // drawerLayout.findViewById(R.id.someGuiElement);
@@ -319,6 +349,8 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
 
         if (custom)
             patternSevenDaysRadioButton.setChecked(true);
+        else if (!custom)
+            patternSixDaysRadioButton.setChecked(true);
     }
 
     private RadioGroup.OnCheckedChangeListener poundKilogramSegmentListener = new RadioGroup.OnCheckedChangeListener() {
@@ -645,10 +677,30 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
 
     private View.OnClickListener customListener = new View.OnClickListener() {
 
+
         @Override
         public void onClick(View v) {
-            inflatePatternButtons(emptyPattern, true);
+            final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
+            animation.setDuration(1000); // duration - half a second
+            animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+            animation.setRepeatCount(Animation.INFINITE); // Repeat animation infinitely
+            animation.setRepeatMode(Animation.REVERSE); // Reverse animation at the end so the button will fade back in
+            if (customButtonState == CUSTOM_BUTTON_STATE.NORMAL) {
+                inflatePatternButtons(emptyPattern, true);
+                customButton.setText("Reset to default");
+                customButton.startAnimation(animation);
+                customButtonState = CUSTOM_BUTTON_STATE.CUSTOM;
+            }
+            else if (customButtonState == CUSTOM_BUTTON_STATE.CUSTOM){
+                inflatePatternButtons(defaultPattern, false);
+                customButton.setText("Custom");
+                customButton.clearAnimation();
+                customButtonState = CUSTOM_BUTTON_STATE.NORMAL;
+            }
         }
+
+
+
     };
 
 

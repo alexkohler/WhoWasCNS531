@@ -128,6 +128,8 @@ public class ThirdScreenFragment extends Fragment
 
     TableLayout tableLayout;
     Button configureButton;
+    TextView trainingMaxesStream;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentActivity faActivity  = (FragmentActivity)    super.getActivity();
@@ -145,10 +147,17 @@ public class ThirdScreenFragment extends Fragment
         //Take care of actual third screen festivities
         configureButton = (Button) drawerLayout.findViewById(R.id.configureButtonPrototype);
 
-//        configureButton.setBackgroundColor(Color.GRAY);
+        trainingMaxesStream = (TextView) drawerLayout.findViewById(R.id.trainingMaxesTVPrototype);
+
         configureButton.setTextColor(Color.WHITE);
 
         configureButton.setOnClickListener(optionsListener);
+
+        //colors
+        int primaryColor = ColorManager.getInstance(getActivity()).getPrimaryColor();
+        configureButton.setBackgroundColor(ColorManager.getInstance(getActivity()).getConfigureButtonColor());
+        trainingMaxesStream.setBackgroundColor(ColorManager.getInstance(getActivity()).getTrainingMaxesStreamColor());
+        ColorManager.clear();
 
 //        Intent intent = getIntent();
         if (TabPrototype.origin != null)
@@ -633,7 +642,6 @@ public class ThirdScreenFragment extends Fragment
                 insertStatus = true;
                 retStringSaver = ret.toString();
                 setQuery(temp);
-                TextView trainingMaxesStream = (TextView) drawerLayout.findViewById(R.id.trainingMaxesTVPrototype);
                 trainingMaxesStream.setText(retStringSaver.toString());
                 trainingMaxesStream.setTextColor(Color.WHITE);
             }
@@ -715,7 +723,8 @@ public class ThirdScreenFragment extends Fragment
                     tr.setTag("sticky");
                     tr.setPadding(0 ,0 ,0 ,0);
 //                    tr.setBackgroundColor(Color.parseColor("#00695C"));//darker green
-                    TableRow finalTR = eventsData.createStickyRow(getActivity(), tr, cycle);
+//                    TableRow finalTR = eventsData.createStickyRow(getActivity(), tr, cycle);
+                    TableRow finalTR = eventsData.createStickyRowPrototype(getActivity(), tr, "Cycle " + cycle , "", "", "", "1st", "2nd", "3rd");
                     stickyHeaderCycle = cycle;
                     tableLayout.addView(finalTR);
                 }

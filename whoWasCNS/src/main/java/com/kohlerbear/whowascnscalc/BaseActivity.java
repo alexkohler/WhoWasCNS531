@@ -8,12 +8,15 @@ import com.google.analytics.tracking.android.Tracker;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -90,8 +93,11 @@ public class BaseActivity extends ActionBarActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayShowHomeEnabled(false);//DON'T show home icon\
-        //colors
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#607D8B")));
+
+        //COLORS
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ColorManager.getInstance(this).getPrimaryColor()));
+        ColorManager.clear();
+
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_drawer, // nav menu toggle icon
@@ -125,12 +131,6 @@ public class BaseActivity extends ActionBarActivity {
 			// display view for selected nav drawer item
 			displayView(position);
 		}
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// getSupportMenuInflater().inflate(R.menu.main, menu);
-		return true;
 	}
 
 	@Override
@@ -226,12 +226,15 @@ public class BaseActivity extends ActionBarActivity {
 			 break;
 		 case 4://settings
              //TODO not exactly stable or anywhere near working
-             android.support.v4.preference.PreferenceFragment settingsFragment = new SettingsFragment();
-             FragmentManager settingsFM = getSupportFragmentManager();
-             FragmentTransaction settingsFT = settingsFM.beginTransaction();
-             settingsFT.replace(R.id.content_frame, settingsFragment);
-//                ft.addToBackStack(null);
-             settingsFT.commit();
+//             Fragment settingsFrag = new SettingsFragment();
+//             FragmentManager settingsFM = getSupportFragmentManager();
+//             FragmentTransaction settingsFT = settingsFM.beginTransaction();
+//             settingsFT.replace(R.id.content_frame, settingsFrag);
+//             settingsFT.addToBackStack(null);
+//             settingsFT.commit();
+             Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
+             startActivity(settings);
+             finish();
 		 break;
 		 case 5://testing arena
              Intent i = new Intent(Intent.ACTION_SEND);

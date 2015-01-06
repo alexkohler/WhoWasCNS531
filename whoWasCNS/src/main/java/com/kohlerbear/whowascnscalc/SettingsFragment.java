@@ -2,7 +2,7 @@ package com.kohlerbear.whowascnscalc;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v4.preference.PreferenceFragment;
+import android.preference.PreferenceFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +24,8 @@ public class SettingsFragment extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences);
     }
+
+
 
 
 }

@@ -134,11 +134,9 @@
         <item>@drawable/ic_newprojection</item>
         <item>@drawable/ic_viewexisting</item>
         <item>@drawable/ic_about</item>
-        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_settings</item>
         <item>@drawable/ic_launcher</item>
     </array>
-
-
 
     <string name="title_activity_revampedsecond_screen">REVAMPEDSecondScreenActivity</string>
     <string name="title_activity_about531">About531</string>
@@ -167,27 +165,17 @@
 
     <!-- About 531 string requirements -->
     <string name="about_title">About this app</string>
-
     <string name="about_whatis531">What is 5/3/1?</string>
     <string name="about_whatis531Answer">Commonly thrown around in the Strength Training world, 5/3/1 programming
     philosophy made popular by Jim Wendler (Buy this book here) - Basically, your training is centered around "cycles", which consist of performing the big
     4 (Bench, squat, deadlift, overhead press) at various frequencies and percentages based on your training maxes. </string>
-
     <string name="about_whatisTrainingMax">Wait, what is a training max?</string>
-
-    <string name="about_whatisTrainingMaxAnswer">
-    A training max (in 5/3/1\'s context) coined by Jim Wendler. It is calculated via 90% of your true max. For example,
+    <string name="about_whatisTrainingMaxAnswer">    A training max (in 5/3/1\'s context) coined by Jim Wendler. It is calculated via 90% of your true max. For example,
     if my best max ever benching was 300 (and I haven\'t lost any significant strength since doing it), then my training max would be
     300 * .90 = 270. This is the only math you\'ll need to do. :) At the end of each cycle, your training max gets incremented by 10lbs/5kgs for bench/squat and 5lbs/2.5kgs
-    for ohp/bench.
-   </string>
-
-    <string name="about_whatisCycle">
-    Alright... so what is a cycle?
-    </string>
-    <string name="about_whatisCycleAnswer"
-     formatted="false">
-    A cycle is determined by your lift pattern (traditionally the 6 day pattern of
+    for ohp/bench.</string>
+    <string name="about_whatisCycle">    Alright... so what is a cycle?</string>
+    <string name="about_whatisCycleAnswer" formatted="false">    A cycle is determined by your lift pattern (traditionally the 6 day pattern of
     Bench, Squat, Rest, Deadlift, Overhead Press, Rest), however,
 
     if you are more comfortable with another
@@ -210,20 +198,43 @@
     embracing
 
     the entire 5/3/1 name and perform a set of 5 at 75%, a set of 3 at 85%, and a
-    single at 95%.
-    </string>
-
-    <string name="about_whatiffailedlift">
-    What if I fail a lift?!
-   </string>
-
-    <string name="about_whatiffailedliftanswer">
-    Then it is time to reset your cycle. You can do this by taking 90% of your
-    failed training max and resetting your lift projection.
-    </string>
-
+    single at 95%.</string>
+    <string name="about_whatiffailedlift">    What if I fail a lift?!</string>
+    <string name="about_whatiffailedliftanswer">    Then it is time to reset your cycle. You can do this by taking 90% of your
+    failed training max and resetting your lift projection.</string>
     <string name="title_activity_tab_prototype">TabPrototype</string>
     <string name="indv_actualTitle">Reps hit: </string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_individual_day_view">IndividualDayView</string>
+    <string name="title_activity_accessory_lift_tab_main">AccessoryLiftTabMain</string>
+    <string name="title_activity_accessory_lift_tab_host">AccessoryLiftTabHost</string>
+
+
+    <!-- Settings strings -->
+
+    <string name="pref_colorScheme">Theme</string>
+    <string name="pref_colorSchemeType">Choose a theme</string>
+    <string-array name="pref_colorSchemeTypes_entries">
+        <item>Teal</item>
+        <item>Orange</item>
+        <item>Kill niggers</item>
+        <item>Not just them</item>
+        <item>The whites will suffer</item>
+    </string-array>
+
+    <string-array name="orangePrefs">
+        <item>123456</item>
+        <item>654321</item>
+    </string-array>
+
+    <string-array name="pref_colorSchemeTypes_values">
+        <item>Teal</item>
+<!--        <item>@array/orangePrefs</item>-->
+        <item>Orange</item>
+        <item>Kill niggers</item>
+        <item>Not just them</item>
+        <item>The whites will suffer</item>
+    </string-array>
+    <string name="pref_colorSchemeTypes_default">Orange</string>
 
 </resources>

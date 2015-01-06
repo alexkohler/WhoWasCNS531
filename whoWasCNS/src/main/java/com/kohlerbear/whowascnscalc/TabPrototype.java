@@ -5,9 +5,12 @@ import java.util.Locale;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +21,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -86,6 +90,23 @@ public class TabPrototype extends BaseActivity {
 
         set(navMenuTitles, navMenuIcons);
         navMenuIcons.recycle();
+
+
+        //Colors
+        //hack away at action bar title color
+        int actionBarTitleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+        if (actionBarTitleId > 0) {
+            TextView title = (TextView) findViewById(actionBarTitleId);
+            if (title != null) {
+                title.setTextColor(Color.WHITE);
+            }
+        }
+        PagerTitleStrip titleStrip = (PagerTitleStrip) findViewById(R.id.pager_title_strip);
+        titleStrip.setBackgroundColor(ColorManager.getInstance(getApplicationContext()).getPrimaryColor());
+        ColorManager.clear();
+
+//        titleStrip.setBackgroundColor();
+
 
         // Set up the action bar.
 //        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);

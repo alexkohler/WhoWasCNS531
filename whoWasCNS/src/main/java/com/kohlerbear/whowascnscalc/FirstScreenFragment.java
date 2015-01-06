@@ -1,26 +1,29 @@
 package com.kohlerbear.whowascnscalc;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.Fields;
 import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.MapBuilder;
 import com.google.analytics.tracking.android.Tracker;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,7 +39,7 @@ import java.util.HashMap;
 public class FirstScreenFragment extends Fragment {
 
 
-    public static DatePicker dp;
+    public static CustomDatePicker dp;
     static Calendar startingCal = new GregorianCalendar();//for sake of getting starting days
     static int startingDateDay = startingCal.getTime().getDay();
     static int startingDateMonth = startingCal.getTime().getMonth();
@@ -63,8 +66,7 @@ public class FirstScreenFragment extends Fragment {
         hitParameters.put(Fields.SCREEN_NAME, "Home Screen");
 
         tracker.send(hitParameters);
-
-        dp = (DatePicker) drawerLayout.findViewById(R.id.dp);
+        dp = (CustomDatePicker) drawerLayout.findViewById(R.id.dp);
         dp.setCalendarViewShown(false);
         Calendar c = Calendar.getInstance();
         int currentYear = c.get(Calendar.YEAR);
@@ -99,6 +101,8 @@ public class FirstScreenFragment extends Fragment {
                 db.close();
             }
         });
+
+
 
         liftTicker = (TextView) drawerLayout.findViewById(R.id.liftTicker);
 
@@ -166,4 +170,10 @@ public class FirstScreenFragment extends Fragment {
         TabPrototype.origin = "first";
         TabPrototype.liftPattern = liftPattern;
     }
+
+    /**
+     * Using reflection to access private variables for the number picker in the datepicker
+     */
+
+
 }

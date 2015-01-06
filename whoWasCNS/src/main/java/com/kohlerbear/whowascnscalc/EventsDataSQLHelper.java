@@ -4,18 +4,14 @@ package com.kohlerbear.whowascnscalc;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import android.support.v4.app.NotificationCompatSideChannelService;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
@@ -221,6 +217,100 @@ public class EventsDataSQLHelper extends SQLiteOpenHelper {
         tr.addView(thirdLiftColumn);
 
        toggle = !toggle;
+
+    }
+
+    TableRow createStickyRowPrototype(Context thirdScreen, TableRow tr, String liftDate, String cycle, String lift, String freq, String first, String second, String third) {
+        int backgroundColor = ColorManager.getInstance(thirdScreen).getStickyHeaderBackgroundColor();
+        int textColor = ColorManager.getInstance(thirdScreen).getStickyHeaderTextColor();
+        ColorManager.clear();
+
+//        else
+
+        tr.setBackgroundColor(backgroundColor);
+
+        LayoutParams tvParams = new LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT);
+        tvParams.setMargins(1, 1, 1, 1);
+//        final int minHeight = 30;
+        TextView dateColumn = new TextView(thirdScreen);
+        dateColumn.setText(liftDate);//xx-xx
+        dateColumn.setTextSize(17);
+        dateColumn.setTextColor(textColor);
+        dateColumn.setLayoutParams(tvParams);
+        dateColumn.setBackgroundColor(backgroundColor);
+//        dateColumn.setMinHeight(minHeight);//this will create space for rest of textviews in table
+        dateColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+        tr.addView(dateColumn);
+
+
+        //cycle column creation
+/*		TextView cycleColumn = new TextView(thirdScreen);
+		cycleColumn.setText(cycle);
+		cycleColumn.setLayoutParams(tvParams);
+		cycleColumn.setBackgroundColor(Color.BLACK);
+		cycleColumn.setMinHeight(minHeight);
+		cycleColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+		tr.addView(cycleColumn);*/
+
+        //lift column creation
+        TextView liftColumn = new TextView(thirdScreen);
+        liftColumn.setText(lift);
+        liftColumn.setTextSize(17);
+        liftColumn.setTextColor(textColor);
+        liftColumn.setLayoutParams(tvParams);
+        liftColumn.setBackgroundColor(backgroundColor);
+//        liftColumn.setMinHeight(minHeight);
+        liftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+        tr.addView(liftColumn);
+
+        //freq column creation
+        TextView freqColumn = new TextView(thirdScreen);
+        freqColumn.setText(freq);
+        freqColumn.setTextSize(17);
+        freqColumn.setTextColor(textColor);
+        freqColumn.setLayoutParams(tvParams);
+        freqColumn.setBackgroundColor(backgroundColor);
+//        freqColumn.setMinHeight(minHeight);
+        freqColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+        tr.addView(freqColumn);
+
+
+        //first lift column creation
+        TextView firstLiftColumn = new TextView(thirdScreen);
+        firstLiftColumn.setText(first);
+        firstLiftColumn.setTextSize(17);
+        firstLiftColumn.setTextColor(textColor);
+        firstLiftColumn.setLayoutParams(tvParams);
+        firstLiftColumn.setBackgroundColor(backgroundColor);
+//        firstLiftColumn.setMinHeight(minHeight);
+        firstLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+        tr.addView(firstLiftColumn);
+
+        //second lift column creation
+        TextView secondLiftColumn = new TextView(thirdScreen);
+        secondLiftColumn.setText(second);
+        secondLiftColumn.setTextColor(textColor);
+        secondLiftColumn.setTextSize(17);
+        secondLiftColumn.setLayoutParams(tvParams);
+        secondLiftColumn.setBackgroundColor(backgroundColor);
+//        secondLiftColumn.setMinHeight(minHeight);
+        secondLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+        tr.addView(secondLiftColumn);
+
+        //third lift column creation
+        TextView thirdLiftColumn = new TextView(thirdScreen);
+        thirdLiftColumn.setText(third);
+        thirdLiftColumn.setTextSize(17);
+        thirdLiftColumn.setTextColor(textColor);
+        thirdLiftColumn.setLayoutParams(tvParams);
+        thirdLiftColumn.setBackgroundColor(backgroundColor);
+//        thirdLiftColumn.setMinHeight(minHeight);
+        thirdLiftColumn.setGravity(Gravity.CENTER_HORIZONTAL);
+        tr.addView(thirdLiftColumn);
+
+        toggle = !toggle;
+
+        return tr;
     }
 
     void inflateTable(ThirdScreenFragment thirdScreen, /*Intent intent,*/ String startingDate, SQLiteDatabase db) {

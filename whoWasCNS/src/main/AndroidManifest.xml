@@ -5,12 +5,11 @@
     android:versionName="1.9" >
 
     <uses-sdk
-        android:minSdkVersion="L"
+        android:minSdkVersion="17"
         android:targetSdkVersion="L" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
@@ -47,30 +46,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity
+        <!--
+            <activity
             android:name=".Second"
             android:label="@string/title_activity_second"
             android:theme="@style/AppBaseLight" >
-        </activity>-->
+        </activity>
+        -->
         <activity
-            android:name=".SecondScreenPrototype"
+            android:name=".deprecated.SecondScreenPrototype"
             android:label="@string/title_activity_revampedsecond_screen" >
         </activity>
-<!--        <activity
+        <!--
+            <activity
             android:name=".About531Fragment"
             android:label="@string/title_activity_about531"
             android:theme="@style/AppBaseTheme" >
-        </activity>-->
+        </activity>
+        -->
         <activity
-            android:name=".SettingsFragment"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_setting"
             android:theme="@style/AppBaseTheme" >
         </activity>
-<!--        <activity
+        <!--
+            <activity
             android:name=".deprecated.ThirdScreenPrototype"
             android:label="@string/title_activity_third_screen_prototype"
             android:theme="@style/AppBaseTheme" >
-        </activity>-->
+        </activity>
+        -->
         <activity
             android:name=".IndividualViewsPrototype"
             android:label="@string/title_activity_individual_views_prototype"
@@ -78,11 +83,20 @@
         </activity>
         <activity
             android:name=".TabPrototype"
-            android:label="@string/title_activity_tab_prototype" 
-            android:theme="@style/AppBaseLight" >
+            android:label="@string/title_activity_tab_prototype"
+            android:theme="@style/AppBaseLight"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
-
-
+        <activity
+            android:name=".IndividualDayView"
+            android:label="@string/title_activity_individual_day_view"
+            android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name=".AccessoryLiftTabHost"
+            android:label="@string/title_activity_accessory_lift_tab_host"
+            android:theme="@style/AppBaseTheme" >
+        </activity>
     </application>
 
 </manifest>

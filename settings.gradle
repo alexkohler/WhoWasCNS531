@@ -1,2 +1,2 @@
-include ':swipeBackLibrary'
+include ':swipeBackLibrary', ':DragNDropList'
 include ':whoWasCNS'

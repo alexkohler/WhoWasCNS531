@@ -1,3 +1,4 @@
+<!--
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:dither="true" >
  
@@ -15,4 +16,17 @@
         android:right="10dp"
         android:top="2dp" />
  
+</shape>-->
+
+
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <solid
+        android:color="#546E7A"/>
+
+    <size
+        android:width="25dp"
+        android:height="50dp"/>
 </shape>

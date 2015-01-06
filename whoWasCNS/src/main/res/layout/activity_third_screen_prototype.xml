@@ -26,7 +26,7 @@
     android:layout_weight="2"
     >
 
-        <TableLayout
+       <!-- <TableLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,13 +53,13 @@
                     android:gravity="center"
                     android:text="@string/date_column" />
 
-                <!--      <TextView
+                &lt;!&ndash;      <TextView
                         android:id="@+id/cycleColumn"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
                         android:textS8y="center"
-                        android:text="B@string/cycle_column" /> -->
+                        android:text="B@string/cycle_column" /> &ndash;&gt;
 
                 <TextView
                     android:id="@+id/headerLiftColumn"
@@ -114,7 +114,7 @@
                     android:text="@string/third_lift_column" />
 
             </TableRow>
-        </TableLayout>
+        </TableLayout>-->
 
 
     <com.emilsjolander.components.StickyScrollViewItems.StickyScrollView
