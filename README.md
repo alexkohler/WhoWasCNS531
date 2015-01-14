@@ -31,10 +31,21 @@ Libraries used:
 
 Some screenshots:
 
+Now with nav drawer support:
 ![alt tag](http://i.imgur.com/ZAOI1Ny.png?1)
 
-![alt tag](http://i.imgur.com/ZAOI1Ny.png?2)
 
+Themes and a much prettier UI :) 
+![alt tag](http://i.imgur.com/8WYP62U.png?1)
+
+![alt tag](http://i.imgur.com/nAoscIT.png?1)
+
+
+
+![alt tag](http://i.imgur.com/ElDuIcl.png?1)
+
+
+![alt tag](http://i.imgur.com/r5zXyQ6.png?1)
 
 
 
