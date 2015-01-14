@@ -29,23 +29,28 @@ Libraries used:
 
 <b> 2.0 IN PROGRESS (And will hopefully be out soon..) </b>
 
-Some screenshots:
+Some screenshots: <br>
 
-Now with nav drawer support:
-![alt tag](http://i.imgur.com/ZAOI1Ny.png?1)
-
-
-Themes and a much prettier UI :) 
-![alt tag](http://i.imgur.com/8WYP62U.png?1)
-
-![alt tag](http://i.imgur.com/nAoscIT.png?1)
+New Dashboard             |  MUCH improved UI
+:-------------------------:|:-------------------------:
+![](http://i.imgur.com/ZAOI1Ny.png?1)  |  ![alt tag](http://i.imgur.com/8WYP62U.png?1)
 
 
+Themes             |  Custom pattern support improved
+:-------------------------:|:-------------------------:
+![](http://i.imgur.com/nAoscIT.png?1)  |  ![alt tag](http://i.imgur.com/ElDuIcl.png?1)
 
-![alt tag](http://i.imgur.com/ElDuIcl.png?1)
 
 
-![alt tag](http://i.imgur.com/r5zXyQ6.png?1)
+Prettier table views             |  Tons more coming!
+:-------------------------:|:-------------------------:
+![alt tag](http://i.imgur.com/r5zXyQ6.png?1)  |  
+
+
+
+
+
+
 
 
 
