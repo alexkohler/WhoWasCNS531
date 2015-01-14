@@ -2,7 +2,6 @@ package com.kohlerbear.whowascnscalc;
 
 import android.content.res.TypedArray;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -30,10 +29,11 @@ import android.os.Bundle;
 	}
 
 }*/
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -157,10 +157,18 @@ public class OpeningDashboardActivity extends BaseActivity {
 
             @Override
             public void onClick(View view) {
-                Intent wintent = new Intent(getApplicationContext(), AccessoryLiftTabHost.class);
-                startActivity(wintent);
-                finish();//TODO figure out whether this is fragmented or whatever the fuck
+             Fragment accessoryFragment = new AccessoryFragment();
+             FragmentManager accessoryFM = getSupportFragmentManager();
+             FragmentTransaction accessoryFT = accessoryFM.beginTransaction();
+             accessoryFT.replace(R.id.home_root, accessoryFragment);
+//             accessoryFT.addToBackStack(null);
+             accessoryFT.commit();
             }
+
+
+
+
+
         });
 
         // Listening Messages button click

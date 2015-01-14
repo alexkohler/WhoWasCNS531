@@ -28,5 +28,4 @@ dependencies {
     compile 'se.emilsjolander:StickyScrollViewItems:1.1.0'
     compile 'cn.kongnannan:preferencefragment:1.1'
     compile files('libs/libGoogleAnalyticsServices.jar')
-    compile project(':DragNDropList')
 }

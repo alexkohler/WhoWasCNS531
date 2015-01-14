@@ -11,8 +11,8 @@ import android.util.Log;
  */
 public class LongTermDataSQLHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "LongTermRecords.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final String DATABASE_NAME = "Lifts.db";
+    private static final int DATABASE_VERSION = 1;
 
     // Table name
     public static final String TABLE = "LongTermRecords";
@@ -74,7 +74,7 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
         values.put(LongTermDataSQLHelper.THEORETICAL_ONEREP, event.getTheoreticalOneRepMax());
 
         SQLiteDatabase db = getWritableDatabase();
-        db.insert(EventsDataSQLHelper.TABLE, null, values);
+        db.insert(LongTermDataSQLHelper.TABLE, null, values);
     }
 
     private class LongTermEvent {

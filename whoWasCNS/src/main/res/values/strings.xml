@@ -236,5 +236,6 @@
         <item>The whites will suffer</item>
     </string-array>
     <string name="pref_colorSchemeTypes_default">Orange</string>
+    <string name="menu_title">Edit</string>
 
 </resources>

@@ -93,7 +93,7 @@
             android:theme="@style/AppBaseTheme" >
         </activity>
         <activity
-            android:name=".AccessoryLiftTabHost"
+            android:name=".AccessoryFragment"
             android:label="@string/title_activity_accessory_lift_tab_host"
             android:theme="@style/AppBaseTheme" >
         </activity>

@@ -23,6 +23,8 @@ MERGED from se.emilsjolander:StickyScrollViewItems:1.1.0:3:5
 MERGED from cn.kongnannan:preferencefragment:1.1:20:5
 MERGED from com.android.support:appcompat-v7:20.0.0:16:5
 MERGED from com.android.support:support-v4:20.0.0:16:5
+MERGED from 531Calc:DragNDropList:unspecified:7:5
+MERGED from com.android.support:support-v4:20.0.0:16:5
 	android:targetSdkVersion
 		ADDED from AndroidManifest.xml:9:9
 		INJECTED from AndroidManifest.xml:0:0
@@ -64,6 +66,7 @@ MERGED from com.android.support:support-v4:20.0.0:17:5
 MERGED from cn.kongnannan:preferencefragment:1.1:22:5
 MERGED from com.android.support:appcompat-v7:20.0.0:17:5
 MERGED from com.android.support:support-v4:20.0.0:17:5
+MERGED from com.android.support:support-v4:20.0.0:17:5
 	android:label
 		ADDED from AndroidManifest.xml:24:9
 	android:supportsRtl
@@ -96,7 +99,7 @@ ADDED from AndroidManifest.xml:56:9
 		ADDED from AndroidManifest.xml:58:13
 	android:name
 		ADDED from AndroidManifest.xml:57:13
-activity#com.kohlerbear.whowascnscalc.SettingsFragment
+activity#com.kohlerbear.whowascnscalc.SettingsActivity
 ADDED from AndroidManifest.xml:67:9
 	android:label
 		ADDED from AndroidManifest.xml:69:13
@@ -130,7 +133,7 @@ ADDED from AndroidManifest.xml:90:9
 		ADDED from AndroidManifest.xml:93:13
 	android:name
 		ADDED from AndroidManifest.xml:91:13
-activity#com.kohlerbear.whowascnscalc.AccessoryLiftTabHost
+activity#com.kohlerbear.whowascnscalc.AccessoryFragment
 ADDED from AndroidManifest.xml:95:9
 	android:label
 		ADDED from AndroidManifest.xml:97:13

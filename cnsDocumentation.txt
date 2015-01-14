@@ -192,3 +192,7 @@ time went - just reimport the workspace/531Calc project. Gradle and everything i
 
 01-01-14 --> 01-03-14: Mostly UI and UI bug fixes
 
+01-05-14: Theme support, some prototyping for accessory lifts, we'll see where it goes. With a trash can and a minimal plus button it could be pretty
+
+01-06-14: Need to figure out how to update order in db. I don't think you should have to hit save.
+1-08-14: There is a swipe to remove bug somewhere

@@ -14,7 +14,7 @@
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:src="@drawable/ic_listview_delete"
-        android:visibility="gone"
+        android:visibility="visible"
         />
 
 
