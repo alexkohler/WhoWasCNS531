@@ -27,11 +27,16 @@ Libraries used:
 
 
 
-2.0 IN PROGRESS (And will hopefully be out soon..)
+<b> 2.0 IN PROGRESS (And will hopefully be out soon..) </b>
 
 Some screenshots:
 
 ![alt tag](http://i.imgur.com/ZAOI1Ny.png?1)
+
+![alt tag](http://i.imgur.com/ZAOI1Ny.png?2)
+
+
+
 
 
 
