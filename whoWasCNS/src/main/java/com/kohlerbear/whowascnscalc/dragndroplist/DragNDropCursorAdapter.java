@@ -22,11 +22,16 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kohlerbear.whowascnscalc.AccessoryFragment;
+import com.kohlerbear.whowascnscalc.AccessoryLiftSQLHelper;
 import com.kohlerbear.whowascnscalc.R;
 import com.kohlerbear.whowascnscalc.SwipeDismissListViewTouchListener;
 
@@ -65,11 +70,7 @@ public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragN
 		for (int i = 0; i < mPosition.length; ++i) mPosition[i] = i;
 	}
 
-    public void setDismisser(SwipeDismissListViewTouchListener dismisser)
-    {
-        mDismisser = dismisser;
-    }
-	
+
 	@Override
 	public View getDropDownView(int position, View view, ViewGroup group) {
 		return super.getDropDownView(mPosition[position], view, group);
@@ -105,17 +106,44 @@ public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragN
         return mLayoutInflater.inflate(R.layout.row, parent, false);
     }
 
-    @Override
-    public void bindView(View view, Context context, Cursor c) {
 
-//        TextView rowView = (TextView) view.findViewById(R.id.);
-        ImageView deleteButton = (ImageView) view.findViewById(R.id.deleteButton);
-        deleteButton.setVisibility(View.VISIBLE);
+
+    @Override
+    public void bindView(View view, final Context context, Cursor c) {
+
+        TextView rowTitle = (TextView) view.findViewById(R.id.liftText);
+        final String s = c.getString(c.getColumnIndex(AccessoryLiftSQLHelper.ACCESSORY)); //could do another static jawn to make sure you're getting the most updated cursor
+        final int position = c.getPosition();
+        rowTitle.setText(s);
+        final ImageView deleteButton = (ImageView) view.findViewById(R.id.deleteButton);
+        if (AccessoryFragment.areDeleteButtonShown())
+            deleteButton.setVisibility(View.VISIBLE);
+        else
+            deleteButton.setVisibility(View.GONE);
         final Context myContext = context;
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(myContext, "motherofgod.jpeg", Toast.LENGTH_SHORT).show();
+                final SwipeDismissListViewTouchListener touchListener = AccessoryFragment.getCurrentDismisser();
+                int currentRotation = 0;
+                RotateAnimation anim = new RotateAnimation(currentRotation, currentRotation + 90,
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
+                currentRotation = (currentRotation + 30) % 360;
+
+                anim.setInterpolator(new LinearInterpolator());
+                anim.setDuration(400);
+                anim.setFillEnabled(true);
+
+                anim.setFillAfter(true);
+                deleteButton.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        touchListener.dismiss(position);
+                    }
+                }, 410);
+                deleteButton.startAnimation(anim);
+//                Toast.makeText(myContext, "motherofgod.jpeg " + s, Toast.LENGTH_SHORT).show();
+
             }
         });
         System.out.println();

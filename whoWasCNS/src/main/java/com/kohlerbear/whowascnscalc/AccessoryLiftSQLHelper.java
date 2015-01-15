@@ -105,7 +105,6 @@ public class AccessoryLiftSQLHelper extends SQLiteOpenHelper {
     {
         addAccessoryLift("Dick pushups", ACCESSORY_TYPE.BENCH, 0);
         addAccessoryLift("Quarter squats", ACCESSORY_TYPE.BENCH, 1);
-        addAccessoryLift("Slaying negroes", ACCESSORY_TYPE.BENCH, 2);
         addAccessoryLift("Hot pocket eating", ACCESSORY_TYPE.BENCH, 3);
         addAccessoryLift("Crossfit", ACCESSORY_TYPE.BENCH, 4);
         addAccessoryLift("Fike press", ACCESSORY_TYPE.BENCH, 5);

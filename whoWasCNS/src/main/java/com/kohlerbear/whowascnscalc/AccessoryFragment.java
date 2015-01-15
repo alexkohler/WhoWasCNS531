@@ -49,7 +49,8 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
     DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     DragNDropListView dragNDroplistView;
-    SwipeDismissListViewTouchListener touchListener;
+    static SwipeDismissListViewTouchListener touchListener;
+    static boolean deleteButtonsShown;
     DragNDropCursorAdapter adapter;
     Button changeLiftButton;
     AccessoryLiftSQLHelper helper;
@@ -98,6 +99,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                     helper.repopulateDB(getCurrentListViewItems(), currentAccessoryType.name().toUpperCase());
                     MenuItem editMenuOptionItem = mMenu.findItem(R.id.editMenuOption);
                     editMenuOptionItem.setEnabled(true);
+                    //create new touch listener
 
                 }
             }
@@ -139,7 +141,6 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
 
                                 }
                                 adapter.notifyDataSetChanged();
-                                adapter.setDismisser(touchListener);
 //                                addDeleteButtonListenersToCurrentListView();
 
 
@@ -151,6 +152,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
 
                         });
 
+
 //            dragNDroplistView.setOnTouchListener(touchListener);
 //            dragNDroplistView.setOnScrollListener(touchListener.makeScrollListener());
         dragNDroplistView.setDraggingEnabled(false);
@@ -160,10 +162,26 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
         setHasOptionsMenu(true);
 
         dragNDroplistView.setItemsCanFocus(true);
+        setDeleteButtonsShown(false);
 
         return drawerLayout; // We must return the loaded Layout
     }
 
+    public static SwipeDismissListViewTouchListener getCurrentDismisser()
+    {
+        return touchListener;
+    }
+
+    public static void setDeleteButtonsShown(boolean shown)
+    {
+        deleteButtonsShown = shown;
+    }
+
+
+    public static boolean areDeleteButtonShown()
+    {
+        return deleteButtonsShown;
+    }
 
 
     @Override
@@ -243,23 +261,6 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
     }
 
 
-    public void addDeleteButtonListenersToCurrentListView(ListAdapter a){
-        dragNDroplistView = (DragNDropListView) drawerLayout.findViewById(R.id.liftListView);
-        ListAdapter adapter = a;
-        ArrayList<String> currentListViewItems = new ArrayList<String>();
-        for (int childIndex = 0; childIndex < adapter.getCount(); childIndex++) {
-            final int currentChildIndex = childIndex;
-            ImageView deleteButton = (ImageView) dragNDroplistView.getChildAt(childIndex).findViewById(R.id.deleteButton);
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                turnDeleteButtonAndRemoveListValueEntry(0, currentChildIndex);
-//                toggleListViewDeleteButtonShown(true);
-                }
-            });
-        }
-    }
-
 
     public void toggleListViewDeleteButtonShown(boolean shown) {
         for (int i = 0; i < adapter.getCount(); i++) {
@@ -275,27 +276,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
     }
 
 
-    public void turnDeleteButtonAndRemoveListValueEntry(int currentRotation, int childIndex)
-    {
-        RotateAnimation anim = new RotateAnimation(currentRotation, currentRotation + 90,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
-        currentRotation = (currentRotation + 30) % 360;
 
-        anim.setInterpolator(new LinearInterpolator());
-        anim.setDuration(400);
-        anim.setFillEnabled(true);
-
-        anim.setFillAfter(true);
-        ImageView deleteButton = (ImageView) dragNDroplistView.getChildAt(childIndex).findViewById(R.id.deleteButton);
-        final int currentChildIndex = childIndex;
-        deleteButton.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                touchListener.dismiss(currentChildIndex);
-            }
-        }, 410);
-        deleteButton.startAnimation(anim);
-    }
 
     public void promptUserWithEditText(final String oldLiftName) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
@@ -366,7 +347,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                     v.setDrawingCacheEnabled(true);
                     item.setIcon(createDrawableFromView(v));
                     toggleListViewDeleteButtonShown(true);
-                    addDeleteButtonListenersToCurrentListView(adapter);
+                    setDeleteButtonsShown(true);
                     //Long click listener
 
 
@@ -389,6 +370,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                     v.setDrawingCacheEnabled(true);
                     item.setIcon(createDrawableFromView(v));
                     toggleListViewDeleteButtonShown(false);
+                    setDeleteButtonsShown(false);
                     dragNDroplistView.setLongClickable(true);
 //                    mDrawerToggle.syncState();
                      toggle = !toggle;
