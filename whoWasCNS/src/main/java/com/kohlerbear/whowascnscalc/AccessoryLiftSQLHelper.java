@@ -68,16 +68,17 @@ public class AccessoryLiftSQLHelper extends SQLiteOpenHelper {
         db.insert(AccessoryLiftSQLHelper.TABLE, null, values);
     }
 
-    public void repopulateDB(ArrayList<String> values, String accessoryType)
+    public void repopulateDB(ArrayList<String> values, ACCESSORY_TYPE accessoryType)
     {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("Drop table AccessoryTemplates");
-        db.execSQL("create table " + AccessoryLiftSQLHelper.TABLE + "(ACCESSORY text not null, ACCESSORY_TYPE text not null, LIFT_ORDER integer);");
+        db.execSQL("DELETE FROM " + AccessoryLiftSQLHelper.TABLE + " where " + AccessoryLiftSQLHelper.ACCESSORY_DAY + " ='" + accessoryType + "'");
+//        db.execSQL("Drop table AccessoryTemplates");
+//        db.execSQL("create table " + AccessoryLiftSQLHelper.TABLE + "(ACCESSORY text not null, ACCESSORY_TYPE text not null, LIFT_ORDER integer);");
         ContentValues contentValues = new ContentValues();
         int orderCounter = 0;
         for (String liftValue : values)
         {
-            addAccessoryLift(liftValue, ACCESSORY_TYPE.BENCH, orderCounter);
+            addAccessoryLift(liftValue, accessoryType, orderCounter);
             orderCounter++;
         }
     }

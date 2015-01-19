@@ -17,23 +17,40 @@
 package com.kohlerbear.whowascnscalc.dragndroplist;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.media.Image;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Adapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.WrapperListAdapter;
+
+import com.kohlerbear.whowascnscalc.AccessoryFragment;
+import com.kohlerbear.whowascnscalc.AccessoryLiftSQLHelper;
+import com.kohlerbear.whowascnscalc.R;
+import com.kohlerbear.whowascnscalc.SwipeDismissListViewTouchListener;
+
+import java.util.ArrayList;
 
 public class DragNDropListView extends ListView {
 	
 	public static interface OnItemDragNDropListener {
 		public void onItemDrag(DragNDropListView parent, View view, int position, long id);
 		public void onItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition, long id);
+        public void onPostItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition);
 	}
 	
 	boolean mDragMode;
@@ -158,10 +175,12 @@ public class DragNDropListView extends ListView {
 						actualPosition = INVALID_POSITION;
 
 					stopDrag(mStartPosition - getFirstVisiblePosition(), actualPosition);
+                    onPostItemDrop(this, mDragView, 0, 0); //last 3 params don't matter
+                    //on post item drop here?
 				}
 				break;
 		}
-		
+
 		return true;
 	}
 	
@@ -238,8 +257,10 @@ public class DragNDropListView extends ListView {
         if (endPosition != INVALID_POSITION) {
             long id = getItemIdAtPosition(mStartPosition);
 
-            if (mDragNDropListener != null)
+            if (mDragNDropListener != null) {
                 mDragNDropListener.onItemDrop(this, item, mStartPosition, endPosition, id);
+//                mDragNDropListener.onPostItemDrop(this, item, mStartPosition, endPosition, id);
+            }
 
             Adapter adapter = getAdapter();
             DragNDropAdapter dndAdapter;
@@ -252,6 +273,7 @@ public class DragNDropListView extends ListView {
             }
 
             dndAdapter.onItemDrop(this, item, mStartPosition, endPosition, id);
+//            dndAdapter.onPostItemDrop(this, item, mStartPosition, endPosition, id);
 
         }
 		
@@ -269,6 +291,19 @@ public class DragNDropListView extends ListView {
         mStartPosition = INVALID_POSITION;
         
         invalidateViews(); // We have changed the adapter data, so change everything
+
+/*        Adapter adapter = getAdapter();
+        DragNDropAdapter dndAdapter;
+
+        if (adapter instanceof WrapperListAdapter) {
+            dndAdapter = (DragNDropAdapter)((WrapperListAdapter)adapter).getWrappedAdapter();
+        } else {
+            dndAdapter = (DragNDropAdapter)adapter;
+            dndAdapter.onPostItemDrop(this, item, mStartPosition, endPosition);
+        }*/
+
+
+
 	}
 	
 	/**
@@ -293,5 +328,33 @@ public class DragNDropListView extends ListView {
     public void setDraggingEnabled(boolean draggingEnabled)
     {
         this.isDraggingEnabled = draggingEnabled;
+    }
+
+    public void onPostItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition) {
+
+/*        //Update everything after item has been dropped
+        parent = AccessoryFragment.getCurrentListView();
+        final AccessoryLiftSQLHelper helper = new AccessoryLiftSQLHelper(parent.getContext());
+        final DragNDropListView finalParent = parent;
+        ListAdapter adapter = parent.getAdapter();
+        final DragNDropCursorAdapter dndAdapter = (DragNDropCursorAdapter) adapter;
+        dndAdapter.notifyDataSetChanged();
+        ArrayList<String> currentListViewItems = new ArrayList<String>();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            TextView t = (TextView) parent.getChildAt(i).findViewById(R.id.liftText);
+            currentListViewItems.add(t.getText().toString());
+        }
+        String startingElement = currentListViewItems.get(startPosition);
+        String endingElement = currentListViewItems.get(endPosition);
+        currentListViewItems.set(endPosition, startingElement);
+        currentListViewItems.set(startPosition, endingElement);
+        SwipeDismissListViewTouchListener touchListener = AccessoryFragment.getCurrentDismisser();
+        //        Toast.makeText(parent.getContext(), "Updated: first element " + currentListViewItems.get(0), Toast.LENGTH_SHORT).show();
+        helper.repopulateDB(currentListViewItems, "benchButItDoesn'tReallyMatterRightNow");//TODO must determine accessory type somehow
+        dndAdapter.notifyDataSetChanged();
+//        AccessoryFragment.refreshListViewTouchListener(parent.getContext(), helper);
+        Toast.makeText(parent.getContext(), "called", Toast.LENGTH_SHORT).show();*/
+
+
     }
 }

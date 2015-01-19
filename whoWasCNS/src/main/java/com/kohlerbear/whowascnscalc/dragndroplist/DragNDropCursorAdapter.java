@@ -16,8 +16,10 @@
 
 package com.kohlerbear.whowascnscalc.dragndroplist;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +37,8 @@ import com.kohlerbear.whowascnscalc.AccessoryFragment;
 import com.kohlerbear.whowascnscalc.AccessoryLiftSQLHelper;
 import com.kohlerbear.whowascnscalc.R;
 import com.kohlerbear.whowascnscalc.SwipeDismissListViewTouchListener;
+
+import java.util.ArrayList;
 
 public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragNDropAdapter {
 	int mPosition[];
@@ -108,14 +113,16 @@ public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragN
 
 
 
+
     @Override
     public void bindView(View view, final Context context, Cursor c) {
 
-        TextView rowTitle = (TextView) view.findViewById(R.id.liftText);
+        final TextView rowTitle = (TextView) view.findViewById(R.id.liftText);
         final String s = c.getString(c.getColumnIndex(AccessoryLiftSQLHelper.ACCESSORY)); //could do another static jawn to make sure you're getting the most updated cursor
         final int position = c.getPosition();
         rowTitle.setText(s);
         final ImageView deleteButton = (ImageView) view.findViewById(R.id.deleteButton);
+        final TextView liftText = (TextView) view.findViewById(R.id.liftText);
         if (AccessoryFragment.areDeleteButtonShown())
             deleteButton.setVisibility(View.VISIBLE);
         else
@@ -137,12 +144,22 @@ public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragN
                 anim.setFillAfter(true);
                 deleteButton.postDelayed(new Runnable() {
                     @Override
-                    public void run() {
-                        touchListener.dismiss(position);
+                    public void run() { //refresh database before attempting to delete, since our dataset is small, we can get away with this.
+                        AccessoryLiftSQLHelper helper = new AccessoryLiftSQLHelper(context);
+                        SQLiteDatabase db = helper.getWritableDatabase();
+                        db.execSQL("DELETE FROM " + AccessoryLiftSQLHelper.TABLE);
+                        int orderCounter = 0;
+                        ArrayList<String> values = AccessoryFragment.getCurrentListViewItemsStatic();
+                        for (String liftValue : values)
+                        {
+                            helper.addAccessoryLift(liftValue, AccessoryLiftSQLHelper.ACCESSORY_TYPE.BENCH, orderCounter);
+                            orderCounter++;
+                        }
+                        int positionToDelete = values.indexOf(rowTitle.getText().toString());
+                        touchListener.dismiss(positionToDelete);
                     }
                 }, 410);
                 deleteButton.startAnimation(anim);
-//                Toast.makeText(myContext, "motherofgod.jpeg " + s, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -160,10 +177,12 @@ public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragN
 	public void onItemDrag(DragNDropListView parent, View view, int position, long id) {
 		
 	}
-
+    //TODO the swap has to happen right here I think
 	@Override
 	public void onItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition, long id) {
-		int position = mPosition[startPosition];
+
+        //Base code
+        int position = mPosition[startPosition];
 		
 		if (startPosition < endPosition)
 			for(int i = startPosition; i < endPosition; ++i)
@@ -174,8 +193,38 @@ public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragN
 		
 		mPosition[endPosition] = position;
 
+
 	}
 
+
+    @Override
+    public void onPostItemDrop(DragNDropListView parent, View view, int startPosition, int endPosition) {
+
+/*
+        //Update everything after item has been dropped
+        AccessoryLiftSQLHelper helper = new AccessoryLiftSQLHelper(parent.getContext());
+        ListAdapter adapter = parent.getAdapter();
+        final DragNDropListView finalParent = parent;
+        ArrayList<String> currentListViewItems = new ArrayList<String>();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            TextView t = (TextView) parent.getChildAt(i).findViewById(R.id.liftText);
+            currentListViewItems.add(t.getText().toString());
+        }
+        Toast.makeText(parent.getContext(), "Updated", Toast.LENGTH_SHORT).show();
+        helper.repopulateDB(currentListViewItems, "benchButItDoesn'tReallyMatterRightNow");//TODO must determine accessory type somehow
+
+        //Refresh listview
+        SQLiteDatabase dbAccessories = helper.getWritableDatabase();//TODO spread these out
+        Cursor c = dbAccessories.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = 'BENCH' ORDER BY LIFT_ORDER ASC", null, null,
+                null, null);//TODO change query
+        DragNDropCursorAdapter updatedAdapter = new DragNDropCursorAdapter(parent.getContext(), R.layout.row, c, new String[]{AccessoryLiftSQLHelper.ACCESSORY}, new int[]{R.id.liftText}, R.id.liftText);
+        parent.setDragNDropAdapter(updatedAdapter);
+        updatedAdapter.notifyDataSetChanged();
+*/
+
+
+
+    }
 
 	@Override
 	public int getDragHandler() {

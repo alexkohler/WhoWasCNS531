@@ -1,7 +1,7 @@
 Who Was CNS 531 project progress
 6-4: Got clear button working, ugly solution with onCreate but it will work for now 
 6-5: Started to set up database, still need to figure out how to pass values from activity 1 to activity 3, unknown error, trace doesn't help. It's probably your terrible sql. Understand what each component does, I think you bit off more than you could chew in this (30 minute) print
-6-7: Got dates to display in table. Next up is to get a fuckin formated date to insert.
+6-7: Got dates to display in table. Next up is to get a formated date to insert.
 6-8: Got formatted date to insert. Next is to pass the actual starting date. Which also got done today after a brief i broke something very important scare. Next up is to start adding other columns to table
 6-10:Literally nothing depite working. To add columns you will have to make ugly alter table statemeents or find a way to delete the database
 6-11:Morning:woke up with a drive to get something done before work. Mission accomplished! In order to get table to work properly, had to execute a drop table and then create table command.. To insert data and find proper column indices I used cursor.getString and cursor.getColumnIndex(string columnName). Data inserts fine now. 
@@ -38,7 +38,7 @@ Who Was CNS 531 project progress
 7-16: finsihed up dynamically created view on up and down swipe, took care of corner cases. Broke some stuff with views, will take care of that tomorrow :) 
 7-17: Fixed bug with swiping up and then swiping right, navigation seems to be working proper now. Working on view by bug, will now scroll through no matter what view you're on. Bug now with training max, need to get it from database.
 7-18: IndividualView now works for ANY view. Finally finished off training max bug and it was actually mildly elegant. I impress myself sometimes 
-7-19: Fixed an overall view bug that saved previous mode when resetting and projecting a different set of lifts. Fixed frequency appender... forgot breaks in my switch statements :) Added proper lb/kg mode flag.. methoding is not working properly quite yet but i'll figure it out. I think it has to do with data being unpassed that's needed when you up and down swipe (ie the fucking mode itself) 
+7-19: Fixed an overall view bug that saved previous mode when resetting and projecting a different set of lifts. Fixed frequency appender... forgot breaks in my switch statements :) Added proper lb/kg mode flag.. methoding is not working properly quite yet but i'll figure it out. I think it has to do with data being unpassed that's needed when you up and down swipe (ie the mode itself) 
 7-20: Fixed back button bug. Added kilogram error handling and slightly more dynamic error handling (actually retrieves erroraneous lift number). Got initial KG placeholders made... Started to tackle kilogram support  
 7-21: added extra textviews for kilograms, hid them for lbs. Fixed SQL issue when starting fresh on new device 
 7-22: Plugged in entirely new UI for third screen. Now uses dynamically created tablerows and looks oh so much better
@@ -47,7 +47,7 @@ Who Was CNS 531 project progress
 7-28: Lost log entries somewhere in a commit. whoops. Continuing to refactor today.
 7-28: set up hardware acceleration on linux machine, my life is a million times better now. Except for refactoring. In that sense I'd rather be on fire. Slowly but surely slimming classes down, not going to spend much more time on it.
 7-29: slight refactoring and adding in plate booleans to specify what plates one does and doesn't have
-7-30: environment issue, got boolean logic completely plugged in but can't deploy to test it... maybe it's back to dreaded windows tomorrow. Theme is fucked too 
+7-30: environment issue, got boolean logic completely plugged in but can't deploy to test it... maybe it's back to dreaded windows tomorrow. Theme is messed up too 
 7-31: Got a lot done today, took care of boolean error this morning. Took care of environment issue last night :)  eclipse still likes to crash a lot more on ubuntu than windows. Worth it. Took pattern choosing UI to another project just to iron out issues and make integration a lot less painful. Going well, got back end hooked up to pattern choosing, followed a nice tutorial. Next up is hook up error handling and parsing what the user chose. This will probably be "worst' part. Won't be able to work tomorrow, hopefully get it sorted out on Monday. To bring Monday me up to speed, take a look at the MainActivity comments in the patternchooser UI project. 
 8-2 hooked merged UI activity into main activity with problems (what merge doesn't have those?) Got all of those sorted out. Dynamic day adding for easier error handling for me. Tomorrow is hooking up error handling in back/front end (returning bools/making toast. Then pass your pattern via intent after a couple debug runs and try to break your code. Don't forget the date in your intents.
 8-3: Added richer error handling and improved some layout features.
@@ -58,7 +58,7 @@ Who Was CNS 531 project progress
 10-8-14: Got pound generation done, kilograms shouldn't be too bad but take your time and make sure you do it right. I don't think there's much to do beyond creating a switch statement and adding a conditional in your generateWeights statement that will generate a different barbell standard, use a different rounding protocol, and have a different array of weights. Finish this up tomorrow, shouldn't be too bad. Even for Android ;)
 10-9-14: Finally got around to robusting the roundtotwodecimals crash that has been plauging the application. Figure out if you can fix the plate spaces if not whatever not a huge deal. Some UI stuff and then just let this cook out, fix bugs but forget these big overhauls. Make a stable and straightforward and decent looking app and that's all you really need.
 10-14-14: Add arrows to new individualview page, get a "next" algorithm working (do you want up/down arrows or left/right arrows?.. Probably gonna go with up/down to keep old look and feel and for sake of room.)
-10-15-14: Added back end to next/prev stuff, need to find pretty arrows for that and truly fucking fix this dumbass individual view stuff. Create separate layouts and see where that gets you. Beyond that UI and then drop this fucker for awhile
+10-15-14: Added back end to next/prev stuff, need to find pretty arrows for that and truly fix this dumbass individual view stuff. Create separate layouts and see where that gets you. Beyond that UI and then drop this for awhile
 10-16-14: Finally fixed all barbell troubles with 3 separate layouts for each weight :) I think you're gonna want a twitter-like nav bar with the home page being dashboardy with personal bests, bodyweight, etc..
 10-30-14: KG bug fixes, weird date bug, gonna get out of this project for awhile.
 11-10-14: Made some improvements to adjustpattern, fixed bug with generating preview buffer (the first letter buffer thing you do on create new projection page) , also followed in iOS version's steps and allowed previous pattern to be viewed when adjust pattern is pressed making it feel MUCH more native. Created a method to derive lift pattern from database rather than making a schema change. (I am unsure how to cleanly do this and didn't want to cause a crisis. View existing projection is now supported on dashboard. I would double check over your pattern derivation algorithm because it's pretty ugly, so test that before hopping into anything else. After that add nav bar to all screens. (Beware of back button repercussions this may cause!!!)
@@ -148,7 +148,7 @@ Got viewpager set up for individualView prototype, first time actually working w
 12-6-14: If you get stuck with next/prev just commenting prev out in your direction detector fixes a decent amount :) view is loading what comes will come next, not what you are swiping to. that is already generated. 
 
 
-12-8-14: Back to drawing board.. try using a fragmentpageradapter instead of this state bullshit. 
+12-8-14: Back to drawing board.. try using a fragmentpageradapter instead of this state bs. 
 Went back to drawing board, used a regular fragment adapter and just populated the list and it works perfectly with my mock setup. Need to change titles (currently doesn't display date) and then I'll try to integrate this page into actual page layout and get a commit together. Fixed view existing projection bug on viewing. Lots and lots of cleanup and adding tracker sends. Lint stuff still needs fixed too.
 
 
@@ -195,4 +195,11 @@ time went - just reimport the workspace/531Calc project. Gradle and everything i
 01-05-14: Theme support, some prototyping for accessory lifts, we'll see where it goes. With a trash can and a minimal plus button it could be pretty
 
 01-06-14: Need to figure out how to update order in db. I don't think you should have to hit save.
+
 1-08-14: There is a swipe to remove bug somewhere
+
+1-16-14: can't get listview to behave, order is screwed up when trying to move objects
+
+1-17-14: Listview behaves, upon changing query need to have a flag on whether or not to display delete buttons. Also added add lift and some other cutesey stuff
+
+1-18-14: Random listview fixes, categories and self standing data with nice entry add dialog, hopefully some more bells and whistles tomorrow

@@ -29,8 +29,6 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,21 +46,22 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
     public class AccessoryFragment extends Fragment {
     DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    DragNDropListView dragNDroplistView;
+    static DragNDropListView dragNDroplistView;
     static SwipeDismissListViewTouchListener touchListener;
     static boolean deleteButtonsShown;
-    DragNDropCursorAdapter adapter;
+    static DragNDropCursorAdapter adapter;
     Button changeLiftButton;
     AccessoryLiftSQLHelper helper;
     Menu mMenu;
-    LayoutInflater mInflater;
+//    LayoutInflater mInflater;
+//    TextView listViewHeaderTextView;
 
-    public enum CHANGELIFT_BUTTON_STATE {NORMAL, EXIT}
+    public enum CHANGELIFT_BUTTON_STATE {NORMAL, ADD, EXIT}
 
     ;
     CHANGELIFT_BUTTON_STATE currentButtonState;
 
-    AccessoryLiftSQLHelper.ACCESSORY_TYPE currentAccessoryType;
+    static AccessoryLiftSQLHelper.ACCESSORY_TYPE currentAccessoryType;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,20 +74,22 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
         changeLiftButton = (Button) drawerLayout.findViewById(R.id.changeLiftButton);
         final int primaryColor = ColorManager.getInstance(getActivity()).getPrimaryColor();
         changeLiftButton.setBackgroundColor(primaryColor);
-
+        currentButtonState = CHANGELIFT_BUTTON_STATE.NORMAL;
 
         helper = new AccessoryLiftSQLHelper(getActivity());
         currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.BENCH; //will always open on bench
         SQLiteDatabase db = helper.getWritableDatabase();
-        db.execSQL("drop table " + helper.TABLE);
+/*        db.execSQL("drop table " + helper.TABLE);
         db.execSQL("create table " + helper.TABLE + "(ACCESSORY text not null, ACCESSORY_TYPE text not null, LIFT_ORDER integer);");
-        helper.makeSampleData();
+        helper.makeSampleData();*/
+
 
         //Manage buttons
         changeLiftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (currentButtonState == CHANGELIFT_BUTTON_STATE.NORMAL) {
+                    createChangeLiftBuilder();
 
                 } else if (currentButtonState == CHANGELIFT_BUTTON_STATE.EXIT) {
                     changeLiftButton.clearAnimation();
@@ -96,10 +97,16 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                     currentButtonState = CHANGELIFT_BUTTON_STATE.NORMAL;
                     dragNDroplistView.setDraggingEnabled(false);
                     registerForContextMenu(dragNDroplistView);
-                    helper.repopulateDB(getCurrentListViewItems(), currentAccessoryType.name().toUpperCase());
+                    helper.repopulateDB(getCurrentListViewItems(), currentAccessoryType);
                     MenuItem editMenuOptionItem = mMenu.findItem(R.id.editMenuOption);
                     editMenuOptionItem.setEnabled(true);
                     //create new touch listener
+
+
+                } else if (currentButtonState == CHANGELIFT_BUTTON_STATE.ADD) {
+                    promptUserWithEditTextForNewLiftName(getCurrentListViewItems());
+                    //create new touch listener
+
 
                 }
             }
@@ -109,7 +116,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
         ColorManager.clear();
 
 
-        Cursor cursor = db.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = 'BENCH' ORDER BY LIFT_ORDER ASC", null, null,
+        Cursor cursor = db.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + currentAccessoryType.name().toUpperCase() + "' ORDER BY LIFT_ORDER ASC", null, null,
                 null, null);
         adapter = new DragNDropCursorAdapter(getActivity().getApplicationContext(), R.layout.row, cursor, new String[]{AccessoryLiftSQLHelper.ACCESSORY}, new int[]{R.id.liftText}, R.id.liftText);
 //            SimpleCursorAdapter c = new SimpleCursorAdapter(getActivity().getApplicationContext(), R.layout.row, cursor, new String[] {AccessoryLiftSQLHelper.ACCESSORY}, new int[] {R.id.liftText});
@@ -121,19 +128,116 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
                                     SQLiteDatabase dbAccessories = helper.getWritableDatabase();
-                                    Cursor c = dbAccessories.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = 'BENCH' ORDER BY LIFT_ORDER ASC", null, null,
+                                    Cursor c = dbAccessories.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + currentAccessoryType.name().toUpperCase() + "' ORDER BY LIFT_ORDER ASC", null, null,
+                                            null, null);
+                                    c.moveToPosition(0);
+//                                    Toast.makeText(getActivity(), "First lift " + c.getString(1) , Toast.LENGTH_LONG).show();
+
+                                    c.moveToPosition(position);
+                                    String removedLift = c.getString(1);
+                                    dbAccessories.execSQL("delete from AccessoryTemplates where ACCESSORY = '" + removedLift + "'");//TODO add and clause here
+                                    //requery after deleting to ensure we get those changes into our updated adapter
+                                    c = dbAccessories.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + currentAccessoryType.name().toUpperCase() + "' ORDER BY LIFT_ORDER ASC", null, null,
+                                            null, null);//TODO type query
+                                    DragNDropCursorAdapter updatedAdapter;
+                                        updatedAdapter = new DragNDropCursorAdapter(getActivity().getApplicationContext(), R.layout.row, c, new String[]{AccessoryLiftSQLHelper.ACCESSORY}, new int[]{R.id.liftText}, R.id.liftText);
+                                    dragNDroplistView.setDragNDropAdapter(updatedAdapter);
+
+
+                                }
+                                adapter.notifyDataSetChanged();
+//                                addDeleteButtonListenersToCurrentListView();
+
+
+                            }
+
+                            public boolean canDismiss(int position) {
+                                return true;
+                            }
+
+                        });
+
+        dragNDroplistView.setDraggingEnabled(false);
+
+
+
+        setHasOptionsMenu(true);
+
+        dragNDroplistView.setItemsCanFocus(true);
+        setDeleteButtonsShown(false);
+
+        return drawerLayout; // We must return the loaded Layout
+    }
+
+    private void createChangeLiftBuilder()
+    {
+        CharSequence optionsArray[] = new CharSequence[] {"Bench", "Squat", "Deadlift", "OHP", "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Adjust accessories for...");
+        builder.setItems(optionsArray, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if (which == 0){//Bench
+                    currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.BENCH;
+                    refreshListView();
+                }
+                if (which == 1)//Squat
+                {
+                    currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.SQUAT;
+                    refreshListView();
+                }
+                if (which == 2)//Deadlift
+                {
+                    currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.DEADLIFT;
+                    refreshListView();
+                }
+                if (which == 3)//OHP
+                {
+                    currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.OHP;
+                    refreshListView();
+                }
+                if (which == 4)//Cancel
+                {
+                    dialog.cancel();
+                }
+
+            }
+
+        });
+
+        builder.show();
+    }
+
+    public static SwipeDismissListViewTouchListener getCurrentDismisser()
+    {
+        return touchListener;
+    }
+
+    public static void refreshListViewTouchListener(Context context, AccessoryLiftSQLHelper staticHelper)
+    {
+        final Context finalContext = context;
+        final AccessoryLiftSQLHelper finalStaticHelper = staticHelper;
+        touchListener =
+                new SwipeDismissListViewTouchListener(
+                        dragNDroplistView,
+                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    SQLiteDatabase dbAccessories = finalStaticHelper.getWritableDatabase();
+                                    Cursor c = dbAccessories.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + currentAccessoryType.name().toUpperCase() + "' ORDER BY LIFT_ORDER ASC", null, null,
                                             null, null);
                                     c.moveToPosition(position);
                                     String removedLift = c.getString(1);
                                     dbAccessories.execSQL("delete from AccessoryTemplates where ACCESSORY = '" + removedLift + "'");//TODO add and clause here
                                     //requery after deleting to ensure we get those changes into our updated adapter
-                                    c = dbAccessories.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = 'BENCH' ORDER BY LIFT_ORDER ASC", null, null,
+                                    c = dbAccessories.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + currentAccessoryType.name().toUpperCase() + "' ORDER BY LIFT_ORDER ASC", null, null,
                                             null, null);//TODO type query
                                     DragNDropCursorAdapter updatedAdapter;
-                                    updatedAdapter = new DragNDropCursorAdapter(getActivity().getApplicationContext(), R.layout.row_with_delete, c, new String[]{AccessoryLiftSQLHelper.ACCESSORY}, new int[]{R.id.liftText}, R.id.liftText);
+                                    updatedAdapter = new DragNDropCursorAdapter(finalContext, R.layout.row_with_delete, c, new String[]{AccessoryLiftSQLHelper.ACCESSORY}, new int[]{R.id.liftText}, R.id.liftText);
                                     dragNDroplistView.setDragNDropAdapter(updatedAdapter);
 
-                                    Toast.makeText(getActivity(), "Removing " + removedLift, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(finalContext, "Removing " + removedLift, Toast.LENGTH_LONG).show();
 //                                                     final Cursor updatedCursor = dbLifts.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.LIFTDATE}, "Lift = 'Bench'", null, null,
 //                                                         null, null);
 
@@ -152,25 +256,9 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
 
                         });
 
-
-//            dragNDroplistView.setOnTouchListener(touchListener);
-//            dragNDroplistView.setOnScrollListener(touchListener.makeScrollListener());
-        dragNDroplistView.setDraggingEnabled(false);
-
-
-
-        setHasOptionsMenu(true);
-
-        dragNDroplistView.setItemsCanFocus(true);
-        setDeleteButtonsShown(false);
-
-        return drawerLayout; // We must return the loaded Layout
     }
 
-    public static SwipeDismissListViewTouchListener getCurrentDismisser()
-    {
-        return touchListener;
-    }
+    public static DragNDropListView getCurrentListView() {return dragNDroplistView; }
 
     public static void setDeleteButtonsShown(boolean shown)
     {
@@ -187,7 +275,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
     @Override
     public void onStop() {
         super.onStop();
-        helper.repopulateDB(getCurrentListViewItems(), currentAccessoryType.name().toUpperCase());
+        helper.repopulateDB(getCurrentListViewItems(), currentAccessoryType);
     }
 
     @Override
@@ -241,16 +329,27 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
             dragNDroplistView.setOnScrollListener(null);
             adapter.notifyDataSetChanged();
 //            Toast.makeText(getActivity(), "info " + ((TextView) dragNDroplistView.getChildAt(info.position).findViewById(R.id.liftText)).getText().toString(), Toast.LENGTH_SHORT).show();
-            touchListener.dismiss(info.position);//TODO make sure this works in all cases and that saving happens in right spot
+            touchListener.dismiss(info.position);
             return true;
         } else if (item.getTitle() == "Rename Item") {
-            promptUserWithEditText(touchedLiftName);
+            promptUserWithEditTextForRenamedLift(touchedLiftName);
         }
         return super.onContextItemSelected(item);
     }
 
 
     public ArrayList<String> getCurrentListViewItems() {
+        ListAdapter adapter = dragNDroplistView.getAdapter();
+        ArrayList<String> currentListViewItems = new ArrayList<String>();
+        for (int i = 0; i < adapter.getCount(); i++) {
+            TextView t = (TextView) dragNDroplistView.getChildAt(i).findViewById(R.id.liftText);
+            if (t != null)
+                currentListViewItems.add(t.getText().toString());
+        }
+        return currentListViewItems;
+    }
+
+    public static ArrayList<String> getCurrentListViewItemsStatic() {
         ListAdapter adapter = dragNDroplistView.getAdapter();
         ArrayList<String> currentListViewItems = new ArrayList<String>();
         for (int i = 0; i < adapter.getCount(); i++) {
@@ -263,7 +362,8 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
 
 
     public void toggleListViewDeleteButtonShown(boolean shown) {
-        for (int i = 0; i < adapter.getCount(); i++) {
+        int count = getCurrentListViewItems().size();
+        for (int i = 0; i < count/*adapter.getCount()*/; i++) {
             View currentChild = dragNDroplistView.getChildAt(i);
             if (currentChild != null) {
                 ImageView deleteButton = (ImageView) currentChild.findViewById(R.id.deleteButton);
@@ -278,7 +378,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
 
 
 
-    public void promptUserWithEditText(final String oldLiftName) {
+    public void promptUserWithEditTextForRenamedLift(final String oldLiftName) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
         alert.setTitle("Rename entry");
@@ -315,12 +415,58 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
         titleDivider.setBackgroundColor(Color.TRANSPARENT); // change divider color
     }
 
+
+    public void promptUserWithEditTextForNewLiftName(final ArrayList<String> currentListViewItems) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+
+        alert.setTitle("New entry");
+//        alert.setMessage("Message");
+
+
+// Set an EditText view to get user input
+        final EditText input = new EditText(getActivity());
+        alert.setView(input);
+
+        alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dragNDroplistView.setDraggingEnabled(false);
+                registerForContextMenu(dragNDroplistView);
+                //use a
+                currentListViewItems.add(input.getText().toString());
+                helper.repopulateDB(currentListViewItems, currentAccessoryType);
+                refreshListView();
+                MenuItem editMenuOptionItem = mMenu.findItem(R.id.editMenuOption);
+                editMenuOptionItem.setEnabled(true);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        AlertDialog myDialog = alert.show();
+
+
+        //Fix up UI of dialog
+        Resources resources = alert.getContext().getResources();
+
+        int titleDividerId = resources.getIdentifier("titleDivider", "id", "android");
+
+        View titleDivider = myDialog.getWindow().getDecorView().findViewById(titleDividerId);
+        titleDivider.setBackgroundColor(Color.TRANSPARENT); // change divider color
+    }
+
     //Called after a change to cursor (Source of information for our listview)
     public void refreshListView() {
         SQLiteDatabase dbAccessories = helper.getWritableDatabase();//TODO spread these out
-        Cursor c = dbAccessories.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = 'BENCH' ORDER BY LIFT_ORDER ASC", null, null,
+        String currentAccessoryString = currentAccessoryType.name().toString();
+        Cursor c = dbAccessories.query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + currentAccessoryString + "' ORDER BY LIFT_ORDER ASC", null, null,
                 null, null);//TODO change query
         DragNDropCursorAdapter updatedAdapter = new DragNDropCursorAdapter(getActivity().getApplicationContext(), R.layout.row, c, new String[]{AccessoryLiftSQLHelper.ACCESSORY}, new int[]{R.id.liftText}, R.id.liftText);
+
+
+
         dragNDroplistView.setDragNDropAdapter(updatedAdapter);
         updatedAdapter.notifyDataSetChanged();
     }
@@ -347,19 +493,19 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                     v.setDrawingCacheEnabled(true);
                     item.setIcon(createDrawableFromView(v));
                     toggleListViewDeleteButtonShown(true);
+                    dragNDroplistView.setDraggingEnabled(true);
+                    unregisterForContextMenu(dragNDroplistView);
                     setDeleteButtonsShown(true);
                     //Long click listener
-
-
                     //Null testing
 //                    View v = dragNDroplistView.getChildAt(0);
 //                    ImageView i = v.findViewWithTag();
-
-
+                    changeLiftButton.setText("Add accessory lift");
+                    currentButtonState = CHANGELIFT_BUTTON_STATE.ADD;
                     dragNDroplistView.setLongClickable(false);
                     toggle = !toggle;
                     return true;
-                } else //Done presse
+                } else //Done pressed
                 {
 //                    item.setIcon(R.drawable.ic_edit);
                     TextView v = new TextView(getActivity());
@@ -370,14 +516,20 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                     v.setDrawingCacheEnabled(true);
                     item.setIcon(createDrawableFromView(v));
                     toggleListViewDeleteButtonShown(false);
-                    setDeleteButtonsShown(false);
+//                    setDeleteButtonsShown(false);
+                    dragNDroplistView.setDraggingEnabled(false);
+                    registerForContextMenu(dragNDroplistView);
+
+                    changeLiftButton.setText("Change lift");
+                    currentButtonState = CHANGELIFT_BUTTON_STATE.NORMAL;
+
                     dragNDroplistView.setLongClickable(true);
-//                    mDrawerToggle.syncState();
-                     toggle = !toggle;
+                    toggle = !toggle;
 
                 }
-
+                break;
          }
+//        Toast.makeText(getActivity(), "Clicked " + item.getItemId(), Toast.LENGTH_LONG).show();
         return super.onOptionsItemSelected(item);
 
 
