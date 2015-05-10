@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="com.kohlerbear.whowascnscalc.IndividualViewAccessoryFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1"
+        android:id="@+id/parentSetLayout"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/setLayout1ChildTitles"
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/accessoryName" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:layout_gravity="top|center"
+                android:id="@+id/textView3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:layout_marginStart="100dp"
+                android:id="@+id/textView4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:id="@+id/setLayout1"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:id="@+id/setLayout1Child">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:text="Set 1"
+                    android:layout_weight="1"
+                    android:id="@+id/setTitle1"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentTop="true" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/weightEditText1"
+                    android:imeOptions="actionNext"
+                    android:layout_weight="1"
+                    android:layout_alignBottom="@+id/repsEditText1"
+                    android:layout_alignParentEnd="true" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:layout_weight="1"
+                    android:imeOptions="actionNext"
+                    android:id="@+id/repsEditText1"
+                    android:layout_alignBottom="@+id/setTitle1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

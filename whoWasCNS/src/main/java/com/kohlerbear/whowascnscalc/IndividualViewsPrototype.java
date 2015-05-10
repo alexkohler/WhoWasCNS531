@@ -2,6 +2,7 @@ package com.kohlerbear.whowascnscalc;
 
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Vector;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -97,31 +99,51 @@ public class IndividualViewsPrototype extends FragmentActivity {
       initialArgs.putStringArray("liftPattern", liftPattern);
       initialArgs.putString("status", "init");
       int selectedItem = 0;//selected item is initially one, but if we have any previous lifts we need to increment out selected item
-      //Add all fragments before our clicked fragment
-      Bundle prevLiftArgs = getLiftBasedOn(initialArgs, liftRetrievalDirection.PREV, cycle);
-      while (!prevLiftArgs.getString("status").equals("invalid"))
-      {
-    	  if (prevLiftArgs.getString("date") != null)
-    	  {
-    		  fragments.add(Fragment.instantiate(this,IndividualViewFragment.class.getName(), prevLiftArgs));
-    		  selectedItem++;
-    	  }
-    	  prevLiftArgs = getLiftBasedOn(prevLiftArgs, liftRetrievalDirection.PREV, cycle);
-      }
+
       
       //our originally clicked fragment
       fragments.add(Fragment.instantiate(this,IndividualViewFragment.class.getName(),initialArgs));//add our inital fragment
-      
-      //Add all fragments after our clicked fragment
-      Bundle nextLiftArgs = getLiftBasedOn(initialArgs, liftRetrievalDirection.NEXT, cycle);
-      while (!nextLiftArgs.getString("status").equals("invalid"))
-      {
-    	  if (nextLiftArgs.getString("date") != null)
-    		  fragments.add(Fragment.instantiate(this,IndividualViewFragment.class.getName(), nextLiftArgs));
 
-    	  nextLiftArgs = getLiftBasedOn(nextLiftArgs, liftRetrievalDirection.NEXT, cycle);
+      //add our accessory lifts for given lift type
+
+
+
+
+
+     AccessoryLiftSQLHelper helper = new AccessoryLiftSQLHelper(getApplicationContext());
+     SQLiteDatabase db = helper.getWritableDatabase();
+
+        AccessoryLiftSQLHelper.ACCESSORY_TYPE liftTypeEnum;
+        switch (liftType)
+        {
+            case "Bench":
+                liftTypeEnum = AccessoryLiftSQLHelper.ACCESSORY_TYPE.BENCH;
+                break;
+            case "Squat":
+                liftTypeEnum = AccessoryLiftSQLHelper.ACCESSORY_TYPE.SQUAT;
+                break;
+            case "OHP":
+                liftTypeEnum = AccessoryLiftSQLHelper.ACCESSORY_TYPE.OHP;
+                break;
+            case "Deadlift":
+                liftTypeEnum = AccessoryLiftSQLHelper.ACCESSORY_TYPE.DEADLIFT;
+                break;
+            default:
+                liftTypeEnum = AccessoryLiftSQLHelper.ACCESSORY_TYPE.BENCH;
+                break;
+
+        }
+
+        ArrayList<String> accessoryValues = helper.getAccessoriesFor(liftTypeEnum);
+
+      for (String accessory : accessoryValues) {
+          Bundle accessoryArgs = new Bundle();
+          accessoryArgs.putString("accessory", accessory);
+          fragments.add(Fragment.instantiate(this, IndividualViewAccessoryFragment.class.getName(), accessoryArgs));
+
       }
-      
+
+
       PagerAdapter mPagerAdapter  = new MyFragmentAdapter(super.getSupportFragmentManager(), fragments);
       mViewPager.setAdapter(mPagerAdapter);
     
@@ -216,9 +238,17 @@ public class IndividualViewsPrototype extends FragmentActivity {
     	public CharSequence getPageTitle(int position) {
 
     	   Bundle args = myFragments.get(position).getArguments();
-    	   String truncatedDate = TabPrototype.date.substring(0, 5); //args.getString("date").substring(0, 5);
-    	   String lift = TabPrototype.liftType;///args.getString("liftType");
-    	    String PageTitle = truncatedDate + "- " + lift;
+           String PageTitle;
+            if (position == 0)
+            {
+                String truncatedDate = TabPrototype.date.substring(0, 5); //args.getString("date").substring(0, 5);
+                String lift = TabPrototype.liftType;///args.getString("liftType");
+                PageTitle = truncatedDate + "- " + lift;
+            }
+            else
+            {
+                PageTitle = args.getString("accessory");
+            }
     	    return PageTitle;
     	}
 

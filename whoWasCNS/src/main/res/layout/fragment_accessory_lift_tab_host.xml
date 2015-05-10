@@ -34,11 +34,12 @@
             android:layout_height="35dp"
             android:paddingTop="5dp"
             android:id="@+id/buttonsLayout"
-            android:layout_above="@+id/changeLiftButton"
-            android:layout_alignStart="@+id/changeLiftButton"
+            android:layout_above="@+id/liftListView"
+            android:layout_alignStart="@+id/liftListView"
             android:layout_alignParentEnd="true"
             android:weightSum="1"
-            android:paddingBottom="5dp">
+            android:paddingBottom="5dp"
+            android:layout_alignParentTop="true">
 
             <View
                 android:id="@+id/divider"

@@ -203,3 +203,5 @@ time went - just reimport the workspace/531Calc project. Gradle and everything i
 1-17-14: Listview behaves, upon changing query need to have a flag on whether or not to display delete buttons. Also added add lift and some other cutesey stuff
 
 1-18-14: Random listview fixes, categories and self standing data with nice entry add dialog, hopefully some more bells and whistles tomorrow
+
+5-10-14: Back from school, time to finish this bad boy up. :)

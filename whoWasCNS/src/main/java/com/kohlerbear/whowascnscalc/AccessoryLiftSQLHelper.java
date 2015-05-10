@@ -86,7 +86,7 @@ public class AccessoryLiftSQLHelper extends SQLiteOpenHelper {
     public void updateEntry(String oldEntry, String newEntry, ACCESSORY_TYPE type)
     {
 
-        Cursor c = getWritableDatabase().query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = 'BENCH' ORDER BY LIFT_ORDER ASC", null, null,
+        Cursor c = getWritableDatabase().query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + type.name().toUpperCase() + "' ORDER BY LIFT_ORDER ASC", null, null,
                 null, null);//TODO type query
         String debugString = DatabaseUtils.dumpCursorToString(c);
         String updateSQL = "UPDATE " + TABLE + " SET " +
@@ -95,11 +95,24 @@ public class AccessoryLiftSQLHelper extends SQLiteOpenHelper {
                 "AND " + ACCESSORY_DAY + "= '" + type.name().toUpperCase() + "'";
 
         getWritableDatabase().execSQL(updateSQL);
-        c = getWritableDatabase().query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = 'BENCH' ORDER BY LIFT_ORDER ASC", null, null,
+        c = getWritableDatabase().query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + type.name().toUpperCase() + "' ORDER BY LIFT_ORDER ASC", null, null,
                 null, null);//TODO type query
         debugString = DatabaseUtils.dumpCursorToString(c);
         System.out.println();
 
+    }
+
+
+    public ArrayList<String> getAccessoriesFor( ACCESSORY_TYPE accessoryType)
+    {
+        ArrayList<String> accessoryValues = new ArrayList<String>();
+
+        Cursor c = getWritableDatabase().query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + accessoryType.name().toUpperCase() + "' ORDER BY LIFT_ORDER ASC", null, null, null, null);
+        while (c.moveToNext()) {
+            accessoryValues.add(c.getString(1));
+        }
+
+        return accessoryValues;
     }
 
     public void makeSampleData()

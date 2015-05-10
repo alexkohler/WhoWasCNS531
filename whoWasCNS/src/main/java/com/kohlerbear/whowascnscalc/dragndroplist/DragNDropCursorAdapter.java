@@ -16,6 +16,9 @@
 
 package com.kohlerbear.whowascnscalc.dragndroplist;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -123,6 +126,8 @@ public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragN
         rowTitle.setText(s);
         final ImageView deleteButton = (ImageView) view.findViewById(R.id.deleteButton);
         final TextView liftText = (TextView) view.findViewById(R.id.liftText);
+
+        //Configure delete buttons
         if (AccessoryFragment.areDeleteButtonShown())
             deleteButton.setVisibility(View.VISIBLE);
         else
@@ -134,7 +139,7 @@ public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragN
                 final SwipeDismissListViewTouchListener touchListener = AccessoryFragment.getCurrentDismisser();
                 int currentRotation = 0;
                 RotateAnimation anim = new RotateAnimation(currentRotation, currentRotation + 90,
-                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,0.5f);
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 currentRotation = (currentRotation + 30) % 360;
 
                 anim.setInterpolator(new LinearInterpolator());
@@ -150,8 +155,7 @@ public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragN
                         db.execSQL("DELETE FROM " + AccessoryLiftSQLHelper.TABLE);
                         int orderCounter = 0;
                         ArrayList<String> values = AccessoryFragment.getCurrentListViewItemsStatic();
-                        for (String liftValue : values)
-                        {
+                        for (String liftValue : values) {
                             helper.addAccessoryLift(liftValue, AccessoryLiftSQLHelper.ACCESSORY_TYPE.BENCH, orderCounter);
                             orderCounter++;
                         }
@@ -163,7 +167,17 @@ public class DragNDropCursorAdapter extends SimpleCursorAdapter implements DragN
 
             }
         });
-        System.out.println();
+
+        //Configure configure buttons
+        final ImageView configureButton =  (ImageView) view.findViewById(R.id.configureIcon);
+        configureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//            if (AccessoryFragment.getCurrentListView().isLongClickable())
+                //show context menu
+
+            }
+        });
 
 
     }

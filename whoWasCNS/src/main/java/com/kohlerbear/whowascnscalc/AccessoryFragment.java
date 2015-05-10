@@ -53,6 +53,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
     Button changeLiftButton;
     AccessoryLiftSQLHelper helper;
     Menu mMenu;
+    ContextMenu mContextMenu;
 //    LayoutInflater mInflater;
 //    TextView listViewHeaderTextView;
 
@@ -165,6 +166,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
 
         dragNDroplistView.setItemsCanFocus(true);
         setDeleteButtonsShown(false);
+        getActivity().getActionBar().setTitle("Bench Accessories");
 
         return drawerLayout; // We must return the loaded Layout
     }
@@ -179,21 +181,25 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
             public void onClick(DialogInterface dialog, int which) {
 
                 if (which == 0){//Bench
+                    getActivity().getActionBar().setTitle("Bench Accessories");
                     currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.BENCH;
                     refreshListView();
                 }
                 if (which == 1)//Squat
                 {
+                    getActivity().getActionBar().setTitle("Squat Accessories");
                     currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.SQUAT;
                     refreshListView();
                 }
                 if (which == 2)//Deadlift
                 {
+                    getActivity().getActionBar().setTitle("Deadlift Accessories");
                     currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.DEADLIFT;
                     refreshListView();
                 }
                 if (which == 3)//OHP
                 {
+                    getActivity().getActionBar().setTitle("OHP Accessories");
                     currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.OHP;
                     refreshListView();
                 }
@@ -208,6 +214,8 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
 
         builder.show();
     }
+
+
 
     public static SwipeDismissListViewTouchListener getCurrentDismisser()
     {
@@ -282,6 +290,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+        mContextMenu = menu;
         menu.setHeaderTitle("Modify entry");
         menu.add(0, v.getId(), 0, "Move Item");
         menu.add(0, v.getId(), 0, "Rename Item");
@@ -299,6 +308,11 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
         v.setDrawingCacheEnabled(true);
         i.setIcon(createDrawableFromView(v));
 //code here
+    }
+
+    public void showContextMenu(View v)
+    {
+       getActivity().openContextMenu(v);
     }
 
     @Override
@@ -427,7 +441,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
         final EditText input = new EditText(getActivity());
         alert.setView(input);
 
-        alert.setPositiveButton("Change", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 dragNDroplistView.setDraggingEnabled(false);
                 registerForContextMenu(dragNDroplistView);
@@ -486,8 +500,6 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                 if (toggle) {//Edit Pressed
                     TextView v = new TextView(getActivity());
                     v.setTextColor(Color.WHITE);
-
-//                    v.setTypeface(Typeface.DEFAULT_BOLD);
                     v.setText("Done");
                     v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                     v.setDrawingCacheEnabled(true);
@@ -496,10 +508,6 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                     dragNDroplistView.setDraggingEnabled(true);
                     unregisterForContextMenu(dragNDroplistView);
                     setDeleteButtonsShown(true);
-                    //Long click listener
-                    //Null testing
-//                    View v = dragNDroplistView.getChildAt(0);
-//                    ImageView i = v.findViewWithTag();
                     changeLiftButton.setText("Add accessory lift");
                     currentButtonState = CHANGELIFT_BUTTON_STATE.ADD;
                     dragNDroplistView.setLongClickable(false);
@@ -507,16 +515,14 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                     return true;
                 } else //Done pressed
                 {
-//                    item.setIcon(R.drawable.ic_edit);
                     TextView v = new TextView(getActivity());
                     v.setTextColor(Color.WHITE);
                     v.setText("Edit");
                     v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-//                    v.setTypeface(Typeface.DEFAULT_BOLD);
                     v.setDrawingCacheEnabled(true);
                     item.setIcon(createDrawableFromView(v));
                     toggleListViewDeleteButtonShown(false);
-//                    setDeleteButtonsShown(false);
+                    setDeleteButtonsShown(false);//yes this actually does something for reinflation
                     dragNDroplistView.setDraggingEnabled(false);
                     registerForContextMenu(dragNDroplistView);
 
