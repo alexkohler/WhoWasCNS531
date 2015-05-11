@@ -1,3 +1,10 @@
 TODO:
+add back button to individual fragment views 
+get theme stuff working for individual fragment views 
 Figure out context menu listener 
 flesh out new fragments for individual view and get tracking working
+
+
+
+
+

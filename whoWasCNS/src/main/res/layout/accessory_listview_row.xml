@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="40dp"
+    android:id="@+id/listViewRowLayout"
+    android:gravity="center_vertical"
+    >
+
+    <TextView
+        android:id="@+id/setText"
+        android:gravity="left"
+        android:paddingLeft="4dp"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/weightEditText"
+        android:layout_toRightOf="@id/setText"
+        android:hint="weight"
+        android:layout_weight="1"
+        android:paddingRight="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_action_navigation_more_vert"
+        />
+    <EditText
+        android:id="@+id/repsEditText"
+        android:layout_toRightOf="@id/weightEditText"
+        android:hint="reps"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_action_navigation_more_vert"
+        android:layout_alignParentEnd="true" />
+
+
+</LinearLayout>

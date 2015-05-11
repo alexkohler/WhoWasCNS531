@@ -4,10 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/531Calc.iml" filepath="$PROJECT_DIR$/531Calc.iml" />
       <module fileurl="file://$PROJECT_DIR$/DragNDropList/DragNDropList.iml" filepath="$PROJECT_DIR$/DragNDropList/DragNDropList.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/drag-sort-listview/drag-sort-listview.iml" filepath="$PROJECT_DIR$/libraries/drag-sort-listview/drag-sort-listview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraries/drag-sort-listview/library/library.iml" filepath="$PROJECT_DIR$/libraries/drag-sort-listview/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/swipeBackLibrary/swipeBackLibrary.iml" filepath="$PROJECT_DIR$/swipeBackLibrary/swipeBackLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/whoWasCNS/whoWasCNS.iml" filepath="$PROJECT_DIR$/whoWasCNS/whoWasCNS.iml" />
     </modules>
   </component>
 </project>
-

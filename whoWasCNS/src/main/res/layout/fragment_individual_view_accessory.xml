@@ -1,96 +1,66 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.kohlerbear.whowascnscalc.IndividualViewAccessoryFragment">
+    android:orientation="vertical"
+    tools:context="com.kohlerbear.whowascnscalc.IndividualViewAccessoryFragment"
+    android:weightSum="1">
 
     <!-- TODO: Update blank fragment layout -->
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="283dp"
+        android:id="@+id/accessoryListView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/button3"
+        android:layout_weight="1.07" />
+
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:weightSum="1"
-        android:id="@+id/parentSetLayout"
-        android:layout_alignParentBottom="true">
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="0dp"
+        android:paddingLeft="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:id="@+id/accessoryListButtonLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/listView">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/setLayout1ChildTitles"
-            android:layout_width="match_parent"
-            android:layout_height="23dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/accessoryName" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
-                android:layout_gravity="top|center"
-                android:id="@+id/textView3" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Text"
-                android:layout_marginStart="100dp"
-                android:id="@+id/textView4" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
+        <Button
             android:layout_width="fill_parent"
-            android:id="@+id/setLayout1"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingRight="0dp"
+            android:paddingLeft="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:paddingBottom="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Remove set"
+            android:id="@+id/removeSetButton"
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="bottom" />
 
-            <RelativeLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:id="@+id/setLayout1Child">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="26dp"
-                    android:text="Set 1"
-                    android:layout_weight="1"
-                    android:id="@+id/setTitle1"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentTop="true" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:id="@+id/weightEditText1"
-                    android:imeOptions="actionNext"
-                    android:layout_weight="1"
-                    android:layout_alignBottom="@+id/repsEditText1"
-                    android:layout_alignParentEnd="true" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:layout_weight="1"
-                    android:imeOptions="actionNext"
-                    android:id="@+id/repsEditText1"
-                    android:layout_alignBottom="@+id/setTitle1"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-
-
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="0dp"
+            android:paddingLeft="0dp"
+            android:paddingBottom="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:text="Add set"
+            android:id="@+id/addSetButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="bottom"
+            android:layout_weight="1" />
 
     </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
