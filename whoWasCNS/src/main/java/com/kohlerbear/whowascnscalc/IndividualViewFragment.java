@@ -1,14 +1,19 @@
 package com.kohlerbear.whowascnscalc;
 
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.google.analytics.tracking.android.MapBuilder;
@@ -107,19 +112,45 @@ public class IndividualViewFragment extends Fragment {
 		static Resources resources;
 		static String viewMode;
 		static String[] liftPattern;
-	
+
+		static EditText l1EditText;
+		static EditText l2EditText;
+	    static EditText l3EditText;
+
+		//Information we need to persist data in database
+		static String m_liftDate;
+		static String m_liftDay;//Lift type and lift name are the same in the case of our main compound for the day
+		static String m_liftName;
+		static String m_frequency; //frequency probably wouldn't be bad to know either
+		static double m_firstLiftWeight;
+		static char m_firstLiftReps;
+		static double m_secondLiftWeight;
+		static char m_secondLiftReps;
+		static double m_thirdLiftWeight;
+		static char m_thirdLiftReps;
+		static int m_cycle;
+
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    View rootView = inflater.inflate(R.layout.fragment_individual_view, container, false);
-	    Bundle args = getArguments();
+	    Bundle 	args = getArguments();
 	     firstLiftTV = (TextView) rootView.findViewById(R.id.indVLiftOne);
 		 firstLiftErrTV = (TextView) rootView.findViewById(R.id.lift1ErrText);
 		 secondLiftTV = (TextView) rootView.findViewById(R.id.indVLiftTwo);
 		 secondLiftErrTV = (TextView) rootView.findViewById(R.id.lift2ErrText);
 		 thirdLiftTV = (TextView) rootView.findViewById(R.id.indVLiftThree);
 		 thirdLiftErrTV = (TextView) rootView.findViewById(R.id.lift3ErrText);
-		 
-		
+
+
+		//Handle some color scheme fun
+		l1EditText = (EditText) rootView.findViewById(R.id.repsHit1editText);
+		l2EditText = (EditText) rootView.findViewById(R.id.repsHit2editText);
+		l3EditText = (EditText) rootView.findViewById(R.id.repsHit3editText);
+		int primaryColor = ColorManager.getInstance(getActivity()).getPrimaryColor();
+		l1EditText.getBackground().setColorFilter(primaryColor, PorterDuff.Mode.SRC_ATOP);
+		l2EditText.getBackground().setColorFilter(primaryColor, PorterDuff.Mode.SRC_ATOP);
+		l3EditText.getBackground().setColorFilter(primaryColor, PorterDuff.Mode.SRC_ATOP);
 	 	
 	   //Lift one declarationss
        lift1Barbell = (ImageView) rootView.findViewById(R.id.liftOneBarbell);
@@ -185,13 +216,17 @@ public class IndividualViewFragment extends Fragment {
 	   
 		resources = getResources();
 	
-	   int cycle = args.getInt("cycle");
-	   String frequency = args.getString("frequency");
-	   String liftType = args.getString("liftType");
-	   double firstLift = args.getDouble("firstLift"); 
-	   double secondLift = args.getDouble("secondLift"); 	
-	   double thirdLift = args.getDouble("thirdLift"); 
-	   String date = args.getString("date");
+	   /*int cycle*/ m_cycle = args.getInt("cycle");
+	   /*String frequency*/ m_frequency = args.getString("frequency");
+	   /*String liftType*/ m_liftDay = args.getString("liftType");
+		m_liftName = m_liftDay; //only in the case of compounds
+	   m_firstLiftWeight = args.getDouble("firstLift");
+	   m_firstLiftReps = m_frequency.charAt(0);
+	   m_secondLiftWeight = args.getDouble("secondLift");
+       m_secondLiftReps = m_frequency.charAt(2);
+	   m_thirdLiftWeight = args.getDouble("thirdLift");
+       m_thirdLiftReps = m_frequency.charAt(4);
+	   /*String date*/m_liftDate = args.getString("date");
 	   String mode = args.getString("mode");
 	   viewMode = args.getString("viewMode");
 	   liftPattern = args.getStringArray("liftPattern");
@@ -201,18 +236,20 @@ public class IndividualViewFragment extends Fragment {
 	   	usingLbs = true;
 	   
 		
-	   generateWeights(firstLift, 1);
-	   generateWeights(secondLift, 2);
-	   generateWeights(thirdLift, 3);
-	   getActivity().setTitle(date);
+	   generateWeights(m_firstLiftWeight, 1);
+	   generateWeights(m_secondLiftWeight, 2);
+	   generateWeights(m_thirdLiftWeight, 3);
+	   getActivity().setTitle(m_liftDate);
 	   TextView dataMarquee = (TextView) rootView.findViewById(R.id.dataMarquee);
-	   dataMarquee.setText(liftType + " " + frequency  + " Cycle " + cycle);
-		firstLiftTV.setText(String.valueOf("Set 1: " + firstLift + "x" + frequency.charAt(0)));
-		secondLiftTV.setText(String.valueOf("Set 2: " + secondLift+ "x" + frequency.charAt(2)));
-		thirdLiftTV.setText(String.valueOf("Set 3: "  + thirdLift)+ "x" + frequency.charAt(4));
+	   dataMarquee.setText(m_liftDay + " " + m_frequency  + " Cycle " + m_cycle);
+       firstLiftTV.setText(String.valueOf("Set 1: " + m_firstLiftWeight + "x" + m_firstLiftReps));
+	   secondLiftTV.setText(String.valueOf("Set 2: " + m_secondLiftWeight+ "x" + m_secondLiftReps));
+	   thirdLiftTV.setText(String.valueOf("Set 3: "  + m_thirdLiftWeight)+ "x" + m_thirdLiftReps);
 	    
 	    return rootView;
 	}
+
+
 
 	double roundkg(double valueToBeRounded)
 	{
@@ -443,6 +480,33 @@ public class IndividualViewFragment extends Fragment {
 	        }
 		}
 	      
+	}
+
+	//Once this goes out of view, the viewpager handler will call this method and the data will be created or updated in the progress database
+	public void persistData() {
+		//Things we need to know: Date, lift day, accessory name, weight, reps
+        //Make sure textviews aren't empty, otherwise don't enter an entry. (So do an individual entry for each textview)
+		//public LongTermEvent(String liftDate, String cycle, String liftType, String liftName, String frequency, double firstLift, int firstLiftReps, double theoOneRepMax, boolean lbs)
+        if (l1EditText.getText().toString().trim().length() != 0) {//if the edittext is not empty
+			LongTermEvent liftOneEntry = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftDay, m_liftName, m_frequency, m_firstLiftWeight, m_firstLiftReps, usingLbs);
+			LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity().getApplicationContext());
+			//helper.getWritableDatabase().execSQL("create table LongTermRecords (liftDate text not null, Cycle text not null, Lift_Type text not null, Lift_name text not null, Frequency text not null, Weight real, Reps integer, Theoretical_Onerep real, Lb_Flag integer);");
+			helper.addEvent(liftOneEntry);
+//			Cursor test = helper.getWritableDatabase().rawQuery("SELECT * FROM LongTermRecords", null);
+//			String dump = DatabaseUtils.dumpCursorToString(test);
+//			System.out.println(dump);
+		}
+        if (l2EditText.getText().toString().trim().length() != 0) {
+			LongTermEvent liftTwoEntry = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftDay, m_liftName, m_frequency, m_secondLiftWeight, m_secondLiftReps, usingLbs);
+			LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity().getApplicationContext());
+			helper.addEvent(liftTwoEntry);
+        }
+        if (l3EditText.getText().toString().trim().length() != 0) {
+			LongTermEvent liftThreeEntry = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftDay, m_liftName, m_frequency, m_thirdLiftWeight, m_thirdLiftReps, usingLbs);
+			LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity().getApplicationContext());
+			helper.addEvent(liftThreeEntry);
+        }
+
 	}
 
 

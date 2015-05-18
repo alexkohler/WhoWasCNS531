@@ -3,6 +3,7 @@ package com.kohlerbear.whowascnscalc;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,9 +21,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import javax.sql.RowSet;
 
 
 public class IndividualViewAccessoryFragment extends Fragment {
@@ -39,6 +43,13 @@ public class IndividualViewAccessoryFragment extends Fragment {
     private MyAdapter accessoryListAdapter;
     private int m_numberSets = 1;
 
+    private String m_liftDate;
+    private int m_cycle;
+    private String m_liftType;
+    private String m_frequency;
+    private String m_accessoryName;
+    private boolean m_usingLbs;
+
 
 
 
@@ -49,12 +60,20 @@ public class IndividualViewAccessoryFragment extends Fragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_individual_view_accessory, container, false);
             Bundle args = getArguments();
             final ListView myListView = (ListView) rootView.findViewById(R.id.accessoryListView);
             Button addSetButton = (Button) rootView.findViewById(R.id.addSetButton);
             Button removeSetButton = (Button) rootView.findViewById(R.id.removeSetButton);
 
+            //Take care of theming (Button colors)
+            ColorManager colormanager = ColorManager.getInstance(getActivity());
+            addSetButton.setBackgroundColor(colormanager.getPrimaryColor());
+            addSetButton.setTextColor(colormanager.getTextColor());
+            removeSetButton.setBackgroundColor(colormanager.getPrimaryColor());
+            removeSetButton.setTextColor(colormanager.getTextColor());
+            colormanager.clear();//not sure why I used singleton pattern here.. guess there was still some script kiddy in me back then
 
             final ArrayList<rowSet> rows = new ArrayList<rowSet>();
             rows.add(new rowSet(-1, -1, "Set 1: "));
@@ -87,12 +106,43 @@ public class IndividualViewAccessoryFragment extends Fragment {
             String s = args.getString("accessory");
             t.setText(args.getString("accessory"));*/
 
-
+            //Grab our arguments
+            m_cycle = args.getInt("cycle");
+	        m_frequency = args.getString("frequency");
+            m_liftType = args.getString("liftType");
+            m_liftDate = args.getString("date");
+            m_accessoryName = args.getString("accessory");
+            String mode = args.getString("mode");
+            if (mode.equals("0"))
+                m_usingLbs = false;
+            else
+                m_usingLbs = true;
 
 
 
             return rootView;
         }
+
+    //Once this goes out of view, the viewpager handler will call this method and the data will be created or updated in the progress database
+    public void persistData() {
+
+
+        //This will start by simply making toast of what it should be inserting into the database
+        String buffer = "";
+        for (rowSet entry : accessoryListAdapter.getAccessoryEntries())
+        {
+            if (entry.getWeight() > 0) { //initialized with -1, we don't want these empty entries
+                //buffer = buffer + entry.getSet() + " " + entry.getWeight() + "x" + entry.getReps();
+//                public LongTermEvent(String liftDate, String cycle, String liftType, String liftName, String frequency, double weight, int reps, boolean lbs)
+                LongTermEvent accessoryEvent = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftType, m_accessoryName, m_frequency, entry.getWeight(), entry.getReps(), m_usingLbs);
+                LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
+                helper.addEvent(accessoryEvent);
+
+            }
+        }
+        Toast.makeText(getActivity(), "Accessories added", Toast.LENGTH_SHORT).show();
+
+    }
 
     //Create a small custom listview adapter
     public class MyAdapter extends ArrayAdapter<rowSet> {
@@ -106,6 +156,10 @@ public class IndividualViewAccessoryFragment extends Fragment {
 
             this.context = context;
             this.itemsArrayList = itemsArrayList;
+        }
+
+        public ArrayList<rowSet> getAccessoryEntries() {
+            return itemsArrayList;
         }
 
         @Override
@@ -210,6 +264,8 @@ public class IndividualViewAccessoryFragment extends Fragment {
         {
             mrowSet_reps = reps;
         }
+
+
 
 
     }

@@ -16,6 +16,7 @@ public class ColorManager {
     }
     static Context m_context;
     static int primaryColor;
+    static int textColor;
 
     //Third Screen
     static int stickyHeaderBackgroundColor;
@@ -39,6 +40,7 @@ public class ColorManager {
                     trainingMaxesStreamColor = Color.parseColor("#607D8B"); //500
                     configureButtonColor = Color.parseColor("#546E7A");//600
                     calendarDividerColor = Color.parseColor("#607D8B"); //500
+                    textColor = Color.WHITE;
                     break;
 
                 case "Orange":
@@ -48,6 +50,7 @@ public class ColorManager {
                     trainingMaxesStreamColor = Color.parseColor("#FF5722"); //500
                     configureButtonColor = Color.parseColor("#F4511E");//600
                     calendarDividerColor = Color.parseColor("#FF5722"); //500
+                    textColor = Color.WHITE;
                     break;
 
                 default:
@@ -57,6 +60,7 @@ public class ColorManager {
                     trainingMaxesStreamColor = Color.parseColor("#607D8B"); //500
                     configureButtonColor = Color.parseColor("#546E7A");//600
                     calendarDividerColor = Color.parseColor("#607D8B"); //500
+                    textColor = Color.WHITE;
                     break;
             }
 
@@ -90,4 +94,6 @@ public class ColorManager {
     int getTrainingMaxesStreamColor() { return trainingMaxesStreamColor; }
 
     int getCalendarDividerColor() { return calendarDividerColor; }
+
+    int getTextColor() {return textColor; }
 }

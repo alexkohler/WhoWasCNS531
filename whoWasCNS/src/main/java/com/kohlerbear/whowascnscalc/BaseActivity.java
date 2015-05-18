@@ -14,6 +14,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.audiofx.BassBoost;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -237,16 +238,23 @@ public class BaseActivity extends ActionBarActivity {
              finish();
 		 break;
 		 case 5://testing arena
-             Intent i = new Intent(Intent.ACTION_SEND);
-             i.setType("message/rfc822");
-             i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"recipient@example.com"});
-             i.putExtra(Intent.EXTRA_SUBJECT, "Concerning the 5/3/1 app");
-             i.putExtra(Intent.EXTRA_TEXT   , "message body");
-             try {
-                 startActivity(Intent.createChooser(i, "Send mail..."));
-             } catch (android.content.ActivityNotFoundException ex) {
-                 Toast.makeText(BaseActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-             }
+			 String[] TO = {"amrood.admin@gmail.com"};
+			 Intent emailIntent = new Intent(Intent.ACTION_SEND);
+			 emailIntent.setData(Uri.parse("mailto:"));
+			 emailIntent.setType("message/rfc822");
+
+
+			 emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"toaddress@gmail.com"});
+			 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+			 emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+
+			 try {
+				 startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+				 finish();
+			 } catch (android.content.ActivityNotFoundException ex) {
+				 Toast.makeText(getApplicationContext(),
+						 "There is no email client installed.", Toast.LENGTH_SHORT).show();
+			 }
              break;
 		default:
 			break;

@@ -69,16 +69,16 @@ public class OpeningDashboardActivity extends BaseActivity {
          * Creating all buttons instances
          * */
         // Dashboard News feed button
-        Button btn_newsfeed = (Button) findViewById(R.id.btn_news_feed);
+        Button btn_today_lift = (Button) findViewById(R.id.btn_news_feed);
 
         // Dashboard Friends button
-        Button btn_friends = (Button) findViewById(R.id.btn_friends);
+        Button btn_acc_temp = (Button) findViewById(R.id.btn_friends);
 
         // Dashboard Messages button
-        Button btn_messages = (Button) findViewById(R.id.btn_messages);
+        Button btn_track_bw = (Button) findViewById(R.id.btn_messages);
 
         // Dashboard Places button
-        Button btn_places = (Button) findViewById(R.id.btn_places);
+        Button btn_view_prog = (Button) findViewById(R.id.btn_places);
 
         // Dashboard Events button
         Button btn_events = (Button) findViewById(R.id.btn_events);
@@ -91,7 +91,7 @@ public class OpeningDashboardActivity extends BaseActivity {
          * */
 
         // Listening to News Feed button click
-        btn_newsfeed.setOnClickListener(new View.OnClickListener() { //Go to today's lift placeholder
+        btn_today_lift.setOnClickListener(new View.OnClickListener() { //Go to today's lift placeholder
 /*            String myFrequency = myEntries[2];
             String myLiftType = myEntries[1];
             String myCycle = myEntries[0];
@@ -123,6 +123,7 @@ public class OpeningDashboardActivity extends BaseActivity {
                 SQLiteDatabase db = eventsData.getReadableDatabase();
                 Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, "liftDate = '" + currentDateString + "'", null, null,
                         null, null);
+//                String s = DatabaseUtils.dumpCurrentRowToString(cursor);
                 ConfigTool ct = new ConfigTool(getApplicationContext());
                 if (!ct.dbEmpty()) {
                     if (cursor.moveToNext()) {
@@ -153,26 +154,23 @@ public class OpeningDashboardActivity extends BaseActivity {
         });
 
         // Listening Friends button click
-        btn_friends.setOnClickListener(new View.OnClickListener() { //Accesory template placeholder
+        btn_acc_temp.setOnClickListener(new View.OnClickListener() { //Accesory template placeholder
 
             @Override
             public void onClick(View view) {
-             Fragment accessoryFragment = new AccessoryFragment();
-             FragmentManager accessoryFM = getSupportFragmentManager();
-             FragmentTransaction accessoryFT = accessoryFM.beginTransaction();
-             accessoryFT.replace(R.id.home_root, accessoryFragment);
+                Fragment accessoryFragment = new AccessoryFragment();
+                FragmentManager accessoryFM = getSupportFragmentManager();
+                FragmentTransaction accessoryFT = accessoryFM.beginTransaction();
+                accessoryFT.replace(R.id.home_root, accessoryFragment);
 //             accessoryFT.addToBackStack(null);
-             accessoryFT.commit();
+                accessoryFT.commit();
             }
-
-
-
 
 
         });
 
         // Listening Messages button click
-        btn_messages.setOnClickListener(new View.OnClickListener() {
+        btn_track_bw.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -180,10 +178,15 @@ public class OpeningDashboardActivity extends BaseActivity {
         });
 
         // Listening to Places button click
-        btn_places.setOnClickListener(new View.OnClickListener() {
+        btn_view_prog.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
+                Fragment viewprogfragment = new ProgressOverviewFragment();
+                FragmentManager accessoryFM = getSupportFragmentManager();
+                FragmentTransaction accessoryFT = accessoryFM.beginTransaction();
+                accessoryFT.replace(R.id.home_root, viewprogfragment);
+                accessoryFT.commit();
             }
         });
 

@@ -79,7 +79,7 @@
         <activity
             android:name=".IndividualViewsPrototype"
             android:label="@string/title_activity_individual_views_prototype"
-            android:theme="@style/AppBaseLightThemeNoTitleBar" >
+            android:theme="@style/AppBaseLight" >
         </activity>
         <activity
             android:name=".TabPrototype"
@@ -88,14 +88,14 @@
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
-            android:name=".IndividualDayView"
-            android:label="@string/title_activity_individual_day_view"
-            android:theme="@style/AppBaseTheme" >
-        </activity>
-        <activity
             android:name=".AccessoryFragment"
             android:label="@string/title_activity_accessory_lift_tab_host"
             android:theme="@style/AppBaseTheme" >
+        </activity>
+        <activity
+            android:name=".ProgressIndividualActivity"
+            android:label="@string/title_activity_progress_individual"
+            android:theme="@style/AppBaseTheme">
         </activity>
     </application>
 

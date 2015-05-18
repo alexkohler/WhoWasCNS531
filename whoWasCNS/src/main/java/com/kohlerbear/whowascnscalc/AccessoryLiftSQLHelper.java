@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class AccessoryLiftSQLHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Lifts.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     // Table name
     public static final String TABLE = "AccessoryTemplates";
@@ -88,7 +88,7 @@ public class AccessoryLiftSQLHelper extends SQLiteOpenHelper {
 
         Cursor c = getWritableDatabase().query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + type.name().toUpperCase() + "' ORDER BY LIFT_ORDER ASC", null, null,
                 null, null);//TODO type query
-        String debugString = DatabaseUtils.dumpCursorToString(c);
+   //     String debugString = DatabaseUtils.dumpCursorToString(c);
         String updateSQL = "UPDATE " + TABLE + " SET " +
                 ACCESSORY + "= '" + newEntry + "' " +
                 "WHERE " + ACCESSORY + "= '" + oldEntry + "' " +
@@ -97,7 +97,7 @@ public class AccessoryLiftSQLHelper extends SQLiteOpenHelper {
         getWritableDatabase().execSQL(updateSQL);
         c = getWritableDatabase().query(AccessoryLiftSQLHelper.TABLE, new String[]{"rowid _id", AccessoryLiftSQLHelper.ACCESSORY}, "ACCESSORY_TYPE = '" + type.name().toUpperCase() + "' ORDER BY LIFT_ORDER ASC", null, null,
                 null, null);//TODO type query
-        debugString = DatabaseUtils.dumpCursorToString(c);
+   //     debugString = DatabaseUtils.dumpCursorToString(c);
         System.out.println();
 
     }

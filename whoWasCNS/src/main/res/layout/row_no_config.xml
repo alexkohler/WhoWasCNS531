@@ -28,13 +28,4 @@
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <ImageView
-        android:id="@+id/configureIcon"
-        android:layout_alignParentRight="true"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_action_navigation_more_vert"
-        android:layout_marginRight="8px"
-        />
-
 </RelativeLayout>

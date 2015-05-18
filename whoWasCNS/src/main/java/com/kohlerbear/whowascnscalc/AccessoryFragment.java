@@ -42,7 +42,6 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropCursorAdapter;
 import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
 
 
-/* NEW FUCKIN PLAN, WHEN A VIEW IS CHANGED, OR ONDESTROY IS CALLED OR SOME SHIT, MAKE SURE THERE IS AN UPDATE LIKE YOUR CONFIGUREBUTTON PRESSED. BOOM ROASTED*/
     public class AccessoryFragment extends Fragment {
     DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -374,7 +373,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
     }
 
 
-
+    //Needs to be done with
     public void toggleListViewDeleteButtonShown(boolean shown) {
         int count = getCurrentListViewItems().size();
         for (int i = 0; i < count/*adapter.getCount()*/; i++) {

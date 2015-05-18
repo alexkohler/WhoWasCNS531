@@ -122,7 +122,7 @@ ADDED from AndroidManifest.xml:84:9
 		ADDED from AndroidManifest.xml:87:13
 	android:name
 		ADDED from AndroidManifest.xml:85:13
-activity#com.kohlerbear.whowascnscalc.IndividualDayView
+activity#com.kohlerbear.whowascnscalc.AccessoryFragment
 ADDED from AndroidManifest.xml:90:9
 	android:label
 		ADDED from AndroidManifest.xml:92:13
@@ -130,11 +130,3 @@ ADDED from AndroidManifest.xml:90:9
 		ADDED from AndroidManifest.xml:93:13
 	android:name
 		ADDED from AndroidManifest.xml:91:13
-activity#com.kohlerbear.whowascnscalc.AccessoryFragment
-ADDED from AndroidManifest.xml:95:9
-	android:label
-		ADDED from AndroidManifest.xml:97:13
-	android:theme
-		ADDED from AndroidManifest.xml:98:13
-	android:name
-		ADDED from AndroidManifest.xml:96:13

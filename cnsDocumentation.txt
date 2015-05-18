@@ -205,3 +205,39 @@ time went - just reimport the workspace/531Calc project. Gradle and everything i
 1-18-14: Random listview fixes, categories and self standing data with nice entry add dialog, hopefully some more bells and whistles tomorrow
 
 5-10-14: Back from school, time to finish this bad boy up. :)
+
+5-11-14: Got basic accessory entry template done with (front end), need to persist data in a database and then be able to view it in view progress
+
+5-12-14: * Outlining of persistence, getting some lag so taking a break but you need to look into figuring out swipe direction because this affects what the "previous" fragment will be. On the last page you either need to have a "notes" fragment or something to "conclude" the workout and finish up your last page. I still like the idea of persistig on swipe, I don't think it's too expensive and is probably better for the user. (pager is in IndividualViewsPrototype)
+
+* Got basic insert working for compound lift, flesh this out a little more because you're going to have to worry about multiple entries every time you peersist (if an entry already exists for the specified date, llift type, and lift name (date is essentially unique), have an update instead of insert statement (insert or replace)
+ http://stackoverflow.com/questions/2251699/sqlite-insert-or-replace-into-vs-update-where	
+
+5-13-14: Finished up basic compound lift insertion, 
+*you need to create a custom adapter to handle your delete button/row stuff. 
+*You then need to add an onclick listener to go into the individual workout for each lift. (Graphs eventually? Go minimal to get this out)
+
+5-14-14: Added nicer spotify-esque listview deletion with that weird bug you ran into last time with the accessory template. 
+
+
+Bug: delete button disappears after single deletion, same bug you were experiencing a couple months ago
+
+
+5-15-14: Fixed casting problem when jumping in and out, that's what you get for using the static keyword too freely. Still no luck on the deletion thing, I'm pretty sure you're going to have to write a custom adapter and rewrite your code in BindView to get that to work properly. It's a small bug in the grand scheme of things and I'm going to continue pressing forward. All date entries were showing up in the general view progress page, fixed by a simple group by clause. 
+
+
+5-17-14: Random fixes, getting individual progress views going.. It's starting to take shape. 
+
+Things left to do:
+
+custom array adapter to fix delete button problems on progress overview
+
+view by button for progress overview
+
+custom array adapter to show individual views (table row stuff from third screen is a good idea)
+
+once individual views page hooked up, make sure it can support being called from each accessory fragment (for sake of tracking progress)
+
+weight tracking page should be final accessory added to viewpager to "finish workout", and provides extra sanity towards making sure everything is persisted (final accessory page may not be persisted otherwise
+
+graphs wouldn't be a bad idea

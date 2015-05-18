@@ -231,5 +231,6 @@
     </string-array>
     <string name="pref_colorSchemeTypes_default">Orange</string>
     <string name="menu_title">Edit</string>
+    <string name="title_activity_progress_individual">ProgressIndividualActivity</string>
 
 </resources>
