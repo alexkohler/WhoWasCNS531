@@ -1,6 +1,11 @@
 package com.kohlerbear.whowascnscalc;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -33,6 +38,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,14 +75,103 @@ public class ProgressOverviewFragment extends Fragment {
         //take care of colors
         Button viewByButton = (Button) drawerLayout.findViewById(R.id.progressConfigureButton);
         ColorManager manager = ColorManager.getInstance(getActivity());
-        viewByButton.setBackgroundColor(manager.getPrimaryColor());
+        final int primaryColor = manager.getPrimaryColor();
+        viewByButton.setBackgroundColor(primaryColor);
+        ColorManager.clear();
+
+        //Manage back end for view by button
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        CharSequence optionsArray[] = new CharSequence[] {"Show all", "Bench", "Squat", "OHP", "Deadlift", "5-5-5", "3-3-3", "5-3-1", "Cancel" };
+
+        builder.setTitle("View only..");
+        builder.setItems(optionsArray, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+                switch (which)
+                {
+                    case 0: //Show all
+
+                        break;
+                    case 1://Bench
+
+                        break;
+                    case 2: //Squat
+
+                        break;
+
+                    case 3: //OHP
+
+                        break;
+
+                    case 4: //Deadlift
+
+                        break;
+
+                    case 5: //5-5-5
+
+                        break;
+
+                    case 6: //3-3-3
+
+                        break;
+
+                    case 7://5-3-1
+
+                        break;
+
+                    case 8: //cancel
+
+                        break;
+
+
+                }
+
+                if (which == 0) {//Bench
+                }
+                if (which == 1) //Squat
+                {
+
+                }
+                if (which == 2){//OHP
+
+                }
+                if (which == 3){ //Deadlift
+
+                }
+
+
+            }
+
+        });
+
+        viewByButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog d = builder.show();
+                int textViewId = d.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+                TextView tv = (TextView) d.findViewById(textViewId);
+                tv.setTextColor(primaryColor);
+                int x = Resources.getSystem().getIdentifier("titleDivider","id", "android");
+                View titleDivider = d.findViewById(x);
+                titleDivider.setBackgroundColor(primaryColor);
+//                int dividerId = d.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
+//                View divider = d.findViewById(dividerId);
+//                if (dividerId != 0) {
+//                    divider.setBackgroundColor(getResources().getColor(primaryColor));
+//                }
+            }
+        });
+
 
 
         progress_listView = (ListView) drawerLayout.findViewById(R.id.prog_listView);
         List<LongTermEvent> events = new ArrayList<LongTermEvent>();
         LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
         SQLiteDatabase db = helper.getWritableDatabase();
-        ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressList());
+//        ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressList());
+        ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressList(), false);
         progress_listView.setAdapter(mArrayAdapter);
         drawerLayout.setBackgroundColor(Color.BLACK);
         registerForContextMenu(progress_listView);
@@ -105,6 +200,7 @@ public class ProgressOverviewFragment extends Fragment {
         // findViewById(R.id.someGuiElement);
         return drawerLayout; // We must return the loaded Layout
     }
+
 
     /*************************************************
      Methods to manage context button
@@ -149,10 +245,13 @@ public class ProgressOverviewFragment extends Fragment {
         LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(LongTermDataSQLHelper.TABLE, LongTermDataSQLHelper.LIFTDATE + "=? and " + LongTermDataSQLHelper.LIFT_TYPE + "=? and " + LongTermDataSQLHelper.FREQUENCY + "=?", args);
-        ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressList());//have separate layout with visibility
+        //ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressList());//have separate layout with visibility
+        ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressList(), true);
         progress_listView.setAdapter(mArrayAdapter);
         toggleListViewDeleteButtonShown(true);
     }
+
+
 
 
     /*************************************************
@@ -235,21 +334,12 @@ public class ProgressOverviewFragment extends Fragment {
                                             LongTermEvent eventToRemove = (LongTermEvent) progress_listView.getAdapter().getItem(currentPosition);
                                             removeLiftBasedOnListViewEntry(eventToRemove.getLiftDate(), eventToRemove.getLiftType(), eventToRemove.getFrequency());
 
-/*                                            int count = progress_listView.getAdapter().getCount();
-                                            for (int i = 0; i < count; i++) {
-                                                final View currentChild = progress_listView.getChildAt(i);
-                                                if (currentChild != null) {
-                                                    final ImageView deleteButton = (ImageView) currentChild.findViewById(R.id.deleteButton);
-//                                                    final TextView currentRowText = (TextView) currentChild.findViewById(R.id.liftText);
-                                                    deleteButton.setVisibility(View.VISIBLE);
-                                                }
-                                            }*/
                                         }
-                                    },610);
+                                    }, 610);
 
 
-                                    }
-                                }, 410);
+                                }
+                            }, 410);
                                     deleteButton.startAnimation(anim);
 
 

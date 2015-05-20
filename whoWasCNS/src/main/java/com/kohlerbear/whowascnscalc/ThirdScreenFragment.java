@@ -3,9 +3,11 @@ package com.kohlerbear.whowascnscalc;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -80,6 +82,7 @@ public class ThirdScreenFragment extends Fragment
     Cursor cursor;
     String lbmode;
     DrawerLayout drawerLayout;
+    int primaryColor;
 
 //    TableRow titleTableRow;
 
@@ -154,7 +157,7 @@ public class ThirdScreenFragment extends Fragment
         configureButton.setOnClickListener(optionsListener);
 
         //colors
-        int primaryColor = ColorManager.getInstance(getActivity()).getPrimaryColor();
+        primaryColor = ColorManager.getInstance(getActivity()).getPrimaryColor();
         configureButton.setBackgroundColor(ColorManager.getInstance(getActivity()).getConfigureButtonColor());
         trainingMaxesStream.setBackgroundColor(ColorManager.getInstance(getActivity()).getTrainingMaxesStreamColor());
         ColorManager.clear();
@@ -243,8 +246,16 @@ public class ThirdScreenFragment extends Fragment
                                 })
                                 .create();
                           ConfigTool ct = new ConfigTool(getActivity());
-                        if (!ct.dbEmpty())
-                            builder.show();
+                        if (!ct.dbEmpty()) {
+                            Dialog d = builder.show();
+                            int textViewId = d.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+                            TextView tv = (TextView) d.findViewById(textViewId);
+                            tv.setTextColor(primaryColor);
+                            int x = Resources.getSystem().getIdentifier("titleDivider","id", "android");
+                            View titleDivider = d.findViewById(x);
+                            titleDivider.setBackgroundColor(primaryColor);
+
+                        }
                         else
                           {
                             onPositiveButtonPressed();
@@ -334,7 +345,13 @@ public class ThirdScreenFragment extends Fragment
                 }
 
             });
-            builder.show();
+            Dialog d = builder.show();
+            int textViewId = d.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+            TextView tv = (TextView) d.findViewById(textViewId);
+            tv.setTextColor(primaryColor);
+            int x = Resources.getSystem().getIdentifier("titleDivider","id", "android");
+            View titleDivider = d.findViewById(x);
+            titleDivider.setBackgroundColor(primaryColor);
 
         }};
 
@@ -549,7 +566,13 @@ public class ThirdScreenFragment extends Fragment
             }//end outter onclick
         });//end outter which listener
 
-        builder2.show();
+        Dialog d = builder2.show();
+        int textViewId = d.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+        TextView tv = (TextView) d.findViewById(textViewId);
+        tv.setTextColor(primaryColor);
+        int x = Resources.getSystem().getIdentifier("titleDivider", "id", "android");
+        View titleDivider = d.findViewById(x);
+        titleDivider.setBackgroundColor(primaryColor);
 
     }//end createViewBuilder
     public void createShiftDateBuilder()
@@ -591,7 +614,13 @@ public class ThirdScreenFragment extends Fragment
             }//end outter onclick
         });//end outter which listener
 
-        builder2.show();
+        Dialog d = builder2.show();
+        int textViewId = d.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+        TextView tv = (TextView) d.findViewById(textViewId);
+        tv.setTextColor(primaryColor);
+        int x = Resources.getSystem().getIdentifier("titleDivider","id", "android");
+        View titleDivider = d.findViewById(x);
+        titleDivider.setBackgroundColor(primaryColor);
 
     }//end createShiftDateBui;der
 

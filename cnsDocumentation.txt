@@ -228,9 +228,9 @@ Bug: delete button disappears after single deletion, same bug you were experienc
 
 5-17-14: Random fixes, getting individual progress views going.. It's starting to take shape. 
 
-Things left to do:
+5-18-14: added custom array adapter to fix delete button problems, started to flesh out view by button for progress overview and experimented a bit with custom builders, all now use primary text color 
 
-custom array adapter to fix delete button problems on progress overview
+Things left to do:
 
 view by button for progress overview
 
@@ -241,3 +241,5 @@ once individual views page hooked up, make sure it can support being called from
 weight tracking page should be final accessory added to viewpager to "finish workout", and provides extra sanity towards making sure everything is persisted (final accessory page may not be persisted otherwise
 
 graphs wouldn't be a bad idea
+
+fix your damn master branch
