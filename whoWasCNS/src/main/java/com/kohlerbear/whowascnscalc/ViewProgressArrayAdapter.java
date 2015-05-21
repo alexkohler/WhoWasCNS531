@@ -76,7 +76,7 @@ public class ViewProgressArrayAdapter extends ArrayAdapter<LongTermEvent> {
                                 LongTermDataSQLHelper helper = new LongTermDataSQLHelper(context);
                                 SQLiteDatabase db = helper.getWritableDatabase();
                                 LongTermEvent eventToRemove = values[finalPos];
-                                Toast.makeText(context, "remove", Toast.LENGTH_SHORT).show();
+                                //.makeText(context, "remove", Toast.LENGTH_SHORT).show();
                                 String[] args = new String[3];
                                 args[0] = eventToRemove.getLiftDate();
                                 args[1] = eventToRemove.getLiftType();

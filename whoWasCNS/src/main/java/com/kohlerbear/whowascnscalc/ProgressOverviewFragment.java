@@ -59,6 +59,7 @@ public class ProgressOverviewFragment extends Fragment {
     //Keep track of menu for sake of delete button
     Menu mMenu;
     ListView progress_listView;
+    ThirdScreenFragment.CURRENT_VIEW m_currentView = ThirdScreenFragment.CURRENT_VIEW.DEFAULT;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentActivity faActivity  = (FragmentActivity)    super.getActivity();
@@ -81,7 +82,7 @@ public class ProgressOverviewFragment extends Fragment {
 
         //Manage back end for view by button
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        CharSequence optionsArray[] = new CharSequence[] {"Show all", "Bench", "Squat", "OHP", "Deadlift", "5-5-5", "3-3-3", "5-3-1", "Cancel" };
+        CharSequence optionsArray[] = new CharSequence[] {"Show all", "Bench only", "Squat only", "OHP only", "Deadlift only", "5-5-5 only", "3-3-3 only", "5-3-1 only", "Cancel" };
 
         builder.setTitle("View only..");
         builder.setItems(optionsArray, new DialogInterface.OnClickListener() {
@@ -92,55 +93,37 @@ public class ProgressOverviewFragment extends Fragment {
                 switch (which)
                 {
                     case 0: //Show all
-
+                        m_currentView = ThirdScreenFragment.CURRENT_VIEW.DEFAULT;
                         break;
                     case 1://Bench
-
+                        m_currentView = ThirdScreenFragment.CURRENT_VIEW.BENCH;
                         break;
                     case 2: //Squat
-
+                        m_currentView = ThirdScreenFragment.CURRENT_VIEW.SQUAT;
                         break;
-
                     case 3: //OHP
-
+                        m_currentView = ThirdScreenFragment.CURRENT_VIEW.OHP;
                         break;
-
                     case 4: //Deadlift
-
+                        m_currentView = ThirdScreenFragment.CURRENT_VIEW.DEAD;
                         break;
-
                     case 5: //5-5-5
-
+                        m_currentView = ThirdScreenFragment.CURRENT_VIEW.FIVES;
                         break;
-
                     case 6: //3-3-3
-
+                        m_currentView = ThirdScreenFragment.CURRENT_VIEW.THREES;
                         break;
-
                     case 7://5-3-1
-
+                        m_currentView = ThirdScreenFragment.CURRENT_VIEW.ONES;
                         break;
-
                     case 8: //cancel
 
                         break;
-
-
                 }
 
-                if (which == 0) {//Bench
-                }
-                if (which == 1) //Squat
-                {
-
-                }
-                if (which == 2){//OHP
-
-                }
-                if (which == 3){ //Deadlift
-
-                }
-
+                LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
+                ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressList(m_currentView), false);
+                progress_listView.setAdapter(mArrayAdapter);
 
             }
 
@@ -171,7 +154,7 @@ public class ProgressOverviewFragment extends Fragment {
         LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
         SQLiteDatabase db = helper.getWritableDatabase();
 //        ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressList());
-        ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressList(), false);
+        ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressList(m_currentView), false);
         progress_listView.setAdapter(mArrayAdapter);
         drawerLayout.setBackgroundColor(Color.BLACK);
         registerForContextMenu(progress_listView);
@@ -187,9 +170,11 @@ public class ProgressOverviewFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
             {
                 LongTermEvent clickedEvent = (LongTermEvent) progress_listView.getItemAtPosition(position);
-                Intent intent = new Intent(getActivity(), ProgressIndividualActivity.class);
-                intent.putExtra("date", clickedEvent.getLiftDate());
-                startActivity(intent);
+                if (!clickedEvent.toString().contains("No previous")) {
+                    Intent intent = new Intent(getActivity(), ProgressIndividualActivity.class);
+                    intent.putExtra("date", clickedEvent.getLiftDate());
+                    startActivity(intent);
+                }
 
             }
         });
@@ -226,9 +211,8 @@ public class ProgressOverviewFragment extends Fragment {
 //            progress_listView
 
 
-            String listViewEntry = ((TextView) info.targetView).getText().toString();
-            if (!listViewEntry.contains("No previous workouts found!")) {//don't allow deletion of the "empty listview" entry
-                LongTermEvent clickedEvent = (LongTermEvent) progress_listView.getAdapter().getItem(info.position);
+            LongTermEvent clickedEvent = (LongTermEvent) progress_listView.getAdapter().getItem(info.position);
+            if (!clickedEvent.toString().contains("No previous")) {//don't allow deletion of the "empty listview" entry
                 removeLiftBasedOnListViewEntry(clickedEvent.getLiftDate(), clickedEvent.getLiftType(), clickedEvent.getFrequency());
             }
         }
@@ -246,7 +230,7 @@ public class ProgressOverviewFragment extends Fragment {
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(LongTermDataSQLHelper.TABLE, LongTermDataSQLHelper.LIFTDATE + "=? and " + LongTermDataSQLHelper.LIFT_TYPE + "=? and " + LongTermDataSQLHelper.FREQUENCY + "=?", args);
         //ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressList());//have separate layout with visibility
-        ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressList(), true);
+        ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressList(m_currentView), true);
         progress_listView.setAdapter(mArrayAdapter);
         toggleListViewDeleteButtonShown(true);
     }

@@ -108,9 +108,45 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
 
 
     //"create table " + TABLE + "(liftDate text not null, Cycle text not null, Lift_Type text not null, Lift_name text not null, Frequency text not null, Weight real, Reps integer, Theoretical_Onerep real, Lb_Flag integer)
-    public List<LongTermEvent> getProgressList(){ //this will give us individual entries grouped by liftDate (a single entry for each lift date)
+    public List<LongTermEvent> getProgressList(ThirdScreenFragment.CURRENT_VIEW view){ //this will give us individual entries grouped by liftDate (a single entry for each lift date)
+
+
+
+        String whereClause = "";
+        switch (view)
+        {
+            case DEFAULT:
+                whereClause = "";
+                break;
+            case BENCH:
+                whereClause = " WHERE " + LongTermDataSQLHelper.LIFT_TYPE + "=" +"'Bench'";
+                break;
+            case SQUAT:
+                whereClause = " WHERE " + LongTermDataSQLHelper.LIFT_TYPE + "=" +"'Squat'";
+                break;
+            case OHP:
+                whereClause = " WHERE " + LongTermDataSQLHelper.LIFT_TYPE + "=" +"'OHP'";
+                break;
+            case DEAD:
+                whereClause = " WHERE " + LongTermDataSQLHelper.LIFT_TYPE + "=" +"'Deadlift'";
+                break;
+            case FIVES:
+                whereClause = " WHERE " + LongTermDataSQLHelper.FREQUENCY + "=" + "'5-5-5'";
+                break;
+            case THREES:
+                whereClause = " WHERE " + LongTermDataSQLHelper.FREQUENCY + "=" + "'3-3-3'";
+                break;
+            case ONES:
+                whereClause = " WHERE " + LongTermDataSQLHelper.FREQUENCY + "=" + "'5-3-1'";
+                break;
+
+
+        }
+
+
+
         List<LongTermEvent> eventList = new ArrayList<LongTermEvent>();
-        String selectQuery = "SELECT * FROM " + LongTermDataSQLHelper.TABLE; //+ " group by " + LongTermDataSQLHelper.LIFTDATE;//give us unique dates
+        String selectQuery = "SELECT * FROM " + LongTermDataSQLHelper.TABLE + whereClause + " group by " + LongTermDataSQLHelper.LIFTDATE;//give us unique dates
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if(cursor.moveToFirst()){

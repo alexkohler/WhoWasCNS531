@@ -474,7 +474,7 @@ public class ThirdScreenFragment extends Fragment
 
     public void createViewBuilder()
     {
-        CharSequence optionsArray[] = new CharSequence[] {"Show all", "Bench Only", "Squat Only", "OHP Only", "Deadlift only", "5-5-5 Days only", "3-3-3 Days only", "5-3-1 days only", "Back"};
+        CharSequence optionsArray[] = new CharSequence[] {"Show all", "Bench Only", "Squat Only", "OHP Only", "Deadlift only", "5-5-5 only", "3-3-3 only", "5-3-1 only", "Back"};
 
         AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
         builder2.setTitle("Show by:");

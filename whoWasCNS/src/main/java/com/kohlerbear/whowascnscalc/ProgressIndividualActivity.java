@@ -37,7 +37,7 @@ public class ProgressIndividualActivity extends ActionBarActivity {
         //Get listview and populate it with our accessories for the current date
         ListView individual_progress_listView = (ListView) findViewById(R.id.individual_progress_listview);
         LongTermDataSQLHelper helper = new LongTermDataSQLHelper(this);
-        ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(this, R.layout.row_no_config, R.id.liftText, helper.getProgressList());
+        ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(this, R.layout.row_no_config, R.id.liftText, helper.getProgressList(ThirdScreenFragment.CURRENT_VIEW.DEFAULT));
         individual_progress_listView.setAdapter(mArrayAdapter);
 
         //Manage colors
