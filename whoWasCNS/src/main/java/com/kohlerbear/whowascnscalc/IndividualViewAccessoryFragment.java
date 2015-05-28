@@ -1,10 +1,6 @@
 package com.kohlerbear.whowascnscalc;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -12,21 +8,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.sql.RowSet;
 
 
 public class IndividualViewAccessoryFragment extends Fragment {
@@ -76,7 +65,7 @@ public class IndividualViewAccessoryFragment extends Fragment {
             colormanager.clear();//not sure why I used singleton pattern here.. guess there was still some script kiddy in me back then
 
             final ArrayList<rowSet> rows = new ArrayList<rowSet>();
-            rows.add(new rowSet(-1, -1, "Set 1: "));
+            rows.add(new rowSet(-1, -1, "Set 1: ", 1));
             accessoryListAdapter = new MyAdapter(getActivity(), rows);
             myListView.setAdapter(accessoryListAdapter);
 
@@ -85,7 +74,7 @@ public class IndividualViewAccessoryFragment extends Fragment {
                 public void onClick(View view) {
                     if (m_numberSets < 20) {
                         m_numberSets++;
-                        rows.add(new rowSet(-1, -1, "Set " + m_numberSets + ": "));
+                        rows.add(new rowSet(-1, -1, "Set " + m_numberSets + ": ", m_numberSets));
                         myListView.setAdapter(accessoryListAdapter);
                     }
                 }
@@ -132,9 +121,9 @@ public class IndividualViewAccessoryFragment extends Fragment {
         for (rowSet entry : accessoryListAdapter.getAccessoryEntries())
         {
             if (entry.getWeight() > 0) { //initialized with -1, we don't want these empty entries
-                //buffer = buffer + entry.getSet() + " " + entry.getWeight() + "x" + entry.getReps();
+                //buffer = buffer + entry.getSetString() + " " + entry.getWeight() + "x" + entry.getReps();
 //                public LongTermEvent(String liftDate, String cycle, String liftType, String liftName, String frequency, double weight, int reps, boolean lbs)
-                LongTermEvent accessoryEvent = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftType, m_accessoryName, m_frequency, entry.getWeight(), entry.getReps(), m_usingLbs);
+                LongTermEvent accessoryEvent = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftType, m_accessoryName, m_frequency, entry.getWeight(), entry.getReps(), m_usingLbs, entry.getSet());
                 LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
                 helper.addEvent(accessoryEvent);
 
@@ -148,7 +137,7 @@ public class IndividualViewAccessoryFragment extends Fragment {
     public class MyAdapter extends ArrayAdapter<rowSet> {
 
         private final Context context;
-        private final ArrayList<rowSet> itemsArrayList;
+        private ArrayList<rowSet> itemsArrayList;
 
         public MyAdapter(Context context, ArrayList<rowSet> itemsArrayList) {
 
@@ -215,7 +204,7 @@ public class IndividualViewAccessoryFragment extends Fragment {
 
 
 //            repsView.setText(itemsArrayList.get(position));
-            setView.setText(itemsArrayList.get(position).getSet());
+            setView.setText(itemsArrayList.get(position).getSetString());
 
             if (itemsArrayList.get(position).getWeight() > 0) {
                 weightEditText.setText(String.valueOf(itemsArrayList.get(position).getWeight()));
@@ -231,12 +220,14 @@ public class IndividualViewAccessoryFragment extends Fragment {
     public class rowSet {
         private double mrowSet_weight;
         private int mrowSet_reps;
-        private String mrowSet_set;
+        private String mrowSet_setString;
+        private int mrowSet;
 
-        public rowSet (double weight, int reps, String setString) {
+        public rowSet (double weight, int reps, String setString, int setNumb) {
             mrowSet_weight = weight;
             mrowSet_reps = reps;
-            mrowSet_set = setString;
+            mrowSet_setString = setString;
+            mrowSet = setNumb;
         }
 
 
@@ -250,10 +241,12 @@ public class IndividualViewAccessoryFragment extends Fragment {
             return mrowSet_reps;
         }
 
-        public String getSet()
+        public String getSetString()
         {
-            return mrowSet_set;
+            return mrowSet_setString;
         }
+
+        public int getSet() {return mrowSet;}
 
         public void setWeight(double weight)
         {

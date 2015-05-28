@@ -16,7 +16,7 @@ import java.util.List;
 public class LongTermDataSQLHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Lifts.db";
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 11;
 
     // Table name
     public static final String TABLE = "LongTermRecords";
@@ -31,6 +31,7 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
     public static final String REPS = "Reps";
     public static final String THEORETICAL_ONEREP = "Theoretical_Onerep";
     public static final String LBS_FLAG= "Lb_Flag";
+    public static final String SET_NUMBER= "setNumber";
 
     public LongTermDataSQLHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,7 +39,7 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table " + TABLE + "(liftDate text not null, Cycle text not null, Lift_Type text not null, Lift_name text not null, Frequency text not null, Weight real, Reps integer, Theoretical_Onerep real, Lb_Flag integer);";
+        String sql = "create table " + TABLE + "(liftDate text not null, Cycle text not null, Lift_Type text not null, Lift_name text not null, Frequency text not null, Weight real, Reps integer, Theoretical_Onerep real, Lb_Flag integer, setNumber integer);";
 //        Log.d("EventsData", "onCreate: " + sql);
         db.execSQL(sql);
     }
@@ -49,10 +50,8 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
             return;
 
         String sql = null;
-        if (oldVersion == 1)
-            sql = "alter table " + TABLE + " add note text;";
-        if (oldVersion == 2)
-            sql = "";
+        if (oldVersion == 10)
+            sql = "alter table " + TABLE + " add setNumber integer;";
 
         Log.d("EventsData", "onUpgrade	: " + sql);
         if (sql != null)
@@ -61,6 +60,7 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
 
     public void addEvent(LongTermEvent event)
     {
+
         ContentValues values = new ContentValues();
 
         values.put(LongTermDataSQLHelper.LIFTDATE, event.getLiftDate());
@@ -72,18 +72,26 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
         values.put(LongTermDataSQLHelper.REPS, event.getReps());
         values.put(LongTermDataSQLHelper.THEORETICAL_ONEREP, event.getTheoreticalOneRepMax());
         values.put(LongTermDataSQLHelper.LBS_FLAG, event.getLbsFlag());
+        if (event.getSetNumber() != 0)
+        values.put(LongTermDataSQLHelper.SET_NUMBER, event.getSetNumber());
 
         SQLiteDatabase db = getWritableDatabase();
+        //Stop any occurence of event conflict (cannot have two lifts on the same day), if they are of the same type, they will be taken care of by update statement
+
+//        if (event.getLiftName().toLowerCase().matches("bench|squat|deadlift|ohp"))
+        db.delete(LongTermDataSQLHelper.TABLE, LongTermDataSQLHelper.LIFT_TYPE + "!= ? AND " + LongTermDataSQLHelper.LIFTDATE + "= ?", new String[]{event.getLiftType(), event.getLiftDate()});
+
+
         //If we have a compound
       //  if (event.getLiftName().matches("Squat|Deadlift|OHP|Bench")) {
-            Cursor mCount= db.rawQuery("select count(*) from " + TABLE +  " where " + LIFTDATE + "='" + event.getLiftDate() + "' and " + LIFT_NAME + "='" + event.getLiftName() + "' and " + WEIGHT + "='" + event.getWeight() + "';", null);
+            Cursor mCount= db.rawQuery("select count(*) from " + TABLE +  " where " + LIFTDATE + "='" + event.getLiftDate() + "' and " + LIFT_NAME + "='" + event.getLiftName() + "' and " + SET_NUMBER + " ='" + event.getSetNumber() + "';", null);
             mCount.moveToFirst();
             int count= mCount.getInt(0);
             if (count == 0)
                 db.insert(LongTermDataSQLHelper.TABLE, null, values);
             else {
-                String selection = LIFTDATE + "=? and " + LIFT_NAME + "=? and " + WEIGHT + "=?";
-                db.update(TABLE, values, selection, new String[]{event.getLiftDate(), event.getLiftName(), String.valueOf(event.getWeight())});
+                String selection = LIFTDATE + "=? and " + LIFT_NAME + "=? and " + SET_NUMBER + "=?";
+                db.update(TABLE, values, selection, new String[]{event.getLiftDate(), event.getLiftName(), String.valueOf(event.getSetNumber())});
             }
             mCount.close();
      //   }
@@ -108,10 +116,7 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
 
 
     //"create table " + TABLE + "(liftDate text not null, Cycle text not null, Lift_Type text not null, Lift_name text not null, Frequency text not null, Weight real, Reps integer, Theoretical_Onerep real, Lb_Flag integer)
-    public List<LongTermEvent> getProgressList(ThirdScreenFragment.CURRENT_VIEW view){ //this will give us individual entries grouped by liftDate (a single entry for each lift date)
-
-
-
+    public List<LongTermEvent> getProgressListByView(ThirdScreenFragment.CURRENT_VIEW view){ //this will give us individual entries grouped by liftDate (a single entry for each lift date)
         String whereClause = "";
         switch (view)
         {
@@ -143,8 +148,6 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
 
         }
 
-
-
         List<LongTermEvent> eventList = new ArrayList<LongTermEvent>();
         String selectQuery = "SELECT * FROM " + LongTermDataSQLHelper.TABLE + whereClause + " group by " + LongTermDataSQLHelper.LIFTDATE;//give us unique dates
         SQLiteDatabase db = getWritableDatabase();
@@ -159,7 +162,7 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
                 event.setFrequency(cursor.getString(4));
                 event.setWeight(cursor.getDouble(5));
                 // event.setLbsFlag(cursor.getString(6));
-                event.setReps(cursor.getInt(8));
+                event.setReps(cursor.getInt(6));
 
 
                 eventList.add(event);
@@ -172,6 +175,49 @@ public class LongTermDataSQLHelper extends SQLiteOpenHelper {
             emptyEvent.setCycle("");
             emptyEvent.setLiftType("");
             emptyEvent.setLiftName("");
+            emptyEvent.setFrequency("");
+            emptyEvent.setWeight(0);
+            // event.setLbsFlag(cursor.getString(6));
+            emptyEvent.setReps(0);
+            eventList.add(emptyEvent);
+
+        }
+
+        return eventList;
+    }
+
+    public List<LongTermEvent> getProgressListByDate(String date){ //this will give us individual entries grouped by liftDate (a single entry for each lift date)
+
+        String whereClause = " WHERE " + LongTermDataSQLHelper.LIFTDATE + "=" + "'" + date + "'";
+
+        List<LongTermEvent> eventList = new ArrayList<LongTermEvent>();
+        String selectQuery = "SELECT * FROM " + LongTermDataSQLHelper.TABLE + whereClause;//give us unique dates
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if(cursor.moveToFirst()){
+            do{
+                LongTermEvent event = new LongTermEvent();
+                event.setLiftDate(cursor.getString(0));
+                event.setCycle(cursor.getString(1));
+                event.setLiftType(cursor.getString(2));
+                event.setLiftName(cursor.getString(3));
+                event.setFrequency(cursor.getString(4));
+                event.setWeight(cursor.getDouble(5));
+                // event.setLbsFlag(cursor.getString(6));
+                event.setReps(cursor.getInt(6));
+                event.setSetNumber((cursor.getInt(7)));
+
+
+                eventList.add(event);
+            } while(cursor.moveToNext());
+        }
+
+        if (eventList.size() == 0) {
+            LongTermEvent emptyEvent = new LongTermEvent();
+            emptyEvent.setLiftDate("");
+            emptyEvent.setCycle("");
+            emptyEvent.setLiftType("");
+            emptyEvent.setLiftName("No lifts found!");
             emptyEvent.setFrequency("");
             emptyEvent.setWeight(0);
             // event.setLbsFlag(cursor.getString(6));

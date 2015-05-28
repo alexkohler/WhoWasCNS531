@@ -484,11 +484,9 @@ public class IndividualViewFragment extends Fragment {
 
 	//Once this goes out of view, the viewpager handler will call this method and the data will be created or updated in the progress database
 	public void persistData() {
-		//Things we need to know: Date, lift day, accessory name, weight, reps
-        //Make sure textviews aren't empty, otherwise don't enter an entry. (So do an individual entry for each textview)
-		//public LongTermEvent(String liftDate, String cycle, String liftType, String liftName, String frequency, double firstLift, int firstLiftReps, double theoOneRepMax, boolean lbs)
+
         if (l1EditText.getText().toString().trim().length() != 0) {//if the edittext is not empty
-			LongTermEvent liftOneEntry = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftDay, m_liftName, m_frequency, m_firstLiftWeight, m_firstLiftReps, usingLbs);
+			LongTermEvent liftOneEntry = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftDay, m_liftName, m_frequency, m_firstLiftWeight, Integer.valueOf(l1EditText.getText().toString()), usingLbs, 1);
 			LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity().getApplicationContext());
 			//helper.getWritableDatabase().execSQL("create table LongTermRecords (liftDate text not null, Cycle text not null, Lift_Type text not null, Lift_name text not null, Frequency text not null, Weight real, Reps integer, Theoretical_Onerep real, Lb_Flag integer);");
 			helper.addEvent(liftOneEntry);
@@ -497,12 +495,12 @@ public class IndividualViewFragment extends Fragment {
 //			System.out.println(dump);
 		}
         if (l2EditText.getText().toString().trim().length() != 0) {
-			LongTermEvent liftTwoEntry = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftDay, m_liftName, m_frequency, m_secondLiftWeight, m_secondLiftReps, usingLbs);
+			LongTermEvent liftTwoEntry = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftDay, m_liftName, m_frequency, m_secondLiftWeight, Integer.valueOf(l2EditText.getText().toString()), usingLbs, 2);
 			LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity().getApplicationContext());
 			helper.addEvent(liftTwoEntry);
         }
         if (l3EditText.getText().toString().trim().length() != 0) {
-			LongTermEvent liftThreeEntry = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftDay, m_liftName, m_frequency, m_thirdLiftWeight, m_thirdLiftReps, usingLbs);
+			LongTermEvent liftThreeEntry = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftDay, m_liftName, m_frequency, m_thirdLiftWeight, Integer.valueOf(l3EditText.getText().toString()), usingLbs, 3); //set 3
 			LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity().getApplicationContext());
 			helper.addEvent(liftThreeEntry);
         }

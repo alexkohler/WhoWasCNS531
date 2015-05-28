@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class AccessoryLiftSQLHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Lifts.db";
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 11;
 
     // Table name
     public static final String TABLE = "AccessoryTemplates";

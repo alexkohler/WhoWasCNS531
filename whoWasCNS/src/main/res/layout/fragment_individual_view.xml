@@ -39,12 +39,14 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/barbell" />
 
+            <!--Plate definitions -->
                 <ImageView
                 android:id="@+id/lift1r1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/liftOneBarbell"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -53,6 +55,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift1r1"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -61,6 +64,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift1r2"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -69,6 +73,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift1r3"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -77,6 +82,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift1r4"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -85,6 +91,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift1r5"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -93,6 +100,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift1r6"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -101,6 +109,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift1r7"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
                  
                  <!--  Left plate definitions -->
@@ -111,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/liftOneBarbell"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
                  
                 <ImageView
@@ -119,6 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift1l1"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -127,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift1l2"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -135,6 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift1l3"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -143,6 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift1l4"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -151,6 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift1l5"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -159,6 +174,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift1l6"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -167,6 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift1l7"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
 		<!-- Various textview definitions -->
@@ -257,6 +274,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/liftTwoBarbell"
+                android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -265,6 +283,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift2r1"
+                 android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -272,6 +291,7 @@
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
+                 android:visibility="invisible"
                  android:layout_toRightOf="@+id/lift2r2"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
@@ -280,6 +300,7 @@
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
+                 android:visibility="invisible"
                  android:layout_toRightOf="@+id/lift2r3"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
@@ -289,6 +310,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift2r4"
+                 android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -297,6 +319,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift2r5"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -305,6 +328,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift2r6"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -313,6 +337,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift2r7"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
                  
                  <!--  Left plate definitions -->
@@ -323,6 +348,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/liftTwoBarbell"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
                  
                 <ImageView
@@ -331,6 +357,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift2l1"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -339,6 +366,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift2l2"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -347,6 +375,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift2l3"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -355,6 +384,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift2l4"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -363,6 +393,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift2l5"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -371,6 +402,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift2l6"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -379,6 +411,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift2l7"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
 		<!-- Various textview definitions -->
@@ -459,6 +492,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/liftThreeBarbell"
+                    android:visibility="invisible"
                     android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -467,6 +501,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift3r1"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -475,6 +510,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift3r2"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -483,6 +519,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift3r3"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -491,6 +528,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift3r4"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -499,6 +537,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift3r5"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -507,6 +546,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift3r6"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
 
                  <ImageView
@@ -515,6 +555,7 @@
                  android:layout_height="wrap_content"
                  android:layout_centerVertical="true"
                  android:layout_toRightOf="@+id/lift3r7"
+                     android:visibility="invisible"
                  android:src="@drawable/plate_fourtyfive_lbs" />
                  
                  <!--  Left plate definitions -->
@@ -525,6 +566,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/liftThreeBarbell"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
                  
                 <ImageView
@@ -533,6 +575,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift3l1"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -541,6 +584,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift3l2"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -549,6 +593,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift3l3"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -557,6 +602,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift3l4"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -565,6 +611,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift3l5"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -573,6 +620,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift3l6"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
                 <ImageView
@@ -581,6 +629,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/lift3l7"
+                    android:visibility="invisible"
                 android:src="@drawable/plate_fourtyfive_lbs" />
 
 		<!-- Various textview definitions -->

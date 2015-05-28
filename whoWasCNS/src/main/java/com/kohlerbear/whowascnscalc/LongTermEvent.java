@@ -15,6 +15,7 @@ public class LongTermEvent {
     private int m_reps            = 0 ;
     private double m_theoreticalOneRepMax = 0.0;
     private boolean m_lbsFlag     = true;
+    private int m_setNumber = 0;
 
 
 
@@ -64,6 +65,9 @@ public class LongTermEvent {
         return m_theoreticalOneRepMax;
     }
 
+    public int getSetNumber() { return m_setNumber;}
+    public void setSetNumber(int setNumber) { m_setNumber = setNumber;}
+
 
     public LongTermEvent(){
         //for cleanliness in getLongTermEvents (In the SQL helper)
@@ -82,8 +86,22 @@ public class LongTermEvent {
         m_lbsFlag = lbs;
     }
 
+    public LongTermEvent(String liftDate, String cycle, String liftType, String liftName, String frequency, double weight, int reps, boolean lbs, int setNumber)
+    {
+        m_liftDate = liftDate;
+        m_cycle = cycle;
+        m_liftType = liftType;
+        m_liftName = liftName;
+        m_frequency = frequency;
+        m_weight = weight;
+        m_reps = reps;
+        m_theoreticalOneRepMax = reps * weight; //TODO make this calculation correct.
+        m_lbsFlag = lbs;
+        m_setNumber = setNumber;
+    }
+
     @Override
     public String toString() {
-        return m_liftDate + "- [" /*+ m_liftType +*/ + m_liftName + "-" + m_frequency + "]";
+        return m_liftDate + "- [" /*+ m_liftType +*/ + m_liftType + "-" + m_frequency + "]";
     }
 }

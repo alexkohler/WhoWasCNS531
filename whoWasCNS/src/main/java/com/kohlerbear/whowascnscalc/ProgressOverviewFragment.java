@@ -2,11 +2,9 @@ package com.kohlerbear.whowascnscalc;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -16,8 +14,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.TypedValue;
 import android.view.ContextMenu;
@@ -27,27 +23,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by alex on 5/13/15.
@@ -122,7 +110,7 @@ public class ProgressOverviewFragment extends Fragment {
                 }
 
                 LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
-                ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressList(m_currentView), false);
+                ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressListByView(m_currentView), false);
                 progress_listView.setAdapter(mArrayAdapter);
 
             }
@@ -153,8 +141,8 @@ public class ProgressOverviewFragment extends Fragment {
         List<LongTermEvent> events = new ArrayList<LongTermEvent>();
         LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
         SQLiteDatabase db = helper.getWritableDatabase();
-//        ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressList());
-        ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressList(m_currentView), false);
+//        ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressListByView());
+        ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressListByView(m_currentView), false);
         progress_listView.setAdapter(mArrayAdapter);
         drawerLayout.setBackgroundColor(Color.BLACK);
         registerForContextMenu(progress_listView);
@@ -171,8 +159,10 @@ public class ProgressOverviewFragment extends Fragment {
             {
                 LongTermEvent clickedEvent = (LongTermEvent) progress_listView.getItemAtPosition(position);
                 if (!clickedEvent.toString().contains("No previous")) {
-                    Intent intent = new Intent(getActivity(), ProgressIndividualActivity.class);
+                    Intent intent = new Intent(getActivity(), IndividualProgressActivity.class);
                     intent.putExtra("date", clickedEvent.getLiftDate());
+                    intent.putExtra("liftType", clickedEvent.getLiftType());
+                    intent.putExtra("origin", "progressOverview");
                     startActivity(intent);
                 }
 
@@ -212,7 +202,7 @@ public class ProgressOverviewFragment extends Fragment {
 
 
             LongTermEvent clickedEvent = (LongTermEvent) progress_listView.getAdapter().getItem(info.position);
-            if (!clickedEvent.toString().contains("No previous")) {//don't allow deletion of the "empty listview" entry
+            if (!clickedEvent.toString().contains("No previouschan")) {//don't allow deletion of the "empty listview" entry
                 removeLiftBasedOnListViewEntry(clickedEvent.getLiftDate(), clickedEvent.getLiftType(), clickedEvent.getFrequency());
             }
         }
@@ -229,8 +219,8 @@ public class ProgressOverviewFragment extends Fragment {
         LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(LongTermDataSQLHelper.TABLE, LongTermDataSQLHelper.LIFTDATE + "=? and " + LongTermDataSQLHelper.LIFT_TYPE + "=? and " + LongTermDataSQLHelper.FREQUENCY + "=?", args);
-        //ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressList());//have separate layout with visibility
-        ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressList(m_currentView), true);
+        //ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressListByView());//have separate layout with visibility
+        ViewProgressArrayAdapter mArrayAdapter = new ViewProgressArrayAdapter(getActivity(), helper.getProgressListByView(m_currentView), true);
         progress_listView.setAdapter(mArrayAdapter);
         toggleListViewDeleteButtonShown(true);
     }

@@ -114,7 +114,7 @@ public class IndividualViewsPrototype extends BaseActivity {
  	  initialArgs.putInt("cycle",cycle);
       String frequency = TabPrototype.frequency;//prevScreen.getStringExtra("frequency");
       initialArgs.putString("frequency", frequency);
-      String liftType = TabPrototype.liftType;//prevScreen.getStringExtra("liftType");
+      final String liftType = TabPrototype.liftType;//prevScreen.getStringExtra("liftType");
       initialArgs.putString("liftType", liftType);
       double firstLift = Double.valueOf(TabPrototype.firstLift/*prevScreen.getStringExtra("firstLift")*/);
       initialArgs.putDouble("firstLift", firstLift);
@@ -167,17 +167,26 @@ public class IndividualViewsPrototype extends BaseActivity {
 
         }
 
-        ArrayList<String> accessoryValues = helper.getAccessoriesFor(liftTypeEnum);
+        final ArrayList<String> accessoryValues = helper.getAccessoriesFor(liftTypeEnum);
 
       for (String accessory : accessoryValues) {
-          Bundle accessoryArgs = initialArgs;//new Bundle();
+          Bundle accessoryArgs = new Bundle(initialArgs);//new Bundle();
           accessoryArgs.putString("accessory", accessory);
           fragments.add(Fragment.instantiate(this, IndividualViewAccessoryFragment.class.getName(), accessoryArgs));
 
       }
 
 
-      PagerAdapter mPagerAdapter  = new MyFragmentAdapter(super.getSupportFragmentManager(), fragments);
+      PagerAdapter mPagerAdapter  = new MyFragmentAdapter(super.getSupportFragmentManager(), fragments);/*{
+          @Override
+          public CharSequence getPageTitle(int position) {
+              if (position == 0)
+                  return liftType;
+
+              return accessoryValues.get( position - 1);
+          }
+
+      };*/
       mViewPager.setAdapter(mPagerAdapter);
     
       mViewPager.setCurrentItem(selectedItem);

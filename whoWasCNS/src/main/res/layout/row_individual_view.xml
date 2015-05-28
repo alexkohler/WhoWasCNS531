@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="40dp"
+    android:id="@+id/listViewRowLayout"
+    android:gravity="center_vertical"
+    >
+
+    <ImageView
+        android:id="@+id/deleteButtonIndV"
+        android:layout_alignParentLeft="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:src="@drawable/ic_listview_delete"
+        android:visibility="gone"
+        />
+
+
+    <TextView
+        android:id="@+id/liftNameTV"
+
+        android:gravity="left"
+        android:paddingLeft="4dp"
+        android:layout_toRightOf="@+id/deleteButtonIndV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Large Text"
+        android:textColor="@color/white"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/setRepsTV"
+        android:text="25x100"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_marginRight="8px"
+        />
+
+</RelativeLayout>

@@ -93,7 +93,7 @@
             android:theme="@style/AppBaseTheme" >
         </activity>
         <activity
-            android:name=".ProgressIndividualActivity"
+            android:name=".IndividualProgressActivity"
             android:label="@string/title_activity_progress_individual"
             android:theme="@style/AppBaseTheme">
         </activity>
