@@ -243,24 +243,31 @@ Bug: delete button disappears after single deletion, same bug you were experienc
 5-27-15: (after work) -fixed back button, accessories seem to to be good to go, header bug is likely beyond your paygrade. Fixed weird viewpager bug.. 
 
 5-28-15: Fixed adding number of accessories, you were correct with the schema change, set numbe r stuff now works great :) 
+5-28-15: (after work) persistance for main lift done, still a bit of work to do for accessory 
 
-Plan for individual lift listview: For now, make it something robust that can be used by each accessory lift (add bodyweight in later) 
+6-2: persistence in adding is working, now need to add remove logic and general logic in the add/remove buttons 
+
+6-3: removal persistence 
+
+6-4: added checks for adding accessory with same name as compound, added persistence when add set is pressed. made text smaler on each progression 
+
+6-5: added view progress icon to individual view, need to add page itself 
+
+6-7; fixed some instability in adding/removing sets, got individual tracking set up 
+
+6-8: programmatically add finish button to last page, you will avoid weight tracking until post release
 
 todo:
-	persist each number into its respective when you update an already existing workout
-	Get progress view up and running for each accessory 
-	What are you going to do if you've deleted all entries in a progress view?
-	on pressing add set (or remove),  update database, it's lightweight enough that you can get away with it. 
-	back pressed delete button individual to overview bug	
-	(Still some random crashes when deleting workouts)
-	weight tracking page to end of fragment stack for individualview
+	general cleaup, add titles etc..
+	weight tracking page to end of fragment stack for individualview (mostly to ensure persistence of final lift on penultimate page - you NEED this.
+	don't allow multi line accessory names
 
 
-Things left to do:
-
-once individual views page hooked up, make sure it can support being called from each accessory fragment (for sake of tracking progress)
-
-weight tracking page should be final accessory added to viewpager to "finish workout", and provides extra sanity towards making sure everything is persisted (final accessory page may not be persisted otherwise. This needs done before individual views I think? Check this out
-
-graphs wouldn't be a bad idea
-
+post release
+	graphs
+	order your progressiion by liftName (might need a schema change for progression order to be correct) (progression order is in anothertable) 
+	What are you going to do if you've deleted all entries in a progress view? - it's handled, but the entry stays hanging out afterwards which isn't a huge deal
+	change text color for missed reps on compound?
+	footer for bodyweight (add to adapter) after weight tracking page is added
+	export workout 
+	general usage testing 

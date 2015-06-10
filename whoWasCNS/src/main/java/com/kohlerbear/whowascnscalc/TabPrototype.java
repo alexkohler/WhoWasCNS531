@@ -101,6 +101,7 @@ public class TabPrototype extends BaseActivity {
                 title.setTextColor(Color.WHITE);
             }
         }
+        getActionBar().setTitle("New Projection");
         PagerTitleStrip titleStrip = (PagerTitleStrip) findViewById(R.id.pager_title_strip);
         titleStrip.setBackgroundColor(ColorManager.getInstance(getApplicationContext()).getPrimaryColor());
         ColorManager.clear();

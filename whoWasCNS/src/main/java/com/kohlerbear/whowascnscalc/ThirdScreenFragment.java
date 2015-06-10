@@ -22,6 +22,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Html;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -145,7 +146,7 @@ public class ThirdScreenFragment extends Fragment
         // ...
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-
+//        getActivity().getActionBar().setTitle(Html.fromHtml("<font color='#ff0000'>View Projection </font>"));
 
         //Take care of actual third screen festivities
         configureButton = (Button) drawerLayout.findViewById(R.id.configureButtonPrototype);

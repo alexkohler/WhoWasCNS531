@@ -105,6 +105,7 @@
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_progress_graph">ManifestTitleHere</string>
     <string name="action_example">Example action</string>
 
     <string-array name="items">
@@ -125,7 +126,7 @@
         <item>View Exisiting Projection</item>
         <item>About</item>
         <item>Settings</item>
-        <item>Testing arena</item>
+        <!--<item>Testing arena</item> -->
         <!-- <item>Sixth</item> -->
     </string-array>
 

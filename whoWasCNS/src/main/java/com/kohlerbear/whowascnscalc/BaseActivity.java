@@ -237,7 +237,7 @@ public class BaseActivity extends ActionBarActivity {
              startActivity(settings);
              finish();
 		 break;
-		 case 5://testing arena
+		/* case 5://testing arena
 			 String[] TO = {"amrood.admin@gmail.com"};
 			 Intent emailIntent = new Intent(Intent.ACTION_SEND);
 			 emailIntent.setData(Uri.parse("mailto:"));
@@ -255,7 +255,7 @@ public class BaseActivity extends ActionBarActivity {
 				 Toast.makeText(getApplicationContext(),
 						 "There is no email client installed.", Toast.LENGTH_SHORT).show();
 			 }
-             break;
+             break;*/
 		default:
 			break;
 		}

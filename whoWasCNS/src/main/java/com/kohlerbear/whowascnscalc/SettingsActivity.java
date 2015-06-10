@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.widget.Toast;
 
 /**
@@ -42,7 +43,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
                 .replace(R.id.content_frame, new SettingsFragment())
                 .commit();
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-
+        getActionBar().setTitle(Html.fromHtml("<font color='#000000'>Settings </font>"));
     }
 
 

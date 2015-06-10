@@ -1,7 +1,6 @@
 package com.kohlerbear.whowascnscalc;
 
 import android.app.ActionBar;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -12,30 +11,21 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-
+//Activity class is accessed via pressing a date in the individualViewsPrototype
 public class IndividualProgressActivity extends ActionBarActivity {
 
 
@@ -45,6 +35,7 @@ public class IndividualProgressActivity extends ActionBarActivity {
      */
 
     StickyListHeadersListView indProgLV;
+    boolean m_isProgressOverview;//vs accessoryProgress.. can't justify a 2 valued enum.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +61,18 @@ public class IndividualProgressActivity extends ActionBarActivity {
         indProgLV = (StickyListHeadersListView) findViewById(R.id.individual_listView);
 
         if (args.getString("origin").equals("progressOverview")) {
+            m_isProgressOverview= true;
             actionBar.setTitle(date.substring(0, 5) + " " + liftType + " accessories");
             //Populate based on data
             StickyListHeadersAdapter mArrayAdapter = new IndividualProgressArrayAdapter(getApplicationContext(), helper.getProgressListByDate(date), false);
+            indProgLV.setAdapter(mArrayAdapter);
+        }
+        else if (args.getString("origin").equals("accessoryProgress")) {
+            m_isProgressOverview = false;
+            String liftName = args.getString("liftName");
+            actionBar.setTitle(liftName + " Progress");
+            //Populate based on data
+            StickyListHeadersAdapter mArrayAdapter = new AccessoryProgressArrayAdapter(getApplicationContext(), helper.getProgressListByLiftName(liftName), false);
             indProgLV.setAdapter(mArrayAdapter);
         }
 
@@ -104,7 +104,11 @@ public class IndividualProgressActivity extends ActionBarActivity {
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(LongTermDataSQLHelper.TABLE, LongTermDataSQLHelper.LIFTDATE + "=? and " + LongTermDataSQLHelper.LIFT_TYPE + "=? and " + LongTermDataSQLHelper.LIFT_NAME + "=? and " + LongTermDataSQLHelper.WEIGHT + "=? and " + LongTermDataSQLHelper.REPS + "=? and " + LongTermDataSQLHelper.FREQUENCY + "=? /*LIMIT 1*/", args);
         //ArrayAdapter<LongTermEvent> mArrayAdapter = new ArrayAdapter<LongTermEvent>(getActivity(), R.layout.row_with_arrow, R.id.liftText, helper.getProgressListByView());//have separate layout with visibility
-        StickyListHeadersAdapter mArrayAdapter = new IndividualProgressArrayAdapter(getApplicationContext(), helper.getProgressListByDate(event.getLiftDate()), true);
+        StickyListHeadersAdapter mArrayAdapter;
+        if (m_isProgressOverview)
+            mArrayAdapter = new IndividualProgressArrayAdapter(getApplicationContext(), helper.getProgressListByDate(event.getLiftDate()), true);
+        else
+            mArrayAdapter = new AccessoryProgressArrayAdapter(getApplication(), helper.getProgressListByLiftName(event.getLiftName()), true);
         indProgLV.setAdapter(mArrayAdapter);
         //toggleListViewDeleteButtonShown(true);
     }

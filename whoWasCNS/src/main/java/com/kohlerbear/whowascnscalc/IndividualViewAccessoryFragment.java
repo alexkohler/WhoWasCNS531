@@ -1,11 +1,24 @@
 package com.kohlerbear.whowascnscalc;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -29,7 +42,7 @@ public class IndividualViewAccessoryFragment extends Fragment {
     private String mParam2;
     private String mAcessoryName;
     private ArrayAdapter<String> listAdapter;
-    private MyAdapter accessoryListAdapter;
+    private IndividualViewAccessoryAdapter accessoryListAdapter;
     private int m_numberSets = 1;
 
     private String m_liftDate;
@@ -39,12 +52,16 @@ public class IndividualViewAccessoryFragment extends Fragment {
     private String m_accessoryName;
     private boolean m_usingLbs;
 
+    LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
 
 
+    final ArrayList<rowSet> rows = new ArrayList<rowSet>();
+    ListView myListView;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            setHasOptionsMenu(true);
         }
 
         @Override
@@ -52,7 +69,7 @@ public class IndividualViewAccessoryFragment extends Fragment {
 
             View rootView = inflater.inflate(R.layout.fragment_individual_view_accessory, container, false);
             Bundle args = getArguments();
-            final ListView myListView = (ListView) rootView.findViewById(R.id.accessoryListView);
+            myListView = (ListView) rootView.findViewById(R.id.accessoryListView);
             Button addSetButton = (Button) rootView.findViewById(R.id.addSetButton);
             Button removeSetButton = (Button) rootView.findViewById(R.id.removeSetButton);
 
@@ -64,40 +81,9 @@ public class IndividualViewAccessoryFragment extends Fragment {
             removeSetButton.setTextColor(colormanager.getTextColor());
             colormanager.clear();//not sure why I used singleton pattern here.. guess there was still some script kiddy in me back then
 
-            final ArrayList<rowSet> rows = new ArrayList<rowSet>();
-            rows.add(new rowSet(-1, -1, "Set 1: ", 1));
-            accessoryListAdapter = new MyAdapter(getActivity(), rows);
-            myListView.setAdapter(accessoryListAdapter);
-
-            addSetButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (m_numberSets < 20) {
-                        m_numberSets++;
-                        rows.add(new rowSet(-1, -1, "Set " + m_numberSets + ": ", m_numberSets));
-                        myListView.setAdapter(accessoryListAdapter);
-                    }
-                }
-            });
-
-            removeSetButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (m_numberSets > 0) {
-                        rows.remove(m_numberSets - 1);
-                        m_numberSets--;
-                        myListView.setAdapter(accessoryListAdapter);
-                    }
-                }
-            });
-
-            /*TextView t = (TextView) rootView.findViewById(R.id.accessoryName);
-            String s = args.getString("accessory");
-            t.setText(args.getString("accessory"));*/
-
             //Grab our arguments
             m_cycle = args.getInt("cycle");
-	        m_frequency = args.getString("frequency");
+            m_frequency = args.getString("frequency");
             m_liftType = args.getString("liftType");
             m_liftDate = args.getString("date");
             m_accessoryName = args.getString("accessory");
@@ -106,6 +92,57 @@ public class IndividualViewAccessoryFragment extends Fragment {
                 m_usingLbs = false;
             else
                 m_usingLbs = true;
+
+
+
+            //get max number of sets here , then iterate through. (I think you only have to change string)
+            //query for max set number where liftName=liftName
+            helper = new LongTermDataSQLHelper(getActivity());
+            int numSets = helper.getNumberOfSetsForLift(m_liftDate, m_accessoryName); //also pass lift name here
+            if (rows.isEmpty())
+                rows.add(new rowSet(-1, -1, "Set 1: ", 1));
+
+            for (int i = 2; i <= numSets; i++)
+                rows.add(new rowSet(-1, -1, "Set " + i + ": ", i));
+            m_numberSets += numSets - 1;
+            accessoryListAdapter = new IndividualViewAccessoryAdapter(getActivity(), rows);
+            myListView.setAdapter(accessoryListAdapter);
+
+            addSetButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (m_numberSets < 20) {
+                        if (m_numberSets == 0)//empty
+                            m_numberSets = 1;
+                        m_numberSets++;
+                        rows.add(new rowSet(-1, -1, "Set " + m_numberSets + ": ", m_numberSets));
+                        myListView.setAdapter(accessoryListAdapter);
+                        persistData();
+                    }
+                }
+            });
+
+            removeSetButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (m_numberSets > 1) {
+                        m_numberSets--;
+                        rows.remove(m_numberSets);
+                        myListView.setAdapter(accessoryListAdapter);
+                        int setNumber;
+                        if (m_numberSets > 0) {
+                            setNumber = accessoryListAdapter.getAccessoryEntries().get(m_numberSets - 1).getSet();//zero indexed
+                            helper.deleteAccessory(m_liftDate, m_liftType, m_accessoryName, setNumber + 1); //not zero indexed
+                        }
+
+                    }
+                }
+            });
+
+            /*TextView t = (TextView) rootView.findViewById(R.id.accessoryName);
+            String s = args.getString("accessory");
+            t.setText(args.getString("accessory"));*/
+
 
 
 
@@ -124,22 +161,67 @@ public class IndividualViewAccessoryFragment extends Fragment {
                 //buffer = buffer + entry.getSetString() + " " + entry.getWeight() + "x" + entry.getReps();
 //                public LongTermEvent(String liftDate, String cycle, String liftType, String liftName, String frequency, double weight, int reps, boolean lbs)
                 LongTermEvent accessoryEvent = new LongTermEvent(m_liftDate, String.valueOf(m_cycle), m_liftType, m_accessoryName, m_frequency, entry.getWeight(), entry.getReps(), m_usingLbs, entry.getSet());
-                LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
+                helper = new LongTermDataSQLHelper(getActivity());
                 helper.addEvent(accessoryEvent);
 
             }
         }
-        Toast.makeText(getActivity(), "Accessories added", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Accessories added", Toast.LENGTH_SHORT).show();
 
     }
 
+    public Drawable createDrawableFromView(View v)
+    {
+        // this is the important code :)
+        // Without it the view will have a dimension of 0,0 and the bitmap will be null
+        v.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+
+        v.buildDrawingCache(true);
+        Bitmap b = Bitmap.createBitmap(v.getDrawingCache());
+        v.setDrawingCacheEnabled(false); // clear drawing cachee
+        return new BitmapDrawable(getResources(), b);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.accessory_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem graphMenuOption = menu.findItem(R.id.editMenuOption);
+        graphMenuOption.setEnabled(true);
+        graphMenuOption.setVisible(true);
+        //We need to initialize what image we want
+        Drawable img = getResources().getDrawable(R.drawable.db_ic_view_progress);
+        img.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        graphMenuOption.setIcon(img);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case (R.id.editMenuOption):
+                Intent intent = new Intent(getActivity(), IndividualProgressActivity.class);
+                intent.putExtra("date", m_liftDate);
+                intent.putExtra("liftType", m_liftType);
+                intent.putExtra("liftName", m_accessoryName);
+                intent.putExtra("origin", "accessoryProgress");
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
     //Create a small custom listview adapter
-    public class MyAdapter extends ArrayAdapter<rowSet> {
+    public class IndividualViewAccessoryAdapter extends ArrayAdapter<rowSet> {
 
         private final Context context;
         private ArrayList<rowSet> itemsArrayList;
 
-        public MyAdapter(Context context, ArrayList<rowSet> itemsArrayList) {
+        public IndividualViewAccessoryAdapter(Context context, ArrayList<rowSet> itemsArrayList) {
 
             super(context, R.layout.row, itemsArrayList);
 
@@ -166,6 +248,16 @@ public class IndividualViewAccessoryFragment extends Fragment {
             EditText weightEditText = (EditText) rowView.findViewById(R.id.weightEditText);
             EditText repsEditText = (EditText) rowView.findViewById(R.id.repsEditText); //nothing needs set here
 
+
+            String reps = String.valueOf(helper.getEditTextForEvent(m_liftDate, m_accessoryName, String.valueOf(itemsArrayList.get(position).getSet()))[1]);
+            String weight = String.valueOf(helper.getEditTextForEvent(m_liftDate, m_accessoryName, String.valueOf(itemsArrayList.get(position).getSet()))[0]);
+            if (!reps.equals("-1")) {
+                repsEditText.setText(reps);
+                weightEditText.setText(weight);
+            }
+            helper.close();
+
+
             //Add listeners for changes on our editTexts for sake of persisting data
             weightEditText.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -179,7 +271,8 @@ public class IndividualViewAccessoryFragment extends Fragment {
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    itemsArrayList.get(position).setWeight(Double.valueOf(editable.toString()));
+                    if (!editable.toString().isEmpty())
+                        itemsArrayList.get(position).setWeight(Double.valueOf(editable.toString()));
 
                 }
             });

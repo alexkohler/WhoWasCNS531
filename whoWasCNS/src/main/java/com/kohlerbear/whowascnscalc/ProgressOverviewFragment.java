@@ -244,6 +244,7 @@ public class ProgressOverviewFragment extends Fragment {
         TextView v = new TextView(getActivity());
         v.setTextColor(Color.WHITE);
         v.setText("Edit");
+        v.setBackgroundColor(ColorManager.getInstance(getActivity()).getPrimaryColor());
         v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         v.setDrawingCacheEnabled(true);
         editMenuOptionItem.setIcon(createDrawableFromView(v));
@@ -333,6 +334,7 @@ public class ProgressOverviewFragment extends Fragment {
                 if (toggle) {//Edit Pressed
                     TextView v = new TextView(getActivity());
                     v.setTextColor(Color.WHITE);
+                    v.setBackgroundColor(ColorManager.getInstance(getActivity()).getPrimaryColor());
                     v.setText("Done");
                     v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                     v.setDrawingCacheEnabled(true);
@@ -344,6 +346,7 @@ public class ProgressOverviewFragment extends Fragment {
                 {
                     TextView v = new TextView(getActivity());
                     v.setTextColor(Color.WHITE);
+                    v.setBackgroundColor(ColorManager.getInstance(getActivity()).getPrimaryColor());
                     v.setText("Edit");
                     v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                     v.setDrawingCacheEnabled(true);

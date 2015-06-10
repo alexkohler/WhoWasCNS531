@@ -1,6 +1,7 @@
 package com.kohlerbear.whowascnscalc;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -445,11 +446,16 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                 dragNDroplistView.setDraggingEnabled(false);
                 registerForContextMenu(dragNDroplistView);
                 //use a
-                currentListViewItems.add(input.getText().toString());
-                helper.repopulateDB(currentListViewItems, currentAccessoryType);
-                refreshListView();
-                MenuItem editMenuOptionItem = mMenu.findItem(R.id.editMenuOption);
-                editMenuOptionItem.setEnabled(true);
+                String inputAccessory = input.getText().toString();
+                if (inputAccessory.toLowerCase(Locale.getDefault()).equals(currentAccessoryType.name().toLowerCase(Locale.getDefault())))
+                    Toast.makeText(getActivity(), "You may not add an accessory with the same name as your main lift", Toast.LENGTH_LONG).show();
+                else {
+                    currentListViewItems.add(inputAccessory);
+                    helper.repopulateDB(currentListViewItems, currentAccessoryType);
+                    refreshListView();
+                    MenuItem editMenuOptionItem = mMenu.findItem(R.id.editMenuOption);
+                    editMenuOptionItem.setEnabled(true);
+                }
             }
         });
 

@@ -57,15 +57,13 @@
      <Button
         android:id="@+id/btn_events"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/btn_events"
-        android:text="ignoreme" />
+         />
 
     <!--  Photos Button -->
     <Button
         android:id="@+id/btn_photos"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/btn_photos"
-        android:text="ignoreme" />
+         />
 
     </com.kohlerbear.whowascnscalc.DashboardLayout>
 

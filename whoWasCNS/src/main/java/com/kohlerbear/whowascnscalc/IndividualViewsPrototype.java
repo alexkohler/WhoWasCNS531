@@ -61,6 +61,9 @@ public class IndividualViewsPrototype extends BaseActivity {
     public enum liftRetrievalDirection{
   	  NEXT, PREV;
     }
+
+    private int m_finalPosition;
+
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,6 +180,12 @@ public class IndividualViewsPrototype extends BaseActivity {
       }
 
 
+        //Finally, add our weight tracking page (finalize workout page)
+        /*Bundle endOfWorkoutArgs = new Bundle();
+        endOfWorkoutArgs.putString("accessory", "End workout");
+        fragments.add(Fragment.instantiate(this, EndOfWorkoutFragment.class.getName(), endOfWorkoutArgs));*/
+
+
       PagerAdapter mPagerAdapter  = new MyFragmentAdapter(super.getSupportFragmentManager(), fragments);/*{
           @Override
           public CharSequence getPageTitle(int position) {
@@ -203,28 +212,27 @@ public class IndividualViewsPrototype extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
 
-                final IndividualViewFragment individualviewfragment;
-                final IndividualViewAccessoryFragment individualviewaccessoryfragment;
-                //need to get last page and do some funkiness there
-                Fragment previousFragment;
-                if (lastPage > position) //we swiped right and are going backwards
-                     previousFragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.indv_pager + ":" + (position + 1));
-                else //position is greater than last page, we swiped left and are going forwards
-                    previousFragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.indv_pager + ":" + (position - 1));
-                if ((position == 1 && lastPage == 0)) {
-                    individualviewfragment = (IndividualViewFragment) previousFragment; //persist previous
+
+                    final IndividualViewFragment individualviewfragment;
+                    final IndividualViewAccessoryFragment individualviewaccessoryfragment;
+                    //need to get last page and do some funkiness there
+                    Fragment previousFragment;
+                    if (lastPage > position) //we swiped right and are going backwards
+                        previousFragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.indv_pager + ":" + (position + 1));
+                    else //position is greater than last page, we swiped left and are going forwards
+                        previousFragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.indv_pager + ":" + (position - 1));
+                    if ((position == 1 && lastPage == 0)) {
+                        individualviewfragment = (IndividualViewFragment) previousFragment; //persist previous
 //                    Toast.makeText(getApplicationContext(), "Persisting first page", Toast.LENGTH_SHORT).show();
-                    individualviewfragment.persistData();
-                    lastPage = position;
+                        individualviewfragment.persistData();
+                        lastPage = position;
 
-                }
-                else  {
-                    individualviewaccessoryfragment = (IndividualViewAccessoryFragment) previousFragment;
+                    } else {
+                        individualviewaccessoryfragment = (IndividualViewAccessoryFragment) previousFragment;
 //                    Toast.makeText(getApplicationContext(), "Persisting accessory", Toast.LENGTH_SHORT).show();
-                    individualviewaccessoryfragment.persistData();
-                    lastPage = position;
-                }
-
+                        individualviewaccessoryfragment.persistData();
+                        lastPage = position;
+                    }
 
 
 //                Toast.makeText(getApplicationContext(), "Selected page " + position, Toast.LENGTH_SHORT).show();

@@ -1,14 +1,8 @@
 package com.kohlerbear.whowascnscalc;
 
-/**
- * Created by alex on 5/25/15.
- */
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,27 +12,29 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.kohlerbear.whowascnscalc.ColorManager;
+import com.kohlerbear.whowascnscalc.LongTermDataSQLHelper;
+import com.kohlerbear.whowascnscalc.LongTermEvent;
+import com.kohlerbear.whowascnscalc.R;
 
 import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
-//
 /**
- * Created by alex on 5/17/15.
+ * Created by alex on 6/7/15.
  */
-public class IndividualProgressArrayAdapter extends ArrayAdapter<LongTermEvent> implements StickyListHeadersAdapter {
+public class AccessoryProgressArrayAdapter extends ArrayAdapter<LongTermEvent> implements StickyListHeadersAdapter {
 
     private final Context context;
     private LongTermEvent[] values;
     private boolean visible = false;
     private LayoutInflater inflater;
 
-    public IndividualProgressArrayAdapter(Context context, List<LongTermEvent> values, boolean visible) {
-        super(context, R.layout.row_individual_view, values);
+    public AccessoryProgressArrayAdapter(Context context, List<LongTermEvent> values, boolean visible) {
+        super(context, R.layout.row_accessory_progress, values);
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.values = new LongTermEvent[values.size()];
@@ -49,14 +45,22 @@ public class IndividualProgressArrayAdapter extends ArrayAdapter<LongTermEvent> 
     @Override
     public View getView(int position, final View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.row_individual_view, parent, false);
+        View rowView = inflater.inflate(R.layout.row_accessory_progress, parent, false);
         TextView liftText = (TextView) rowView.findViewById(R.id.liftNameTV);
         TextView setsRepsText = (TextView) rowView.findViewById(R.id.setRepsTV);
         final ImageView deleteButton = (ImageView) rowView.findViewById(R.id.deleteButtonIndV);
 
         LongTermEvent selectedEvent = values[position];
-        liftText.setText(selectedEvent.getLiftName());
-        setsRepsText.setText(selectedEvent.getWeight() + "x" + selectedEvent.getReps());
+        String liftString = selectedEvent.getLiftDate();
+        if (liftString.isEmpty()) {
+            liftString = "No previous progress for this lift found!";
+
+            setsRepsText.setText("");
+
+        }
+        else
+            setsRepsText.setText(selectedEvent.getWeight() + "x" + selectedEvent.getReps());
+        liftText.setText(liftString);
         if (visible)
             deleteButton.setVisibility(View.VISIBLE);
         else
@@ -116,9 +120,9 @@ public class IndividualProgressArrayAdapter extends ArrayAdapter<LongTermEvent> 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
 
-        convertView = inflater.inflate(R.layout.row_individual_view, parent, false);
+        convertView = inflater.inflate(R.layout.row_accessory_progress, parent, false);
         TextView liftTitle = (TextView) convertView.findViewById(R.id.liftNameTV);
-        liftTitle.setText("Name");
+        liftTitle.setText("Date");
 
 
         TextView setRepsTV = (TextView) convertView.findViewById(R.id.setRepsTV);
@@ -133,9 +137,4 @@ public class IndividualProgressArrayAdapter extends ArrayAdapter<LongTermEvent> 
         //return the first character of the country as ID because this is what headers are based upon
         return 7861;
     }
-
-
-
-
 }
-

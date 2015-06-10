@@ -1,13 +1,18 @@
 package com.kohlerbear.whowascnscalc;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -36,6 +41,7 @@ public class IndividualViewFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 	}
 		static TextView firstLiftTV;
 		static TextView firstLiftErrTV;
@@ -147,6 +153,7 @@ public class IndividualViewFragment extends Fragment {
 		l1EditText = (EditText) rootView.findViewById(R.id.repsHit1editText);
 		l2EditText = (EditText) rootView.findViewById(R.id.repsHit2editText);
 		l3EditText = (EditText) rootView.findViewById(R.id.repsHit3editText);
+
 		int primaryColor = ColorManager.getInstance(getActivity()).getPrimaryColor();
 		l1EditText.getBackground().setColorFilter(primaryColor, PorterDuff.Mode.SRC_ATOP);
 		l2EditText.getBackground().setColorFilter(primaryColor, PorterDuff.Mode.SRC_ATOP);
@@ -245,6 +252,22 @@ public class IndividualViewFragment extends Fragment {
        firstLiftTV.setText(String.valueOf("Set 1: " + m_firstLiftWeight + "x" + m_firstLiftReps));
 	   secondLiftTV.setText(String.valueOf("Set 2: " + m_secondLiftWeight+ "x" + m_secondLiftReps));
 	   thirdLiftTV.setText(String.valueOf("Set 3: "  + m_thirdLiftWeight)+ "x" + m_thirdLiftReps);
+
+
+		//Check if we already have entries for the edittexts
+		LongTermDataSQLHelper helper = new LongTermDataSQLHelper(getActivity());
+		String liftOneReps = String.valueOf(helper.getEditTextForEvent(m_liftDate, m_liftName, "1")[1]);
+		if (!liftOneReps.equals("-1"))
+			l1EditText.setText(liftOneReps);
+		String lifTwoReps = String.valueOf(helper.getEditTextForEvent(m_liftDate, m_liftName, "2")[1]);
+		if (!lifTwoReps.equals("-1"))
+			l2EditText.setText(lifTwoReps);
+		String liftThreeReps = String.valueOf(helper.getEditTextForEvent(m_liftDate, m_liftName, "3")[1]);
+		if (!liftThreeReps.equals("-1"))
+			l3EditText.setText(liftThreeReps);
+
+		helper.close();
+
 	    
 	    return rootView;
 	}
@@ -505,6 +528,36 @@ public class IndividualViewFragment extends Fragment {
 			helper.addEvent(liftThreeEntry);
         }
 
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.accessory_menu, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+
+		MenuItem editMenuOptionItem = menu.findItem(R.id.editMenuOption);
+		editMenuOptionItem.setEnabled(true);
+		editMenuOptionItem.setVisible(true);
+		//We need to initialize what image we want
+		Drawable img = getResources().getDrawable(R.drawable.db_ic_view_progress);
+		img.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+		editMenuOptionItem.setIcon(img);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case (R.id.editMenuOption):
+				Intent intent = new Intent(getActivity(), IndividualProgressActivity.class);
+				intent.putExtra("date", m_liftDate);
+				intent.putExtra("liftType", m_liftDay);
+				intent.putExtra("liftName", m_liftName);
+				intent.putExtra("origin", "accessoryProgress");
+				startActivity(intent);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 

@@ -205,5 +205,32 @@ public class OpeningDashboardActivity extends BaseActivity {
             public void onClick(View view) {
             }
         });
+
+        //Finally, ensure all our tables exist
+        LongTermDataSQLHelper LThelper = new LongTermDataSQLHelper(getApplicationContext());
+        SQLiteDatabase db = LThelper.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?", new String[]{LongTermDataSQLHelper.TABLE});
+        int count = c.getCount();
+//        if (count == 0) {
+//            db.execSQL("drop table " + LongTermDataSQLHelper.TABLE);
+            db.execSQL("create table if not exists " + LongTermDataSQLHelper.TABLE + " (liftDate text not null, Cycle text not null, Lift_Type text not null, Lift_name text not null, Frequency text not null, Weight real, Reps integer, Theoretical_Onerep real, Lb_Flag integer, setNumber integer);");
+//        }
+        c = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?", new String[]{AccessoryLiftSQLHelper.TABLE});
+        count = c.getCount();
+//        if (count == 0) {
+//            db.execSQL("drop table " + AccessoryLiftSQLHelper.TABLE);
+            db.execSQL("create table if not exists " + AccessoryLiftSQLHelper.TABLE + " (ACCESSORY text not null, ACCESSORY_TYPE text not null, LIFT_ORDER integer);");
+
+//        }
+        c = db.rawQuery("SELECT count(*) FROM sqlite_master WHERE type='table' AND name=?", new String[]{EventsDataSQLHelper.TABLE});
+        count = c.getCount();
+//        if (count == 0) {
+//            db.execSQL("drop table " + EventsDataSQLHelper.TABLE);
+            db.execSQL("create table if not exists " + EventsDataSQLHelper.TABLE + " (liftDate text not null, Cycle integer, Lift text not null, Frequency text not null, First_Lift real, Second_Lift real, Third_Lift real, Training_Max integer, column_LbFlag integer, RoundFlag integer, Pattern text);");
+
+//        }
+
+//        "create table " + TABLE + "(liftDate text not null, Cycle text not null, Lift_Type text not null, Lift_name text not null, Frequency text not null, Weight real, Reps integer, Theoretical_Onerep real, Lb_Flag integer, setNumber integer);";
+
     }
 }

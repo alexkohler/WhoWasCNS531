@@ -22,7 +22,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
      android:orientation="vertical"
-   android:background="#607D8B"
+   android:background="#f8f9fe"
     android:layout_weight="2"
     >
 
