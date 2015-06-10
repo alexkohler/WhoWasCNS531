@@ -255,7 +255,9 @@ Bug: delete button disappears after single deletion, same bug you were experienc
 
 6-7; fixed some instability in adding/removing sets, got individual tracking set up 
 
-6-8: programmatically add finish button to last page, you will avoid weight tracking until post release
+6-8: general cleanup for release
+
+6-9: added finish workout button with logic to ignore classcastexception (just a simple try catch with a swallow), some more cleanup
 
 todo:
 	general cleaup, add titles etc..

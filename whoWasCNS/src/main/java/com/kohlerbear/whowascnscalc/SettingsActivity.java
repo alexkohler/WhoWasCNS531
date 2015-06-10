@@ -43,7 +43,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
                 .replace(R.id.content_frame, new SettingsFragment())
                 .commit();
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-        getActionBar().setTitle(Html.fromHtml("<font color='#000000'>Settings </font>"));
+        getActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Settings </font>"));
     }
 
 

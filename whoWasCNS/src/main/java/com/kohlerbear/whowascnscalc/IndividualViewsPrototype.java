@@ -181,9 +181,9 @@ public class IndividualViewsPrototype extends BaseActivity {
 
 
         //Finally, add our weight tracking page (finalize workout page)
-        /*Bundle endOfWorkoutArgs = new Bundle();
+        Bundle endOfWorkoutArgs = new Bundle();
         endOfWorkoutArgs.putString("accessory", "End workout");
-        fragments.add(Fragment.instantiate(this, EndOfWorkoutFragment.class.getName(), endOfWorkoutArgs));*/
+        fragments.add(Fragment.instantiate(this, EndOfWorkoutFragment.class.getName(), endOfWorkoutArgs));
 
 
       PagerAdapter mPagerAdapter  = new MyFragmentAdapter(super.getSupportFragmentManager(), fragments);/*{
@@ -217,6 +217,7 @@ public class IndividualViewsPrototype extends BaseActivity {
                     final IndividualViewAccessoryFragment individualviewaccessoryfragment;
                     //need to get last page and do some funkiness there
                     Fragment previousFragment;
+                try {
                     if (lastPage > position) //we swiped right and are going backwards
                         previousFragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.indv_pager + ":" + (position + 1));
                     else //position is greater than last page, we swiped left and are going forwards
@@ -233,6 +234,11 @@ public class IndividualViewsPrototype extends BaseActivity {
                         individualviewaccessoryfragment.persistData();
                         lastPage = position;
                     }
+                }
+                catch (ClassCastException e)//catch only
+                {
+                    //no worries, just swallow this (I think)
+                }
 
 
 //                Toast.makeText(getApplicationContext(), "Selected page " + position, Toast.LENGTH_SHORT).show();
