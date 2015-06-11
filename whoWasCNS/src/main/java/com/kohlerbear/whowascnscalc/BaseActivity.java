@@ -57,6 +57,7 @@ public class BaseActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.drawer);
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ColorManager.getInstance(this).getPrimaryColor()));
 		// if (savedInstanceState == null) {
 		// // on first time display view for first nav item
 		// // displayView(0);
@@ -114,7 +115,7 @@ public class BaseActivity extends ActionBarActivity {
 			}
 
 			public void onDrawerOpened(View drawerView) {
-				getSupportActionBar().setTitle(mDrawerTitle);
+				getSupportActionBar().setTitle(mTitle);//.setTitle(mDrawerTitle);
 				// calling onPrepareOptionsMenu() to hide action bar icons
 				supportInvalidateOptionsMenu();
 				mDrawerList.bringToFront();

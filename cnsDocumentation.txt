@@ -257,10 +257,11 @@ Bug: delete button disappears after single deletion, same bug you were experienc
 
 6-8: general cleanup for release
 
-6-9: added finish workout button with logic to ignore classcastexception (just a simple try catch with a swallow), some more cleanup
+6-9: added finish workout button with logic to ignore classcastexception (just a simple try catch with a swallow), some more cleanup. More cleanup for release. 
 
 todo:
 	general cleaup, add titles etc..
+	fix expanded drawer colored settings bug
 	weight tracking page to end of fragment stack for individualview (mostly to ensure persistence of final lift on penultimate page - you NEED this.
 	don't allow multi line accessory names
 

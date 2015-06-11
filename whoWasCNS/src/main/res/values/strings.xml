@@ -78,7 +78,7 @@
 
     <!-- Button title definitoins -->
     <string name="AdjustActivity_Back">Back</string>
-    <string name="AdjustActivity_Custom">Custom</string>
+    <string name="AdjustActivity_Custom">Custom Pattern</string>
     <string name="AdjustActivity_Save">Save</string>
 
     <!-- Spinner contents definition -->

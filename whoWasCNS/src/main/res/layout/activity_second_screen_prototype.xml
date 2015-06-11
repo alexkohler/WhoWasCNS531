@@ -286,6 +286,7 @@
                     android:background="@drawable/option"
                     android:gravity="center"
                     android:text="@string/option_5"
+                    android:visibility="invisible"
                     android:textStyle="bold" />
 
                 <TextView
@@ -300,6 +301,7 @@
                     android:gravity="center"
                     android:text="@string/option_4"
                     android:textColor="#ffffff"
+                    android:visibility="invisible"
                     android:textStyle="bold" />
 
                 <TextView
@@ -314,6 +316,7 @@
                     android:gravity="center"
                     android:text="@string/option_2"
                     android:textColor="#ffffff"
+                    android:visibility="invisible"
                     android:textStyle="bold" />
 
                 <TextView
@@ -328,6 +331,7 @@
                     android:gravity="center"
                     android:text="@string/option_3"
                     android:textColor="#ffffff"
+                    android:visibility="invisible"
                     android:textStyle="bold" />
 
                 <TextView
@@ -342,6 +346,7 @@
                     android:gravity="center"
                     android:text="@string/option_1"
                     android:textColor="#ffffff"
+                    android:visibility="invisible"
                     android:textStyle="bold" />
             </LinearLayout>
 

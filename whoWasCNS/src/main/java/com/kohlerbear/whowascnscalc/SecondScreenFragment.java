@@ -690,18 +690,34 @@ public class SecondScreenFragment extends android.support.v4.app.Fragment {
                 customButton.setText("Reset to default");
                 customButton.startAnimation(animation);
                 customButtonState = CUSTOM_BUTTON_STATE.CUSTOM;
+                showOptions(true);
             }
             else if (customButtonState == CUSTOM_BUTTON_STATE.CUSTOM){
                 inflatePatternButtons(defaultPattern, false);
-                customButton.setText("Custom");
+                customButton.setText("Custom Pattern");
                 customButton.clearAnimation();
                 customButtonState = CUSTOM_BUTTON_STATE.NORMAL;
+                showOptions(false);
             }
         }
 
 
 
     };
+
+
+
+
+    void showOptions(boolean show) {
+
+            for (TextView option : options)  {
+                if (show)
+                    option.setVisibility(View.VISIBLE);
+                else
+                    option.setVisibility(View.INVISIBLE);
+            }
+
+        }
 
 
 /*    private View.OnClickListener saveListener = new View.OnClickListener() {
