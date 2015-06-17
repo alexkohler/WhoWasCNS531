@@ -64,8 +64,8 @@ public class BaseActivity extends ActionBarActivity {
 		// }
 	}
 
-	public void set(String[] navMenuTitles, TypedArray navMenuIcons) {
-		mTitle = mDrawerTitle = getTitle();
+	public void set(String[] navMenuTitles, TypedArray navMenuIcons, String actionBarTitle) {
+		mTitle = mDrawerTitle = actionBarTitle;
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);

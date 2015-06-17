@@ -53,7 +53,7 @@ public class AccessoryProgressArrayAdapter extends ArrayAdapter<LongTermEvent> i
         LongTermEvent selectedEvent = values[position];
         String liftString = selectedEvent.getLiftDate();
         if (liftString.isEmpty()) {
-            liftString = "No previous progress for this lift found!";
+            liftString = "No previous progress found!";
 
             setsRepsText.setText("");
 

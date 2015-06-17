@@ -102,7 +102,7 @@
     <string name="sampleentry">Set X: 300x5!</string>
     <string name="next">next</string>
     <string name="prev">prev</string>
-    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_dashboard">5/3/1 Calculator</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_progress_graph">ManifestTitleHere</string>
@@ -168,7 +168,7 @@
     <string name="about_title">About this app</string>
     <string name="about_whatis531">What is 5/3/1?</string>
     <string name="about_whatis531Answer">Commonly thrown around in the Strength Training world, 5/3/1 programming
-    philosophy made popular by Jim Wendler (Buy this book here) - Basically, your training is centered around "cycles", which consist of performing the big
+    philosophy made popular by Jim Wendler (Buy this book <a href="http://store.jimwendler.com/ProductDetails.asp?ProductCode=5312edebook">here</a>) - Basically, your training is centered around "cycles", which consist of performing the big
     4 (Bench, squat, deadlift, overhead press) at various frequencies and percentages based on your training maxes. </string>
     <string name="about_whatisTrainingMax">Wait, what is a training max?</string>
     <string name="about_whatisTrainingMaxAnswer">    A training max (in 5/3/1\'s context) coined by Jim Wendler. It is calculated via 90% of your true max. For example,
@@ -218,6 +218,8 @@
     <string-array name="pref_colorSchemeTypes_entries">
         <item>Teal</item>
         <item>Orange</item>
+        <item>Indigo</item>
+        <item>Red</item>
     </string-array>
 
     <string-array name="orangePrefs">
@@ -229,6 +231,8 @@
         <item>Teal</item>
 <!--        <item>@array/orangePrefs</item>-->
         <item>Orange</item>
+        <item>Indigo</item>
+        <item>Red</item>
     </string-array>
     <string name="pref_colorSchemeTypes_default">Orange</string>
     <string name="menu_title">Edit</string>

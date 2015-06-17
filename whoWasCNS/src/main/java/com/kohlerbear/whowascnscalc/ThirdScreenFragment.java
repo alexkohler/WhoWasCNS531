@@ -146,7 +146,10 @@ public class ThirdScreenFragment extends Fragment
         // ...
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-//        getActivity().getActionBar().setTitle(Html.fromHtml("<font color='#ff0000'>View Projection </font>"));
+        //ensure no random tabs come up
+        getActivity().getActionBar().removeAllTabs();
+        getActivity().getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+
 
         //Take care of actual third screen festivities
         configureButton = (Button) drawerLayout.findViewById(R.id.configureButtonPrototype);
@@ -639,7 +642,6 @@ public class ThirdScreenFragment extends Fragment
         SQLiteDatabase db = eventsData.getReadableDatabase();
         Cursor cursor = db.query(EventsDataSQLHelper.TABLE, null, getQuery(), null, null,
                 null, null);
-
         getActivity().startManagingCursor(cursor);
         return cursor;
     }

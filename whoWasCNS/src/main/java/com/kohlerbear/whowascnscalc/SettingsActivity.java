@@ -35,7 +35,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
                 .obtainTypedArray(R.array.nav_drawer_icons);// load icons from
         // strings.xml
 
-        set(navMenuTitles, navMenuIcons);
+        set(navMenuTitles, navMenuIcons, "Settings");
         navMenuIcons.recycle();
 
         // Display the fragment as the main content.
@@ -61,6 +61,12 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
 
                 case "Orange":
                     actionBarColorString = "#FF5722";
+                    break;
+                case "Indigo":
+                    actionBarColorString = "#3F51B5";
+                    break;
+                case "Red":
+                    actionBarColorString = "#F44336";
                     break;
 
                 default:

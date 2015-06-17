@@ -53,6 +53,26 @@ public class ColorManager {
                     textColor = Color.WHITE;
                     break;
 
+                case "Indigo":
+                    primaryColor = Color.parseColor("#3F51B5");//Blue 500
+                    stickyHeaderBackgroundColor = Color.parseColor("#3949AB");//600
+                    stickyHeaderTextColor = Color.WHITE;
+                    trainingMaxesStreamColor = Color.parseColor("#3F51B5"); //500
+                    configureButtonColor = Color.parseColor("#3949AB");//600
+                    calendarDividerColor = Color.parseColor("#3F51B5"); //500
+                    textColor = Color.WHITE;
+                    break;
+
+                case "Red":
+                    primaryColor = Color.parseColor("#F44336");//Red 500
+                    stickyHeaderBackgroundColor = Color.parseColor("#E53935");//600
+                    stickyHeaderTextColor = Color.WHITE;
+                    trainingMaxesStreamColor = Color.parseColor("#F44336"); //500
+                    configureButtonColor = Color.parseColor("#E53935");//600
+                    calendarDividerColor = Color.parseColor("#F44336"); //500
+                    textColor = Color.WHITE;
+                    break;
+
                 default:
                     primaryColor = Color.parseColor("#FF5722");//Orange 500
                     stickyHeaderBackgroundColor = Color.parseColor("#F4511E");//600

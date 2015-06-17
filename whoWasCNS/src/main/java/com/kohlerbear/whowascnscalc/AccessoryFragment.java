@@ -3,7 +3,9 @@ package com.kohlerbear.whowascnscalc;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -13,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
@@ -71,6 +74,8 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
         drawerLayout = (DrawerLayout) inflater.inflate(R.layout.fragment_accessory_lift_tab_host, container, false);
         dragNDroplistView = (DragNDropListView) drawerLayout.findViewById(R.id.liftListView);
         registerForContextMenu(dragNDroplistView);
+
+
         //Colors
         changeLiftButton = (Button) drawerLayout.findViewById(R.id.changeLiftButton);
         final int primaryColor = ColorManager.getInstance(getActivity()).getPrimaryColor();
@@ -80,17 +85,15 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
         helper = new AccessoryLiftSQLHelper(getActivity());
         currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.BENCH; //will always open on bench
         SQLiteDatabase db = helper.getWritableDatabase();
-/*        db.execSQL("drop table " + helper.TABLE);
-        db.execSQL("create table " + helper.TABLE + "(ACCESSORY text not null, ACCESSORY_TYPE text not null, LIFT_ORDER integer);");
-        helper.makeSampleData();*/
 
 
         //Manage buttons
+        changeLiftButton.setVisibility(View.GONE);
         changeLiftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (currentButtonState == CHANGELIFT_BUTTON_STATE.NORMAL) {
-                    createChangeLiftBuilder();
+//                    createChangeLiftBuilder();
 
                 } else if (currentButtonState == CHANGELIFT_BUTTON_STATE.EXIT) {
                     changeLiftButton.clearAnimation();
@@ -166,7 +169,53 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
 
         dragNDroplistView.setItemsCanFocus(true);
         setDeleteButtonsShown(false);
-        getActivity().getActionBar().setTitle("Bench Accessories");
+
+        //Create a nice tabbed layout
+        // Create a tab listener that is called when the user changes tabs.
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                getActivity().getActionBar().setStackedBackgroundDrawable(new ColorDrawable(ColorManager.getInstance(getActivity()).getStickyHeaderBackgroundColor()));
+                if (tab.getText().equals("Bench")){//Bench
+                    getActivity().getActionBar().setTitle("Bench Accessories");
+                    currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.BENCH;
+                    refreshListView();
+                }
+                else if (tab.getText().equals("Squat"))//Squat
+                {
+                    getActivity().getActionBar().setTitle("Squat Accessories");
+                    currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.SQUAT;
+                    refreshListView();
+                }
+                if (tab.getText().equals("Dead"))//Deadlift
+                {
+                    getActivity().getActionBar().setTitle("Deadlift Accessories");
+                    currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.DEADLIFT;
+                    refreshListView();
+                }
+                if (tab.getText().equals("OHP"))//OHP
+                {
+                    getActivity().getActionBar().setTitle("OHP Accessories");
+                    currentAccessoryType = AccessoryLiftSQLHelper.ACCESSORY_TYPE.OHP;
+                    refreshListView();
+                }
+            }
+
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // hide the given tab
+            }
+
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // probably ignore this event
+            }
+        };
+
+        ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        // Add 3 tabs, specifying the tab's text and TabListener
+        actionBar.addTab(actionBar.newTab().setText("Bench").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("Squat").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("Dead").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText("OHP").setTabListener(tabListener));
 
         return drawerLayout; // We must return the loaded Layout
     }
@@ -284,7 +333,17 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
     public void onStop() {
         super.onStop();
         helper.repopulateDB(getCurrentListViewItems(), currentAccessoryType);
+        getActivity().getActionBar().removeAllTabs();
+
     }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+
+        }
+
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -308,11 +367,6 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
         v.setDrawingCacheEnabled(true);
         i.setIcon(createDrawableFromView(v));
 //code here
-    }
-
-    public void showContextMenu(View v)
-    {
-       getActivity().openContextMenu(v);
     }
 
     @Override
@@ -513,6 +567,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                     dragNDroplistView.setDraggingEnabled(true);
                     unregisterForContextMenu(dragNDroplistView);
                     setDeleteButtonsShown(true);
+                    changeLiftButton.setVisibility(View.VISIBLE);
                     changeLiftButton.setText("Add accessory lift");
                     currentButtonState = CHANGELIFT_BUTTON_STATE.ADD;
                     dragNDroplistView.setLongClickable(false);
@@ -521,6 +576,7 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                 } else //Done pressed
                 {
                     TextView v = new TextView(getActivity());
+                    changeLiftButton.setVisibility(View.GONE);
                     v.setTextColor(Color.WHITE);
                     v.setText("Edit");
                     v.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
@@ -531,8 +587,8 @@ import com.kohlerbear.whowascnscalc.dragndroplist.DragNDropListView;
                     dragNDroplistView.setDraggingEnabled(false);
                     registerForContextMenu(dragNDroplistView);
 
-                    changeLiftButton.setText("Change lift");
-                    currentButtonState = CHANGELIFT_BUTTON_STATE.NORMAL;
+//                    changeLiftButton.setText("Change lift");
+//                    currentButtonState = CHANGELIFT_BUTTON_STATE.NORMAL;
 
                     dragNDroplistView.setLongClickable(true);
                     toggle = !toggle;

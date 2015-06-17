@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kohlerbear.whowascnscalc"
+
     android:versionCode="12"
     android:versionName="1.9" >
 
@@ -67,7 +68,7 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_setting"
-            android:theme="@style/AppBaseLight" >
+            android:theme="@style/AppBaseTheme" >
         </activity>
         <!--
             <activity

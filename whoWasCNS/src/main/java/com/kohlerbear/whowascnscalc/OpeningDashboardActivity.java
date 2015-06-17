@@ -1,5 +1,7 @@
 package com.kohlerbear.whowascnscalc;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,9 +36,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -59,8 +65,23 @@ public class OpeningDashboardActivity extends BaseActivity {
                 .obtainTypedArray(R.array.nav_drawer_icons);// load icons from
         // strings.xml
 
-        set(navMenuTitles, navMenuIcons);
+        set(navMenuTitles, navMenuIcons, "Dashboard");
         navMenuIcons.recycle();
+        /*SharedPreferences sp = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        if (!sp.getBoolean("first", false)) {
+            SharedPreferences.Editor editor = sp.edit();
+            new ShowcaseView.Builder(this)
+                    .setTarget(new ActionViewTarget(this, ActionViewTarget.Type.HOME))
+                    .setContentTitle("cold stone creamery bitch")
+                    .setContentText("This is highlighting the Home button")
+                    .hideOnTouchOutside()
+                    .setStyle(R.style.CustomShowcaseTheme)
+                    .build();
+            //editor.putBoolean("first", true);
+            //editor.commit();
+            Toast.makeText(getApplicationContext(), "first time", Toast.LENGTH_SHORT).show();
+        }*/
+
 
         //Set our default values for preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -195,6 +216,7 @@ public class OpeningDashboardActivity extends BaseActivity {
 
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Coming soon!", Toast.LENGTH_SHORT).show();
             }
         });
 

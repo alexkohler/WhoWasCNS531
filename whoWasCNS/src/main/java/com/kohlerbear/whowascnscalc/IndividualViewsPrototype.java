@@ -89,7 +89,7 @@ public class IndividualViewsPrototype extends BaseActivity {
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items); // load titles from strings.xml
         navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);// load icons from strings.xml
 
-        set(navMenuTitles, navMenuIcons);
+        set(navMenuTitles, navMenuIcons, "Individual View");
         navMenuIcons.recycle();
 
         //Set up theme colors
