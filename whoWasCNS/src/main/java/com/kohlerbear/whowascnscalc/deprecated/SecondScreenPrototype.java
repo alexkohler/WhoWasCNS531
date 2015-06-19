@@ -19,6 +19,7 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -185,10 +186,14 @@ public class SecondScreenPrototype extends BaseActivity {
 	    
 	    //fields views are attributed with 
 	    choice1F = (EditText)findViewById(R.id.choice1Field);
+		choice1F.setNextFocusDownId(R.id.choice2Field);
 	    choice2F = (EditText)findViewById(R.id.choice2Field);
-	    choice3F = (EditText)findViewById(R.id.choice3Field);
+		choice2F.setNextFocusDownId(R.id.choice4Field);
+		choice3F = (EditText)findViewById(R.id.choice3Field);
 	    choice4F = (EditText)findViewById(R.id.choice4Field);
+		choice4F.setNextFocusDownId(R.id.choice5Field);
 	    choice5F = (EditText)findViewById(R.id.choice5Field);
+		choice5F.setImeOptions(EditorInfo.IME_ACTION_DONE);
 	    choice6F = (EditText)findViewById(R.id.choice6Field);
 	    choice7F = (EditText)findViewById(R.id.choice7Field);
 	    

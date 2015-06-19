@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 
 /*public class OpeningDashboardActivity extends BaseActivity {
@@ -68,6 +69,7 @@ public class OpeningDashboardActivity extends BaseActivity {
         set(navMenuTitles, navMenuIcons, "Dashboard");
         navMenuIcons.recycle();
         /*SharedPreferences sp = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        /*SharedPreferences sp = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         if (!sp.getBoolean("first", false)) {
             SharedPreferences.Editor editor = sp.edit();
             new ShowcaseView.Builder(this)
@@ -89,24 +91,32 @@ public class OpeningDashboardActivity extends BaseActivity {
         /**
          * Creating all buttons instances
          * */
+
+        //int primaryColor = ColorManager.getInstance(getApplicationContext()).getPrimaryColor();
         // Dashboard News feed button
         Button btn_today_lift = (Button) findViewById(R.id.btn_news_feed);
+        btn_today_lift.setTextColor(Color.BLACK);
 
         // Dashboard Friends button
         Button btn_acc_temp = (Button) findViewById(R.id.btn_friends);
+        btn_acc_temp.setTextColor(Color.BLACK);
+
 
         // Dashboard Messages button
         Button btn_track_bw = (Button) findViewById(R.id.btn_messages);
+        btn_track_bw.setTextColor(Color.BLACK);
 
         // Dashboard Places button
         Button btn_view_prog = (Button) findViewById(R.id.btn_places);
+        btn_view_prog.setTextColor(Color.BLACK);
 
         // Dashboard Events button
         Button btn_events = (Button) findViewById(R.id.btn_events);
+        btn_events.setTextColor(Color.BLACK);
 
         // Dashboard Photos button
         Button btn_photos = (Button) findViewById(R.id.btn_photos);
-
+        btn_photos.setTextColor(Color.BLACK);
         /**
          * Handling all button click events
          * */
@@ -195,6 +205,8 @@ public class OpeningDashboardActivity extends BaseActivity {
 
             @Override
             public void onClick(View view) {
+
+                Toast.makeText(getApplicationContext(), "Coming soon!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -212,21 +224,21 @@ public class OpeningDashboardActivity extends BaseActivity {
         });
 
         // Listening to Events button click
-        btn_events.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Coming soon!", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        btn_events.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         // Listening to Photos button click
-        btn_photos.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-            }
-        });
+//        btn_photos.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//            }
+//        });
 
         //Finally, ensure all our tables exist
         LongTermDataSQLHelper LThelper = new LongTermDataSQLHelper(getApplicationContext());
