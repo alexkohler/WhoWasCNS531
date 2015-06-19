@@ -259,6 +259,9 @@ Bug: delete button disappears after single deletion, same bug you were experienc
 
 6-9: added finish workout button with logic to ignore classcastexception (just a simple try catch with a swallow), some more cleanup. More cleanup for release. 
 
+6-17: Need to figure out a way to get your edittexts to behave with a soft keyboard. It shouldn't be too bad you just need to do a little more research. You also need to look into changing the text color of your dashboard icons. Black does not work and your primary orange color is too bright. Perhaps create another getter with a modified orange color and primary colors for everything else 
+
+
 todo:
 	change application icon
 	logging? - http://stackoverflow.com/questions/19897628/need-to-handle-uncaught-exception-and-send-log-file
