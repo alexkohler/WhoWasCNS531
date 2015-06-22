@@ -31,20 +31,25 @@ Libraries used:
 
 Some screenshots: <br>
 
-New Dashboard             |  MUCH improved UI
+Easy to use Dashboard             |  ..and navigation drawer!
 :-------------------------:|:-------------------------:
-![](http://i.imgur.com/ZAOI1Ny.png?1)  |  ![alt tag](http://i.imgur.com/8WYP62U.png?1)
+![](stub)  |  ![alt tag](stub)
 
 
-Themes             |  Custom pattern support improved
+5 cycle Table Format             |  Custom pattern support
 :-------------------------:|:-------------------------:
-![](http://i.imgur.com/nAoscIT.png?1)  |  ![alt tag](http://i.imgur.com/ElDuIcl.png?1)
+![](http://i.imgur.com/5yZIuqG.png?1)  |  ![alt tag](http://i.imgur.com/gMVkT3T.png?1)
 
 
 
-Prettier table views             |  Tons more coming!
+Lb plate individual views             |  IWF kilogram plate view
 :-------------------------:|:-------------------------:
-![alt tag](http://i.imgur.com/r5zXyQ6.png?1)  |  
+![alt tag](http://i.imgur.com/qo1T96x.png?1)  |  ![alt tag](stub)
+
+
+Accessory configuration            |  ...and tracking!
+:-------------------------:|:-------------------------:
+![alt tag](http://i.imgur.com/1od6zEd.png?2)  |  ![alt tag](stub)
 
 
 
