@@ -44,12 +44,12 @@ Easy to use Dashboard             |  ..and navigation drawer!
 
 Lb plate individual views             |  IWF kilogram plate view
 :-------------------------:|:-------------------------:
-![alt tag](http://i.imgur.com/qo1T96x.png?1)  |  ![alt tag](stub)
+![alt tag](http://i.imgur.com/qo1T96x.png?1)  |  ![alt tag](http://i.imgur.com/S1HjvG9.png)
 
 
 Accessory configuration            |  ...and tracking!
 :-------------------------:|:-------------------------:
-![alt tag](http://i.imgur.com/1od6zEd.png?2)  |  ![alt tag](stub)
+![alt tag](http://i.imgur.com/nUc7dWP.png)  |  ![alt tag](http://i.imgur.com/1od6zEd.png?2)
 
 
 
