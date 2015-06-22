@@ -33,7 +33,7 @@ Some screenshots: <br>
 
 Easy to use Dashboard             |  ..and navigation drawer!
 :-------------------------:|:-------------------------:
-![](stub)  |  ![alt tag](stub)
+![](http://i.imgur.com/CGQvXxj.png?1)  |  ![alt tag](http://i.imgur.com/xV18E11.png?1)
 
 
 5 cycle Table Format             |  Custom pattern support
@@ -44,12 +44,12 @@ Easy to use Dashboard             |  ..and navigation drawer!
 
 Lb plate individual views             |  IWF kilogram plate view
 :-------------------------:|:-------------------------:
-![alt tag](http://i.imgur.com/qo1T96x.png?1)  |  ![alt tag](http://i.imgur.com/S1HjvG9.png)
+![alt tag](http://i.imgur.com/qo1T96x.png?1)  |  ![alt tag](http://i.imgur.com/YjwsBUJ.png?1)
 
 
 Accessory configuration            |  ...and tracking!
 :-------------------------:|:-------------------------:
-![alt tag](http://i.imgur.com/nUc7dWP.png)  |  ![alt tag](http://i.imgur.com/1od6zEd.png?2)
+![alt tag](http://i.imgur.com/cygriZh.png?1)  |  ![alt tag](http://i.imgur.com/1od6zEd.png?2)
 
 
 
