@@ -27,8 +27,6 @@ Libraries used:
 
 <a href="https://github.com/emilsjolander/StickyScrollViewItems"> Emilsjolander's StickyScrollViewItems </a>
 
-<b> 2.0 IN PROGRESS (And will hopefully be out soon..) </b>
-
 Some screenshots: <br>
 
 Easy to use Dashboard             |  ..and navigation drawer!
